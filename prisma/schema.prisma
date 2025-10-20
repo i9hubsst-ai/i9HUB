@@ -1,0 +1,266 @@
+// Prisma schema for i9HUBSST - Occupational Health and Safety Management Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// CORE ENTITIES
+// ============================================
+
+model Company {
+  id        String   @id @default(uuid())
+  name      String
+  cnpj      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  memberships       Membership[]
+  assessments       Assessment[]
+  actionPlans       ActionPlan[]
+  modulePermissions ModulePermission[]
+  auditLogs         AuditLog[]
+
+  @@map("companies")
+}
+
+enum Role {
+  PLATFORM_ADMIN
+  COMPANY_ADMIN
+  ENGINEER
+  EMPLOYER
+  VIEWER
+}
+
+enum MembershipStatus {
+  ACTIVE
+  INVITED
+  INACTIVE
+}
+
+model Membership {
+  id        String           @id @default(uuid())
+  userId    String // Supabase Auth user ID
+  companyId String
+  role      Role
+  status    MembershipStatus @default(INVITED)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  // Relations
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, companyId])
+  @@index([userId])
+  @@index([companyId])
+  @@map("memberships")
+}
+
+model PlatformAdmin {
+  id        String   @id @default(uuid())
+  userId    String   @unique // Supabase Auth user ID
+  createdAt DateTime @default(now())
+
+  @@map("platform_admins")
+}
+
+// ============================================
+// MODULE PERMISSIONS
+// ============================================
+
+model ModulePermission {
+  id        String   @id @default(uuid())
+  userId    String // Supabase Auth user ID
+  companyId String
+  moduleKey String // e.g., "diagnostics", "actions", "training"
+  canRead   Boolean  @default(false)
+  canWrite  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, companyId, moduleKey])
+  @@index([userId, companyId])
+  @@map("module_permissions")
+}
+
+// ============================================
+// IMSST DIAGNOSTIC SYSTEM
+// ============================================
+
+model IMSSTDimension {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  order       Int
+  createdAt   DateTime @default(now())
+
+  // Relations
+  questions Questions[]
+
+  @@map("imsst_dimensions")
+}
+
+enum QuestionType {
+  LIKERT // 1-5 scale
+  MULTIPLE_CHOICE
+  YES_NO
+  TEXT
+}
+
+model Question {
+  id          String       @id @default(uuid())
+  dimensionId String
+  text        String
+  type        QuestionType
+  options     Json? // For multiple choice: ["Option 1", "Option 2"]
+  weight      Float        @default(1.0) // Weight for scoring
+  order       Int
+  createdAt   DateTime     @default(now())
+
+  // Relations
+  dimension IMSSTDimension @relation(fields: [dimensionId], references: [id], onDelete: Cascade)
+  answers   AssessmentAnswer[]
+
+  @@index([dimensionId])
+  @@map("imsst_questions")
+}
+
+enum AssessmentStatus {
+  DRAFT
+  IN_PROGRESS
+  SUBMITTED
+  COMPLETED
+}
+
+model Assessment {
+  id          String           @id @default(uuid())
+  companyId   String
+  createdBy   String // Supabase Auth user ID
+  title       String
+  description String?
+  status      AssessmentStatus @default(DRAFT)
+  startedAt   DateTime?
+  submittedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relations
+  company Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  answers AssessmentAnswer[]
+  scores  AssessmentScore[]
+  actionPlans ActionPlan[]
+
+  @@index([companyId])
+  @@index([createdBy])
+  @@map("assessments")
+}
+
+model AssessmentAnswer {
+  id           String   @id @default(uuid())
+  assessmentId String
+  questionId   String
+  answeredBy   String // Supabase Auth user ID
+  value        Json // Flexible: number for Likert, string for text, boolean for yes/no
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  question   Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([assessmentId, questionId])
+  @@index([assessmentId])
+  @@map("assessment_answers")
+}
+
+model AssessmentScore {
+  id           String   @id @default(uuid())
+  assessmentId String
+  dimensionId  String
+  score        Float // 0-100
+  level        Int // 1-5 maturity level
+  createdAt    DateTime @default(now())
+
+  // Relations
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@unique([assessmentId, dimensionId])
+  @@index([assessmentId])
+  @@map("assessment_scores")
+}
+
+// ============================================
+// ACTION PLANS
+// ============================================
+
+enum ActionStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ActionCategory {
+  NR_COMPLIANCE // Norma Regulamentadora
+  PROCESS
+  TRAINING
+  MANAGEMENT
+  OTHER
+}
+
+model ActionPlan {
+  id           String         @id @default(uuid())
+  assessmentId String
+  companyId    String
+  title        String
+  description  String
+  category     ActionCategory
+  priority     Int            @default(3) // 1=High, 3=Medium, 5=Low
+  responsible  String? // Supabase Auth user ID
+  dueDate      DateTime?
+  status       ActionStatus   @default(PENDING)
+  aiGenerated  Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  // Relations
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  company    Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+  @@index([companyId])
+  @@index([status])
+  @@map("action_plans")
+}
+
+// ============================================
+// AUDIT & LOGGING
+// ============================================
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String // Supabase Auth user ID
+  companyId String?
+  action    String // e.g., "CREATE_ASSESSMENT", "UPDATE_USER_ROLE"
+  entity    String? // e.g., "assessment", "user"
+  entityId  String?
+  metadata  Json? // Additional context
+  createdAt DateTime @default(now())
+
+  // Relations
+  company Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([companyId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

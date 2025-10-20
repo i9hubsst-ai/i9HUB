@@ -1,0 +1,212 @@
+Crie uma aplicação SaaS chamada i9HUBSST — uma plataforma de Gestão de Segurança e Saúde do Trabalho (SST) com autenticação multiempresa, diagnóstico de maturidade (IMSST) e assistente de IA integrado.
+
+⚙️ Stack técnica
+
+Next.js 15 + React + TypeScript
+
+Tailwind + shadcn/ui + lucide-react
+
+Supabase (Auth, Postgres, Storage)
+
+Prisma ORM + Zod
+
+PDFKit ou React-PDF (relatórios)
+
+OpenAI API / ChatGPT API para IA integrada
+
+Executável no Replit
+
+🔒 Autenticação e Multiempresa (Prioridade Máxima)
+
+Usuários e papéis:
+
+PlatformAdmin → acesso total a todas as empresas; cadastra empresas e CompanyAdmins.
+
+CompanyAdmin → único vínculo com uma empresa; gerencia membros e Employers.
+
+Engineer → pode estar em várias empresas; aplica diagnósticos e gera relatórios.
+
+Employer → funcionário vinculado a uma única empresa; acesso restrito a módulos.
+
+Viewer → leitura apenas; pode ter múltiplas empresas.
+
+Regras:
+
+PlatformAdmin cria empresa + define CompanyAdmin.
+
+CompanyAdmin pode cadastrar Engineers, Employers e Viewers.
+
+Employers têm permissões por módulo (diagnostics, actions, training, etc.) controladas via tabela module_permissions.
+
+Engineer/Viewer podem alternar empresa ativa.
+
+RLS: todos os dados filtrados por company_id.
+
+🧩 Diagnóstico IMSST
+
+Módulo principal do sistema.
+Funcionalidades:
+
+Questionário baseado em dimensões de maturidade (Liderança, Processos, Conformidade, Capacitação, Dados).
+
+Usuário Engineer ou CompanyAdmin pode:
+
+Criar um Assessment;
+
+Responder perguntas (Likert, múltipla escolha, sim/não);
+
+Submeter diagnóstico → sistema calcula pontuação e nível IMSST (1–5);
+
+Gerar relatório PDF com radar e plano de ação.
+
+Histórico de avaliações e comparação de evolução entre períodos.
+
+IA integrada:
+
+A IA gera automaticamente novas perguntas com base no contexto da empresa, CNAE e histórico.
+
+A IA sugere planos de ação personalizados após cada diagnóstico, com base nos pontos fracos detectados.
+
+🧠 IA integrada (Assistentes)
+
+Três funções principais:
+
+IA Geral (menu lateral)
+
+Atua como assistente corporativo do HUBSST.
+
+Responde dúvidas, gera relatórios e orienta uso da plataforma.
+
+Conecta-se via API da OpenAI com contexto do usuário logado e empresa ativa.
+
+IA de Diagnóstico
+
+Gera automaticamente perguntas para o IMSST com base em normas e histórico da empresa.
+
+IA de Plano de Ação
+
+Analisa resultados do diagnóstico e sugere ações corretivas/preventivas com prazo, responsável e categoria (NR, processo, treinamento, gestão).
+
+🧱 Banco de Dados (via Supabase/Prisma)
+
+Tabelas essenciais:
+
+users (Auth Supabase)
+
+companies (id, name, cnpj)
+
+memberships (user_id, company_id, role, status)
+
+platform_admins (user_id)
+
+module_permissions (user_id, company_id, module_key, can_read, can_write)
+
+imsst_dimensions, imsst_questions, assessments, assessment_answers, assessment_scores
+
+action_plans (vinculado ao diagnóstico)
+
+audit_logs (registro de ações)
+
+Constraints:
+
+CompanyAdmin e Employer só podem pertencer a 1 empresa.
+
+Engineer e Viewer podem pertencer a várias.
+
+RLS ativo em todas as tabelas com company_id.
+
+🧭 Fluxos principais
+
+PlatformAdmin cria empresa e designa CompanyAdmin.
+
+CompanyAdmin gerencia membros da empresa.
+
+Engineer aplica diagnóstico IMSST.
+
+Employer responde blocos de perguntas conforme permissão.
+
+IA gera plano de ação e relatório automático.
+
+Viewer visualiza resultados.
+
+🧩 UI/UX
+
+Sidebar fixa: acesso a módulos → Dashboard, Diagnósticos, Ações, Treinamentos, Administração.
+
+Menu lateral direito (IA): acesso ao assistente inteligente do HUBSST.
+
+Dashboard inicial: visão geral da empresa, últimos diagnósticos, ações pendentes.
+
+Tela de diagnóstico: formulário por etapas, botão de salvar e submeter, exibição de pontuação.
+
+Tela de relatório: radar chart, lista de ações sugeridas, botão “Gerar PDF”.
+
+Admin Platform: gerenciar empresas e CompanyAdmins.
+
+Admin Company: gerenciar usuários e permissões.
+
+⚡ API e Server Actions
+
+/api/auth/* → registro, convites, trocas de empresa.
+
+/api/companies → CRUD de empresas (PlatformAdmin only).
+
+/api/diagnostics → criar, responder e submeter avaliações.
+
+/api/ai/* → geração de perguntas, planos e relatórios.
+
+/api/actions → plano de ação e acompanhamento.
+
+Validação via Zod + Role guards (requireRole, requirePlatformAdmin).
+
+🧩 Seeds
+
+1 PlatformAdmin
+
+2 empresas demo
+
+1 CompanyAdmin por empresa
+
+2 Engineers (multiempresa)
+
+2 Employers (um por empresa, permissões restritas)
+
+1 Viewer
+
+5 dimensões IMSST com 5 perguntas cada
+
+📈 Pós-MVP
+
+Comparativo de diagnósticos (histórico)
+
+Dashboard executivo consolidado
+
+Marketplace de treinamentos e serviços
+
+Integração com ComplianceSST e EPIManager
+
+📋 .env Example
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+OPENAI_API_KEY=
+NEXTAUTH_SECRET=
+ENABLE_GOOGLE_SSO=true
+ENABLE_PDF_EXPORT=true
+ALLOW_COMPANYADMIN_ASSIGN_EMPLOYER_PERMS=true
+
+✅ Entregável esperado no Replit
+
+Projeto Next.js funcional com:
+
+Login e troca de empresa.
+
+Cadastro controlado de usuários (PlatformAdmin → CompanyAdmin → Demais).
+
+Diagnóstico IMSST funcionando (criar → responder → submeter → gerar relatório).
+
+IA operante no menu lateral e nos módulos de diagnóstico e plano de ação.
+
+Banco Supabase com RLS ativo.
+
+README com instruções de setup local e deploy.

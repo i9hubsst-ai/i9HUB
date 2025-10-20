@@ -104,7 +104,7 @@ model IMSSTDimension {
   createdAt   DateTime @default(now())
 
   // Relations
-  questions Questions[]
+  questions Question[]
 
   @@map("imsst_dimensions")
 }

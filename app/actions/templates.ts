@@ -123,3 +123,130 @@ export async function deleteTemplate(templateId: string) {
     return { error: 'Erro ao excluir template' }
   }
 }
+
+export async function getPublishedTemplates() {
+  try {
+    const templates = await prisma.diagnosticTemplate.findMany({
+      where: { status: 'PUBLISHED' },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        type: true,
+        _count: {
+          select: { sections: true }
+        }
+      },
+      orderBy: { name: 'asc' }
+    })
+
+    return { success: true, templates }
+  } catch (error) {
+    console.error('Erro ao buscar templates publicados:', error)
+    return { error: 'Erro ao buscar templates publicados' }
+  }
+}
+
+export async function applyTemplateToAssessment(assessmentId: string, templateId: string) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    // Verificar se o assessment existe e se o usuário tem permissão
+    const assessment = await prisma.assessment.findUnique({
+      where: { id: assessmentId },
+      select: { companyId: true, status: true }
+    })
+
+    if (!assessment) {
+      return { error: 'Diagnóstico não encontrado' }
+    }
+
+    if (assessment.status !== 'DRAFT') {
+      return { error: 'Só é possível aplicar template em diagnósticos com status DRAFT' }
+    }
+
+    const isAdmin = await isPlatformAdmin(user.id)
+    const membership = await prisma.membership.findFirst({
+      where: {
+        userId: user.id,
+        companyId: assessment.companyId,
+        status: 'ACTIVE'
+      }
+    })
+
+    if (!isAdmin && !membership) {
+      return { error: 'Sem permissão para modificar este diagnóstico' }
+    }
+
+    // Buscar o template com seções e perguntas
+    const template = await prisma.diagnosticTemplate.findUnique({
+      where: { id: templateId },
+      include: {
+        sections: {
+          include: {
+            questions: {
+              where: { active: true },
+              orderBy: { createdAt: 'asc' }
+            }
+          },
+          orderBy: { order: 'asc' }
+        }
+      }
+    })
+
+    if (!template) {
+      return { error: 'Template não encontrado' }
+    }
+
+    if (template.status !== 'PUBLISHED') {
+      return { error: 'Apenas templates publicados podem ser aplicados' }
+    }
+
+    // Copiar seções e perguntas do template para o assessment
+    for (const templateSection of template.sections) {
+      const newSection = await prisma.diagnosticSection.create({
+        data: {
+          assessmentId,
+          name: templateSection.name,
+          description: templateSection.description,
+          order: templateSection.order,
+          weight: templateSection.weight
+        }
+      })
+
+      // Copiar perguntas da seção
+      for (const templateQuestion of templateSection.questions) {
+        await prisma.diagnosticQuestion.create({
+          data: {
+            sectionId: newSection.id,
+            text: templateQuestion.text,
+            description: templateQuestion.description,
+            weight: templateQuestion.weight,
+            questionType: templateQuestion.questionType,
+            reference: templateQuestion.reference,
+            active: true
+          }
+        })
+      }
+    }
+
+    // Associar o template ao assessment
+    await prisma.assessment.update({
+      where: { id: assessmentId },
+      data: { templateId }
+    })
+
+    revalidatePath(`/dashboard/diagnostics/${assessmentId}`)
+    return { 
+      success: true, 
+      sectionsCount: template.sections.length,
+      questionsCount: template.sections.reduce((sum, s) => sum + s.questions.length, 0)
+    }
+  } catch (error) {
+    console.error('Erro ao aplicar template:', error)
+    return { error: 'Erro ao aplicar template ao diagnóstico' }
+  }
+}

@@ -8,8 +8,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { logout } from '@/app/actions/auth'
+import { getGravatarUrl } from '@/lib/utils'
 
 interface UserNavProps {
   user: {
@@ -29,6 +30,12 @@ export function UserNav({ user }: UserNavProps) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-full">
           <Avatar>
+            {user.email && (
+              <AvatarImage 
+                src={getGravatarUrl(user.email, 80)} 
+                alt={user.name || user.email} 
+              />
+            )}
             <AvatarFallback className="bg-accent text-accent-foreground">
               {initials}
             </AvatarFallback>

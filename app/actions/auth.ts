@@ -32,7 +32,8 @@ export async function signup(formData: FormData) {
     options: {
       data: {
         name: formData.get('name') as string,
-      }
+      },
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
     }
   }
 

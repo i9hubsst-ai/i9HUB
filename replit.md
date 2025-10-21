@@ -28,6 +28,15 @@
   - Remove users from companies with confirmation modal
   - Resend invites for pending users (status INVITED)
   - User list with Gravatar integration and action menu
+- **Employee Management**: Complete CRUD for employee/worker registry with Brazilian compliance fields
+  - Civil identification: full name, CPF (with validation), birth date, gender, marital status, nationality
+  - Contact info: email, phone, emergency contact (name + phone)
+  - Employment bond: employee number, admission date, contract type (CLT/intern/outsourced/temporary/autonomous), work schedule, unit/site, department, position, CBO code, immediate supervisor
+  - CPF validation with Brazilian algorithm
+  - Formatted fields (CPF: XXX.XXX.XXX-XX, Phone: (XX) XXXXX-XXXX)
+  - Role-based permissions: Platform Admin (all companies), Company Admin (own company only)
+  - Statistics dashboard (total employees, active, CLT contracts, companies)
+  - Unique constraints: CPF and employee number per company
 - **Diagnostic Flow**: Create assessments, answer 25 questions, auto-calculate maturity scores
 - **Data Visualization**: Radar charts showing IMSST maturity scores across 5 dimensions (Recharts)
 - **Dashboard**: Real-time statistics from database (companies, assessments, users, action plans)
@@ -210,6 +219,18 @@ npm run seed         # Populate with demo data
 - Target: SMBs needing structured SST management
 
 ## Recent Changes
+
+- **2025-10-21**: Employee Management System (Complete CRUD)
+  - Created Employee model in Prisma schema with all SST compliance fields
+  - Added enums: Gender, MaritalStatus, ContractType
+  - Implemented server actions: createEmployee, updateEmployee, deleteEmployee, getEmployees
+  - Created /dashboard/employees page with statistics cards
+  - Built AddEmployeeDialog with 3-section form (Identification, Contact, Employment)
+  - Built EditEmployeeDialog with same validations and field requirements
+  - Created EmployeesList component with cards, actions menu (edit/delete), confirmation modals
+  - Implemented Brazilian validators: CPF validation algorithm, CPF formatter, phone formatter
+  - Unique constraints prevent duplicate CPF or employee numbers per company
+  - All CRUD operations validate permissions (Platform Admin vs Company Admin)
 
 - **2025-10-21**: Complete User Management CRUD Implementation
   - Added edit user role functionality with EditUserRoleDialog component

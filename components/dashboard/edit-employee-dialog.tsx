@@ -49,6 +49,16 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
     setError('')
     setLoading(true)
 
+    // Validate required fields
+    if (!data.companyId || !data.fullName || !data.cpf || 
+        !data.birthDate || !data.email || !data.employeeNumber ||
+        !data.admissionDate || !data.contractType || !data.position) {
+      setError('Preencha todos os campos obrigatórios')
+      setLoading(false)
+      return
+    }
+
+    // Validate CPF
     if (!validateCPF(data.cpf)) {
       setError('CPF inválido')
       setLoading(false)
@@ -62,6 +72,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
       setLoading(false)
     } else {
       onOpenChange(false)
+      setLoading(false)
     }
   }
 
@@ -77,6 +88,20 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
 
         <form onSubmit={handleSubmit}>
           <div className="space-y-6 py-4">
+            {/* Company Display (readonly) */}
+            <div className="space-y-2">
+              <Label htmlFor="company">Empresa *</Label>
+              <Input 
+                id="company" 
+                value={employee?.company?.name || ''} 
+                disabled 
+                className="bg-muted"
+              />
+              <p className="text-xs text-muted-foreground">
+                A empresa não pode ser alterada após o cadastro
+              </p>
+            </div>
+
             <div className="border-t pt-4">
               <h3 className="font-semibold mb-4">Identificação Civil</h3>
               <div className="grid grid-cols-2 gap-4">

@@ -94,6 +94,62 @@ export async function inviteUser(companyId: string, formData: FormData) {
   }
 }
 
+export async function resendInvite(membershipId: string) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    const membership = await prisma.membership.findUnique({
+      where: { id: membershipId }
+    })
+
+    if (!membership) {
+      return { error: 'Membro não encontrado' }
+    }
+
+    if (membership.status !== 'INVITED') {
+      return { error: 'Apenas convites pendentes podem ser reenviados' }
+    }
+
+    const isAdmin = await isPlatformAdmin(user.id)
+    const role = await getUserRole(user.id, membership.companyId)
+
+    if (!isAdmin && role !== 'COMPANY_ADMIN') {
+      return { error: 'Sem permissão para reenviar convites' }
+    }
+
+    // Get user email from Supabase
+    const supabaseAdmin = createAdminClient()
+    const { data: authUser } = await supabaseAdmin.auth.admin.getUserById(membership.userId)
+
+    if (!authUser.user?.email) {
+      return { error: 'Email do usuário não encontrado' }
+    }
+
+    // Resend invite
+    const { error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(authUser.user.email, {
+      data: {
+        invited_by: user.id,
+        company_id: membership.companyId,
+      }
+    })
+
+    if (inviteError) {
+      console.error('Erro ao reenviar convite:', inviteError)
+      return { error: 'Erro ao reenviar convite por email' }
+    }
+
+    revalidatePath(`/dashboard/companies/${membership.companyId}`)
+    revalidatePath('/dashboard/users')
+    return { success: true }
+  } catch (error) {
+    console.error('Erro ao reenviar convite:', error)
+    return { error: 'Erro ao reenviar convite' }
+  }
+}
+
 export async function updateUserRole(membershipId: string, newRole: Role) {
   const user = await getCurrentUser()
   if (!user) {

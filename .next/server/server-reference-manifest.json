@@ -147,6 +147,21 @@
       "filename": "app/actions/users.ts",
       "exportedName": "getAllUsers"
     },
+    "4008ad55fcf21f96be60541e1cf011236ee422ccca": {
+      "workers": {
+        "app/dashboard/users/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/users/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/users.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "resendInvite",
+          "filename": "app/actions/users.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/users/page": "action-browser"
+      },
+      "filename": "app/actions/users.ts",
+      "exportedName": "resendInvite"
+    },
     "406ab7c74aac8725c508fe3b4ca2081a0d7a5b92fa": {
       "workers": {
         "app/dashboard/users/page": {
@@ -172,7 +187,7 @@
         }
       },
       "layer": {
-        "app/dashboard/users/page": "rsc"
+        "app/dashboard/users/page": "action-browser"
       },
       "filename": "app/actions/users.ts",
       "exportedName": "removeUserFromCompany"
@@ -202,7 +217,7 @@
         }
       },
       "layer": {
-        "app/dashboard/users/page": "rsc"
+        "app/dashboard/users/page": "action-browser"
       },
       "filename": "app/actions/users.ts",
       "exportedName": "updateUserRole"

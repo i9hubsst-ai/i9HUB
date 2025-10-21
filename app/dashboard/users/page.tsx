@@ -1,10 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Users, Plus, Shield, UserCog, Mail } from 'lucide-react'
+import { Users, Shield, UserCog } from 'lucide-react'
 import { getAllUsers } from '@/app/actions/users'
 import { getCompanies } from '@/app/actions/companies'
 import { InviteUserDialog } from '@/components/dashboard/invite-user-dialog'
-import Link from 'next/link'
+import { UsersList } from '@/components/dashboard/users-list'
 
 export default async function UsersPage() {
   const result = await getAllUsers()
@@ -83,65 +82,7 @@ export default async function UsersPage() {
       {/* Users List */}
       <div>
         <h2 className="text-xl font-semibold mb-4">Lista de Usuários</h2>
-        {users.length === 0 ? (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <Users className="h-16 w-16 text-muted-foreground/50 mb-4" />
-              <h3 className="text-lg font-semibold mb-2">
-                Nenhum usuário encontrado
-              </h3>
-              <p className="text-muted-foreground text-center max-w-md">
-                Comece criando sua conta ou convidando membros para suas empresas
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <Card>
-            <CardContent className="p-0">
-              <div className="divide-y">
-                {users.map((user) => {
-                  const roleConfig = roleIcons[user.role]
-                  const RoleIcon = roleConfig.icon
-                  
-                  return (
-                    <div key={user.id} className="p-4 hover:bg-muted/50 transition-colors">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4 flex-1">
-                          <div className={`p-3 rounded-lg ${roleConfig.color}`}>
-                            <RoleIcon className="h-5 w-5" />
-                          </div>
-                          <div className="flex-1">
-                            <div className="font-semibold">
-                              {user.name || user.email || 'Usuário sem nome'}
-                            </div>
-                            <div className="text-sm text-muted-foreground flex items-center gap-2">
-                              <Mail className="h-3 w-3" />
-                              {user.email || user.userId}
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-sm font-medium">{user.company.name}</div>
-                            <div className="text-xs text-muted-foreground">
-                              {roleConfig.label}
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
-                              ${user.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : 
-                                user.status === 'INVITED' ? 'bg-yellow-100 text-yellow-700' : 
-                                'bg-gray-100 text-gray-700'}`}>
-                              {user.status === 'ACTIVE' ? 'Ativo' : user.status === 'INVITED' ? 'Convite Pendente' : 'Inativo'}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        <UsersList users={users} />
       </div>
 
       {/* Roles Description */}

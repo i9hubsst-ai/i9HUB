@@ -34,6 +34,8 @@ export function InviteUserDialog({ companies }: InviteUserDialogProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
+  const [companyId, setCompanyId] = useState('')
+  const [role, setRole] = useState('')
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -42,7 +44,9 @@ export function InviteUserDialog({ companies }: InviteUserDialogProps) {
     setSuccess(false)
 
     const formData = new FormData(e.currentTarget)
-    const companyId = formData.get('companyId') as string
+    
+    formData.set('companyId', companyId)
+    formData.set('role', role)
 
     const result = await inviteUser(companyId, formData)
 
@@ -55,6 +59,8 @@ export function InviteUserDialog({ companies }: InviteUserDialogProps) {
       setTimeout(() => {
         setOpen(false)
         setSuccess(false)
+        setCompanyId('')
+        setRole('')
         e.currentTarget.reset()
       }, 1500)
     }
@@ -98,7 +104,7 @@ export function InviteUserDialog({ companies }: InviteUserDialogProps) {
             <Label htmlFor="companyId">
               Empresa <span className="text-destructive">*</span>
             </Label>
-            <Select name="companyId" required disabled={loading}>
+            <Select value={companyId} onValueChange={setCompanyId} disabled={loading}>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione uma empresa" />
               </SelectTrigger>
@@ -116,7 +122,7 @@ export function InviteUserDialog({ companies }: InviteUserDialogProps) {
             <Label htmlFor="role">
               Papel <span className="text-destructive">*</span>
             </Label>
-            <Select name="role" required disabled={loading}>
+            <Select value={role} onValueChange={setRole} disabled={loading}>
               <SelectTrigger>
                 <SelectValue placeholder="Selecione um papel" />
               </SelectTrigger>
@@ -147,7 +153,7 @@ export function InviteUserDialog({ companies }: InviteUserDialogProps) {
           <div className="flex gap-3 pt-2">
             <Button
               type="submit"
-              disabled={loading || success}
+              disabled={loading || success || !companyId || !role}
               className="flex-1"
             >
               {loading ? 'Adicionando...' : success ? 'Adicionado!' : 'Adicionar Usuário'}

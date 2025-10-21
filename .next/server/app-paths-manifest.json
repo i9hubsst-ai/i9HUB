@@ -1,9 +1,4 @@
 {
-  "/dashboard/companies/[id]/page": "app/dashboard/companies/[id]/page.js",
-  "/dashboard/companies/new/page": "app/dashboard/companies/new/page.js",
-  "/dashboard/companies/page": "app/dashboard/companies/page.js",
-  "/dashboard/diagnostics/new/page": "app/dashboard/diagnostics/new/page.js",
-  "/dashboard/diagnostics/page": "app/dashboard/diagnostics/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js"
 }

@@ -17,11 +17,18 @@
 - **Email Confirmation**: Callback route configured for email verification (/auth/callback)
 - **Multi-Tenant Security**: Application-level isolation with ACTIVE membership validation on all server actions
 - **Company Management**: Complete CRUD with role-based permissions
-- **User Management**: Invitation system using Supabase Admin API with service role key
+  - Create new companies with CNPJ validation (Platform Admins only)
+  - View all companies with statistics (users, assessments, action plans)
+  - Edit and delete companies
+- **User Management**: Complete invitation and role management system
+  - Invite users to companies via email (Platform Admin: any company, Company Admin: own company only)
+  - Assign roles: Platform Admin, Company Admin, Engineer, Employer, Viewer
+  - View all users with role badges and status indicators
+  - User list with Gravatar integration
 - **Diagnostic Flow**: Create assessments, answer 25 questions, auto-calculate maturity scores
 - **Data Visualization**: Radar charts showing IMSST maturity scores across 5 dimensions (Recharts)
 - **Dashboard**: Real-time statistics from database (companies, assessments, users, action plans)
-- **Security Reviewed**: Multi-tenant isolation validated by architect after 3 security review rounds
+- **Security Reviewed**: Multi-tenant isolation validated by architect after multiple security review rounds
 - **Landing Page**: Working navigation with functional login/register buttons
 - **Platform Admin Management**: User i9hubsst promoted to Platform Admin with display badge in UserNav component
 
@@ -201,6 +208,14 @@ npm run seed         # Populate with demo data
 
 ## Recent Changes
 
+- **2025-10-21**: User and Company Management System
+  - Implemented complete user invitation system with role-based permissions
+  - Created InviteUserDialog component with company and role selection
+  - Added "Convidar Usuário" button on users page (Platform Admin and Company Admin)
+  - Fixed Select components to properly capture and submit form values
+  - Security validated: Platform Admin can invite to any company, Company Admin only to their own
+  - Prevent duplicate memberships (same user + company combination)
+  
 - **2025-10-21**: Design system modernization
   - Applied lighter color palette based on reference image
   - Reduced border radius from 10px to 6px for cleaner look

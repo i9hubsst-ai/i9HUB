@@ -95,6 +95,8 @@ if ("TURBOPACK compile-time truthy", 1) globalForPrisma.prisma = prisma;
 __turbopack_context__.s([
     "getCurrentUser",
     ()=>getCurrentUser,
+    "getUserDisplayRole",
+    ()=>getUserDisplayRole,
     "getUserMemberships",
     ()=>getUserMemberships,
     "getUserRole",
@@ -166,6 +168,37 @@ async function requireRole(userId, companyId, allowedRoles) {
         throw new Error('Insufficient permissions');
     }
     return true;
+}
+async function getUserDisplayRole(userId) {
+    // Check if user is Platform Admin first
+    const isAdmin = await isPlatformAdmin(userId);
+    if (isAdmin) {
+        return {
+            role: 'PLATFORM_ADMIN',
+            label: 'Admin da Plataforma'
+        };
+    }
+    // Get the user's primary membership (most recent active one)
+    const memberships = await getUserMemberships(userId);
+    if (memberships.length === 0) {
+        return {
+            role: 'VIEWER',
+            label: 'Sem Acesso'
+        };
+    }
+    // Use the first membership's role
+    const primaryRole = memberships[0].role;
+    const roleLabels = {
+        PLATFORM_ADMIN: 'Admin da Plataforma',
+        COMPANY_ADMIN: 'Admin da Empresa',
+        ENGINEER: 'Engenheiro SST',
+        EMPLOYER: 'Empregador',
+        VIEWER: 'Visualizador'
+    };
+    return {
+        role: primaryRole,
+        label: roleLabels[primaryRole]
+    };
 }
 }),
 "[project]/lib/utils.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {

@@ -157,7 +157,7 @@ export async function applyTemplateToAssessment(assessmentId: string, templateId
     // Verificar se o assessment existe e se o usuário tem permissão
     const assessment = await prisma.assessment.findUnique({
       where: { id: assessmentId },
-      select: { companyId: true, status: true }
+      select: { companyId: true, status: true, templateId: true }
     })
 
     if (!assessment) {
@@ -166,6 +166,10 @@ export async function applyTemplateToAssessment(assessmentId: string, templateId
 
     if (assessment.status !== 'DRAFT') {
       return { error: 'Só é possível aplicar template em diagnósticos com status DRAFT' }
+    }
+
+    if (assessment.templateId) {
+      return { error: 'Este diagnóstico já possui um template associado' }
     }
 
     const isAdmin = await isPlatformAdmin(user.id)
@@ -181,18 +185,16 @@ export async function applyTemplateToAssessment(assessmentId: string, templateId
       return { error: 'Sem permissão para modificar este diagnóstico' }
     }
 
-    // Buscar o template com seções e perguntas
+    // Buscar o template com seções e perguntas para validação
     const template = await prisma.diagnosticTemplate.findUnique({
       where: { id: templateId },
       include: {
         sections: {
           include: {
             questions: {
-              where: { active: true },
-              orderBy: { createdAt: 'asc' }
+              where: { active: true }
             }
-          },
-          orderBy: { order: 'asc' }
+          }
         }
       }
     })
@@ -205,36 +207,8 @@ export async function applyTemplateToAssessment(assessmentId: string, templateId
       return { error: 'Apenas templates publicados podem ser aplicados' }
     }
 
-    // Copiar seções e perguntas do template para o assessment
-    for (const templateSection of template.sections) {
-      const newSection = await prisma.diagnosticSection.create({
-        data: {
-          templateId: templateSection.templateId,
-          title: templateSection.title,
-          order: templateSection.order
-        }
-      })
-
-      // Copiar perguntas da seção
-      for (const templateQuestion of templateSection.questions) {
-        await prisma.diagnosticQuestion.create({
-          data: {
-            sectionId: newSection.id,
-            text: templateQuestion.text,
-            type: templateQuestion.type,
-            weight: templateQuestion.weight,
-            reference: templateQuestion.reference,
-            requiresJustification: templateQuestion.requiresJustification,
-            requiresEvidence: templateQuestion.requiresEvidence,
-            source: templateQuestion.source,
-            approved: templateQuestion.approved,
-            active: true
-          }
-        })
-      }
-    }
-
     // Associar o template ao assessment
+    // As seções e perguntas já existem no template e serão acessadas via relacionamento
     await prisma.assessment.update({
       where: { id: assessmentId },
       data: { templateId }

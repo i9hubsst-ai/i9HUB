@@ -66,15 +66,6 @@ async function createAssessment(companyId, formData) {
                 status: 'DRAFT'
             }
         });
-        // Se um template foi selecionado, aplicar suas seções e perguntas
-        if (templateId) {
-            const { applyTemplateToAssessment } = await __turbopack_context__.A("[project]/app/actions/templates.ts [app-rsc] (ecmascript, async loader)");
-            const result = await applyTemplateToAssessment(assessment.id, templateId);
-            if ('error' in result) {
-                // Se falhar ao aplicar template, ainda mantém o assessment criado
-                console.error('Erro ao aplicar template:', result.error);
-            }
-        }
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/dashboard/diagnostics');
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])(`/dashboard/diagnostics/${assessment.id}`);
     } catch (error) {
@@ -1038,7 +1029,8 @@ async function applyTemplateToAssessment(assessmentId, templateId) {
             },
             select: {
                 companyId: true,
-                status: true
+                status: true,
+                templateId: true
             }
         });
         if (!assessment) {
@@ -1049,6 +1041,11 @@ async function applyTemplateToAssessment(assessmentId, templateId) {
         if (assessment.status !== 'DRAFT') {
             return {
                 error: 'Só é possível aplicar template em diagnósticos com status DRAFT'
+            };
+        }
+        if (assessment.templateId) {
+            return {
+                error: 'Este diagnóstico já possui um template associado'
             };
         }
         const isAdmin = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isPlatformAdmin"])(user.id);
@@ -1064,7 +1061,7 @@ async function applyTemplateToAssessment(assessmentId, templateId) {
                 error: 'Sem permissão para modificar este diagnóstico'
             };
         }
-        // Buscar o template com seções e perguntas
+        // Buscar o template com seções e perguntas para validação
         const template = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticTemplate.findUnique({
             where: {
                 id: templateId
@@ -1075,14 +1072,8 @@ async function applyTemplateToAssessment(assessmentId, templateId) {
                         questions: {
                             where: {
                                 active: true
-                            },
-                            orderBy: {
-                                createdAt: 'asc'
                             }
                         }
-                    },
-                    orderBy: {
-                        order: 'asc'
                     }
                 }
             }
@@ -1097,34 +1088,8 @@ async function applyTemplateToAssessment(assessmentId, templateId) {
                 error: 'Apenas templates publicados podem ser aplicados'
             };
         }
-        // Copiar seções e perguntas do template para o assessment
-        for (const templateSection of template.sections){
-            const newSection = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticSection.create({
-                data: {
-                    templateId: templateSection.templateId,
-                    title: templateSection.title,
-                    order: templateSection.order
-                }
-            });
-            // Copiar perguntas da seção
-            for (const templateQuestion of templateSection.questions){
-                await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticQuestion.create({
-                    data: {
-                        sectionId: newSection.id,
-                        text: templateQuestion.text,
-                        type: templateQuestion.type,
-                        weight: templateQuestion.weight,
-                        reference: templateQuestion.reference,
-                        requiresJustification: templateQuestion.requiresJustification,
-                        requiresEvidence: templateQuestion.requiresEvidence,
-                        source: templateQuestion.source,
-                        approved: templateQuestion.approved,
-                        active: true
-                    }
-                });
-            }
-        }
         // Associar o template ao assessment
+        // As seções e perguntas já existem no template e serão acessadas via relacionamento
         await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].assessment.update({
             where: {
                 id: assessmentId

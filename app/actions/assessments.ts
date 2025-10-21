@@ -39,17 +39,6 @@ export async function createAssessment(companyId: string, formData: FormData) {
       }
     })
 
-    // Se um template foi selecionado, aplicar suas seções e perguntas
-    if (templateId) {
-      const { applyTemplateToAssessment } = await import('./templates')
-      const result = await applyTemplateToAssessment(assessment.id, templateId)
-      
-      if ('error' in result) {
-        // Se falhar ao aplicar template, ainda mantém o assessment criado
-        console.error('Erro ao aplicar template:', result.error)
-      }
-    }
-
     revalidatePath('/dashboard/diagnostics')
     redirect(`/dashboard/diagnostics/${assessment.id}`)
   } catch (error) {

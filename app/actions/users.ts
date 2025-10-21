@@ -250,6 +250,54 @@ export async function removeUserFromCompany(membershipId: string) {
   }
 }
 
+export async function updateUserProfile(userId: string, data: { name?: string; email?: string }) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    return { error: 'Não autorizado' }
+  }
+
+  // Only allow updating own profile or if Platform Admin
+  const isAdmin = await isPlatformAdmin(currentUser.id)
+  if (!isAdmin && currentUser.id !== userId) {
+    return { error: 'Você só pode editar seu próprio perfil' }
+  }
+
+  try {
+    const supabaseAdmin = createAdminClient()
+    
+    // Update user in Supabase Auth
+    const updateData: any = {}
+    
+    if (data.email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(data.email)) {
+        return { error: 'Email inválido' }
+      }
+      updateData.email = data.email
+    }
+    
+    if (data.name) {
+      updateData.user_metadata = { name: data.name }
+    }
+
+    const { data: updatedUser, error } = await supabaseAdmin.auth.admin.updateUserById(
+      userId,
+      updateData
+    )
+
+    if (error) {
+      console.error('Erro ao atualizar usuário no Supabase:', error)
+      return { error: 'Erro ao atualizar perfil' }
+    }
+
+    revalidatePath('/dashboard/users')
+    return { success: true, user: updatedUser }
+  } catch (error) {
+    console.error('Erro ao atualizar perfil:', error)
+    return { error: 'Erro ao atualizar perfil' }
+  }
+}
+
 export async function getCompanyUsers(companyId: string) {
   const user = await getCurrentUser()
   if (!user) {

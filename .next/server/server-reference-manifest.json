@@ -222,6 +222,21 @@
       "filename": "app/actions/users.ts",
       "exportedName": "inviteUser"
     },
+    "6064812192ee2706570b06dd3db20ef25759e19527": {
+      "workers": {
+        "app/dashboard/users/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/users/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/users.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateUserProfile",
+          "filename": "app/actions/users.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/users/page": "rsc"
+      },
+      "filename": "app/actions/users.ts",
+      "exportedName": "updateUserProfile"
+    },
     "60a33b8b968fefd2d0391196d3a6e080efbe53a545": {
       "workers": {
         "app/dashboard/users/page": {

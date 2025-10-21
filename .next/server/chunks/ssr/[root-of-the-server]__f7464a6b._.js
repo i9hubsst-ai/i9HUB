@@ -25,7 +25,7 @@ function createAdminClient() {
 "[project]/app/actions/users.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"00472e7dc41a52dcacb7301304161b5c6cb869bff4":"getAllUsers","4014b5a8a427be5d777493239d9e860e3848e3cf03":"removeUserFromCompany","406a654ef485fe133d4cf8b73a8b825f99d19ab32f":"makePlatformAdmin","4076fc64570c9df2b2b31fcb6d1ff754357813a43f":"resendInvite","40cc3374f90b39bde9b19fa1fdbb1420ddb615d865":"getCompanyUsers","601d6006745c5e3dd8b66f40f4fa5fa7339de71a3a":"inviteUser","60a33b8b968fefd2d0391196d3a6e080efbe53a545":"updateUserRole"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"00472e7dc41a52dcacb7301304161b5c6cb869bff4":"getAllUsers","4014b5a8a427be5d777493239d9e860e3848e3cf03":"removeUserFromCompany","406a654ef485fe133d4cf8b73a8b825f99d19ab32f":"makePlatformAdmin","4076fc64570c9df2b2b31fcb6d1ff754357813a43f":"resendInvite","40cc3374f90b39bde9b19fa1fdbb1420ddb615d865":"getCompanyUsers","601d6006745c5e3dd8b66f40f4fa5fa7339de71a3a":"inviteUser","6064812192ee2706570b06dd3db20ef25759e19527":"updateUserProfile","60a33b8b968fefd2d0391196d3a6e080efbe53a545":"updateUserRole"},"",""] */ __turbopack_context__.s([
     "getAllUsers",
     ()=>getAllUsers,
     "getCompanyUsers",
@@ -38,6 +38,8 @@ function createAdminClient() {
     ()=>removeUserFromCompany,
     "resendInvite",
     ()=>resendInvite,
+    "updateUserProfile",
+    ()=>updateUserProfile,
     "updateUserRole",
     ()=>updateUserRole
 ]);
@@ -323,6 +325,57 @@ async function removeUserFromCompany(membershipId) {
         };
     }
 }
+async function updateUserProfile(userId, data) {
+    const currentUser = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
+    if (!currentUser) {
+        return {
+            error: 'Não autorizado'
+        };
+    }
+    // Only allow updating own profile or if Platform Admin
+    const isAdmin = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isPlatformAdmin"])(currentUser.id);
+    if (!isAdmin && currentUser.id !== userId) {
+        return {
+            error: 'Você só pode editar seu próprio perfil'
+        };
+    }
+    try {
+        const supabaseAdmin = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$admin$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createAdminClient"])();
+        // Update user in Supabase Auth
+        const updateData = {};
+        if (data.email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                return {
+                    error: 'Email inválido'
+                };
+            }
+            updateData.email = data.email;
+        }
+        if (data.name) {
+            updateData.user_metadata = {
+                name: data.name
+            };
+        }
+        const { data: updatedUser, error } = await supabaseAdmin.auth.admin.updateUserById(userId, updateData);
+        if (error) {
+            console.error('Erro ao atualizar usuário no Supabase:', error);
+            return {
+                error: 'Erro ao atualizar perfil'
+            };
+        }
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/dashboard/users');
+        return {
+            success: true,
+            user: updatedUser
+        };
+    } catch (error) {
+        console.error('Erro ao atualizar perfil:', error);
+        return {
+            error: 'Erro ao atualizar perfil'
+        };
+    }
+}
 async function getCompanyUsers(companyId) {
     const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
     if (!user) {
@@ -482,6 +535,7 @@ async function makePlatformAdmin(userId) {
     resendInvite,
     updateUserRole,
     removeUserFromCompany,
+    updateUserProfile,
     getCompanyUsers,
     getAllUsers,
     makePlatformAdmin
@@ -490,6 +544,7 @@ async function makePlatformAdmin(userId) {
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(resendInvite, "4076fc64570c9df2b2b31fcb6d1ff754357813a43f", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateUserRole, "60a33b8b968fefd2d0391196d3a6e080efbe53a545", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(removeUserFromCompany, "4014b5a8a427be5d777493239d9e860e3848e3cf03", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateUserProfile, "6064812192ee2706570b06dd3db20ef25759e19527", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getCompanyUsers, "40cc3374f90b39bde9b19fa1fdbb1420ddb615d865", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllUsers, "00472e7dc41a52dcacb7301304161b5c6cb869bff4", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(makePlatformAdmin, "406a654ef485fe133d4cf8b73a8b825f99d19ab32f", null);
@@ -783,6 +838,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$
 ;
 ;
 ;
+;
 }),
 "[project]/.next-internal/server/app/dashboard/users/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/users.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)", ((__turbopack_context__) => {
 "use strict";
@@ -820,6 +876,8 @@ __turbopack_context__.s([
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["inviteUser"],
     "602a16030b1d9091c68c4de7274e3f18b068bcfe48",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateCompany"],
+    "6064812192ee2706570b06dd3db20ef25759e19527",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateUserProfile"],
     "60a33b8b968fefd2d0391196d3a6e080efbe53a545",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateUserRole"]
 ]);

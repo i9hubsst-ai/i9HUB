@@ -1,27 +1,306 @@
 'use client'
 
-import { Card, CardContent } from '@/components/ui/card'
-import { AlertCircle } from 'lucide-react'
+import { useState } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { saveAnswer } from '@/app/actions/assessments'
+import { Check, X, AlertTriangle, Loader2, FileText } from 'lucide-react'
+
+type QuestionType = 'BOOLEAN' | 'SCORE'
+
+interface Question {
+  id: string
+  text: string
+  type: QuestionType
+  weight: number
+  reference: string | null
+  requiresJustification: boolean
+}
+
+interface Section {
+  id: string
+  title: string
+  description: string | null
+  order: number
+  questions: Question[]
+}
+
+interface Answer {
+  id: string
+  questionId: string
+  value: number
+  justification: string | null
+}
 
 interface DiagnosticSectionsProps {
-  assessment: any
+  assessment: {
+    id: string
+    status: string
+    template: {
+      sections: Section[]
+    } | null
+    answers: Answer[]
+  }
 }
 
 export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
-  return (
-    <div className="space-y-6">
+  const [answers, setAnswers] = useState<Record<string, { value: number | null; justification: string }>>(() => {
+    const initial: Record<string, { value: number | null; justification: string }> = {}
+    assessment.answers.forEach(answer => {
+      initial[answer.questionId] = {
+        value: answer.value,
+        justification: answer.justification || ''
+      }
+    })
+    return initial
+  })
+  
+  const [saving, setSaving] = useState<string | null>(null)
+  const [errors, setErrors] = useState<Record<string, string | undefined>>({})
+
+  if (!assessment.template) {
+    return (
       <Card>
         <CardContent className="py-12">
           <div className="text-center space-y-3">
-            <AlertCircle className="h-12 w-12 text-muted-foreground mx-auto" />
-            <h3 className="text-lg font-semibold">Seções & Perguntas</h3>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Esta funcionalidade será implementada nas próximas etapas. 
-              Aqui você poderá responder as perguntas do diagnóstico organizadas por seção.
+            <FileText className="h-12 w-12 text-muted-foreground mx-auto" />
+            <h3 className="text-base font-semibold">Template não encontrado</h3>
+            <p className="text-sm text-muted-foreground">
+              Este diagnóstico não possui um template associado.
             </p>
           </div>
         </CardContent>
       </Card>
+    )
+  }
+
+  const isReadOnly = assessment.status !== 'IN_PROGRESS' && assessment.status !== 'DRAFT'
+
+  const handleAnswer = async (questionId: string, value: number, requiresJustification: boolean) => {
+    const currentAnswer = answers[questionId] || { value: null, justification: '' }
+    const needsJustification = requiresJustification && (value === 0 || value <= 3)
+    
+    if (needsJustification && !currentAnswer.justification.trim()) {
+      setErrors({ ...errors, [questionId]: 'Justificativa obrigatória para esta resposta' })
+      return
+    }
+
+    const newErrors = { ...errors }
+    delete newErrors[questionId]
+    setErrors(newErrors)
+
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: { ...currentAnswer, value }
+    }))
+
+    setSaving(questionId)
+    
+    const result = await saveAnswer(
+      assessment.id,
+      questionId,
+      value,
+      currentAnswer.justification.trim() || undefined
+    )
+    
+    if ('error' in result) {
+      setErrors({ ...errors, [questionId]: result.error })
+    }
+    
+    setSaving(null)
+  }
+
+  const handleJustificationChange = (questionId: string, justification: string) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: { ...prev[questionId], justification }
+    }))
+    
+    const newErrors = { ...errors }
+    delete newErrors[questionId]
+    setErrors(newErrors)
+  }
+
+  const handleJustificationSave = async (questionId: string, value: number) => {
+    const currentAnswer = answers[questionId]
+    
+    if (!currentAnswer || currentAnswer.value === null) {
+      setErrors({ ...errors, [questionId]: 'Responda a pergunta primeiro' })
+      return
+    }
+
+    setSaving(questionId)
+    
+    const result = await saveAnswer(
+      assessment.id,
+      questionId,
+      currentAnswer.value,
+      currentAnswer.justification.trim() || undefined
+    )
+    
+    if ('error' in result) {
+      setErrors({ ...errors, [questionId]: result.error })
+    }
+    
+    setSaving(null)
+  }
+
+  return (
+    <div className="space-y-6">
+      {isReadOnly && (
+        <div className="rounded-md bg-blue-50 p-4 border border-blue-200">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-blue-600" />
+            <p className="text-sm font-medium text-blue-800">
+              Diagnóstico finalizado - Somente leitura
+            </p>
+          </div>
+        </div>
+      )}
+
+      {assessment.template.sections.map((section) => (
+        <Card key={section.id}>
+          <CardHeader>
+            <CardTitle className="text-base text-gray-900">
+              {section.title}
+            </CardTitle>
+            {section.description && (
+              <p className="text-sm text-gray-600 mt-1">{section.description}</p>
+            )}
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {section.questions.map((question, idx) => {
+              const answer = answers[question.id]
+              const hasAnswer = answer && answer.value !== null
+              const needsJustification = question.requiresJustification && hasAnswer && answer.value !== null && (answer.value === 0 || answer.value <= 3)
+              const hasJustification = answer?.justification && answer.justification.trim().length > 0
+              const error = errors[question.id]
+              const isSaving = saving === question.id
+
+              return (
+                <div key={question.id} className="border-b border-gray-200 pb-6 last:border-0 last:pb-0">
+                  <div className="flex items-start gap-3">
+                    <span className="text-sm font-medium text-gray-500 mt-1 min-w-[2rem]">
+                      {idx + 1}.
+                    </span>
+                    <div className="flex-1 space-y-3">
+                      <div>
+                        <p className="text-sm text-gray-900">{question.text}</p>
+                        {question.reference && (
+                          <p className="text-xs text-gray-500 mt-1">
+                            Referência: {question.reference}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {question.type === 'BOOLEAN' ? (
+                          <>
+                            <Button
+                              variant={answer?.value === 1 ? 'default' : 'outline'}
+                              size="sm"
+                              onClick={() => handleAnswer(question.id, 1, question.requiresJustification)}
+                              disabled={isReadOnly || isSaving}
+                              className={answer?.value === 1 ? 'bg-green-600 hover:bg-green-700' : ''}
+                            >
+                              {isSaving && answer?.value === 1 ? (
+                                <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                              ) : (
+                                <Check className="mr-2 h-3 w-3" />
+                              )}
+                              Sim
+                            </Button>
+                            <Button
+                              variant={answer?.value === 0 ? 'default' : 'outline'}
+                              size="sm"
+                              onClick={() => handleAnswer(question.id, 0, question.requiresJustification)}
+                              disabled={isReadOnly || isSaving}
+                              className={answer?.value === 0 ? 'bg-red-600 hover:bg-red-700' : ''}
+                            >
+                              {isSaving && answer?.value === 0 ? (
+                                <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                              ) : (
+                                <X className="mr-2 h-3 w-3" />
+                              )}
+                              Não
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            {[1, 2, 3, 4, 5].map((score) => (
+                              <Button
+                                key={score}
+                                variant={answer?.value === score ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => handleAnswer(question.id, score, question.requiresJustification)}
+                                disabled={isReadOnly || isSaving}
+                                className={answer?.value === score ? 'bg-teal-600 hover:bg-teal-700' : ''}
+                              >
+                                {isSaving && answer?.value === score && (
+                                  <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+                                )}
+                                {score}
+                              </Button>
+                            ))}
+                            <span className="text-xs text-gray-500 self-center ml-2">
+                              (1=Muito Baixo, 5=Excelente)
+                            </span>
+                          </>
+                        )}
+                      </div>
+
+                      {needsJustification && (
+                        <div className="space-y-2">
+                          <Label htmlFor={`justification-${question.id}`} className="text-sm font-medium">
+                            Justificativa obrigatória *
+                          </Label>
+                          <Textarea
+                            id={`justification-${question.id}`}
+                            value={answer.justification}
+                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleJustificationChange(question.id, e.target.value)}
+                            placeholder="Descreva o motivo desta resposta não conforme..."
+                            className="min-h-[80px] text-sm"
+                            disabled={isReadOnly}
+                          />
+                          {!isReadOnly && hasJustification && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => answer.value !== null && handleJustificationSave(question.id, answer.value)}
+                              disabled={isSaving}
+                            >
+                              {isSaving ? (
+                                <>
+                                  <Loader2 className="mr-2 h-3 w-3 animate-spin" />
+                                  Salvando...
+                                </>
+                              ) : (
+                                <>
+                                  <Check className="mr-2 h-3 w-3" />
+                                  Salvar Justificativa
+                                </>
+                              )}
+                            </Button>
+                          )}
+                        </div>
+                      )}
+
+                      {error && (
+                        <p className="text-xs text-red-600 flex items-center gap-1">
+                          <AlertTriangle className="h-3 w-3" />
+                          {error}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </CardContent>
+        </Card>
+      ))}
     </div>
   )
 }

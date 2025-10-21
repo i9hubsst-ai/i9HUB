@@ -411,6 +411,10 @@ export async function submitAssessment(assessmentId: string) {
       }
     })
 
+    // Gerar achados automaticamente baseados nas respostas não conformes
+    const { generateFindings } = await import('./findings')
+    await generateFindings(assessmentId)
+
     revalidatePath('/dashboard/diagnostics')
     revalidatePath(`/dashboard/diagnostics/${assessmentId}`)
     

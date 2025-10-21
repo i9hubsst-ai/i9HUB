@@ -2,80 +2,188 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Pencil, Trash2 } from 'lucide-react'
+import { AlertTriangle, FileText, CheckCircle2, XCircle } from 'lucide-react'
+
+type FindingSeverity = 'HIGH' | 'MEDIUM' | 'LOW'
+type QuestionType = 'BOOLEAN' | 'SCORE'
+
+interface Finding {
+  id: string
+  sectionTitle: string
+  questionText: string
+  questionType: QuestionType
+  value: number
+  reference: string | null
+  justification: string | null
+  severity: FindingSeverity
+  evidenceCount: number
+  createdAt: Date
+}
 
 interface DiagnosticFindingsProps {
-  assessment: any
+  assessment: {
+    id: string
+    findings: Finding[]
+  }
+}
+
+const severityConfig = {
+  HIGH: {
+    label: 'Alta',
+    className: 'bg-red-100 text-red-800 border-red-200',
+    icon: XCircle,
+    iconColor: 'text-red-600'
+  },
+  MEDIUM: {
+    label: 'Média',
+    className: 'bg-orange-100 text-orange-800 border-orange-200',
+    icon: AlertTriangle,
+    iconColor: 'text-orange-600'
+  },
+  LOW: {
+    label: 'Baixa',
+    className: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+    icon: AlertTriangle,
+    iconColor: 'text-yellow-600'
+  }
 }
 
 export function DiagnosticFindings({ assessment }: DiagnosticFindingsProps) {
-  // Mock findings data
-  const findings = [
-    {
-      id: '1',
-      severity: 'HIGH',
-      severityLabel: 'Alta',
-      severityClass: 'bg-red-600 text-white',
-      title: 'Não Conformidade',
-      reference: 'A CIPA está devidamente constituída e atuante?',
-      description: 'Reuniões da CIPA estão ocorrendo de forma irregular, sem registro em ata.',
-      section: 'CIPA e Participação dos Trabalhadores',
-    },
-    {
-      id: '2',
-      severity: 'MEDIUM',
-      severityLabel: 'Média',
-      severityClass: 'bg-yellow-600 text-white',
-      title: 'Oportunidade',
-      reference: 'O inventário de riscos está completo e atualizado?',
-      description: 'O inventário de riscos não inclui os novos equipamentos adquiridos no último trimestre.',
-      section: 'PGR e Gerenciamento de Riscos',
-    },
-    {
-      id: '3',
-      severity: 'HIGH',
-      severityLabel: 'Alta',
-      severityClass: 'bg-red-600 text-white',
-      title: 'Não Conformidade',
-      reference: 'A brigada de emergência está treinada?',
-      description: 'O treinamento da brigada de emergência está vencido há mais de 6 meses.',
-      section: 'Preparação para Emergências',
-    },
-  ]
+  const findings = assessment.findings || []
+
+  const findingsBySection = findings.reduce((acc, finding) => {
+    if (!acc[finding.sectionTitle]) {
+      acc[finding.sectionTitle] = []
+    }
+    acc[finding.sectionTitle].push(finding)
+    return acc
+  }, {} as Record<string, Finding[]>)
+
+  const stats = {
+    high: findings.filter(f => f.severity === 'HIGH').length,
+    medium: findings.filter(f => f.severity === 'MEDIUM').length,
+    low: findings.filter(f => f.severity === 'LOW').length,
+    total: findings.length
+  }
+
+  if (findings.length === 0) {
+    return (
+      <Card>
+        <CardContent className="py-12">
+          <div className="text-center space-y-3">
+            <CheckCircle2 className="h-12 w-12 text-green-600 mx-auto" />
+            <h3 className="text-base font-semibold text-gray-900">
+              Nenhum achado identificado
+            </h3>
+            <p className="text-sm text-muted-foreground max-w-md mx-auto">
+              Todas as respostas estão conformes. O diagnóstico não identificou não conformidades.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
-    <div className="space-y-4">
-      {findings.map((finding) => (
-        <Card key={finding.id} className="hover:shadow-lg transition-shadow">
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Resumo de Achados</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-4 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900">{stats.total}</div>
+              <div className="text-xs text-gray-600">Total</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-red-600">{stats.high}</div>
+              <div className="text-xs text-gray-600">Alta</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-orange-600">{stats.medium}</div>
+              <div className="text-xs text-gray-600">Média</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-yellow-600">{stats.low}</div>
+              <div className="text-xs text-gray-600">Baixa</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {Object.entries(findingsBySection).map(([sectionTitle, sectionFindings]) => (
+        <Card key={sectionTitle}>
           <CardHeader>
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <Badge className={finding.severityClass}>
-                    {finding.severityLabel}
-                  </Badge>
-                  <h3 className="font-semibold">{finding.title}</h3>
-                </div>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Ref: {finding.reference}
-                </p>
-                <CardTitle className="text-base">{finding.description}</CardTitle>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="ghost" size="icon" className="h-8 w-8">
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive">
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+            <CardTitle className="text-base text-gray-900">
+              {sectionTitle}
+              <span className="ml-2 text-sm font-normal text-gray-500">
+                ({sectionFindings.length} {sectionFindings.length === 1 ? 'achado' : 'achados'})
+              </span>
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-sm text-muted-foreground">
-              Seção: {finding.section}
-            </div>
+          <CardContent className="space-y-4">
+            {sectionFindings.map((finding) => {
+              const config = severityConfig[finding.severity]
+              const Icon = config.icon
+              
+              return (
+                <div
+                  key={finding.id}
+                  className={`rounded-md border p-4 ${config.className}`}
+                >
+                  <div className="flex items-start gap-3">
+                    <Icon className={`h-5 w-5 mt-0.5 ${config.iconColor}`} />
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="text-sm font-medium text-gray-900">
+                          {finding.questionText}
+                        </p>
+                        <Badge variant="outline" className="text-xs whitespace-nowrap">
+                          Severidade: {config.label}
+                        </Badge>
+                      </div>
+
+                      <div className="space-y-1 text-xs text-gray-700">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">Resposta:</span>
+                          {finding.questionType === 'BOOLEAN' ? (
+                            <span className="font-semibold text-red-700">
+                              Não
+                            </span>
+                          ) : (
+                            <span className="font-semibold text-red-700">
+                              {finding.value}/5
+                            </span>
+                          )}
+                        </div>
+
+                        {finding.reference && (
+                          <div className="flex items-start gap-2">
+                            <span className="font-medium">Referência:</span>
+                            <span>{finding.reference}</span>
+                          </div>
+                        )}
+
+                        {finding.justification && (
+                          <div className="flex items-start gap-2 mt-2">
+                            <span className="font-medium">Justificativa:</span>
+                            <span className="italic">{finding.justification}</span>
+                          </div>
+                        )}
+
+                        {finding.evidenceCount > 0 && (
+                          <div className="flex items-center gap-2 mt-2">
+                            <FileText className="h-3 w-3" />
+                            <span>{finding.evidenceCount} evidência(s) anexada(s)</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
           </CardContent>
         </Card>
       ))}

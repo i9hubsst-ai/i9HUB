@@ -25,7 +25,7 @@ function createAdminClient() {
 "[project]/app/actions/users.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"006a4eee64e4b978f1a2239d108e60a42d488de0f7":"getAllUsers","4008ad55fcf21f96be60541e1cf011236ee422ccca":"resendInvite","406ab7c74aac8725c508fe3b4ca2081a0d7a5b92fa":"getCompanyUsers","406d00474b07596f79e49a2ca3149ec54dae8e253d":"removeUserFromCompany","40d5cda6a08fa9f640ab0088cb208716b319585ad4":"makePlatformAdmin","604754b50a01b095dd7deddfc8de371a81bf090fc6":"updateUserRole","60961ade258dc63e93fa1dc6e95e901894f57e2e10":"inviteUser"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"00472e7dc41a52dcacb7301304161b5c6cb869bff4":"getAllUsers","4014b5a8a427be5d777493239d9e860e3848e3cf03":"removeUserFromCompany","406a654ef485fe133d4cf8b73a8b825f99d19ab32f":"makePlatformAdmin","4076fc64570c9df2b2b31fcb6d1ff754357813a43f":"resendInvite","40cc3374f90b39bde9b19fa1fdbb1420ddb615d865":"getCompanyUsers","601d6006745c5e3dd8b66f40f4fa5fa7339de71a3a":"inviteUser","60a33b8b968fefd2d0391196d3a6e080efbe53a545":"updateUserRole"},"",""] */ __turbopack_context__.s([
     "getAllUsers",
     ()=>getAllUsers,
     "getCompanyUsers",
@@ -486,18 +486,18 @@ async function makePlatformAdmin(userId) {
     getAllUsers,
     makePlatformAdmin
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(inviteUser, "60961ade258dc63e93fa1dc6e95e901894f57e2e10", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(resendInvite, "4008ad55fcf21f96be60541e1cf011236ee422ccca", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateUserRole, "604754b50a01b095dd7deddfc8de371a81bf090fc6", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(removeUserFromCompany, "406d00474b07596f79e49a2ca3149ec54dae8e253d", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getCompanyUsers, "406ab7c74aac8725c508fe3b4ca2081a0d7a5b92fa", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllUsers, "006a4eee64e4b978f1a2239d108e60a42d488de0f7", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(makePlatformAdmin, "40d5cda6a08fa9f640ab0088cb208716b319585ad4", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(inviteUser, "601d6006745c5e3dd8b66f40f4fa5fa7339de71a3a", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(resendInvite, "4076fc64570c9df2b2b31fcb6d1ff754357813a43f", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateUserRole, "60a33b8b968fefd2d0391196d3a6e080efbe53a545", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(removeUserFromCompany, "4014b5a8a427be5d777493239d9e860e3848e3cf03", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getCompanyUsers, "40cc3374f90b39bde9b19fa1fdbb1420ddb615d865", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllUsers, "00472e7dc41a52dcacb7301304161b5c6cb869bff4", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(makePlatformAdmin, "406a654ef485fe133d4cf8b73a8b825f99d19ab32f", null);
 }),
 "[project]/app/actions/companies.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"00c8765c93cbe381971d0278a48ff8b3da24233c9a":"getCompanies","4094c84691973097429e7e5b4c650b20a9ae9d7569":"getCompanyById","40a68a27b4ef03b7930d332108e0119c2e1346fe99":"createCompany","40fd5abe9644a49e61884fef5c80df92f18c6821d1":"deleteCompany","60bcf5d75616988ddfbfe60d0a87d86aa8ff8d93a4":"updateCompany"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"00504b0d8055265a2b3879c1758b7a191d9411acf3":"getCompanies","40392c370cd68b7827382553fda266aaff93c656b0":"getCompanyById","4047f348f053cff4ae73547c6c4f9d5cd6db8bac58":"createCompany","40b727dae320305475887dacf88234c8ac2ed1c910":"deleteCompany","602a16030b1d9091c68c4de7274e3f18b068bcfe48":"updateCompany"},"",""] */ __turbopack_context__.s([
     "createCompany",
     ()=>createCompany,
     "deleteCompany",
@@ -753,11 +753,11 @@ async function getCompanyById(companyId) {
     getCompanies,
     getCompanyById
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createCompany, "40a68a27b4ef03b7930d332108e0119c2e1346fe99", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateCompany, "60bcf5d75616988ddfbfe60d0a87d86aa8ff8d93a4", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteCompany, "40fd5abe9644a49e61884fef5c80df92f18c6821d1", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getCompanies, "00c8765c93cbe381971d0278a48ff8b3da24233c9a", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getCompanyById, "4094c84691973097429e7e5b4c650b20a9ae9d7569", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createCompany, "4047f348f053cff4ae73547c6c4f9d5cd6db8bac58", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateCompany, "602a16030b1d9091c68c4de7274e3f18b068bcfe48", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteCompany, "40b727dae320305475887dacf88234c8ac2ed1c910", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getCompanies, "00504b0d8055265a2b3879c1758b7a191d9411acf3", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getCompanyById, "40392c370cd68b7827382553fda266aaff93c656b0", null);
 }),
 "[project]/.next-internal/server/app/dashboard/users/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/users.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
 "use strict";
@@ -788,40 +788,40 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$
 "use strict";
 
 __turbopack_context__.s([
-    "006a4eee64e4b978f1a2239d108e60a42d488de0f7",
+    "00472e7dc41a52dcacb7301304161b5c6cb869bff4",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAllUsers"],
-    "00c8765c93cbe381971d0278a48ff8b3da24233c9a",
+    "00504b0d8055265a2b3879c1758b7a191d9411acf3",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCompanies"],
-    "00e593fc5478973185cce0b9ce821b4da00496ec4e",
+    "00a735023be35f67e88f6d5ff201e794bf34e1c1da",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["logout"],
-    "4008ad55fcf21f96be60541e1cf011236ee422ccca",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resendInvite"],
-    "4015eaf7c9bc88e43aeab00c5d6e1da4638c7cf635",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resetPassword"],
-    "406ab7c74aac8725c508fe3b4ca2081a0d7a5b92fa",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCompanyUsers"],
-    "406d00474b07596f79e49a2ca3149ec54dae8e253d",
+    "4014b5a8a427be5d777493239d9e860e3848e3cf03",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["removeUserFromCompany"],
-    "408c79504339acd8922ef65e2214d0ed5f3d517c12",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"],
-    "4093732a01a05f6ac10f62a455f0cba3078709d7b8",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
-    "4094c84691973097429e7e5b4c650b20a9ae9d7569",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCompanyById"],
-    "40a68a27b4ef03b7930d332108e0119c2e1346fe99",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createCompany"],
-    "40d50081d3e632b27406bd39fea13abab11dae7e49",
+    "402b17f5b6db5690bf082bf998f0520fb50826841d",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"],
-    "40d5cda6a08fa9f640ab0088cb208716b319585ad4",
+    "40392c370cd68b7827382553fda266aaff93c656b0",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCompanyById"],
+    "4047f348f053cff4ae73547c6c4f9d5cd6db8bac58",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createCompany"],
+    "406a654ef485fe133d4cf8b73a8b825f99d19ab32f",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["makePlatformAdmin"],
-    "40fd5abe9644a49e61884fef5c80df92f18c6821d1",
+    "4076fc64570c9df2b2b31fcb6d1ff754357813a43f",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resendInvite"],
+    "40940b0605f8f3e95dae3221d5225794824baafe90",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resetPassword"],
+    "40ae612ffc0170df4401803f3535f924c37ff864ab",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
+    "40b727dae320305475887dacf88234c8ac2ed1c910",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteCompany"],
-    "604754b50a01b095dd7deddfc8de371a81bf090fc6",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateUserRole"],
-    "60961ade258dc63e93fa1dc6e95e901894f57e2e10",
+    "40cc3374f90b39bde9b19fa1fdbb1420ddb615d865",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCompanyUsers"],
+    "40d121a4912535f0736a3d030f16f511654e3e35a1",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"],
+    "601d6006745c5e3dd8b66f40f4fa5fa7339de71a3a",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["inviteUser"],
-    "60bcf5d75616988ddfbfe60d0a87d86aa8ff8d93a4",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateCompany"]
+    "602a16030b1d9091c68c4de7274e3f18b068bcfe48",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateCompany"],
+    "60a33b8b968fefd2d0391196d3a6e080efbe53a545",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateUserRole"]
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$dashboard$2f$users$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE1__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$users$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE2__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$companies$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/dashboard/users/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ACTIONS_MODULE1 => "[project]/app/actions/users.ts [app-rsc] (ecmascript)", ACTIONS_MODULE2 => "[project]/app/actions/companies.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/auth.ts [app-rsc] (ecmascript)");

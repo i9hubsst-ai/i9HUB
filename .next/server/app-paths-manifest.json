@@ -1,3 +1,6 @@
 {
+  "/dashboard/companies/new/page": "app/dashboard/companies/new/page.js",
+  "/dashboard/companies/page": "app/dashboard/companies/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
   "/page": "app/page.js"
 }

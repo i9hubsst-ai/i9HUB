@@ -1,0 +1,95 @@
+{
+  "node": {
+    "00a5ee40487a794cf3de9757937d225488e1940bc6": {
+      "workers": {
+        "app/dashboard/companies/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/companies/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "app/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/companies/new/page": "rsc"
+      },
+      "exportedName": "logout",
+      "filename": "app/actions/auth.ts"
+    },
+    "407498a229d6e88c79a18aed9999686e3d982dd47c": {
+      "workers": {
+        "app/dashboard/companies/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/companies/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "resetPassword",
+          "filename": "app/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/companies/new/page": "rsc"
+      },
+      "exportedName": "resetPassword",
+      "filename": "app/actions/auth.ts"
+    },
+    "407cc9c953561b157cdc32d732b174c9b3729f8bc7": {
+      "workers": {
+        "app/dashboard/companies/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/companies/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "login",
+          "filename": "app/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/companies/new/page": "rsc"
+      },
+      "exportedName": "login",
+      "filename": "app/actions/auth.ts"
+    },
+    "408394902f333d9ee6aeef2b5b649b5bf82aed622c": {
+      "workers": {
+        "app/dashboard/companies/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/companies/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "signup",
+          "filename": "app/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/companies/new/page": "rsc"
+      },
+      "exportedName": "signup",
+      "filename": "app/actions/auth.ts"
+    },
+    "40dd34a7c5329f1fcd2a0a3f6c2b855b88f5487ac8": {
+      "workers": {
+        "app/dashboard/companies/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/companies/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updatePassword",
+          "filename": "app/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/companies/new/page": "rsc"
+      },
+      "exportedName": "updatePassword",
+      "filename": "app/actions/auth.ts"
+    },
+    "40a8960a707d60fb10e040648605ccd89037308905": {
+      "workers": {
+        "app/dashboard/companies/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/companies/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createCompany",
+          "filename": "app/actions/companies.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/companies/new/page": "action-browser"
+      },
+      "exportedName": "createCompany",
+      "filename": "app/actions/companies.ts"
+    }
+  },
+  "edge": {}
+}

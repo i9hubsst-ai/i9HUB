@@ -185,11 +185,23 @@ npm run seed         # Populate with demo data
 ## User Preferences
 
 - Language: Portuguese (pt-BR)
-- Theme: Navy blue primary (#1e3a5f) + Lime green accent (#84cc16)
+- Theme: Modern gray & turquoise palette
+  - Primary: #393e46 (grafite escuro)
+  - Accent: #4ecca3 (turquesa)
+  - Secondary: #505762 (cinza médio)
+  - Borders/Muted: #d4d4d4 (cinza claro)
+  - Background: #ffffff (branco)
+  - Cards: #eeeeee (cinza clarinho)
 - Focus: SST compliance for Brazilian companies
 - Target: SMBs needing structured SST management
 
 ## Recent Changes
+
+- **2025-10-21**: Platform admin and visual improvements
+  - User i9hubsst promoted to Platform Admin
+  - Integrated Gravatar for user profile photos
+  - Updated color palette to modern gray & turquesa theme
+  - Fixed role display in UserNav and user list
 
 - **2025-01-20**: Initial project setup complete
   - Created database schema with multi-tenant architecture

@@ -46,20 +46,23 @@ enum MembershipStatus {
 }
 
 model Membership {
-  id        String           @id @default(uuid())
-  userId    String // Supabase Auth user ID
-  companyId String
-  role      Role
-  status    MembershipStatus @default(INVITED)
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+  id         String           @id @default(uuid())
+  userId     String // Supabase Auth user ID
+  companyId  String
+  employeeId String?          @unique // Optional link to Employee data
+  role       Role
+  status     MembershipStatus @default(INVITED)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
 
   // Relations
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company  Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employee Employee? @relation(fields: [employeeId], references: [id], onDelete: SetNull)
 
   @@unique([userId, companyId])
   @@index([userId])
   @@index([companyId])
+  @@index([employeeId])
   @@map("memberships")
 }
 
@@ -305,10 +308,12 @@ model Employee {
   updatedAt DateTime         @updatedAt
 
   // Relations
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company    Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  membership Membership?
 
   @@unique([companyId, cpf])
   @@unique([companyId, employeeNumber])
+  @@unique([companyId, userId]) // Ensure one employee record per user per company
   @@index([companyId])
   @@index([userId])
   @@map("employees")

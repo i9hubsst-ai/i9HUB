@@ -1,0 +1,2165 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([typeof document === "object" ? document.currentScript : undefined,
+"[project]/components/ui/button.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Button",
+    ()=>Button,
+    "buttonVariants",
+    ()=>buttonVariants
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$slot$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@radix-ui/react-slot/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$class$2d$variance$2d$authority$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/class-variance-authority/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
+;
+;
+;
+;
+const buttonVariants = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$class$2d$variance$2d$authority$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cva"])("inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive", {
+    variants: {
+        variant: {
+            default: "bg-primary text-primary-foreground hover:bg-primary/90",
+            destructive: "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+            outline: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+            secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+            ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+            link: "text-primary underline-offset-4 hover:underline"
+        },
+        size: {
+            default: "h-9 px-4 py-2 has-[>svg]:px-3",
+            sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+            lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
+            icon: "size-9",
+            "icon-sm": "size-8",
+            "icon-lg": "size-10"
+        }
+    },
+    defaultVariants: {
+        variant: "default",
+        size: "default"
+    }
+});
+function Button(param) {
+    let { className, variant, size, asChild = false, ...props } = param;
+    const Comp = asChild ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$slot$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Slot"] : "button";
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Comp, {
+        "data-slot": "button",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])(buttonVariants({
+            variant,
+            size,
+            className
+        })),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/button.tsx",
+        lineNumber: 52,
+        columnNumber: 5
+    }, this);
+}
+_c = Button;
+;
+var _c;
+__turbopack_context__.k.register(_c, "Button");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/ui/dialog.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Dialog",
+    ()=>Dialog,
+    "DialogClose",
+    ()=>DialogClose,
+    "DialogContent",
+    ()=>DialogContent,
+    "DialogDescription",
+    ()=>DialogDescription,
+    "DialogFooter",
+    ()=>DialogFooter,
+    "DialogHeader",
+    ()=>DialogHeader,
+    "DialogOverlay",
+    ()=>DialogOverlay,
+    "DialogPortal",
+    ()=>DialogPortal,
+    "DialogTitle",
+    ()=>DialogTitle,
+    "DialogTrigger",
+    ()=>DialogTrigger
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@radix-ui/react-dialog/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__XIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/x.js [app-client] (ecmascript) <export default as XIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+function Dialog(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Root"], {
+        "data-slot": "dialog",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 12,
+        columnNumber: 10
+    }, this);
+}
+_c = Dialog;
+function DialogTrigger(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Trigger"], {
+        "data-slot": "dialog-trigger",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 18,
+        columnNumber: 10
+    }, this);
+}
+_c1 = DialogTrigger;
+function DialogPortal(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Portal"], {
+        "data-slot": "dialog-portal",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 24,
+        columnNumber: 10
+    }, this);
+}
+_c2 = DialogPortal;
+function DialogClose(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Close"], {
+        "data-slot": "dialog-close",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 30,
+        columnNumber: 10
+    }, this);
+}
+_c3 = DialogClose;
+function DialogOverlay(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Overlay"], {
+        "data-slot": "dialog-overlay",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 38,
+        columnNumber: 5
+    }, this);
+}
+_c4 = DialogOverlay;
+function DialogContent(param) {
+    let { className, children, showCloseButton = true, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DialogPortal, {
+        "data-slot": "dialog-portal",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(DialogOverlay, {}, void 0, false, {
+                fileName: "[project]/components/ui/dialog.tsx",
+                lineNumber: 59,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Content"], {
+                "data-slot": "dialog-content",
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg", className),
+                ...props,
+                children: [
+                    children,
+                    showCloseButton && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Close"], {
+                        "data-slot": "dialog-close",
+                        className: "ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__XIcon$3e$__["XIcon"], {}, void 0, false, {
+                                fileName: "[project]/components/ui/dialog.tsx",
+                                lineNumber: 74,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "sr-only",
+                                children: "Close"
+                            }, void 0, false, {
+                                fileName: "[project]/components/ui/dialog.tsx",
+                                lineNumber: 75,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/ui/dialog.tsx",
+                        lineNumber: 70,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/ui/dialog.tsx",
+                lineNumber: 60,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 58,
+        columnNumber: 5
+    }, this);
+}
+_c5 = DialogContent;
+function DialogHeader(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "dialog-header",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex flex-col gap-2 text-center sm:text-left", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 85,
+        columnNumber: 5
+    }, this);
+}
+_c6 = DialogHeader;
+function DialogFooter(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "dialog-footer",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 95,
+        columnNumber: 5
+    }, this);
+}
+_c7 = DialogFooter;
+function DialogTitle(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Title"], {
+        "data-slot": "dialog-title",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-lg leading-none font-semibold", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 111,
+        columnNumber: 5
+    }, this);
+}
+_c8 = DialogTitle;
+function DialogDescription(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Description"], {
+        "data-slot": "dialog-description",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-muted-foreground text-sm", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/dialog.tsx",
+        lineNumber: 124,
+        columnNumber: 5
+    }, this);
+}
+_c9 = DialogDescription;
+;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8, _c9;
+__turbopack_context__.k.register(_c, "Dialog");
+__turbopack_context__.k.register(_c1, "DialogTrigger");
+__turbopack_context__.k.register(_c2, "DialogPortal");
+__turbopack_context__.k.register(_c3, "DialogClose");
+__turbopack_context__.k.register(_c4, "DialogOverlay");
+__turbopack_context__.k.register(_c5, "DialogContent");
+__turbopack_context__.k.register(_c6, "DialogHeader");
+__turbopack_context__.k.register(_c7, "DialogFooter");
+__turbopack_context__.k.register(_c8, "DialogTitle");
+__turbopack_context__.k.register(_c9, "DialogDescription");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/ui/select.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Select",
+    ()=>Select,
+    "SelectContent",
+    ()=>SelectContent,
+    "SelectGroup",
+    ()=>SelectGroup,
+    "SelectItem",
+    ()=>SelectItem,
+    "SelectLabel",
+    ()=>SelectLabel,
+    "SelectScrollDownButton",
+    ()=>SelectScrollDownButton,
+    "SelectScrollUpButton",
+    ()=>SelectScrollUpButton,
+    "SelectSeparator",
+    ()=>SelectSeparator,
+    "SelectTrigger",
+    ()=>SelectTrigger,
+    "SelectValue",
+    ()=>SelectValue
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@radix-ui/react-select/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/check.js [app-client] (ecmascript) <export default as CheckIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-down.js [app-client] (ecmascript) <export default as ChevronDownIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUpIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-up.js [app-client] (ecmascript) <export default as ChevronUpIcon>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+function Select(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Root"], {
+        "data-slot": "select",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 12,
+        columnNumber: 10
+    }, this);
+}
+_c = Select;
+function SelectGroup(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Group"], {
+        "data-slot": "select-group",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 18,
+        columnNumber: 10
+    }, this);
+}
+_c1 = SelectGroup;
+function SelectValue(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Value"], {
+        "data-slot": "select-value",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 24,
+        columnNumber: 10
+    }, this);
+}
+_c2 = SelectValue;
+function SelectTrigger(param) {
+    let { className, size = "default", children, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Trigger"], {
+        "data-slot": "select-trigger",
+        "data-size": size,
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex w-fit items-center justify-between gap-2 rounded-md border bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4", className),
+        ...props,
+        children: [
+            children,
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Icon"], {
+                asChild: true,
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__["ChevronDownIcon"], {
+                    className: "size-4 opacity-50"
+                }, void 0, false, {
+                    fileName: "[project]/components/ui/select.tsx",
+                    lineNumber: 47,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/ui/select.tsx",
+                lineNumber: 46,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 36,
+        columnNumber: 5
+    }, this);
+}
+_c3 = SelectTrigger;
+function SelectContent(param) {
+    let { className, children, position = "popper", align = "center", ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Portal"], {
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Content"], {
+            "data-slot": "select-content",
+            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-(--radix-select-content-available-height) min-w-[8rem] origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border shadow-md", position === "popper" && "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1", className),
+            position: position,
+            align: align,
+            ...props,
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SelectScrollUpButton, {}, void 0, false, {
+                    fileName: "[project]/components/ui/select.tsx",
+                    lineNumber: 74,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Viewport"], {
+                    className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("p-1", position === "popper" && "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1"),
+                    children: children
+                }, void 0, false, {
+                    fileName: "[project]/components/ui/select.tsx",
+                    lineNumber: 75,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(SelectScrollDownButton, {}, void 0, false, {
+                    fileName: "[project]/components/ui/select.tsx",
+                    lineNumber: 84,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/components/ui/select.tsx",
+            lineNumber: 62,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 61,
+        columnNumber: 5
+    }, this);
+}
+_c4 = SelectContent;
+function SelectLabel(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+        "data-slot": "select-label",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-muted-foreground px-2 py-1.5 text-xs", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 95,
+        columnNumber: 5
+    }, this);
+}
+_c5 = SelectLabel;
+function SelectItem(param) {
+    let { className, children, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Item"], {
+        "data-slot": "select-item",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2", className),
+        ...props,
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                className: "absolute right-2 flex size-3.5 items-center justify-center",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ItemIndicator"], {
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckIcon$3e$__["CheckIcon"], {
+                        className: "size-4"
+                    }, void 0, false, {
+                        fileName: "[project]/components/ui/select.tsx",
+                        lineNumber: 119,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/components/ui/select.tsx",
+                    lineNumber: 118,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/ui/select.tsx",
+                lineNumber: 117,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ItemText"], {
+                children: children
+            }, void 0, false, {
+                fileName: "[project]/components/ui/select.tsx",
+                lineNumber: 122,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 109,
+        columnNumber: 5
+    }, this);
+}
+_c6 = SelectItem;
+function SelectSeparator(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Separator"], {
+        "data-slot": "select-separator",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("bg-border pointer-events-none -mx-1 my-1 h-px", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 132,
+        columnNumber: 5
+    }, this);
+}
+_c7 = SelectSeparator;
+function SelectScrollUpButton(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollUpButton"], {
+        "data-slot": "select-scroll-up-button",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex cursor-default items-center justify-center py-1", className),
+        ...props,
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$up$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUpIcon$3e$__["ChevronUpIcon"], {
+            className: "size-4"
+        }, void 0, false, {
+            fileName: "[project]/components/ui/select.tsx",
+            lineNumber: 153,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 145,
+        columnNumber: 5
+    }, this);
+}
+_c8 = SelectScrollUpButton;
+function SelectScrollDownButton(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$select$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollDownButton"], {
+        "data-slot": "select-scroll-down-button",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex cursor-default items-center justify-center py-1", className),
+        ...props,
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDownIcon$3e$__["ChevronDownIcon"], {
+            className: "size-4"
+        }, void 0, false, {
+            fileName: "[project]/components/ui/select.tsx",
+            lineNumber: 171,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/components/ui/select.tsx",
+        lineNumber: 163,
+        columnNumber: 5
+    }, this);
+}
+_c9 = SelectScrollDownButton;
+;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8, _c9;
+__turbopack_context__.k.register(_c, "Select");
+__turbopack_context__.k.register(_c1, "SelectGroup");
+__turbopack_context__.k.register(_c2, "SelectValue");
+__turbopack_context__.k.register(_c3, "SelectTrigger");
+__turbopack_context__.k.register(_c4, "SelectContent");
+__turbopack_context__.k.register(_c5, "SelectLabel");
+__turbopack_context__.k.register(_c6, "SelectItem");
+__turbopack_context__.k.register(_c7, "SelectSeparator");
+__turbopack_context__.k.register(_c8, "SelectScrollUpButton");
+__turbopack_context__.k.register(_c9, "SelectScrollDownButton");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/ui/input.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Input",
+    ()=>Input
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
+;
+;
+function Input(param) {
+    let { className, type, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+        type: type,
+        "data-slot": "input",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]", "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/input.tsx",
+        lineNumber: 7,
+        columnNumber: 5
+    }, this);
+}
+_c = Input;
+;
+var _c;
+__turbopack_context__.k.register(_c, "Input");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/ui/label.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Label",
+    ()=>Label
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$label$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@radix-ui/react-label/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+function Label(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$label$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Root"], {
+        "data-slot": "label",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/label.tsx",
+        lineNumber: 13,
+        columnNumber: 5
+    }, this);
+}
+_c = Label;
+;
+var _c;
+__turbopack_context__.k.register(_c, "Label");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/app/actions/data:8fe6b0 [app-client] (ecmascript) <text/javascript>", ((__turbopack_context__) => {
+"use strict";
+
+/* __next_internal_action_entry_do_not_use__ [{"60961ade258dc63e93fa1dc6e95e901894f57e2e10":"inviteUser"},"app/actions/users.ts",""] */ __turbopack_context__.s([
+    "inviteUser",
+    ()=>inviteUser
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-client-wrapper.js [app-client] (ecmascript)");
+"use turbopack no side effects";
+;
+var inviteUser = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createServerReference"])("60961ade258dc63e93fa1dc6e95e901894f57e2e10", __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["callServer"], void 0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["findSourceMapURL"], "inviteUser"); //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4vdXNlcnMudHMiXSwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzZXJ2ZXInXG5cbmltcG9ydCB7IHJldmFsaWRhdGVQYXRoIH0gZnJvbSAnbmV4dC9jYWNoZSdcbmltcG9ydCB7IHByaXNtYSB9IGZyb20gJ0AvbGliL3ByaXNtYSdcbmltcG9ydCB7IGdldEN1cnJlbnRVc2VyLCBpc1BsYXRmb3JtQWRtaW4sIGdldFVzZXJSb2xlIH0gZnJvbSAnQC9saWIvYXV0aCdcbmltcG9ydCB7IFJvbGUsIE1lbWJlcnNoaXBTdGF0dXMgfSBmcm9tICdAcHJpc21hL2NsaWVudCdcbmltcG9ydCB7IGNyZWF0ZUNsaWVudCB9IGZyb20gJ0AvbGliL3N1cGFiYXNlL3NlcnZlcidcbmltcG9ydCB7IGNyZWF0ZUFkbWluQ2xpZW50IH0gZnJvbSAnQC9saWIvc3VwYWJhc2UvYWRtaW4nXG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBpbnZpdGVVc2VyKGNvbXBhbnlJZDogc3RyaW5nLCBmb3JtRGF0YTogRm9ybURhdGEpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcbiAgY29uc3Qgcm9sZSA9IGF3YWl0IGdldFVzZXJSb2xlKHVzZXIuaWQsIGNvbXBhbnlJZClcblxuICBpZiAoIWlzQWRtaW4gJiYgcm9sZSAhPT0gJ0NPTVBBTllfQURNSU4nKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgYWRtaW5pc3RyYWRvcmVzIHBvZGVtIGNvbnZpZGFyIHVzdcOhcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWwgPSBmb3JtRGF0YS5nZXQoJ2VtYWlsJykgYXMgc3RyaW5nXG4gIGNvbnN0IHVzZXJSb2xlID0gZm9ybURhdGEuZ2V0KCdyb2xlJykgYXMgUm9sZVxuXG4gIGlmICghZW1haWwgfHwgIXVzZXJSb2xlKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFbWFpbCBlIGZ1bsOnw6NvIHPDo28gb2JyaWdhdMOzcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWxSZWdleCA9IC9eW15cXHNAXStAW15cXHNAXStcXC5bXlxcc0BdKyQvXG4gIGlmICghZW1haWxSZWdleC50ZXN0KGVtYWlsKSkge1xuICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgaW52w6FsaWRvLiBVc2UgbyBmb3JtYXRvOiB1c3VhcmlvQGVtcHJlc2EuY29tJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IHN1cGFiYXNlQWRtaW4gPSBjcmVhdGVBZG1pbkNsaWVudCgpXG4gICAgXG4gICAgLy8gQ2hlY2sgaWYgdXNlciBhbHJlYWR5IGV4aXN0cyBpbiBTdXBhYmFzZSBBdXRoXG4gICAgY29uc3QgeyBkYXRhOiBleGlzdGluZ1VzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcbiAgICBsZXQgdGFyZ2V0VXNlciA9IGV4aXN0aW5nVXNlcnM/LnVzZXJzLmZpbmQodSA9PiB1LmVtYWlsPy50b0xvd2VyQ2FzZSgpID09PSBlbWFpbC50b0xvd2VyQ2FzZSgpKVxuXG4gICAgLy8gQ2hlY2sgaWYgdGhlcmUncyBhbHJlYWR5IGEgbWVtYmVyc2hpcCBmb3IgdGhpcyBlbWFpbC9jb21wYW55XG4gICAgaWYgKHRhcmdldFVzZXIpIHtcbiAgICAgIGNvbnN0IGV4aXN0aW5nTWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgICB3aGVyZToge1xuICAgICAgICAgIHVzZXJJZF9jb21wYW55SWQ6IHtcbiAgICAgICAgICAgIHVzZXJJZDogdGFyZ2V0VXNlci5pZCxcbiAgICAgICAgICAgIGNvbXBhbnlJZCxcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH0pXG5cbiAgICAgIGlmIChleGlzdGluZ01lbWJlcnNoaXApIHtcbiAgICAgICAgaWYgKGV4aXN0aW5nTWVtYmVyc2hpcC5zdGF0dXMgPT09ICdJTlZJVEVEJykge1xuICAgICAgICAgIHJldHVybiB7IGVycm9yOiAnRXN0ZSB1c3XDoXJpbyBqw6EgdGVtIHVtIGNvbnZpdGUgcGVuZGVudGUgcGFyYSBlc3RhIGVtcHJlc2EnIH1cbiAgICAgICAgfVxuICAgICAgICByZXR1cm4geyBlcnJvcjogJ0VzdGUgdXN1w6FyaW8gasOhIGVzdMOhIGFzc29jaWFkbyBhIGVzdGEgZW1wcmVzYScgfVxuICAgICAgfVxuICAgIH1cblxuICAgIC8vIElmIHVzZXIgZG9lc24ndCBleGlzdCwgaW52aXRlIHRoZW0gdmlhIFN1cGFiYXNlXG4gICAgaWYgKCF0YXJnZXRVc2VyKSB7XG4gICAgICBjb25zdCB7IGRhdGE6IGludml0ZURhdGEsIGVycm9yOiBpbnZpdGVFcnJvciB9ID0gYXdhaXQgc3VwYWJhc2VBZG1pbi5hdXRoLmFkbWluLmludml0ZVVzZXJCeUVtYWlsKGVtYWlsLCB7XG4gICAgICAgIGRhdGE6IHtcbiAgICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICAgIGNvbXBhbnlfaWQ6IGNvbXBhbnlJZCxcbiAgICAgICAgfVxuICAgICAgfSlcblxuICAgICAgaWYgKGludml0ZUVycm9yKSB7XG4gICAgICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gZW52aWFyIGNvbnZpdGUgU3VwYWJhc2U6JywgaW52aXRlRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyBlbnZpYXIgY29udml0ZSBwb3IgZW1haWwnIH1cbiAgICAgIH1cblxuICAgICAgdGFyZ2V0VXNlciA9IGludml0ZURhdGEudXNlclxuICAgIH1cblxuICAgIC8vIENyZWF0ZSBtZW1iZXJzaGlwIHdpdGggSU5WSVRFRCBzdGF0dXNcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuY3JlYXRlKHtcbiAgICAgIGRhdGE6IHtcbiAgICAgICAgdXNlcklkOiB0YXJnZXRVc2VyLmlkLFxuICAgICAgICBjb21wYW55SWQsXG4gICAgICAgIHJvbGU6IHVzZXJSb2xlLFxuICAgICAgICBzdGF0dXM6ICdJTlZJVEVEJyxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7Y29tcGFueUlkfWApXG4gICAgcmV2YWxpZGF0ZVBhdGgoJy9kYXNoYm9hcmQvdXNlcnMnKVxuICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIG1lbWJlcnNoaXAgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gY29udmlkYXIgdXN1w6FyaW86JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGNvbnZpZGFyIHVzdcOhcmlvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIHJlc2VuZEludml0ZShtZW1iZXJzaGlwSWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZFVuaXF1ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgaWYgKCFtZW1iZXJzaGlwKSB7XG4gICAgICByZXR1cm4geyBlcnJvcjogJ01lbWJybyBuw6NvIGVuY29udHJhZG8nIH1cbiAgICB9XG5cbiAgICBpZiAobWVtYmVyc2hpcC5zdGF0dXMgIT09ICdJTlZJVEVEJykge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgY29udml0ZXMgcGVuZGVudGVzIHBvZGVtIHNlciByZWVudmlhZG9zJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSByZWVudmlhciBjb252aXRlcycgfVxuICAgIH1cblxuICAgIC8vIEdldCB1c2VyIGVtYWlsIGZyb20gU3VwYWJhc2VcbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXIgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5nZXRVc2VyQnlJZChtZW1iZXJzaGlwLnVzZXJJZClcblxuICAgIGlmICghYXV0aFVzZXIudXNlcj8uZW1haWwpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgZG8gdXN1w6FyaW8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgLy8gVHJ5IHRvIHJlc2VuZCBpbnZpdGUgLSBpZiB1c2VyIGFscmVhZHkgZXhpc3RzLCB1c2UgZ2VuZXJhdGVMaW5rIGluc3RlYWRcbiAgICBsZXQgaW52aXRlRXJyb3JcbiAgICBjb25zdCBpbnZpdGVSZXN1bHQgPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4uaW52aXRlVXNlckJ5RW1haWwoYXV0aFVzZXIudXNlci5lbWFpbCwge1xuICAgICAgcmVkaXJlY3RUbzogYCR7cHJvY2Vzcy5lbnYuTkVYVF9QVUJMSUNfU0lURV9VUkx9L2F1dGgvY2FsbGJhY2tgLFxuICAgICAgZGF0YToge1xuICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICBjb21wYW55X2lkOiBtZW1iZXJzaGlwLmNvbXBhbnlJZCxcbiAgICAgIH1cbiAgICB9KVxuICAgIFxuICAgIGludml0ZUVycm9yID0gaW52aXRlUmVzdWx0LmVycm9yXG5cbiAgICAvLyBJZiB1c2VyIGFscmVhZHkgZXhpc3RzIChlbWFpbF9leGlzdHMgZXJyb3IpLCB1c2UgZ2VuZXJhdGVMaW5rIGFwcHJvYWNoXG4gICAgaWYgKGludml0ZUVycm9yICYmIGludml0ZUVycm9yLm1lc3NhZ2U/LmluY2x1ZGVzKCdhbHJlYWR5IGJlZW4gcmVnaXN0ZXJlZCcpKSB7XG4gICAgICBjb25zdCB7IGRhdGE6IGxpbmtEYXRhLCBlcnJvcjogbGlua0Vycm9yIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4uZ2VuZXJhdGVMaW5rKHtcbiAgICAgICAgdHlwZTogJ21hZ2ljbGluaycsXG4gICAgICAgIGVtYWlsOiBhdXRoVXNlci51c2VyLmVtYWlsLFxuICAgICAgfSlcblxuICAgICAgaWYgKGxpbmtFcnJvcikge1xuICAgICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGdlcmFyIGxpbmsgZGUgY29udml0ZTonLCBsaW5rRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyByZWVudmlhciBjb252aXRlLiBQb3IgZmF2b3IsIHRlbnRlIG5vdmFtZW50ZS4nIH1cbiAgICAgIH1cblxuICAgICAgLy8gTm90ZTogZ2VuZXJhdGVMaW5rIGNyZWF0ZXMgdGhlIGxpbmsgYnV0IGRvZXNuJ3Qgc2VuZCBlbWFpbCBhdXRvbWF0aWNhbGx5XG4gICAgICAvLyBUaGUgbGluayBpcyBpbiBsaW5rRGF0YS5wcm9wZXJ0aWVzLmFjdGlvbl9saW5rXG4gICAgICAvLyBGb3Igbm93LCB3ZSdsbCBqdXN0IHVwZGF0ZSB0aGUgbWVtYmVyc2hpcCB0aW1lc3RhbXBcbiAgICAgIGNvbnNvbGUubG9nKCdMaW5rIGRlIGNvbnZpdGUgZ2VyYWRvIChjb25maWd1cmFyIGVudmlvIGRlIGVtYWlsIGN1c3RvbWl6YWRvKTonLCBsaW5rRGF0YS5wcm9wZXJ0aWVzPy5hY3Rpb25fbGluaylcbiAgICAgIFxuICAgICAgLy8gVE9ETzogSW1wbGVtZW50IGN1c3RvbSBlbWFpbCBzZW5kaW5nIHdpdGggdGhlIGdlbmVyYXRlZCBsaW5rXG4gICAgICAvLyBGb3Igbm93LCByZXR1cm4gc3VjY2VzcyBidXQgdXNlciB3b24ndCByZWNlaXZlIGVtYWlsXG4gICAgICByZXR1cm4geyBcbiAgICAgICAgc3VjY2VzczogdHJ1ZSwgXG4gICAgICAgIHdhcm5pbmc6ICdMaW5rIGdlcmFkby4gQ29uZmlndXJlIG8gZW52aW8gZGUgZW1haWwgY3VzdG9taXphZG8gcGFyYSBxdWUgbyB1c3XDoXJpbyByZWNlYmEgbyBjb252aXRlLicgXG4gICAgICB9XG4gICAgfVxuXG4gICAgaWYgKGludml0ZUVycm9yKSB7XG4gICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGU6JywgaW52aXRlRXJyb3IpXG4gICAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gcmVlbnZpYXIgY29udml0ZSBwb3IgZW1haWwnIH1cbiAgICB9XG5cbiAgICByZXZhbGlkYXRlUGF0aChgL2Rhc2hib2FyZC9jb21wYW5pZXMvJHttZW1iZXJzaGlwLmNvbXBhbnlJZH1gKVxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGU6JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGUnIH1cbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gdXBkYXRlVXNlclJvbGUobWVtYmVyc2hpcElkOiBzdHJpbmcsIG5ld1JvbGU6IFJvbGUpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgbWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9XG4gICAgfSlcblxuICAgIGlmICghbWVtYmVyc2hpcCkge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdNZW1icm8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSBhbHRlcmFyIGZ1bsOnw7VlcycgfVxuICAgIH1cblxuICAgIGNvbnN0IHVwZGF0ZWQgPSBhd2FpdCBwcmlzbWEubWVtYmVyc2hpcC51cGRhdGUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9LFxuICAgICAgZGF0YTogeyByb2xlOiBuZXdSb2xlIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7bWVtYmVyc2hpcC5jb21wYW55SWR9YClcbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgbWVtYmVyc2hpcDogdXBkYXRlZCB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyBhdHVhbGl6YXIgZnVuw6fDo286JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGF0dWFsaXphciBmdW7Dp8OjbycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiByZW1vdmVVc2VyRnJvbUNvbXBhbnkobWVtYmVyc2hpcElkOiBzdHJpbmcpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgbWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9XG4gICAgfSlcblxuICAgIGlmICghbWVtYmVyc2hpcCkge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdNZW1icm8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSByZW1vdmVyIHVzdcOhcmlvcycgfVxuICAgIH1cblxuICAgIGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmRlbGV0ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7bWVtYmVyc2hpcC5jb21wYW55SWR9YClcbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyByZW1vdmVyIHVzdcOhcmlvOicsIGVycm9yKVxuICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyByZW1vdmVyIHVzdcOhcmlvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGdldENvbXBhbnlVc2Vycyhjb21wYW55SWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICBjb25zdCByb2xlID0gYXdhaXQgZ2V0VXNlclJvbGUodXNlci5pZCwgY29tcGFueUlkKVxuXG4gIGlmICghaXNBZG1pbiAmJiAhcm9sZSkge1xuICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSBhY2Vzc2FyIHVzdcOhcmlvcyBkZXN0YSBlbXByZXNhJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IG1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgd2hlcmU6IHsgY29tcGFueUlkIH0sXG4gICAgICBpbmNsdWRlOiB7XG4gICAgICAgIGNvbXBhbnk6IHRydWVcbiAgICAgIH0sXG4gICAgICBvcmRlckJ5OiB7XG4gICAgICAgIGNyZWF0ZWRBdDogJ2Rlc2MnXG4gICAgICB9XG4gICAgfSlcblxuICAgIGNvbnN0IHN1cGFiYXNlQWRtaW4gPSBjcmVhdGVBZG1pbkNsaWVudCgpXG4gICAgY29uc3QgeyBkYXRhOiBhdXRoVXNlcnMgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5saXN0VXNlcnMoKVxuXG4gICAgY29uc3QgdXNlcnNXaXRoRGV0YWlscyA9IG1lbWJlcnNoaXBzLm1hcChtZW1iZXJzaGlwID0+IHtcbiAgICAgIGNvbnN0IGF1dGhVc2VyID0gYXV0aFVzZXJzPy51c2Vycy5maW5kKHUgPT4gdS5pZCA9PT0gbWVtYmVyc2hpcC51c2VySWQpXG4gICAgICByZXR1cm4ge1xuICAgICAgICAuLi5tZW1iZXJzaGlwLFxuICAgICAgICBlbWFpbDogYXV0aFVzZXI/LmVtYWlsLFxuICAgICAgICBuYW1lOiBhdXRoVXNlcj8udXNlcl9tZXRhZGF0YT8ubmFtZSxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdXNlcnM6IHVzZXJzV2l0aERldGFpbHMgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvczonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvcycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBnZXRBbGxVc2VycygpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcblxuICB0cnkge1xuICAgIGxldCBtZW1iZXJzaGlwc1xuXG4gICAgaWYgKGlzQWRtaW4pIHtcbiAgICAgIG1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgICBpbmNsdWRlOiB7XG4gICAgICAgICAgY29tcGFueTogdHJ1ZVxuICAgICAgICB9LFxuICAgICAgICBvcmRlckJ5OiB7XG4gICAgICAgICAgY3JlYXRlZEF0OiAnZGVzYydcbiAgICAgICAgfVxuICAgICAgfSlcbiAgICB9IGVsc2Uge1xuICAgICAgY29uc3QgdXNlck1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgICB3aGVyZToge1xuICAgICAgICAgIHVzZXJJZDogdXNlci5pZCxcbiAgICAgICAgICBzdGF0dXM6ICdBQ1RJVkUnXG4gICAgICAgIH0sXG4gICAgICAgIHNlbGVjdDoge1xuICAgICAgICAgIGNvbXBhbnlJZDogdHJ1ZVxuICAgICAgICB9XG4gICAgICB9KVxuXG4gICAgICBjb25zdCBjb21wYW55SWRzID0gdXNlck1lbWJlcnNoaXBzLm1hcChtID0+IG0uY29tcGFueUlkKVxuXG4gICAgICBtZW1iZXJzaGlwcyA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRNYW55KHtcbiAgICAgICAgd2hlcmU6IHtcbiAgICAgICAgICBjb21wYW55SWQ6IHtcbiAgICAgICAgICAgIGluOiBjb21wYW55SWRzXG4gICAgICAgICAgfVxuICAgICAgICB9LFxuICAgICAgICBpbmNsdWRlOiB7XG4gICAgICAgICAgY29tcGFueTogdHJ1ZVxuICAgICAgICB9LFxuICAgICAgICBvcmRlckJ5OiB7XG4gICAgICAgICAgY3JlYXRlZEF0OiAnZGVzYydcbiAgICAgICAgfVxuICAgICAgfSlcbiAgICB9XG5cbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcblxuICAgIC8vIEdldCBhbGwgcGxhdGZvcm0gYWRtaW5zIHRvIG92ZXJyaWRlIHRoZWlyIHJvbGUgZGlzcGxheVxuICAgIGNvbnN0IHBsYXRmb3JtQWRtaW5zID0gYXdhaXQgcHJpc21hLnBsYXRmb3JtQWRtaW4uZmluZE1hbnkoe1xuICAgICAgc2VsZWN0OiB7XG4gICAgICAgIHVzZXJJZDogdHJ1ZVxuICAgICAgfVxuICAgIH0pXG4gICAgY29uc3QgcGxhdGZvcm1BZG1pbklkcyA9IG5ldyBTZXQocGxhdGZvcm1BZG1pbnMubWFwKHBhID0+IHBhLnVzZXJJZCkpXG5cbiAgICBjb25zdCB1c2Vyc1dpdGhEZXRhaWxzID0gbWVtYmVyc2hpcHMubWFwKG1lbWJlcnNoaXAgPT4ge1xuICAgICAgY29uc3QgYXV0aFVzZXIgPSBhdXRoVXNlcnM/LnVzZXJzLmZpbmQodSA9PiB1LmlkID09PSBtZW1iZXJzaGlwLnVzZXJJZClcbiAgICAgIFxuICAgICAgLy8gSWYgdXNlciBpcyBhIHBsYXRmb3JtIGFkbWluLCBvdmVycmlkZSB0aGVpciByb2xlIGZvciBkaXNwbGF5XG4gICAgICBjb25zdCBlZmZlY3RpdmVSb2xlID0gcGxhdGZvcm1BZG1pbklkcy5oYXMobWVtYmVyc2hpcC51c2VySWQpIFxuICAgICAgICA/ICdQTEFURk9STV9BRE1JTicgYXMgUm9sZVxuICAgICAgICA6IG1lbWJlcnNoaXAucm9sZVxuXG4gICAgICByZXR1cm4ge1xuICAgICAgICAuLi5tZW1iZXJzaGlwLFxuICAgICAgICByb2xlOiBlZmZlY3RpdmVSb2xlLFxuICAgICAgICBlbWFpbDogYXV0aFVzZXI/LmVtYWlsLFxuICAgICAgICBuYW1lOiBhdXRoVXNlcj8udXNlcl9tZXRhZGF0YT8ubmFtZSxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdXNlcnM6IHVzZXJzV2l0aERldGFpbHMgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvczonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvcycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBtYWtlUGxhdGZvcm1BZG1pbih1c2VySWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICBpZiAoIWlzQWRtaW4pIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ0FwZW5hcyBhZG1pbmlzdHJhZG9yZXMgZGEgcGxhdGFmb3JtYSBwb2RlbSBwcm9tb3ZlciB1c3XDoXJpb3MnIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgYWRtaW4gPSBhd2FpdCBwcmlzbWEucGxhdGZvcm1BZG1pbi5jcmVhdGUoe1xuICAgICAgZGF0YToge1xuICAgICAgICB1c2VySWQsXG4gICAgICB9XG4gICAgfSlcblxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlLCBhZG1pbiB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyBwcm9tb3ZlciB1c3XDoXJpbzonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0VzdGUgdXN1w6FyaW8gasOhIMOpIGFkbWluaXN0cmFkb3IgZGEgcGxhdGFmb3JtYScgfVxuICB9XG59XG4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IndSQVNzQiJ9
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/dashboard/invite-user-dialog.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "InviteUserDialog",
+    ()=>InviteUserDialog
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/dialog.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/select.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/input.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/label.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserPlus$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user-plus.js [app-client] (ecmascript) <export default as UserPlus>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$8fe6b0__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:8fe6b0 [app-client] (ecmascript) <text/javascript>");
+;
+var _s = __turbopack_context__.k.signature();
+'use client';
+;
+;
+;
+;
+;
+;
+;
+;
+function InviteUserDialog(param) {
+    let { companies } = param;
+    _s();
+    const [open, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [success, setSuccess] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [companyId, setCompanyId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [role, setRole] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        setSuccess(false);
+        const formData = new FormData(e.currentTarget);
+        formData.set('companyId', companyId);
+        formData.set('role', role);
+        const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$8fe6b0__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["inviteUser"])(companyId, formData);
+        if (result.error) {
+            setError(result.error);
+            setLoading(false);
+        } else {
+            setSuccess(true);
+            setLoading(false);
+            setTimeout(()=>{
+                setOpen(false);
+                setSuccess(false);
+                setCompanyId('');
+                setRole('');
+                e.currentTarget.reset();
+            }, 1500);
+        }
+    }
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
+        open: open,
+        onOpenChange: setOpen,
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogTrigger"], {
+                asChild: true,
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                    className: "gap-2",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$plus$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserPlus$3e$__["UserPlus"], {
+                            className: "h-4 w-4"
+                        }, void 0, false, {
+                            fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                            lineNumber: 73,
+                            columnNumber: 11
+                        }, this),
+                        "Convidar Usuário"
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                    lineNumber: 72,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                lineNumber: 71,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogContent"], {
+                className: "sm:max-w-[500px]",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogHeader"], {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogTitle"], {
+                                children: "Convidar Novo Usuário"
+                            }, void 0, false, {
+                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                lineNumber: 79,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
+                                children: "Envie um convite por email para um novo usuário acessar a plataforma"
+                            }, void 0, false, {
+                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                lineNumber: 80,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                        lineNumber: 78,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                        onSubmit: handleSubmit,
+                        className: "space-y-4 pt-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "space-y-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+                                        htmlFor: "email",
+                                        children: [
+                                            "Email do Usuário ",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-destructive",
+                                                children: "*"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                lineNumber: 88,
+                                                columnNumber: 32
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 87,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                                        id: "email",
+                                        name: "email",
+                                        type: "email",
+                                        placeholder: "usuario@empresa.com",
+                                        required: true,
+                                        disabled: loading
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 90,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-muted-foreground",
+                                        children: "Um email será enviado com instruções para criar a senha"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 98,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                lineNumber: 86,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "space-y-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+                                        htmlFor: "companyId",
+                                        children: [
+                                            "Empresa ",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-destructive",
+                                                children: "*"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                lineNumber: 105,
+                                                columnNumber: 23
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 104,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
+                                        value: companyId,
+                                        onValueChange: setCompanyId,
+                                        disabled: loading,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {
+                                                    placeholder: "Selecione uma empresa"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                    lineNumber: 109,
+                                                    columnNumber: 17
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                lineNumber: 108,
+                                                columnNumber: 15
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
+                                                children: companies.map((company)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                        value: company.id,
+                                                        children: company.name
+                                                    }, company.id, false, {
+                                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                        lineNumber: 113,
+                                                        columnNumber: 19
+                                                    }, this))
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                lineNumber: 111,
+                                                columnNumber: 15
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 107,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                lineNumber: 103,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "space-y-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+                                        htmlFor: "role",
+                                        children: [
+                                            "Papel ",
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-destructive",
+                                                children: "*"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                lineNumber: 123,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 122,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
+                                        value: role,
+                                        onValueChange: setRole,
+                                        disabled: loading,
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {
+                                                    placeholder: "Selecione um papel"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                    lineNumber: 127,
+                                                    columnNumber: 17
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                lineNumber: 126,
+                                                columnNumber: 15
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                        value: "COMPANY_ADMIN",
+                                                        children: "Administrador da Empresa"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                        lineNumber: 130,
+                                                        columnNumber: 17
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                        value: "ENGINEER",
+                                                        children: "Engenheiro SST"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                        lineNumber: 131,
+                                                        columnNumber: 17
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                        value: "EMPLOYER",
+                                                        children: "Funcionário"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                        lineNumber: 132,
+                                                        columnNumber: 17
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                        value: "VIEWER",
+                                                        children: "Visualizador"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                        lineNumber: 133,
+                                                        columnNumber: 17
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                                lineNumber: 129,
+                                                columnNumber: 15
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 125,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-xs text-muted-foreground",
+                                        children: "Define as permissões do usuário na empresa"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 136,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                lineNumber: 121,
+                                columnNumber: 11
+                            }, this),
+                            error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-destructive/10 text-destructive p-3 rounded-lg text-sm",
+                                children: error
+                            }, void 0, false, {
+                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                lineNumber: 142,
+                                columnNumber: 13
+                            }, this),
+                            success && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "bg-green-100 text-green-700 p-3 rounded-lg text-sm",
+                                children: "Usuário adicionado com sucesso!"
+                            }, void 0, false, {
+                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                lineNumber: 148,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex gap-3 pt-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                        type: "submit",
+                                        disabled: loading || success || !companyId || !role,
+                                        className: "flex-1",
+                                        children: loading ? 'Adicionando...' : success ? 'Adicionado!' : 'Adicionar Usuário'
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 154,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                        type: "button",
+                                        variant: "outline",
+                                        onClick: ()=>setOpen(false),
+                                        disabled: loading,
+                                        className: "flex-1",
+                                        children: "Cancelar"
+                                    }, void 0, false, {
+                                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                        lineNumber: 161,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                                lineNumber: 153,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                        lineNumber: 85,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+                lineNumber: 77,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/components/dashboard/invite-user-dialog.tsx",
+        lineNumber: 70,
+        columnNumber: 5
+    }, this);
+}
+_s(InviteUserDialog, "eKDx8KeVEGjqQ8ZBycB3U+VBKZ8=");
+_c = InviteUserDialog;
+var _c;
+__turbopack_context__.k.register(_c, "InviteUserDialog");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/ui/card.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Card",
+    ()=>Card,
+    "CardAction",
+    ()=>CardAction,
+    "CardContent",
+    ()=>CardContent,
+    "CardDescription",
+    ()=>CardDescription,
+    "CardFooter",
+    ()=>CardFooter,
+    "CardHeader",
+    ()=>CardHeader,
+    "CardTitle",
+    ()=>CardTitle
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
+;
+;
+function Card(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "card",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/card.tsx",
+        lineNumber: 7,
+        columnNumber: 5
+    }, this);
+}
+_c = Card;
+function CardHeader(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "card-header",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/card.tsx",
+        lineNumber: 20,
+        columnNumber: 5
+    }, this);
+}
+_c1 = CardHeader;
+function CardTitle(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "card-title",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("leading-none font-semibold", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/card.tsx",
+        lineNumber: 33,
+        columnNumber: 5
+    }, this);
+}
+_c2 = CardTitle;
+function CardDescription(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "card-description",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-muted-foreground text-sm", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/card.tsx",
+        lineNumber: 43,
+        columnNumber: 5
+    }, this);
+}
+_c3 = CardDescription;
+function CardAction(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "card-action",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/card.tsx",
+        lineNumber: 53,
+        columnNumber: 5
+    }, this);
+}
+_c4 = CardAction;
+function CardContent(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "card-content",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("px-6", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/card.tsx",
+        lineNumber: 66,
+        columnNumber: 5
+    }, this);
+}
+_c5 = CardContent;
+function CardFooter(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "card-footer",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex items-center px-6 [.border-t]:pt-6", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/card.tsx",
+        lineNumber: 76,
+        columnNumber: 5
+    }, this);
+}
+_c6 = CardFooter;
+;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6;
+__turbopack_context__.k.register(_c, "Card");
+__turbopack_context__.k.register(_c1, "CardHeader");
+__turbopack_context__.k.register(_c2, "CardTitle");
+__turbopack_context__.k.register(_c3, "CardDescription");
+__turbopack_context__.k.register(_c4, "CardAction");
+__turbopack_context__.k.register(_c5, "CardContent");
+__turbopack_context__.k.register(_c6, "CardFooter");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/ui/alert-dialog.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "AlertDialog",
+    ()=>AlertDialog,
+    "AlertDialogAction",
+    ()=>AlertDialogAction,
+    "AlertDialogCancel",
+    ()=>AlertDialogCancel,
+    "AlertDialogContent",
+    ()=>AlertDialogContent,
+    "AlertDialogDescription",
+    ()=>AlertDialogDescription,
+    "AlertDialogFooter",
+    ()=>AlertDialogFooter,
+    "AlertDialogHeader",
+    ()=>AlertDialogHeader,
+    "AlertDialogOverlay",
+    ()=>AlertDialogOverlay,
+    "AlertDialogPortal",
+    ()=>AlertDialogPortal,
+    "AlertDialogTitle",
+    ()=>AlertDialogTitle,
+    "AlertDialogTrigger",
+    ()=>AlertDialogTrigger
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@radix-ui/react-alert-dialog/dist/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
+"use client";
+;
+;
+;
+;
+function AlertDialog(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Root"], {
+        "data-slot": "alert-dialog",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 12,
+        columnNumber: 10
+    }, this);
+}
+_c = AlertDialog;
+function AlertDialogTrigger(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Trigger"], {
+        "data-slot": "alert-dialog-trigger",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 19,
+        columnNumber: 5
+    }, this);
+}
+_c1 = AlertDialogTrigger;
+function AlertDialogPortal(param) {
+    let { ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Portal"], {
+        "data-slot": "alert-dialog-portal",
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 27,
+        columnNumber: 5
+    }, this);
+}
+_c2 = AlertDialogPortal;
+function AlertDialogOverlay(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Overlay"], {
+        "data-slot": "alert-dialog-overlay",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 36,
+        columnNumber: 5
+    }, this);
+}
+_c3 = AlertDialogOverlay;
+function AlertDialogContent(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AlertDialogPortal, {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AlertDialogOverlay, {}, void 0, false, {
+                fileName: "[project]/components/ui/alert-dialog.tsx",
+                lineNumber: 53,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Content"], {
+                "data-slot": "alert-dialog-content",
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg", className),
+                ...props
+            }, void 0, false, {
+                fileName: "[project]/components/ui/alert-dialog.tsx",
+                lineNumber: 54,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 52,
+        columnNumber: 5
+    }, this);
+}
+_c4 = AlertDialogContent;
+function AlertDialogHeader(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "alert-dialog-header",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex flex-col gap-2 text-center sm:text-left", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 71,
+        columnNumber: 5
+    }, this);
+}
+_c5 = AlertDialogHeader;
+function AlertDialogFooter(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        "data-slot": "alert-dialog-footer",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 84,
+        columnNumber: 5
+    }, this);
+}
+_c6 = AlertDialogFooter;
+function AlertDialogTitle(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Title"], {
+        "data-slot": "alert-dialog-title",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-lg font-semibold", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 100,
+        columnNumber: 5
+    }, this);
+}
+_c7 = AlertDialogTitle;
+function AlertDialogDescription(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Description"], {
+        "data-slot": "alert-dialog-description",
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-muted-foreground text-sm", className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 113,
+        columnNumber: 5
+    }, this);
+}
+_c8 = AlertDialogDescription;
+function AlertDialogAction(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Action"], {
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["buttonVariants"])(), className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 126,
+        columnNumber: 5
+    }, this);
+}
+_c9 = AlertDialogAction;
+function AlertDialogCancel(param) {
+    let { className, ...props } = param;
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$radix$2d$ui$2f$react$2d$alert$2d$dialog$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Cancel"], {
+        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["buttonVariants"])({
+            variant: "outline"
+        }), className),
+        ...props
+    }, void 0, false, {
+        fileName: "[project]/components/ui/alert-dialog.tsx",
+        lineNumber: 138,
+        columnNumber: 5
+    }, this);
+}
+_c10 = AlertDialogCancel;
+;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8, _c9, _c10;
+__turbopack_context__.k.register(_c, "AlertDialog");
+__turbopack_context__.k.register(_c1, "AlertDialogTrigger");
+__turbopack_context__.k.register(_c2, "AlertDialogPortal");
+__turbopack_context__.k.register(_c3, "AlertDialogOverlay");
+__turbopack_context__.k.register(_c4, "AlertDialogContent");
+__turbopack_context__.k.register(_c5, "AlertDialogHeader");
+__turbopack_context__.k.register(_c6, "AlertDialogFooter");
+__turbopack_context__.k.register(_c7, "AlertDialogTitle");
+__turbopack_context__.k.register(_c8, "AlertDialogDescription");
+__turbopack_context__.k.register(_c9, "AlertDialogAction");
+__turbopack_context__.k.register(_c10, "AlertDialogCancel");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/app/actions/data:5a8708 [app-client] (ecmascript) <text/javascript>", ((__turbopack_context__) => {
+"use strict";
+
+/* __next_internal_action_entry_do_not_use__ [{"604754b50a01b095dd7deddfc8de371a81bf090fc6":"updateUserRole"},"app/actions/users.ts",""] */ __turbopack_context__.s([
+    "updateUserRole",
+    ()=>updateUserRole
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-client-wrapper.js [app-client] (ecmascript)");
+"use turbopack no side effects";
+;
+var updateUserRole = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createServerReference"])("604754b50a01b095dd7deddfc8de371a81bf090fc6", __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["callServer"], void 0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["findSourceMapURL"], "updateUserRole"); //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4vdXNlcnMudHMiXSwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzZXJ2ZXInXG5cbmltcG9ydCB7IHJldmFsaWRhdGVQYXRoIH0gZnJvbSAnbmV4dC9jYWNoZSdcbmltcG9ydCB7IHByaXNtYSB9IGZyb20gJ0AvbGliL3ByaXNtYSdcbmltcG9ydCB7IGdldEN1cnJlbnRVc2VyLCBpc1BsYXRmb3JtQWRtaW4sIGdldFVzZXJSb2xlIH0gZnJvbSAnQC9saWIvYXV0aCdcbmltcG9ydCB7IFJvbGUsIE1lbWJlcnNoaXBTdGF0dXMgfSBmcm9tICdAcHJpc21hL2NsaWVudCdcbmltcG9ydCB7IGNyZWF0ZUNsaWVudCB9IGZyb20gJ0AvbGliL3N1cGFiYXNlL3NlcnZlcidcbmltcG9ydCB7IGNyZWF0ZUFkbWluQ2xpZW50IH0gZnJvbSAnQC9saWIvc3VwYWJhc2UvYWRtaW4nXG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBpbnZpdGVVc2VyKGNvbXBhbnlJZDogc3RyaW5nLCBmb3JtRGF0YTogRm9ybURhdGEpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcbiAgY29uc3Qgcm9sZSA9IGF3YWl0IGdldFVzZXJSb2xlKHVzZXIuaWQsIGNvbXBhbnlJZClcblxuICBpZiAoIWlzQWRtaW4gJiYgcm9sZSAhPT0gJ0NPTVBBTllfQURNSU4nKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgYWRtaW5pc3RyYWRvcmVzIHBvZGVtIGNvbnZpZGFyIHVzdcOhcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWwgPSBmb3JtRGF0YS5nZXQoJ2VtYWlsJykgYXMgc3RyaW5nXG4gIGNvbnN0IHVzZXJSb2xlID0gZm9ybURhdGEuZ2V0KCdyb2xlJykgYXMgUm9sZVxuXG4gIGlmICghZW1haWwgfHwgIXVzZXJSb2xlKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFbWFpbCBlIGZ1bsOnw6NvIHPDo28gb2JyaWdhdMOzcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWxSZWdleCA9IC9eW15cXHNAXStAW15cXHNAXStcXC5bXlxcc0BdKyQvXG4gIGlmICghZW1haWxSZWdleC50ZXN0KGVtYWlsKSkge1xuICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgaW52w6FsaWRvLiBVc2UgbyBmb3JtYXRvOiB1c3VhcmlvQGVtcHJlc2EuY29tJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IHN1cGFiYXNlQWRtaW4gPSBjcmVhdGVBZG1pbkNsaWVudCgpXG4gICAgXG4gICAgLy8gQ2hlY2sgaWYgdXNlciBhbHJlYWR5IGV4aXN0cyBpbiBTdXBhYmFzZSBBdXRoXG4gICAgY29uc3QgeyBkYXRhOiBleGlzdGluZ1VzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcbiAgICBsZXQgdGFyZ2V0VXNlciA9IGV4aXN0aW5nVXNlcnM/LnVzZXJzLmZpbmQodSA9PiB1LmVtYWlsPy50b0xvd2VyQ2FzZSgpID09PSBlbWFpbC50b0xvd2VyQ2FzZSgpKVxuXG4gICAgLy8gQ2hlY2sgaWYgdGhlcmUncyBhbHJlYWR5IGEgbWVtYmVyc2hpcCBmb3IgdGhpcyBlbWFpbC9jb21wYW55XG4gICAgaWYgKHRhcmdldFVzZXIpIHtcbiAgICAgIGNvbnN0IGV4aXN0aW5nTWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgICB3aGVyZToge1xuICAgICAgICAgIHVzZXJJZF9jb21wYW55SWQ6IHtcbiAgICAgICAgICAgIHVzZXJJZDogdGFyZ2V0VXNlci5pZCxcbiAgICAgICAgICAgIGNvbXBhbnlJZCxcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH0pXG5cbiAgICAgIGlmIChleGlzdGluZ01lbWJlcnNoaXApIHtcbiAgICAgICAgaWYgKGV4aXN0aW5nTWVtYmVyc2hpcC5zdGF0dXMgPT09ICdJTlZJVEVEJykge1xuICAgICAgICAgIHJldHVybiB7IGVycm9yOiAnRXN0ZSB1c3XDoXJpbyBqw6EgdGVtIHVtIGNvbnZpdGUgcGVuZGVudGUgcGFyYSBlc3RhIGVtcHJlc2EnIH1cbiAgICAgICAgfVxuICAgICAgICByZXR1cm4geyBlcnJvcjogJ0VzdGUgdXN1w6FyaW8gasOhIGVzdMOhIGFzc29jaWFkbyBhIGVzdGEgZW1wcmVzYScgfVxuICAgICAgfVxuICAgIH1cblxuICAgIC8vIElmIHVzZXIgZG9lc24ndCBleGlzdCwgaW52aXRlIHRoZW0gdmlhIFN1cGFiYXNlXG4gICAgaWYgKCF0YXJnZXRVc2VyKSB7XG4gICAgICBjb25zdCB7IGRhdGE6IGludml0ZURhdGEsIGVycm9yOiBpbnZpdGVFcnJvciB9ID0gYXdhaXQgc3VwYWJhc2VBZG1pbi5hdXRoLmFkbWluLmludml0ZVVzZXJCeUVtYWlsKGVtYWlsLCB7XG4gICAgICAgIGRhdGE6IHtcbiAgICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICAgIGNvbXBhbnlfaWQ6IGNvbXBhbnlJZCxcbiAgICAgICAgfVxuICAgICAgfSlcblxuICAgICAgaWYgKGludml0ZUVycm9yKSB7XG4gICAgICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gZW52aWFyIGNvbnZpdGUgU3VwYWJhc2U6JywgaW52aXRlRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyBlbnZpYXIgY29udml0ZSBwb3IgZW1haWwnIH1cbiAgICAgIH1cblxuICAgICAgdGFyZ2V0VXNlciA9IGludml0ZURhdGEudXNlclxuICAgIH1cblxuICAgIC8vIENyZWF0ZSBtZW1iZXJzaGlwIHdpdGggSU5WSVRFRCBzdGF0dXNcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuY3JlYXRlKHtcbiAgICAgIGRhdGE6IHtcbiAgICAgICAgdXNlcklkOiB0YXJnZXRVc2VyLmlkLFxuICAgICAgICBjb21wYW55SWQsXG4gICAgICAgIHJvbGU6IHVzZXJSb2xlLFxuICAgICAgICBzdGF0dXM6ICdJTlZJVEVEJyxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7Y29tcGFueUlkfWApXG4gICAgcmV2YWxpZGF0ZVBhdGgoJy9kYXNoYm9hcmQvdXNlcnMnKVxuICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIG1lbWJlcnNoaXAgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gY29udmlkYXIgdXN1w6FyaW86JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGNvbnZpZGFyIHVzdcOhcmlvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIHJlc2VuZEludml0ZShtZW1iZXJzaGlwSWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZFVuaXF1ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgaWYgKCFtZW1iZXJzaGlwKSB7XG4gICAgICByZXR1cm4geyBlcnJvcjogJ01lbWJybyBuw6NvIGVuY29udHJhZG8nIH1cbiAgICB9XG5cbiAgICBpZiAobWVtYmVyc2hpcC5zdGF0dXMgIT09ICdJTlZJVEVEJykge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgY29udml0ZXMgcGVuZGVudGVzIHBvZGVtIHNlciByZWVudmlhZG9zJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSByZWVudmlhciBjb252aXRlcycgfVxuICAgIH1cblxuICAgIC8vIEdldCB1c2VyIGVtYWlsIGZyb20gU3VwYWJhc2VcbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXIgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5nZXRVc2VyQnlJZChtZW1iZXJzaGlwLnVzZXJJZClcblxuICAgIGlmICghYXV0aFVzZXIudXNlcj8uZW1haWwpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgZG8gdXN1w6FyaW8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgLy8gVHJ5IHRvIHJlc2VuZCBpbnZpdGUgLSBpZiB1c2VyIGFscmVhZHkgZXhpc3RzLCB1c2UgZ2VuZXJhdGVMaW5rIGluc3RlYWRcbiAgICBsZXQgaW52aXRlRXJyb3JcbiAgICBjb25zdCBpbnZpdGVSZXN1bHQgPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4uaW52aXRlVXNlckJ5RW1haWwoYXV0aFVzZXIudXNlci5lbWFpbCwge1xuICAgICAgcmVkaXJlY3RUbzogYCR7cHJvY2Vzcy5lbnYuTkVYVF9QVUJMSUNfU0lURV9VUkx9L2F1dGgvY2FsbGJhY2tgLFxuICAgICAgZGF0YToge1xuICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICBjb21wYW55X2lkOiBtZW1iZXJzaGlwLmNvbXBhbnlJZCxcbiAgICAgIH1cbiAgICB9KVxuICAgIFxuICAgIGludml0ZUVycm9yID0gaW52aXRlUmVzdWx0LmVycm9yXG5cbiAgICAvLyBJZiB1c2VyIGFscmVhZHkgZXhpc3RzIChlbWFpbF9leGlzdHMgZXJyb3IpLCB1c2UgZ2VuZXJhdGVMaW5rIGFwcHJvYWNoXG4gICAgaWYgKGludml0ZUVycm9yICYmIGludml0ZUVycm9yLm1lc3NhZ2U/LmluY2x1ZGVzKCdhbHJlYWR5IGJlZW4gcmVnaXN0ZXJlZCcpKSB7XG4gICAgICBjb25zdCB7IGRhdGE6IGxpbmtEYXRhLCBlcnJvcjogbGlua0Vycm9yIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4uZ2VuZXJhdGVMaW5rKHtcbiAgICAgICAgdHlwZTogJ21hZ2ljbGluaycsXG4gICAgICAgIGVtYWlsOiBhdXRoVXNlci51c2VyLmVtYWlsLFxuICAgICAgfSlcblxuICAgICAgaWYgKGxpbmtFcnJvcikge1xuICAgICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGdlcmFyIGxpbmsgZGUgY29udml0ZTonLCBsaW5rRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyByZWVudmlhciBjb252aXRlLiBQb3IgZmF2b3IsIHRlbnRlIG5vdmFtZW50ZS4nIH1cbiAgICAgIH1cblxuICAgICAgLy8gTm90ZTogZ2VuZXJhdGVMaW5rIGNyZWF0ZXMgdGhlIGxpbmsgYnV0IGRvZXNuJ3Qgc2VuZCBlbWFpbCBhdXRvbWF0aWNhbGx5XG4gICAgICAvLyBUaGUgbGluayBpcyBpbiBsaW5rRGF0YS5wcm9wZXJ0aWVzLmFjdGlvbl9saW5rXG4gICAgICAvLyBGb3Igbm93LCB3ZSdsbCBqdXN0IHVwZGF0ZSB0aGUgbWVtYmVyc2hpcCB0aW1lc3RhbXBcbiAgICAgIGNvbnNvbGUubG9nKCdMaW5rIGRlIGNvbnZpdGUgZ2VyYWRvIChjb25maWd1cmFyIGVudmlvIGRlIGVtYWlsIGN1c3RvbWl6YWRvKTonLCBsaW5rRGF0YS5wcm9wZXJ0aWVzPy5hY3Rpb25fbGluaylcbiAgICAgIFxuICAgICAgLy8gVE9ETzogSW1wbGVtZW50IGN1c3RvbSBlbWFpbCBzZW5kaW5nIHdpdGggdGhlIGdlbmVyYXRlZCBsaW5rXG4gICAgICAvLyBGb3Igbm93LCByZXR1cm4gc3VjY2VzcyBidXQgdXNlciB3b24ndCByZWNlaXZlIGVtYWlsXG4gICAgICByZXR1cm4geyBcbiAgICAgICAgc3VjY2VzczogdHJ1ZSwgXG4gICAgICAgIHdhcm5pbmc6ICdMaW5rIGdlcmFkby4gQ29uZmlndXJlIG8gZW52aW8gZGUgZW1haWwgY3VzdG9taXphZG8gcGFyYSBxdWUgbyB1c3XDoXJpbyByZWNlYmEgbyBjb252aXRlLicgXG4gICAgICB9XG4gICAgfVxuXG4gICAgaWYgKGludml0ZUVycm9yKSB7XG4gICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGU6JywgaW52aXRlRXJyb3IpXG4gICAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gcmVlbnZpYXIgY29udml0ZSBwb3IgZW1haWwnIH1cbiAgICB9XG5cbiAgICByZXZhbGlkYXRlUGF0aChgL2Rhc2hib2FyZC9jb21wYW5pZXMvJHttZW1iZXJzaGlwLmNvbXBhbnlJZH1gKVxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGU6JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGUnIH1cbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gdXBkYXRlVXNlclJvbGUobWVtYmVyc2hpcElkOiBzdHJpbmcsIG5ld1JvbGU6IFJvbGUpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgbWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9XG4gICAgfSlcblxuICAgIGlmICghbWVtYmVyc2hpcCkge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdNZW1icm8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSBhbHRlcmFyIGZ1bsOnw7VlcycgfVxuICAgIH1cblxuICAgIGNvbnN0IHVwZGF0ZWQgPSBhd2FpdCBwcmlzbWEubWVtYmVyc2hpcC51cGRhdGUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9LFxuICAgICAgZGF0YTogeyByb2xlOiBuZXdSb2xlIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7bWVtYmVyc2hpcC5jb21wYW55SWR9YClcbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgbWVtYmVyc2hpcDogdXBkYXRlZCB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyBhdHVhbGl6YXIgZnVuw6fDo286JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGF0dWFsaXphciBmdW7Dp8OjbycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiByZW1vdmVVc2VyRnJvbUNvbXBhbnkobWVtYmVyc2hpcElkOiBzdHJpbmcpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgbWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9XG4gICAgfSlcblxuICAgIGlmICghbWVtYmVyc2hpcCkge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdNZW1icm8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSByZW1vdmVyIHVzdcOhcmlvcycgfVxuICAgIH1cblxuICAgIGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmRlbGV0ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7bWVtYmVyc2hpcC5jb21wYW55SWR9YClcbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyByZW1vdmVyIHVzdcOhcmlvOicsIGVycm9yKVxuICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyByZW1vdmVyIHVzdcOhcmlvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGdldENvbXBhbnlVc2Vycyhjb21wYW55SWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICBjb25zdCByb2xlID0gYXdhaXQgZ2V0VXNlclJvbGUodXNlci5pZCwgY29tcGFueUlkKVxuXG4gIGlmICghaXNBZG1pbiAmJiAhcm9sZSkge1xuICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSBhY2Vzc2FyIHVzdcOhcmlvcyBkZXN0YSBlbXByZXNhJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IG1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgd2hlcmU6IHsgY29tcGFueUlkIH0sXG4gICAgICBpbmNsdWRlOiB7XG4gICAgICAgIGNvbXBhbnk6IHRydWVcbiAgICAgIH0sXG4gICAgICBvcmRlckJ5OiB7XG4gICAgICAgIGNyZWF0ZWRBdDogJ2Rlc2MnXG4gICAgICB9XG4gICAgfSlcblxuICAgIGNvbnN0IHN1cGFiYXNlQWRtaW4gPSBjcmVhdGVBZG1pbkNsaWVudCgpXG4gICAgY29uc3QgeyBkYXRhOiBhdXRoVXNlcnMgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5saXN0VXNlcnMoKVxuXG4gICAgY29uc3QgdXNlcnNXaXRoRGV0YWlscyA9IG1lbWJlcnNoaXBzLm1hcChtZW1iZXJzaGlwID0+IHtcbiAgICAgIGNvbnN0IGF1dGhVc2VyID0gYXV0aFVzZXJzPy51c2Vycy5maW5kKHUgPT4gdS5pZCA9PT0gbWVtYmVyc2hpcC51c2VySWQpXG4gICAgICByZXR1cm4ge1xuICAgICAgICAuLi5tZW1iZXJzaGlwLFxuICAgICAgICBlbWFpbDogYXV0aFVzZXI/LmVtYWlsLFxuICAgICAgICBuYW1lOiBhdXRoVXNlcj8udXNlcl9tZXRhZGF0YT8ubmFtZSxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdXNlcnM6IHVzZXJzV2l0aERldGFpbHMgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvczonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvcycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBnZXRBbGxVc2VycygpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcblxuICB0cnkge1xuICAgIGxldCBtZW1iZXJzaGlwc1xuXG4gICAgaWYgKGlzQWRtaW4pIHtcbiAgICAgIG1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgICBpbmNsdWRlOiB7XG4gICAgICAgICAgY29tcGFueTogdHJ1ZVxuICAgICAgICB9LFxuICAgICAgICBvcmRlckJ5OiB7XG4gICAgICAgICAgY3JlYXRlZEF0OiAnZGVzYydcbiAgICAgICAgfVxuICAgICAgfSlcbiAgICB9IGVsc2Uge1xuICAgICAgY29uc3QgdXNlck1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgICB3aGVyZToge1xuICAgICAgICAgIHVzZXJJZDogdXNlci5pZCxcbiAgICAgICAgICBzdGF0dXM6ICdBQ1RJVkUnXG4gICAgICAgIH0sXG4gICAgICAgIHNlbGVjdDoge1xuICAgICAgICAgIGNvbXBhbnlJZDogdHJ1ZVxuICAgICAgICB9XG4gICAgICB9KVxuXG4gICAgICBjb25zdCBjb21wYW55SWRzID0gdXNlck1lbWJlcnNoaXBzLm1hcChtID0+IG0uY29tcGFueUlkKVxuXG4gICAgICBtZW1iZXJzaGlwcyA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRNYW55KHtcbiAgICAgICAgd2hlcmU6IHtcbiAgICAgICAgICBjb21wYW55SWQ6IHtcbiAgICAgICAgICAgIGluOiBjb21wYW55SWRzXG4gICAgICAgICAgfVxuICAgICAgICB9LFxuICAgICAgICBpbmNsdWRlOiB7XG4gICAgICAgICAgY29tcGFueTogdHJ1ZVxuICAgICAgICB9LFxuICAgICAgICBvcmRlckJ5OiB7XG4gICAgICAgICAgY3JlYXRlZEF0OiAnZGVzYydcbiAgICAgICAgfVxuICAgICAgfSlcbiAgICB9XG5cbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcblxuICAgIC8vIEdldCBhbGwgcGxhdGZvcm0gYWRtaW5zIHRvIG92ZXJyaWRlIHRoZWlyIHJvbGUgZGlzcGxheVxuICAgIGNvbnN0IHBsYXRmb3JtQWRtaW5zID0gYXdhaXQgcHJpc21hLnBsYXRmb3JtQWRtaW4uZmluZE1hbnkoe1xuICAgICAgc2VsZWN0OiB7XG4gICAgICAgIHVzZXJJZDogdHJ1ZVxuICAgICAgfVxuICAgIH0pXG4gICAgY29uc3QgcGxhdGZvcm1BZG1pbklkcyA9IG5ldyBTZXQocGxhdGZvcm1BZG1pbnMubWFwKHBhID0+IHBhLnVzZXJJZCkpXG5cbiAgICBjb25zdCB1c2Vyc1dpdGhEZXRhaWxzID0gbWVtYmVyc2hpcHMubWFwKG1lbWJlcnNoaXAgPT4ge1xuICAgICAgY29uc3QgYXV0aFVzZXIgPSBhdXRoVXNlcnM/LnVzZXJzLmZpbmQodSA9PiB1LmlkID09PSBtZW1iZXJzaGlwLnVzZXJJZClcbiAgICAgIFxuICAgICAgLy8gSWYgdXNlciBpcyBhIHBsYXRmb3JtIGFkbWluLCBvdmVycmlkZSB0aGVpciByb2xlIGZvciBkaXNwbGF5XG4gICAgICBjb25zdCBlZmZlY3RpdmVSb2xlID0gcGxhdGZvcm1BZG1pbklkcy5oYXMobWVtYmVyc2hpcC51c2VySWQpIFxuICAgICAgICA/ICdQTEFURk9STV9BRE1JTicgYXMgUm9sZVxuICAgICAgICA6IG1lbWJlcnNoaXAucm9sZVxuXG4gICAgICByZXR1cm4ge1xuICAgICAgICAuLi5tZW1iZXJzaGlwLFxuICAgICAgICByb2xlOiBlZmZlY3RpdmVSb2xlLFxuICAgICAgICBlbWFpbDogYXV0aFVzZXI/LmVtYWlsLFxuICAgICAgICBuYW1lOiBhdXRoVXNlcj8udXNlcl9tZXRhZGF0YT8ubmFtZSxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdXNlcnM6IHVzZXJzV2l0aERldGFpbHMgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvczonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvcycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBtYWtlUGxhdGZvcm1BZG1pbih1c2VySWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICBpZiAoIWlzQWRtaW4pIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ0FwZW5hcyBhZG1pbmlzdHJhZG9yZXMgZGEgcGxhdGFmb3JtYSBwb2RlbSBwcm9tb3ZlciB1c3XDoXJpb3MnIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgYWRtaW4gPSBhd2FpdCBwcmlzbWEucGxhdGZvcm1BZG1pbi5jcmVhdGUoe1xuICAgICAgZGF0YToge1xuICAgICAgICB1c2VySWQsXG4gICAgICB9XG4gICAgfSlcblxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlLCBhZG1pbiB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyBwcm9tb3ZlciB1c3XDoXJpbzonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0VzdGUgdXN1w6FyaW8gasOhIMOpIGFkbWluaXN0cmFkb3IgZGEgcGxhdGFmb3JtYScgfVxuICB9XG59XG4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjRSQXFMc0IifQ==
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/dashboard/edit-user-role-dialog.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "EditUserRoleDialog",
+    ()=>EditUserRoleDialog
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/dialog.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/select.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/label.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$5a8708__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:5a8708 [app-client] (ecmascript) <text/javascript>");
+;
+var _s = __turbopack_context__.k.signature();
+'use client';
+;
+;
+;
+;
+;
+;
+function EditUserRoleDialog(param) {
+    let { open, onOpenChange, user } = param;
+    _s();
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [success, setSuccess] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [selectedRole, setSelectedRole] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(user.role);
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        setSuccess(false);
+        const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$5a8708__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["updateUserRole"])(user.id, selectedRole);
+        if (result.error) {
+            setError(result.error);
+            setLoading(false);
+        } else {
+            setSuccess(true);
+            setLoading(false);
+            setTimeout(()=>{
+                onOpenChange(false);
+                setSuccess(false);
+            }, 1500);
+        }
+    }
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
+        open: open,
+        onOpenChange: onOpenChange,
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogContent"], {
+            className: "sm:max-w-[400px]",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogHeader"], {
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogTitle"], {
+                            children: "Editar Papel do Usuário"
+                        }, void 0, false, {
+                            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                            lineNumber: 65,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
+                            children: [
+                                "Altere o papel de ",
+                                user.name || user.email
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                            lineNumber: 66,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                    lineNumber: 64,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                    onSubmit: handleSubmit,
+                    className: "space-y-4 pt-4",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "space-y-2",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+                                    htmlFor: "role",
+                                    children: [
+                                        "Papel ",
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-destructive",
+                                            children: "*"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                            lineNumber: 74,
+                                            columnNumber: 21
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                    lineNumber: 73,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
+                                    value: selectedRole,
+                                    onValueChange: (value)=>setSelectedRole(value),
+                                    disabled: loading,
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {
+                                                placeholder: "Selecione um papel"
+                                            }, void 0, false, {
+                                                fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                                lineNumber: 78,
+                                                columnNumber: 17
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                            lineNumber: 77,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                    value: "COMPANY_ADMIN",
+                                                    children: "Administrador da Empresa"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                                    lineNumber: 81,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                    value: "ENGINEER",
+                                                    children: "Engenheiro SST"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                                    lineNumber: 82,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                    value: "EMPLOYER",
+                                                    children: "Funcionário"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                                    lineNumber: 83,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                    value: "VIEWER",
+                                                    children: "Visualizador"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                                    lineNumber: 84,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                            lineNumber: 80,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                    lineNumber: 76,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-xs text-muted-foreground",
+                                    children: "Define as permissões do usuário na empresa"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                    lineNumber: 87,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                            lineNumber: 72,
+                            columnNumber: 11
+                        }, this),
+                        error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-destructive/10 text-destructive p-3 rounded-lg text-sm",
+                            children: error
+                        }, void 0, false, {
+                            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                            lineNumber: 93,
+                            columnNumber: 13
+                        }, this),
+                        success && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "bg-green-500/10 text-green-700 p-3 rounded-lg text-sm",
+                            children: "Papel atualizado com sucesso!"
+                        }, void 0, false, {
+                            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                            lineNumber: 99,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex gap-3 pt-2",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                    type: "submit",
+                                    disabled: loading || success || selectedRole === user.role,
+                                    className: "flex-1",
+                                    children: loading ? 'Salvando...' : success ? 'Salvo!' : 'Salvar'
+                                }, void 0, false, {
+                                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                    lineNumber: 105,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                    type: "button",
+                                    variant: "outline",
+                                    onClick: ()=>onOpenChange(false),
+                                    disabled: loading,
+                                    className: "flex-1",
+                                    children: "Cancelar"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                                    lineNumber: 112,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                            lineNumber: 104,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+                    lineNumber: 71,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+            lineNumber: 63,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/components/dashboard/edit-user-role-dialog.tsx",
+        lineNumber: 62,
+        columnNumber: 5
+    }, this);
+}
+_s(EditUserRoleDialog, "CF+CVys6G/+l89si8arIRhGWspI=");
+_c = EditUserRoleDialog;
+var _c;
+__turbopack_context__.k.register(_c, "EditUserRoleDialog");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/app/actions/data:8a97fa [app-client] (ecmascript) <text/javascript>", ((__turbopack_context__) => {
+"use strict";
+
+/* __next_internal_action_entry_do_not_use__ [{"4008ad55fcf21f96be60541e1cf011236ee422ccca":"resendInvite"},"app/actions/users.ts",""] */ __turbopack_context__.s([
+    "resendInvite",
+    ()=>resendInvite
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-client-wrapper.js [app-client] (ecmascript)");
+"use turbopack no side effects";
+;
+var resendInvite = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createServerReference"])("4008ad55fcf21f96be60541e1cf011236ee422ccca", __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["callServer"], void 0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["findSourceMapURL"], "resendInvite"); //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4vdXNlcnMudHMiXSwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzZXJ2ZXInXG5cbmltcG9ydCB7IHJldmFsaWRhdGVQYXRoIH0gZnJvbSAnbmV4dC9jYWNoZSdcbmltcG9ydCB7IHByaXNtYSB9IGZyb20gJ0AvbGliL3ByaXNtYSdcbmltcG9ydCB7IGdldEN1cnJlbnRVc2VyLCBpc1BsYXRmb3JtQWRtaW4sIGdldFVzZXJSb2xlIH0gZnJvbSAnQC9saWIvYXV0aCdcbmltcG9ydCB7IFJvbGUsIE1lbWJlcnNoaXBTdGF0dXMgfSBmcm9tICdAcHJpc21hL2NsaWVudCdcbmltcG9ydCB7IGNyZWF0ZUNsaWVudCB9IGZyb20gJ0AvbGliL3N1cGFiYXNlL3NlcnZlcidcbmltcG9ydCB7IGNyZWF0ZUFkbWluQ2xpZW50IH0gZnJvbSAnQC9saWIvc3VwYWJhc2UvYWRtaW4nXG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBpbnZpdGVVc2VyKGNvbXBhbnlJZDogc3RyaW5nLCBmb3JtRGF0YTogRm9ybURhdGEpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcbiAgY29uc3Qgcm9sZSA9IGF3YWl0IGdldFVzZXJSb2xlKHVzZXIuaWQsIGNvbXBhbnlJZClcblxuICBpZiAoIWlzQWRtaW4gJiYgcm9sZSAhPT0gJ0NPTVBBTllfQURNSU4nKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgYWRtaW5pc3RyYWRvcmVzIHBvZGVtIGNvbnZpZGFyIHVzdcOhcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWwgPSBmb3JtRGF0YS5nZXQoJ2VtYWlsJykgYXMgc3RyaW5nXG4gIGNvbnN0IHVzZXJSb2xlID0gZm9ybURhdGEuZ2V0KCdyb2xlJykgYXMgUm9sZVxuXG4gIGlmICghZW1haWwgfHwgIXVzZXJSb2xlKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFbWFpbCBlIGZ1bsOnw6NvIHPDo28gb2JyaWdhdMOzcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWxSZWdleCA9IC9eW15cXHNAXStAW15cXHNAXStcXC5bXlxcc0BdKyQvXG4gIGlmICghZW1haWxSZWdleC50ZXN0KGVtYWlsKSkge1xuICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgaW52w6FsaWRvLiBVc2UgbyBmb3JtYXRvOiB1c3VhcmlvQGVtcHJlc2EuY29tJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IHN1cGFiYXNlQWRtaW4gPSBjcmVhdGVBZG1pbkNsaWVudCgpXG4gICAgXG4gICAgLy8gQ2hlY2sgaWYgdXNlciBhbHJlYWR5IGV4aXN0cyBpbiBTdXBhYmFzZSBBdXRoXG4gICAgY29uc3QgeyBkYXRhOiBleGlzdGluZ1VzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcbiAgICBsZXQgdGFyZ2V0VXNlciA9IGV4aXN0aW5nVXNlcnM/LnVzZXJzLmZpbmQodSA9PiB1LmVtYWlsPy50b0xvd2VyQ2FzZSgpID09PSBlbWFpbC50b0xvd2VyQ2FzZSgpKVxuXG4gICAgLy8gQ2hlY2sgaWYgdGhlcmUncyBhbHJlYWR5IGEgbWVtYmVyc2hpcCBmb3IgdGhpcyBlbWFpbC9jb21wYW55XG4gICAgaWYgKHRhcmdldFVzZXIpIHtcbiAgICAgIGNvbnN0IGV4aXN0aW5nTWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgICB3aGVyZToge1xuICAgICAgICAgIHVzZXJJZF9jb21wYW55SWQ6IHtcbiAgICAgICAgICAgIHVzZXJJZDogdGFyZ2V0VXNlci5pZCxcbiAgICAgICAgICAgIGNvbXBhbnlJZCxcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH0pXG5cbiAgICAgIGlmIChleGlzdGluZ01lbWJlcnNoaXApIHtcbiAgICAgICAgaWYgKGV4aXN0aW5nTWVtYmVyc2hpcC5zdGF0dXMgPT09ICdJTlZJVEVEJykge1xuICAgICAgICAgIHJldHVybiB7IGVycm9yOiAnRXN0ZSB1c3XDoXJpbyBqw6EgdGVtIHVtIGNvbnZpdGUgcGVuZGVudGUgcGFyYSBlc3RhIGVtcHJlc2EnIH1cbiAgICAgICAgfVxuICAgICAgICByZXR1cm4geyBlcnJvcjogJ0VzdGUgdXN1w6FyaW8gasOhIGVzdMOhIGFzc29jaWFkbyBhIGVzdGEgZW1wcmVzYScgfVxuICAgICAgfVxuICAgIH1cblxuICAgIC8vIElmIHVzZXIgZG9lc24ndCBleGlzdCwgaW52aXRlIHRoZW0gdmlhIFN1cGFiYXNlXG4gICAgaWYgKCF0YXJnZXRVc2VyKSB7XG4gICAgICBjb25zdCB7IGRhdGE6IGludml0ZURhdGEsIGVycm9yOiBpbnZpdGVFcnJvciB9ID0gYXdhaXQgc3VwYWJhc2VBZG1pbi5hdXRoLmFkbWluLmludml0ZVVzZXJCeUVtYWlsKGVtYWlsLCB7XG4gICAgICAgIGRhdGE6IHtcbiAgICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICAgIGNvbXBhbnlfaWQ6IGNvbXBhbnlJZCxcbiAgICAgICAgfVxuICAgICAgfSlcblxuICAgICAgaWYgKGludml0ZUVycm9yKSB7XG4gICAgICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gZW52aWFyIGNvbnZpdGUgU3VwYWJhc2U6JywgaW52aXRlRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyBlbnZpYXIgY29udml0ZSBwb3IgZW1haWwnIH1cbiAgICAgIH1cblxuICAgICAgdGFyZ2V0VXNlciA9IGludml0ZURhdGEudXNlclxuICAgIH1cblxuICAgIC8vIENyZWF0ZSBtZW1iZXJzaGlwIHdpdGggSU5WSVRFRCBzdGF0dXNcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuY3JlYXRlKHtcbiAgICAgIGRhdGE6IHtcbiAgICAgICAgdXNlcklkOiB0YXJnZXRVc2VyLmlkLFxuICAgICAgICBjb21wYW55SWQsXG4gICAgICAgIHJvbGU6IHVzZXJSb2xlLFxuICAgICAgICBzdGF0dXM6ICdJTlZJVEVEJyxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7Y29tcGFueUlkfWApXG4gICAgcmV2YWxpZGF0ZVBhdGgoJy9kYXNoYm9hcmQvdXNlcnMnKVxuICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIG1lbWJlcnNoaXAgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gY29udmlkYXIgdXN1w6FyaW86JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGNvbnZpZGFyIHVzdcOhcmlvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIHJlc2VuZEludml0ZShtZW1iZXJzaGlwSWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZFVuaXF1ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgaWYgKCFtZW1iZXJzaGlwKSB7XG4gICAgICByZXR1cm4geyBlcnJvcjogJ01lbWJybyBuw6NvIGVuY29udHJhZG8nIH1cbiAgICB9XG5cbiAgICBpZiAobWVtYmVyc2hpcC5zdGF0dXMgIT09ICdJTlZJVEVEJykge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgY29udml0ZXMgcGVuZGVudGVzIHBvZGVtIHNlciByZWVudmlhZG9zJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSByZWVudmlhciBjb252aXRlcycgfVxuICAgIH1cblxuICAgIC8vIEdldCB1c2VyIGVtYWlsIGZyb20gU3VwYWJhc2VcbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXIgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5nZXRVc2VyQnlJZChtZW1iZXJzaGlwLnVzZXJJZClcblxuICAgIGlmICghYXV0aFVzZXIudXNlcj8uZW1haWwpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgZG8gdXN1w6FyaW8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgLy8gVHJ5IHRvIHJlc2VuZCBpbnZpdGUgLSBpZiB1c2VyIGFscmVhZHkgZXhpc3RzLCB1c2UgZ2VuZXJhdGVMaW5rIGluc3RlYWRcbiAgICBsZXQgaW52aXRlRXJyb3JcbiAgICBjb25zdCBpbnZpdGVSZXN1bHQgPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4uaW52aXRlVXNlckJ5RW1haWwoYXV0aFVzZXIudXNlci5lbWFpbCwge1xuICAgICAgcmVkaXJlY3RUbzogYCR7cHJvY2Vzcy5lbnYuTkVYVF9QVUJMSUNfU0lURV9VUkx9L2F1dGgvY2FsbGJhY2tgLFxuICAgICAgZGF0YToge1xuICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICBjb21wYW55X2lkOiBtZW1iZXJzaGlwLmNvbXBhbnlJZCxcbiAgICAgIH1cbiAgICB9KVxuICAgIFxuICAgIGludml0ZUVycm9yID0gaW52aXRlUmVzdWx0LmVycm9yXG5cbiAgICAvLyBJZiB1c2VyIGFscmVhZHkgZXhpc3RzIChlbWFpbF9leGlzdHMgZXJyb3IpLCB1c2UgZ2VuZXJhdGVMaW5rIGFwcHJvYWNoXG4gICAgaWYgKGludml0ZUVycm9yICYmIGludml0ZUVycm9yLm1lc3NhZ2U/LmluY2x1ZGVzKCdhbHJlYWR5IGJlZW4gcmVnaXN0ZXJlZCcpKSB7XG4gICAgICBjb25zdCB7IGRhdGE6IGxpbmtEYXRhLCBlcnJvcjogbGlua0Vycm9yIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4uZ2VuZXJhdGVMaW5rKHtcbiAgICAgICAgdHlwZTogJ21hZ2ljbGluaycsXG4gICAgICAgIGVtYWlsOiBhdXRoVXNlci51c2VyLmVtYWlsLFxuICAgICAgfSlcblxuICAgICAgaWYgKGxpbmtFcnJvcikge1xuICAgICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGdlcmFyIGxpbmsgZGUgY29udml0ZTonLCBsaW5rRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyByZWVudmlhciBjb252aXRlLiBQb3IgZmF2b3IsIHRlbnRlIG5vdmFtZW50ZS4nIH1cbiAgICAgIH1cblxuICAgICAgLy8gTm90ZTogZ2VuZXJhdGVMaW5rIGNyZWF0ZXMgdGhlIGxpbmsgYnV0IGRvZXNuJ3Qgc2VuZCBlbWFpbCBhdXRvbWF0aWNhbGx5XG4gICAgICAvLyBUaGUgbGluayBpcyBpbiBsaW5rRGF0YS5wcm9wZXJ0aWVzLmFjdGlvbl9saW5rXG4gICAgICAvLyBGb3Igbm93LCB3ZSdsbCBqdXN0IHVwZGF0ZSB0aGUgbWVtYmVyc2hpcCB0aW1lc3RhbXBcbiAgICAgIGNvbnNvbGUubG9nKCdMaW5rIGRlIGNvbnZpdGUgZ2VyYWRvIChjb25maWd1cmFyIGVudmlvIGRlIGVtYWlsIGN1c3RvbWl6YWRvKTonLCBsaW5rRGF0YS5wcm9wZXJ0aWVzPy5hY3Rpb25fbGluaylcbiAgICAgIFxuICAgICAgLy8gVE9ETzogSW1wbGVtZW50IGN1c3RvbSBlbWFpbCBzZW5kaW5nIHdpdGggdGhlIGdlbmVyYXRlZCBsaW5rXG4gICAgICAvLyBGb3Igbm93LCByZXR1cm4gc3VjY2VzcyBidXQgdXNlciB3b24ndCByZWNlaXZlIGVtYWlsXG4gICAgICByZXR1cm4geyBcbiAgICAgICAgc3VjY2VzczogdHJ1ZSwgXG4gICAgICAgIHdhcm5pbmc6ICdMaW5rIGdlcmFkby4gQ29uZmlndXJlIG8gZW52aW8gZGUgZW1haWwgY3VzdG9taXphZG8gcGFyYSBxdWUgbyB1c3XDoXJpbyByZWNlYmEgbyBjb252aXRlLicgXG4gICAgICB9XG4gICAgfVxuXG4gICAgaWYgKGludml0ZUVycm9yKSB7XG4gICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGU6JywgaW52aXRlRXJyb3IpXG4gICAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gcmVlbnZpYXIgY29udml0ZSBwb3IgZW1haWwnIH1cbiAgICB9XG5cbiAgICByZXZhbGlkYXRlUGF0aChgL2Rhc2hib2FyZC9jb21wYW5pZXMvJHttZW1iZXJzaGlwLmNvbXBhbnlJZH1gKVxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGU6JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGUnIH1cbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gdXBkYXRlVXNlclJvbGUobWVtYmVyc2hpcElkOiBzdHJpbmcsIG5ld1JvbGU6IFJvbGUpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgbWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9XG4gICAgfSlcblxuICAgIGlmICghbWVtYmVyc2hpcCkge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdNZW1icm8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSBhbHRlcmFyIGZ1bsOnw7VlcycgfVxuICAgIH1cblxuICAgIGNvbnN0IHVwZGF0ZWQgPSBhd2FpdCBwcmlzbWEubWVtYmVyc2hpcC51cGRhdGUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9LFxuICAgICAgZGF0YTogeyByb2xlOiBuZXdSb2xlIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7bWVtYmVyc2hpcC5jb21wYW55SWR9YClcbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgbWVtYmVyc2hpcDogdXBkYXRlZCB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyBhdHVhbGl6YXIgZnVuw6fDo286JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGF0dWFsaXphciBmdW7Dp8OjbycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiByZW1vdmVVc2VyRnJvbUNvbXBhbnkobWVtYmVyc2hpcElkOiBzdHJpbmcpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgbWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9XG4gICAgfSlcblxuICAgIGlmICghbWVtYmVyc2hpcCkge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdNZW1icm8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSByZW1vdmVyIHVzdcOhcmlvcycgfVxuICAgIH1cblxuICAgIGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmRlbGV0ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7bWVtYmVyc2hpcC5jb21wYW55SWR9YClcbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyByZW1vdmVyIHVzdcOhcmlvOicsIGVycm9yKVxuICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyByZW1vdmVyIHVzdcOhcmlvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGdldENvbXBhbnlVc2Vycyhjb21wYW55SWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICBjb25zdCByb2xlID0gYXdhaXQgZ2V0VXNlclJvbGUodXNlci5pZCwgY29tcGFueUlkKVxuXG4gIGlmICghaXNBZG1pbiAmJiAhcm9sZSkge1xuICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSBhY2Vzc2FyIHVzdcOhcmlvcyBkZXN0YSBlbXByZXNhJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IG1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgd2hlcmU6IHsgY29tcGFueUlkIH0sXG4gICAgICBpbmNsdWRlOiB7XG4gICAgICAgIGNvbXBhbnk6IHRydWVcbiAgICAgIH0sXG4gICAgICBvcmRlckJ5OiB7XG4gICAgICAgIGNyZWF0ZWRBdDogJ2Rlc2MnXG4gICAgICB9XG4gICAgfSlcblxuICAgIGNvbnN0IHN1cGFiYXNlQWRtaW4gPSBjcmVhdGVBZG1pbkNsaWVudCgpXG4gICAgY29uc3QgeyBkYXRhOiBhdXRoVXNlcnMgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5saXN0VXNlcnMoKVxuXG4gICAgY29uc3QgdXNlcnNXaXRoRGV0YWlscyA9IG1lbWJlcnNoaXBzLm1hcChtZW1iZXJzaGlwID0+IHtcbiAgICAgIGNvbnN0IGF1dGhVc2VyID0gYXV0aFVzZXJzPy51c2Vycy5maW5kKHUgPT4gdS5pZCA9PT0gbWVtYmVyc2hpcC51c2VySWQpXG4gICAgICByZXR1cm4ge1xuICAgICAgICAuLi5tZW1iZXJzaGlwLFxuICAgICAgICBlbWFpbDogYXV0aFVzZXI/LmVtYWlsLFxuICAgICAgICBuYW1lOiBhdXRoVXNlcj8udXNlcl9tZXRhZGF0YT8ubmFtZSxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdXNlcnM6IHVzZXJzV2l0aERldGFpbHMgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvczonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvcycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBnZXRBbGxVc2VycygpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcblxuICB0cnkge1xuICAgIGxldCBtZW1iZXJzaGlwc1xuXG4gICAgaWYgKGlzQWRtaW4pIHtcbiAgICAgIG1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgICBpbmNsdWRlOiB7XG4gICAgICAgICAgY29tcGFueTogdHJ1ZVxuICAgICAgICB9LFxuICAgICAgICBvcmRlckJ5OiB7XG4gICAgICAgICAgY3JlYXRlZEF0OiAnZGVzYydcbiAgICAgICAgfVxuICAgICAgfSlcbiAgICB9IGVsc2Uge1xuICAgICAgY29uc3QgdXNlck1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgICB3aGVyZToge1xuICAgICAgICAgIHVzZXJJZDogdXNlci5pZCxcbiAgICAgICAgICBzdGF0dXM6ICdBQ1RJVkUnXG4gICAgICAgIH0sXG4gICAgICAgIHNlbGVjdDoge1xuICAgICAgICAgIGNvbXBhbnlJZDogdHJ1ZVxuICAgICAgICB9XG4gICAgICB9KVxuXG4gICAgICBjb25zdCBjb21wYW55SWRzID0gdXNlck1lbWJlcnNoaXBzLm1hcChtID0+IG0uY29tcGFueUlkKVxuXG4gICAgICBtZW1iZXJzaGlwcyA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRNYW55KHtcbiAgICAgICAgd2hlcmU6IHtcbiAgICAgICAgICBjb21wYW55SWQ6IHtcbiAgICAgICAgICAgIGluOiBjb21wYW55SWRzXG4gICAgICAgICAgfVxuICAgICAgICB9LFxuICAgICAgICBpbmNsdWRlOiB7XG4gICAgICAgICAgY29tcGFueTogdHJ1ZVxuICAgICAgICB9LFxuICAgICAgICBvcmRlckJ5OiB7XG4gICAgICAgICAgY3JlYXRlZEF0OiAnZGVzYydcbiAgICAgICAgfVxuICAgICAgfSlcbiAgICB9XG5cbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcblxuICAgIC8vIEdldCBhbGwgcGxhdGZvcm0gYWRtaW5zIHRvIG92ZXJyaWRlIHRoZWlyIHJvbGUgZGlzcGxheVxuICAgIGNvbnN0IHBsYXRmb3JtQWRtaW5zID0gYXdhaXQgcHJpc21hLnBsYXRmb3JtQWRtaW4uZmluZE1hbnkoe1xuICAgICAgc2VsZWN0OiB7XG4gICAgICAgIHVzZXJJZDogdHJ1ZVxuICAgICAgfVxuICAgIH0pXG4gICAgY29uc3QgcGxhdGZvcm1BZG1pbklkcyA9IG5ldyBTZXQocGxhdGZvcm1BZG1pbnMubWFwKHBhID0+IHBhLnVzZXJJZCkpXG5cbiAgICBjb25zdCB1c2Vyc1dpdGhEZXRhaWxzID0gbWVtYmVyc2hpcHMubWFwKG1lbWJlcnNoaXAgPT4ge1xuICAgICAgY29uc3QgYXV0aFVzZXIgPSBhdXRoVXNlcnM/LnVzZXJzLmZpbmQodSA9PiB1LmlkID09PSBtZW1iZXJzaGlwLnVzZXJJZClcbiAgICAgIFxuICAgICAgLy8gSWYgdXNlciBpcyBhIHBsYXRmb3JtIGFkbWluLCBvdmVycmlkZSB0aGVpciByb2xlIGZvciBkaXNwbGF5XG4gICAgICBjb25zdCBlZmZlY3RpdmVSb2xlID0gcGxhdGZvcm1BZG1pbklkcy5oYXMobWVtYmVyc2hpcC51c2VySWQpIFxuICAgICAgICA/ICdQTEFURk9STV9BRE1JTicgYXMgUm9sZVxuICAgICAgICA6IG1lbWJlcnNoaXAucm9sZVxuXG4gICAgICByZXR1cm4ge1xuICAgICAgICAuLi5tZW1iZXJzaGlwLFxuICAgICAgICByb2xlOiBlZmZlY3RpdmVSb2xlLFxuICAgICAgICBlbWFpbDogYXV0aFVzZXI/LmVtYWlsLFxuICAgICAgICBuYW1lOiBhdXRoVXNlcj8udXNlcl9tZXRhZGF0YT8ubmFtZSxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdXNlcnM6IHVzZXJzV2l0aERldGFpbHMgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvczonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvcycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBtYWtlUGxhdGZvcm1BZG1pbih1c2VySWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICBpZiAoIWlzQWRtaW4pIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ0FwZW5hcyBhZG1pbmlzdHJhZG9yZXMgZGEgcGxhdGFmb3JtYSBwb2RlbSBwcm9tb3ZlciB1c3XDoXJpb3MnIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgYWRtaW4gPSBhd2FpdCBwcmlzbWEucGxhdGZvcm1BZG1pbi5jcmVhdGUoe1xuICAgICAgZGF0YToge1xuICAgICAgICB1c2VySWQsXG4gICAgICB9XG4gICAgfSlcblxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlLCBhZG1pbiB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyBwcm9tb3ZlciB1c3XDoXJpbzonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0VzdGUgdXN1w6FyaW8gasOhIMOpIGFkbWluaXN0cmFkb3IgZGEgcGxhdGFmb3JtYScgfVxuICB9XG59XG4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjBSQWdHc0IifQ==
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/app/actions/data:236617 [app-client] (ecmascript) <text/javascript>", ((__turbopack_context__) => {
+"use strict";
+
+/* __next_internal_action_entry_do_not_use__ [{"406d00474b07596f79e49a2ca3149ec54dae8e253d":"removeUserFromCompany"},"app/actions/users.ts",""] */ __turbopack_context__.s([
+    "removeUserFromCompany",
+    ()=>removeUserFromCompany
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-client-wrapper.js [app-client] (ecmascript)");
+"use turbopack no side effects";
+;
+var removeUserFromCompany = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createServerReference"])("406d00474b07596f79e49a2ca3149ec54dae8e253d", __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["callServer"], void 0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["findSourceMapURL"], "removeUserFromCompany"); //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4vdXNlcnMudHMiXSwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzZXJ2ZXInXG5cbmltcG9ydCB7IHJldmFsaWRhdGVQYXRoIH0gZnJvbSAnbmV4dC9jYWNoZSdcbmltcG9ydCB7IHByaXNtYSB9IGZyb20gJ0AvbGliL3ByaXNtYSdcbmltcG9ydCB7IGdldEN1cnJlbnRVc2VyLCBpc1BsYXRmb3JtQWRtaW4sIGdldFVzZXJSb2xlIH0gZnJvbSAnQC9saWIvYXV0aCdcbmltcG9ydCB7IFJvbGUsIE1lbWJlcnNoaXBTdGF0dXMgfSBmcm9tICdAcHJpc21hL2NsaWVudCdcbmltcG9ydCB7IGNyZWF0ZUNsaWVudCB9IGZyb20gJ0AvbGliL3N1cGFiYXNlL3NlcnZlcidcbmltcG9ydCB7IGNyZWF0ZUFkbWluQ2xpZW50IH0gZnJvbSAnQC9saWIvc3VwYWJhc2UvYWRtaW4nXG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBpbnZpdGVVc2VyKGNvbXBhbnlJZDogc3RyaW5nLCBmb3JtRGF0YTogRm9ybURhdGEpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcbiAgY29uc3Qgcm9sZSA9IGF3YWl0IGdldFVzZXJSb2xlKHVzZXIuaWQsIGNvbXBhbnlJZClcblxuICBpZiAoIWlzQWRtaW4gJiYgcm9sZSAhPT0gJ0NPTVBBTllfQURNSU4nKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgYWRtaW5pc3RyYWRvcmVzIHBvZGVtIGNvbnZpZGFyIHVzdcOhcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWwgPSBmb3JtRGF0YS5nZXQoJ2VtYWlsJykgYXMgc3RyaW5nXG4gIGNvbnN0IHVzZXJSb2xlID0gZm9ybURhdGEuZ2V0KCdyb2xlJykgYXMgUm9sZVxuXG4gIGlmICghZW1haWwgfHwgIXVzZXJSb2xlKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFbWFpbCBlIGZ1bsOnw6NvIHPDo28gb2JyaWdhdMOzcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWxSZWdleCA9IC9eW15cXHNAXStAW15cXHNAXStcXC5bXlxcc0BdKyQvXG4gIGlmICghZW1haWxSZWdleC50ZXN0KGVtYWlsKSkge1xuICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgaW52w6FsaWRvLiBVc2UgbyBmb3JtYXRvOiB1c3VhcmlvQGVtcHJlc2EuY29tJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IHN1cGFiYXNlQWRtaW4gPSBjcmVhdGVBZG1pbkNsaWVudCgpXG4gICAgXG4gICAgLy8gQ2hlY2sgaWYgdXNlciBhbHJlYWR5IGV4aXN0cyBpbiBTdXBhYmFzZSBBdXRoXG4gICAgY29uc3QgeyBkYXRhOiBleGlzdGluZ1VzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcbiAgICBsZXQgdGFyZ2V0VXNlciA9IGV4aXN0aW5nVXNlcnM/LnVzZXJzLmZpbmQodSA9PiB1LmVtYWlsPy50b0xvd2VyQ2FzZSgpID09PSBlbWFpbC50b0xvd2VyQ2FzZSgpKVxuXG4gICAgLy8gQ2hlY2sgaWYgdGhlcmUncyBhbHJlYWR5IGEgbWVtYmVyc2hpcCBmb3IgdGhpcyBlbWFpbC9jb21wYW55XG4gICAgaWYgKHRhcmdldFVzZXIpIHtcbiAgICAgIGNvbnN0IGV4aXN0aW5nTWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgICB3aGVyZToge1xuICAgICAgICAgIHVzZXJJZF9jb21wYW55SWQ6IHtcbiAgICAgICAgICAgIHVzZXJJZDogdGFyZ2V0VXNlci5pZCxcbiAgICAgICAgICAgIGNvbXBhbnlJZCxcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH0pXG5cbiAgICAgIGlmIChleGlzdGluZ01lbWJlcnNoaXApIHtcbiAgICAgICAgaWYgKGV4aXN0aW5nTWVtYmVyc2hpcC5zdGF0dXMgPT09ICdJTlZJVEVEJykge1xuICAgICAgICAgIHJldHVybiB7IGVycm9yOiAnRXN0ZSB1c3XDoXJpbyBqw6EgdGVtIHVtIGNvbnZpdGUgcGVuZGVudGUgcGFyYSBlc3RhIGVtcHJlc2EnIH1cbiAgICAgICAgfVxuICAgICAgICByZXR1cm4geyBlcnJvcjogJ0VzdGUgdXN1w6FyaW8gasOhIGVzdMOhIGFzc29jaWFkbyBhIGVzdGEgZW1wcmVzYScgfVxuICAgICAgfVxuICAgIH1cblxuICAgIC8vIElmIHVzZXIgZG9lc24ndCBleGlzdCwgaW52aXRlIHRoZW0gdmlhIFN1cGFiYXNlXG4gICAgaWYgKCF0YXJnZXRVc2VyKSB7XG4gICAgICBjb25zdCB7IGRhdGE6IGludml0ZURhdGEsIGVycm9yOiBpbnZpdGVFcnJvciB9ID0gYXdhaXQgc3VwYWJhc2VBZG1pbi5hdXRoLmFkbWluLmludml0ZVVzZXJCeUVtYWlsKGVtYWlsLCB7XG4gICAgICAgIGRhdGE6IHtcbiAgICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICAgIGNvbXBhbnlfaWQ6IGNvbXBhbnlJZCxcbiAgICAgICAgfVxuICAgICAgfSlcblxuICAgICAgaWYgKGludml0ZUVycm9yKSB7XG4gICAgICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gZW52aWFyIGNvbnZpdGUgU3VwYWJhc2U6JywgaW52aXRlRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyBlbnZpYXIgY29udml0ZSBwb3IgZW1haWwnIH1cbiAgICAgIH1cblxuICAgICAgdGFyZ2V0VXNlciA9IGludml0ZURhdGEudXNlclxuICAgIH1cblxuICAgIC8vIENyZWF0ZSBtZW1iZXJzaGlwIHdpdGggSU5WSVRFRCBzdGF0dXNcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuY3JlYXRlKHtcbiAgICAgIGRhdGE6IHtcbiAgICAgICAgdXNlcklkOiB0YXJnZXRVc2VyLmlkLFxuICAgICAgICBjb21wYW55SWQsXG4gICAgICAgIHJvbGU6IHVzZXJSb2xlLFxuICAgICAgICBzdGF0dXM6ICdJTlZJVEVEJyxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7Y29tcGFueUlkfWApXG4gICAgcmV2YWxpZGF0ZVBhdGgoJy9kYXNoYm9hcmQvdXNlcnMnKVxuICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIG1lbWJlcnNoaXAgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gY29udmlkYXIgdXN1w6FyaW86JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGNvbnZpZGFyIHVzdcOhcmlvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIHJlc2VuZEludml0ZShtZW1iZXJzaGlwSWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZFVuaXF1ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgaWYgKCFtZW1iZXJzaGlwKSB7XG4gICAgICByZXR1cm4geyBlcnJvcjogJ01lbWJybyBuw6NvIGVuY29udHJhZG8nIH1cbiAgICB9XG5cbiAgICBpZiAobWVtYmVyc2hpcC5zdGF0dXMgIT09ICdJTlZJVEVEJykge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgY29udml0ZXMgcGVuZGVudGVzIHBvZGVtIHNlciByZWVudmlhZG9zJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSByZWVudmlhciBjb252aXRlcycgfVxuICAgIH1cblxuICAgIC8vIEdldCB1c2VyIGVtYWlsIGZyb20gU3VwYWJhc2VcbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXIgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5nZXRVc2VyQnlJZChtZW1iZXJzaGlwLnVzZXJJZClcblxuICAgIGlmICghYXV0aFVzZXIudXNlcj8uZW1haWwpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgZG8gdXN1w6FyaW8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgLy8gVHJ5IHRvIHJlc2VuZCBpbnZpdGUgLSBpZiB1c2VyIGFscmVhZHkgZXhpc3RzLCB1c2UgZ2VuZXJhdGVMaW5rIGluc3RlYWRcbiAgICBsZXQgaW52aXRlRXJyb3JcbiAgICBjb25zdCBpbnZpdGVSZXN1bHQgPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4uaW52aXRlVXNlckJ5RW1haWwoYXV0aFVzZXIudXNlci5lbWFpbCwge1xuICAgICAgcmVkaXJlY3RUbzogYCR7cHJvY2Vzcy5lbnYuTkVYVF9QVUJMSUNfU0lURV9VUkx9L2F1dGgvY2FsbGJhY2tgLFxuICAgICAgZGF0YToge1xuICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICBjb21wYW55X2lkOiBtZW1iZXJzaGlwLmNvbXBhbnlJZCxcbiAgICAgIH1cbiAgICB9KVxuICAgIFxuICAgIGludml0ZUVycm9yID0gaW52aXRlUmVzdWx0LmVycm9yXG5cbiAgICAvLyBJZiB1c2VyIGFscmVhZHkgZXhpc3RzIChlbWFpbF9leGlzdHMgZXJyb3IpLCB1c2UgZ2VuZXJhdGVMaW5rIGFwcHJvYWNoXG4gICAgaWYgKGludml0ZUVycm9yICYmIGludml0ZUVycm9yLm1lc3NhZ2U/LmluY2x1ZGVzKCdhbHJlYWR5IGJlZW4gcmVnaXN0ZXJlZCcpKSB7XG4gICAgICBjb25zdCB7IGRhdGE6IGxpbmtEYXRhLCBlcnJvcjogbGlua0Vycm9yIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4uZ2VuZXJhdGVMaW5rKHtcbiAgICAgICAgdHlwZTogJ21hZ2ljbGluaycsXG4gICAgICAgIGVtYWlsOiBhdXRoVXNlci51c2VyLmVtYWlsLFxuICAgICAgfSlcblxuICAgICAgaWYgKGxpbmtFcnJvcikge1xuICAgICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGdlcmFyIGxpbmsgZGUgY29udml0ZTonLCBsaW5rRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyByZWVudmlhciBjb252aXRlLiBQb3IgZmF2b3IsIHRlbnRlIG5vdmFtZW50ZS4nIH1cbiAgICAgIH1cblxuICAgICAgLy8gTm90ZTogZ2VuZXJhdGVMaW5rIGNyZWF0ZXMgdGhlIGxpbmsgYnV0IGRvZXNuJ3Qgc2VuZCBlbWFpbCBhdXRvbWF0aWNhbGx5XG4gICAgICAvLyBUaGUgbGluayBpcyBpbiBsaW5rRGF0YS5wcm9wZXJ0aWVzLmFjdGlvbl9saW5rXG4gICAgICAvLyBGb3Igbm93LCB3ZSdsbCBqdXN0IHVwZGF0ZSB0aGUgbWVtYmVyc2hpcCB0aW1lc3RhbXBcbiAgICAgIGNvbnNvbGUubG9nKCdMaW5rIGRlIGNvbnZpdGUgZ2VyYWRvIChjb25maWd1cmFyIGVudmlvIGRlIGVtYWlsIGN1c3RvbWl6YWRvKTonLCBsaW5rRGF0YS5wcm9wZXJ0aWVzPy5hY3Rpb25fbGluaylcbiAgICAgIFxuICAgICAgLy8gVE9ETzogSW1wbGVtZW50IGN1c3RvbSBlbWFpbCBzZW5kaW5nIHdpdGggdGhlIGdlbmVyYXRlZCBsaW5rXG4gICAgICAvLyBGb3Igbm93LCByZXR1cm4gc3VjY2VzcyBidXQgdXNlciB3b24ndCByZWNlaXZlIGVtYWlsXG4gICAgICByZXR1cm4geyBcbiAgICAgICAgc3VjY2VzczogdHJ1ZSwgXG4gICAgICAgIHdhcm5pbmc6ICdMaW5rIGdlcmFkby4gQ29uZmlndXJlIG8gZW52aW8gZGUgZW1haWwgY3VzdG9taXphZG8gcGFyYSBxdWUgbyB1c3XDoXJpbyByZWNlYmEgbyBjb252aXRlLicgXG4gICAgICB9XG4gICAgfVxuXG4gICAgaWYgKGludml0ZUVycm9yKSB7XG4gICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGU6JywgaW52aXRlRXJyb3IpXG4gICAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gcmVlbnZpYXIgY29udml0ZSBwb3IgZW1haWwnIH1cbiAgICB9XG5cbiAgICByZXZhbGlkYXRlUGF0aChgL2Rhc2hib2FyZC9jb21wYW5pZXMvJHttZW1iZXJzaGlwLmNvbXBhbnlJZH1gKVxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGU6JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGUnIH1cbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gdXBkYXRlVXNlclJvbGUobWVtYmVyc2hpcElkOiBzdHJpbmcsIG5ld1JvbGU6IFJvbGUpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgbWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9XG4gICAgfSlcblxuICAgIGlmICghbWVtYmVyc2hpcCkge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdNZW1icm8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSBhbHRlcmFyIGZ1bsOnw7VlcycgfVxuICAgIH1cblxuICAgIGNvbnN0IHVwZGF0ZWQgPSBhd2FpdCBwcmlzbWEubWVtYmVyc2hpcC51cGRhdGUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9LFxuICAgICAgZGF0YTogeyByb2xlOiBuZXdSb2xlIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7bWVtYmVyc2hpcC5jb21wYW55SWR9YClcbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgbWVtYmVyc2hpcDogdXBkYXRlZCB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyBhdHVhbGl6YXIgZnVuw6fDo286JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGF0dWFsaXphciBmdW7Dp8OjbycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiByZW1vdmVVc2VyRnJvbUNvbXBhbnkobWVtYmVyc2hpcElkOiBzdHJpbmcpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgbWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IG1lbWJlcnNoaXBJZCB9XG4gICAgfSlcblxuICAgIGlmICghbWVtYmVyc2hpcCkge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdNZW1icm8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSByZW1vdmVyIHVzdcOhcmlvcycgfVxuICAgIH1cblxuICAgIGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmRlbGV0ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7bWVtYmVyc2hpcC5jb21wYW55SWR9YClcbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyByZW1vdmVyIHVzdcOhcmlvOicsIGVycm9yKVxuICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyByZW1vdmVyIHVzdcOhcmlvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGdldENvbXBhbnlVc2Vycyhjb21wYW55SWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICBjb25zdCByb2xlID0gYXdhaXQgZ2V0VXNlclJvbGUodXNlci5pZCwgY29tcGFueUlkKVxuXG4gIGlmICghaXNBZG1pbiAmJiAhcm9sZSkge1xuICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSBhY2Vzc2FyIHVzdcOhcmlvcyBkZXN0YSBlbXByZXNhJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IG1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgd2hlcmU6IHsgY29tcGFueUlkIH0sXG4gICAgICBpbmNsdWRlOiB7XG4gICAgICAgIGNvbXBhbnk6IHRydWVcbiAgICAgIH0sXG4gICAgICBvcmRlckJ5OiB7XG4gICAgICAgIGNyZWF0ZWRBdDogJ2Rlc2MnXG4gICAgICB9XG4gICAgfSlcblxuICAgIGNvbnN0IHN1cGFiYXNlQWRtaW4gPSBjcmVhdGVBZG1pbkNsaWVudCgpXG4gICAgY29uc3QgeyBkYXRhOiBhdXRoVXNlcnMgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5saXN0VXNlcnMoKVxuXG4gICAgY29uc3QgdXNlcnNXaXRoRGV0YWlscyA9IG1lbWJlcnNoaXBzLm1hcChtZW1iZXJzaGlwID0+IHtcbiAgICAgIGNvbnN0IGF1dGhVc2VyID0gYXV0aFVzZXJzPy51c2Vycy5maW5kKHUgPT4gdS5pZCA9PT0gbWVtYmVyc2hpcC51c2VySWQpXG4gICAgICByZXR1cm4ge1xuICAgICAgICAuLi5tZW1iZXJzaGlwLFxuICAgICAgICBlbWFpbDogYXV0aFVzZXI/LmVtYWlsLFxuICAgICAgICBuYW1lOiBhdXRoVXNlcj8udXNlcl9tZXRhZGF0YT8ubmFtZSxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdXNlcnM6IHVzZXJzV2l0aERldGFpbHMgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvczonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvcycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBnZXRBbGxVc2VycygpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcblxuICB0cnkge1xuICAgIGxldCBtZW1iZXJzaGlwc1xuXG4gICAgaWYgKGlzQWRtaW4pIHtcbiAgICAgIG1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgICBpbmNsdWRlOiB7XG4gICAgICAgICAgY29tcGFueTogdHJ1ZVxuICAgICAgICB9LFxuICAgICAgICBvcmRlckJ5OiB7XG4gICAgICAgICAgY3JlYXRlZEF0OiAnZGVzYydcbiAgICAgICAgfVxuICAgICAgfSlcbiAgICB9IGVsc2Uge1xuICAgICAgY29uc3QgdXNlck1lbWJlcnNoaXBzID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZE1hbnkoe1xuICAgICAgICB3aGVyZToge1xuICAgICAgICAgIHVzZXJJZDogdXNlci5pZCxcbiAgICAgICAgICBzdGF0dXM6ICdBQ1RJVkUnXG4gICAgICAgIH0sXG4gICAgICAgIHNlbGVjdDoge1xuICAgICAgICAgIGNvbXBhbnlJZDogdHJ1ZVxuICAgICAgICB9XG4gICAgICB9KVxuXG4gICAgICBjb25zdCBjb21wYW55SWRzID0gdXNlck1lbWJlcnNoaXBzLm1hcChtID0+IG0uY29tcGFueUlkKVxuXG4gICAgICBtZW1iZXJzaGlwcyA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRNYW55KHtcbiAgICAgICAgd2hlcmU6IHtcbiAgICAgICAgICBjb21wYW55SWQ6IHtcbiAgICAgICAgICAgIGluOiBjb21wYW55SWRzXG4gICAgICAgICAgfVxuICAgICAgICB9LFxuICAgICAgICBpbmNsdWRlOiB7XG4gICAgICAgICAgY29tcGFueTogdHJ1ZVxuICAgICAgICB9LFxuICAgICAgICBvcmRlckJ5OiB7XG4gICAgICAgICAgY3JlYXRlZEF0OiAnZGVzYydcbiAgICAgICAgfVxuICAgICAgfSlcbiAgICB9XG5cbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcblxuICAgIC8vIEdldCBhbGwgcGxhdGZvcm0gYWRtaW5zIHRvIG92ZXJyaWRlIHRoZWlyIHJvbGUgZGlzcGxheVxuICAgIGNvbnN0IHBsYXRmb3JtQWRtaW5zID0gYXdhaXQgcHJpc21hLnBsYXRmb3JtQWRtaW4uZmluZE1hbnkoe1xuICAgICAgc2VsZWN0OiB7XG4gICAgICAgIHVzZXJJZDogdHJ1ZVxuICAgICAgfVxuICAgIH0pXG4gICAgY29uc3QgcGxhdGZvcm1BZG1pbklkcyA9IG5ldyBTZXQocGxhdGZvcm1BZG1pbnMubWFwKHBhID0+IHBhLnVzZXJJZCkpXG5cbiAgICBjb25zdCB1c2Vyc1dpdGhEZXRhaWxzID0gbWVtYmVyc2hpcHMubWFwKG1lbWJlcnNoaXAgPT4ge1xuICAgICAgY29uc3QgYXV0aFVzZXIgPSBhdXRoVXNlcnM/LnVzZXJzLmZpbmQodSA9PiB1LmlkID09PSBtZW1iZXJzaGlwLnVzZXJJZClcbiAgICAgIFxuICAgICAgLy8gSWYgdXNlciBpcyBhIHBsYXRmb3JtIGFkbWluLCBvdmVycmlkZSB0aGVpciByb2xlIGZvciBkaXNwbGF5XG4gICAgICBjb25zdCBlZmZlY3RpdmVSb2xlID0gcGxhdGZvcm1BZG1pbklkcy5oYXMobWVtYmVyc2hpcC51c2VySWQpIFxuICAgICAgICA/ICdQTEFURk9STV9BRE1JTicgYXMgUm9sZVxuICAgICAgICA6IG1lbWJlcnNoaXAucm9sZVxuXG4gICAgICByZXR1cm4ge1xuICAgICAgICAuLi5tZW1iZXJzaGlwLFxuICAgICAgICByb2xlOiBlZmZlY3RpdmVSb2xlLFxuICAgICAgICBlbWFpbDogYXV0aFVzZXI/LmVtYWlsLFxuICAgICAgICBuYW1lOiBhdXRoVXNlcj8udXNlcl9tZXRhZGF0YT8ubmFtZSxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdXNlcnM6IHVzZXJzV2l0aERldGFpbHMgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvczonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYnVzY2FyIHVzdcOhcmlvcycgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBtYWtlUGxhdGZvcm1BZG1pbih1c2VySWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICBpZiAoIWlzQWRtaW4pIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ0FwZW5hcyBhZG1pbmlzdHJhZG9yZXMgZGEgcGxhdGFmb3JtYSBwb2RlbSBwcm9tb3ZlciB1c3XDoXJpb3MnIH1cbiAgfVxuXG4gIHRyeSB7XG4gICAgY29uc3QgYWRtaW4gPSBhd2FpdCBwcmlzbWEucGxhdGZvcm1BZG1pbi5jcmVhdGUoe1xuICAgICAgZGF0YToge1xuICAgICAgICB1c2VySWQsXG4gICAgICB9XG4gICAgfSlcblxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlLCBhZG1pbiB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyBwcm9tb3ZlciB1c3XDoXJpbzonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0VzdGUgdXN1w6FyaW8gasOhIMOpIGFkbWluaXN0cmFkb3IgZGEgcGxhdGFmb3JtYScgfVxuICB9XG59XG4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Im1TQXlOc0IifQ==
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/dashboard/users-list.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "UsersList",
+    ()=>UsersList
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/card.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/dropdown-menu.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/alert-dialog.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/mail.js [app-client] (ecmascript) <export default as Mail>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$ellipsis$2d$vertical$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MoreVertical$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/ellipsis-vertical.js [app-client] (ecmascript) <export default as MoreVertical>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pencil$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pencil$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/pencil.js [app-client] (ecmascript) <export default as Pencil>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trash-2.js [app-client] (ecmascript) <export default as Trash2>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$send$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Send$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/send.js [app-client] (ecmascript) <export default as Send>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/users.js [app-client] (ecmascript) <export default as Users>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield.js [app-client] (ecmascript) <export default as Shield>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$cog$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCog$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user-cog.js [app-client] (ecmascript) <export default as UserCog>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$dashboard$2f$edit$2d$user$2d$role$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/dashboard/edit-user-role-dialog.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$8a97fa__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:8a97fa [app-client] (ecmascript) <text/javascript>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$236617__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:236617 [app-client] (ecmascript) <text/javascript>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
+'use client';
+;
+;
+;
+;
+;
+;
+;
+;
+;
+const roleIcons = {
+    PLATFORM_ADMIN: {
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"],
+        color: 'bg-red-100 text-red-700',
+        label: 'Admin Plataforma'
+    },
+    COMPANY_ADMIN: {
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$cog$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCog$3e$__["UserCog"],
+        color: 'bg-orange-100 text-orange-700',
+        label: 'Admin Empresa'
+    },
+    ENGINEER: {
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"],
+        color: 'bg-blue-100 text-blue-700',
+        label: 'Engenheiro SST'
+    },
+    EMPLOYER: {
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"],
+        color: 'bg-green-100 text-green-700',
+        label: 'Funcionário'
+    },
+    VIEWER: {
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"],
+        color: 'bg-gray-100 text-gray-700',
+        label: 'Visualizador'
+    }
+};
+function UsersList(param) {
+    let { users } = param;
+    _s();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const [editingUser, setEditingUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [removingUser, setRemovingUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    async function handleResendInvite(user) {
+        setLoading(user.id);
+        setError('');
+        const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$8a97fa__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["resendInvite"])(user.id);
+        if (result.error) {
+            setError(result.error);
+        }
+        setLoading(null);
+        router.refresh();
+    }
+    async function handleRemoveUser() {
+        if (!removingUser) return;
+        setLoading(removingUser.id);
+        setError('');
+        const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$236617__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["removeUserFromCompany"])(removingUser.id);
+        if (result.error) {
+            setError(result.error);
+        } else {
+            setRemovingUser(null);
+            router.refresh();
+        }
+        setLoading(null);
+    }
+    if (users.length === 0) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
+                className: "flex flex-col items-center justify-center py-12",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"], {
+                        className: "h-16 w-16 text-muted-foreground/50 mb-4"
+                    }, void 0, false, {
+                        fileName: "[project]/components/dashboard/users-list.tsx",
+                        lineNumber: 97,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                        className: "text-lg font-semibold mb-2",
+                        children: "Nenhum usuário encontrado"
+                    }, void 0, false, {
+                        fileName: "[project]/components/dashboard/users-list.tsx",
+                        lineNumber: 98,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-muted-foreground text-center max-w-md",
+                        children: "Comece criando sua conta ou convidando membros para suas empresas"
+                    }, void 0, false, {
+                        fileName: "[project]/components/dashboard/users-list.tsx",
+                        lineNumber: 101,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/dashboard/users-list.tsx",
+                lineNumber: 96,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/components/dashboard/users-list.tsx",
+            lineNumber: 95,
+            columnNumber: 7
+        }, this);
+    }
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
+                    className: "p-0",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "divide-y",
+                        children: users.map((user)=>{
+                            const roleConfig = roleIcons[user.role];
+                            const RoleIcon = roleConfig.icon;
+                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "p-4 hover:bg-muted/50 transition-colors",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center justify-between",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "flex items-center gap-4 flex-1",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "p-3 rounded-lg ".concat(roleConfig.color),
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(RoleIcon, {
+                                                        className: "h-5 w-5"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/dashboard/users-list.tsx",
+                                                        lineNumber: 123,
+                                                        columnNumber: 25
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                    lineNumber: 122,
+                                                    columnNumber: 23
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex-1",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "font-semibold",
+                                                            children: user.name || user.email || 'Usuário sem nome'
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                                            lineNumber: 126,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "text-sm text-muted-foreground flex items-center gap-2",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__["Mail"], {
+                                                                    className: "h-3 w-3"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                                    lineNumber: 130,
+                                                                    columnNumber: 27
+                                                                }, this),
+                                                                user.email || user.userId
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                                            lineNumber: 129,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                    lineNumber: 125,
+                                                    columnNumber: 23
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "text-right",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "text-sm font-medium",
+                                                            children: user.company.name
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                                            lineNumber: 135,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "text-xs text-muted-foreground",
+                                                            children: roleConfig.label
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                                            lineNumber: 136,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                    lineNumber: 134,
+                                                    columnNumber: 23
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "text-right",
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "inline-flex items-center px-2 py-1 rounded-full text-xs font-medium\n                          ".concat(user.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : user.status === 'INVITED' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700'),
+                                                        children: user.status === 'ACTIVE' ? 'Ativo' : user.status === 'INVITED' ? 'Convite Pendente' : 'Inativo'
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/dashboard/users-list.tsx",
+                                                        lineNumber: 141,
+                                                        columnNumber: 25
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                    lineNumber: 140,
+                                                    columnNumber: 23
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                            lineNumber: 121,
+                                            columnNumber: 21
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenu"], {
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuTrigger"], {
+                                                    asChild: true,
+                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                        variant: "ghost",
+                                                        size: "sm",
+                                                        className: "h-8 w-8 p-0",
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$ellipsis$2d$vertical$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MoreVertical$3e$__["MoreVertical"], {
+                                                            className: "h-4 w-4"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                                            lineNumber: 153,
+                                                            columnNumber: 27
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/components/dashboard/users-list.tsx",
+                                                        lineNumber: 152,
+                                                        columnNumber: 25
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                    lineNumber: 151,
+                                                    columnNumber: 23
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuContent"], {
+                                                    align: "end",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
+                                                            onClick: ()=>setEditingUser(user),
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pencil$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Pencil$3e$__["Pencil"], {
+                                                                    className: "h-4 w-4 mr-2"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                                    lineNumber: 158,
+                                                                    columnNumber: 27
+                                                                }, this),
+                                                                "Editar Papel"
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                                            lineNumber: 157,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        user.status === 'INVITED' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
+                                                            onClick: ()=>handleResendInvite(user),
+                                                            disabled: loading === user.id,
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$send$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Send$3e$__["Send"], {
+                                                                    className: "h-4 w-4 mr-2"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                                    lineNumber: 166,
+                                                                    columnNumber: 29
+                                                                }, this),
+                                                                loading === user.id ? 'Enviando...' : 'Reenviar Convite'
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                                            lineNumber: 162,
+                                                            columnNumber: 27
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
+                                                            onClick: ()=>setRemovingUser(user),
+                                                            className: "text-destructive focus:text-destructive",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
+                                                                    className: "h-4 w-4 mr-2"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                                    lineNumber: 174,
+                                                                    columnNumber: 27
+                                                                }, this),
+                                                                "Remover"
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                                            lineNumber: 170,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                                    lineNumber: 156,
+                                                    columnNumber: 23
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                            lineNumber: 150,
+                                            columnNumber: 21
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                    lineNumber: 120,
+                                    columnNumber: 19
+                                }, this)
+                            }, user.id, false, {
+                                fileName: "[project]/components/dashboard/users-list.tsx",
+                                lineNumber: 119,
+                                columnNumber: 17
+                            }, this);
+                        })
+                    }, void 0, false, {
+                        fileName: "[project]/components/dashboard/users-list.tsx",
+                        lineNumber: 113,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/components/dashboard/users-list.tsx",
+                    lineNumber: 112,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/dashboard/users-list.tsx",
+                lineNumber: 111,
+                columnNumber: 7
+            }, this),
+            error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "bg-destructive/10 text-destructive p-3 rounded-lg text-sm mt-4",
+                children: error
+            }, void 0, false, {
+                fileName: "[project]/components/dashboard/users-list.tsx",
+                lineNumber: 188,
+                columnNumber: 9
+            }, this),
+            editingUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$dashboard$2f$edit$2d$user$2d$role$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["EditUserRoleDialog"], {
+                open: !!editingUser,
+                onOpenChange: (open)=>{
+                    if (!open) setEditingUser(null);
+                    else router.refresh();
+                },
+                user: editingUser
+            }, void 0, false, {
+                fileName: "[project]/components/dashboard/users-list.tsx",
+                lineNumber: 194,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialog"], {
+                open: !!removingUser,
+                onOpenChange: (open)=>!open && setRemovingUser(null),
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogContent"], {
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogHeader"], {
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogTitle"], {
+                                    children: "Remover Usuário"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                    lineNumber: 207,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogDescription"], {
+                                    children: [
+                                        "Tem certeza que deseja remover ",
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                            children: (removingUser === null || removingUser === void 0 ? void 0 : removingUser.name) || (removingUser === null || removingUser === void 0 ? void 0 : removingUser.email)
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                            lineNumber: 209,
+                                            columnNumber: 46
+                                        }, this),
+                                        " da empresa ",
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                            children: removingUser === null || removingUser === void 0 ? void 0 : removingUser.company.name
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                            lineNumber: 209,
+                                            columnNumber: 118
+                                        }, this),
+                                        "?",
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                            lineNumber: 210,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
+                                            fileName: "[project]/components/dashboard/users-list.tsx",
+                                            lineNumber: 210,
+                                            columnNumber: 21
+                                        }, this),
+                                        "Esta ação não pode ser desfeita."
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                    lineNumber: 208,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/dashboard/users-list.tsx",
+                            lineNumber: 206,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogFooter"], {
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogCancel"], {
+                                    disabled: loading === (removingUser === null || removingUser === void 0 ? void 0 : removingUser.id),
+                                    children: "Cancelar"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                    lineNumber: 215,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogAction"], {
+                                    onClick: handleRemoveUser,
+                                    disabled: loading === (removingUser === null || removingUser === void 0 ? void 0 : removingUser.id),
+                                    className: "bg-destructive hover:bg-destructive/90",
+                                    children: loading === (removingUser === null || removingUser === void 0 ? void 0 : removingUser.id) ? 'Removendo...' : 'Remover'
+                                }, void 0, false, {
+                                    fileName: "[project]/components/dashboard/users-list.tsx",
+                                    lineNumber: 218,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/dashboard/users-list.tsx",
+                            lineNumber: 214,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/dashboard/users-list.tsx",
+                    lineNumber: 205,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/components/dashboard/users-list.tsx",
+                lineNumber: 204,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true);
+}
+_s(UsersList, "YFKS77LWERKw8ImgfdWFGQAZ7Sc=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
+    ];
+});
+_c = UsersList;
+var _c;
+__turbopack_context__.k.register(_c, "UsersList");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+]);
+
+//# sourceMappingURL=_15c8a327._.js.map

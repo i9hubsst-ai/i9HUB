@@ -181,23 +181,52 @@ async function resendInvite(membershipId) {
                 error: 'Email do usuário não encontrado'
             };
         }
-        // Resend invite
-        const { error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(authUser.user.email, {
-            data: {
-                invited_by: user.id,
-                company_id: membership.companyId
+        // For users with status INVITED that haven't confirmed their email yet,
+        // we need to delete and recreate them to resend the invite email
+        // This is necessary because Supabase's inviteUserByEmail fails with "email_exists" 
+        // for users that haven't confirmed yet
+        // Check if user has confirmed their email
+        if (!authUser.user.email_confirmed_at) {
+            // User hasn't confirmed yet - delete and recreate to resend invite
+            const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(membership.userId);
+            if (deleteError) {
+                console.error('Erro ao preparar reenvio:', deleteError);
+                return {
+                    error: 'Erro ao preparar reenvio de convite'
+                };
             }
-        });
-        if (inviteError) {
-            console.error('Erro ao reenviar convite:', inviteError);
+            // Recreate user with same email
+            const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.inviteUserByEmail(authUser.user.email, {
+                redirectTo: `${("TURBOPACK compile-time value", "https://839c63d9-dbb8-437d-83b2-ef0aa41ae08a-00-3nwxw68s56w08.riker.replit.dev")}/auth/callback`,
+                data: {
+                    invited_by: user.id,
+                    company_id: membership.companyId
+                }
+            });
+            if (createError) {
+                console.error('Erro ao reenviar convite:', createError);
+                return {
+                    error: 'Erro ao reenviar convite por email'
+                };
+            }
+            // Update membership with new user ID
+            await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.update({
+                where: {
+                    id: membershipId
+                },
+                data: {
+                    userId: newUser.user.id
+                }
+            });
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])(`/dashboard/companies/${membership.companyId}`);
+            (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/dashboard/users');
             return {
-                error: 'Erro ao reenviar convite por email'
+                success: true
             };
         }
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])(`/dashboard/companies/${membership.companyId}`);
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/dashboard/users');
+        // User has confirmed email - they should login normally
         return {
-            success: true
+            error: 'Este usuário já confirmou o email. Ele deve fazer login normalmente.'
         };
     } catch (error) {
         console.error('Erro ao reenviar convite:', error);

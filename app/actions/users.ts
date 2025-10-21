@@ -128,22 +128,51 @@ export async function resendInvite(membershipId: string) {
       return { error: 'Email do usuário não encontrado' }
     }
 
-    // Resend invite
-    const { error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(authUser.user.email, {
-      data: {
-        invited_by: user.id,
-        company_id: membership.companyId,
+    // For users with status INVITED that haven't confirmed their email yet,
+    // we need to delete and recreate them to resend the invite email
+    // This is necessary because Supabase's inviteUserByEmail fails with "email_exists" 
+    // for users that haven't confirmed yet
+    
+    // Check if user has confirmed their email
+    if (!authUser.user.email_confirmed_at) {
+      // User hasn't confirmed yet - delete and recreate to resend invite
+      const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(membership.userId)
+      
+      if (deleteError) {
+        console.error('Erro ao preparar reenvio:', deleteError)
+        return { error: 'Erro ao preparar reenvio de convite' }
       }
-    })
 
-    if (inviteError) {
-      console.error('Erro ao reenviar convite:', inviteError)
-      return { error: 'Erro ao reenviar convite por email' }
+      // Recreate user with same email
+      const { data: newUser, error: createError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
+        authUser.user.email,
+        {
+          redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+          data: {
+            invited_by: user.id,
+            company_id: membership.companyId,
+          }
+        }
+      )
+
+      if (createError) {
+        console.error('Erro ao reenviar convite:', createError)
+        return { error: 'Erro ao reenviar convite por email' }
+      }
+
+      // Update membership with new user ID
+      await prisma.membership.update({
+        where: { id: membershipId },
+        data: { userId: newUser.user!.id }
+      })
+
+      revalidatePath(`/dashboard/companies/${membership.companyId}`)
+      revalidatePath('/dashboard/users')
+      return { success: true }
     }
 
-    revalidatePath(`/dashboard/companies/${membership.companyId}`)
-    revalidatePath('/dashboard/users')
-    return { success: true }
+    // User has confirmed email - they should login normally
+    return { error: 'Este usuário já confirmou o email. Ele deve fazer login normalmente.' }
   } catch (error) {
     console.error('Erro ao reenviar convite:', error)
     return { error: 'Erro ao reenviar convite' }

@@ -1,6 +1,6 @@
 {
   "node": {
-    "409442ef5c01fe17b6887c71fc8ca54ffef717e919": {
+    "4077a738fcabd0eb80d01c54c15e15a00deb6b9214": {
       "workers": {
         "app/auth/register/page": {
           "moduleId": "[project]/.next-internal/server/app/auth/register/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",

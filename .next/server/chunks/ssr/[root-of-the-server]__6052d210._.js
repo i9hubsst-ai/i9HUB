@@ -92,7 +92,7 @@ if ("TURBOPACK compile-time truthy", 1) globalForPrisma.prisma = prisma;
 "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"00a93f877bb0d56401c0575359419bd85577c9a602":"logout","403c54f51ce5769b2efe5db06346cd9df760286d23":"updatePassword","406dde76555c1de044016035965038c331888e6f1a":"login","409442ef5c01fe17b6887c71fc8ca54ffef717e919":"signup","40b3d43ca69be5b9e874918693a47bdc8db436887d":"resetPassword"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"002d1c25f175ced4c2f184e43331fc3e91bf4ad15d":"logout","4077a738fcabd0eb80d01c54c15e15a00deb6b9214":"signup","4078033901ee1c15035e3281e4782e27f9f69df289":"resetPassword","4082ddba0f69f4cfea85ce5f91b9def3e6d94f1aaf":"updatePassword","40dcb840f9c11628aa3ddc1270182b2ae292b6b105":"login"},"",""] */ __turbopack_context__.s([
     "login",
     ()=>login,
     "logout",
@@ -139,7 +139,8 @@ async function signup(formData) {
         options: {
             data: {
                 name: formData.get('name')
-            }
+            },
+            emailRedirectTo: `${("TURBOPACK compile-time value", "https://839c63d9-dbb8-437d-83b2-ef0aa41ae08a-00-3nwxw68s56w08.riker.replit.dev")}/auth/callback`
         }
     };
     const { data: authData, error } = await supabase.auth.signUp(data);
@@ -188,7 +189,7 @@ async function resetPassword(formData) {
     const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createClient"])();
     const email = formData.get('email');
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/reset-password`
+        redirectTo: `${("TURBOPACK compile-time value", "https://839c63d9-dbb8-437d-83b2-ef0aa41ae08a-00-3nwxw68s56w08.riker.replit.dev")}/auth/reset-password`
     });
     if (error) {
         return {
@@ -221,11 +222,11 @@ async function updatePassword(formData) {
     resetPassword,
     updatePassword
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(login, "406dde76555c1de044016035965038c331888e6f1a", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(signup, "409442ef5c01fe17b6887c71fc8ca54ffef717e919", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(logout, "00a93f877bb0d56401c0575359419bd85577c9a602", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(resetPassword, "40b3d43ca69be5b9e874918693a47bdc8db436887d", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updatePassword, "403c54f51ce5769b2efe5db06346cd9df760286d23", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(login, "40dcb840f9c11628aa3ddc1270182b2ae292b6b105", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(signup, "4077a738fcabd0eb80d01c54c15e15a00deb6b9214", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(logout, "002d1c25f175ced4c2f184e43331fc3e91bf4ad15d", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(resetPassword, "4078033901ee1c15035e3281e4782e27f9f69df289", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updatePassword, "4082ddba0f69f4cfea85ce5f91b9def3e6d94f1aaf", null);
 }),
 "[project]/.next-internal/server/app/auth/register/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
 "use strict";
@@ -238,7 +239,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts
 "use strict";
 
 __turbopack_context__.s([
-    "409442ef5c01fe17b6887c71fc8ca54ffef717e919",
+    "4077a738fcabd0eb80d01c54c15e15a00deb6b9214",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"]
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$auth$2f$register$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/auth/register/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');

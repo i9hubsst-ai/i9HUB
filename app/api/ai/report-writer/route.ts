@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import OpenAI from 'openai'
+import { GoogleGenAI } from '@google/genai'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const genai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY || '',
 })
 
 interface ReportWriterRequest {
@@ -137,17 +137,16 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
   ]
 }`
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
-      ],
-      temperature: 0.7,
-      response_format: { type: 'json_object' }
+    const response = await genai.models.generateContent({
+      model: 'gemini-2.0-flash-exp',
+      config: {
+        systemInstruction: systemPrompt,
+        responseMimeType: 'application/json',
+      },
+      contents: userPrompt,
     })
 
-    const content = completion.choices[0].message.content
+    const content = response.text
     if (!content) {
       return NextResponse.json(
         { error: 'IA não retornou conteúdo' },

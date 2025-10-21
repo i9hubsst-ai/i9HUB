@@ -97,7 +97,94 @@ model ModulePermission {
 }
 
 // ============================================
-// IMSST DIAGNOSTIC SYSTEM
+// DIAGNOSTIC TEMPLATES SYSTEM
+// ============================================
+
+enum TemplateType {
+  NR        // Norma Regulamentadora (NR-12, NR-35, etc)
+  ISO       // ISO Standards (ISO 45001, ISO 14001, etc)
+  IMSST     // Sistema Geral IMSST
+  CUSTOM    // Custom templates
+}
+
+enum TemplateStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model DiagnosticTemplate {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  type        TemplateType
+  version     String         @default("1.0")
+  status      TemplateStatus @default(DRAFT)
+  createdBy   String // Supabase Auth user ID
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relations
+  sections    DiagnosticSection[]
+  assessments Assessment[]
+
+  @@index([type])
+  @@index([status])
+  @@map("diagnostic_templates")
+}
+
+model DiagnosticSection {
+  id         String   @id @default(uuid())
+  templateId String
+  title      String
+  order      Int
+  createdAt  DateTime @default(now())
+
+  // Relations
+  template  DiagnosticTemplate   @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  questions DiagnosticQuestion[]
+  scores    AssessmentScore[]
+
+  @@index([templateId])
+  @@map("diagnostic_sections")
+}
+
+enum QuestionType {
+  BOOLEAN // Sim/Não
+  SCORE   // 1-5 scale
+}
+
+enum QuestionSource {
+  MANUAL
+  AI
+}
+
+model DiagnosticQuestion {
+  id                     String         @id @default(uuid())
+  sectionId              String
+  text                   String
+  type                   QuestionType
+  weight                 Float          @default(1.0)
+  reference              String? // Referência normativa (ex: "NR-12.153")
+  requiresJustification  Boolean        @default(false)
+  requiresEvidence       Boolean        @default(false)
+  source                 QuestionSource @default(MANUAL)
+  versionOf              String? // UUID da pergunta original se for versão
+  approved               Boolean        @default(false)
+  active                 Boolean        @default(true)
+  createdAt              DateTime       @default(now())
+
+  // Relations
+  section DiagnosticSection  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  answers AssessmentAnswer[]
+
+  @@index([sectionId])
+  @@index([approved])
+  @@map("diagnostic_questions")
+}
+
+// ============================================
+// LEGACY IMSST SYSTEM (manter compatibilidade)
 // ============================================
 
 model IMSSTDimension {
@@ -107,99 +194,137 @@ model IMSSTDimension {
   order       Int
   createdAt   DateTime @default(now())
 
-  // Relations
-  questions Question[]
-
   @@map("imsst_dimensions")
-}
-
-enum QuestionType {
-  LIKERT // 1-5 scale
-  MULTIPLE_CHOICE
-  YES_NO
-  TEXT
-}
-
-model Question {
-  id          String       @id @default(uuid())
-  dimensionId String
-  text        String
-  type        QuestionType
-  options     Json? // For multiple choice: ["Option 1", "Option 2"]
-  weight      Float        @default(1.0) // Weight for scoring
-  order       Int
-  createdAt   DateTime     @default(now())
-
-  // Relations
-  dimension IMSSTDimension @relation(fields: [dimensionId], references: [id], onDelete: Cascade)
-  answers   AssessmentAnswer[]
-
-  @@index([dimensionId])
-  @@map("imsst_questions")
 }
 
 enum AssessmentStatus {
   DRAFT
   IN_PROGRESS
   SUBMITTED
+  SCORED
   COMPLETED
 }
 
 model Assessment {
-  id          String           @id @default(uuid())
-  companyId   String
-  createdBy   String // Supabase Auth user ID
-  title       String
-  description String?
-  status      AssessmentStatus @default(DRAFT)
-  startedAt   DateTime?
-  submittedAt DateTime?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  id           String           @id @default(uuid())
+  companyId    String
+  templateId   String? // Link to DiagnosticTemplate
+  createdBy    String // Supabase Auth user ID
+  title        String
+  description  String?
+  status       AssessmentStatus @default(DRAFT)
+  overallScore Float? // 0-100
+  overallLevel Int? // 1-5 IMSST maturity level
+  startedAt    DateTime?
+  submittedAt  DateTime?
+  scoredAt     DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
 
   // Relations
-  company Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  answers AssessmentAnswer[]
-  scores  AssessmentScore[]
+  company     Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  template    DiagnosticTemplate?  @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  answers     AssessmentAnswer[]
+  scores      AssessmentScore[]
+  findings    Finding[]
+  evidences   Evidence[]
   actionPlans ActionPlan[]
 
   @@index([companyId])
+  @@index([templateId])
   @@index([createdBy])
   @@map("assessments")
 }
 
 model AssessmentAnswer {
-  id           String   @id @default(uuid())
-  assessmentId String
-  questionId   String
-  answeredBy   String // Supabase Auth user ID
-  value        Json // Flexible: number for Likert, string for text, boolean for yes/no
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id            String   @id @default(uuid())
+  assessmentId  String
+  questionId    String
+  userId        String // Supabase Auth user ID
+  value         Float // 0 (Não) ou 1 (Sim) para BOOLEAN; 1-5 para SCORE
+  justification String?
+  evidenceUrls  String[] // Array de URLs de evidências no Supabase Storage
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   // Relations
-  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  question   Question   @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  assessment Assessment         @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  question   DiagnosticQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
   @@unique([assessmentId, questionId])
   @@index([assessmentId])
+  @@index([userId])
   @@map("assessment_answers")
 }
 
 model AssessmentScore {
-  id           String   @id @default(uuid())
-  assessmentId String
-  dimensionId  String
-  score        Float // 0-100
-  level        Int // 1-5 maturity level
-  createdAt    DateTime @default(now())
+  id            String   @id @default(uuid())
+  assessmentId  String
+  sectionId     String // Link to DiagnosticSection
+  rawScore      Float // Soma dos pontos
+  weightedScore Float // Score ponderado 0-100
+  level         Int // 1-5 maturity level
+  createdAt     DateTime @default(now())
+
+  // Relations
+  assessment Assessment        @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  section    DiagnosticSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@unique([assessmentId, sectionId])
+  @@index([assessmentId])
+  @@map("assessment_scores")
+}
+
+// ============================================
+// FINDINGS (ACHADOS)
+// ============================================
+
+enum FindingSeverity {
+  HIGH   // Alta (Não Conformidade crítica)
+  MEDIUM // Média (Oportunidade de melhoria)
+  LOW    // Baixa (Observação)
+}
+
+model Finding {
+  id            String          @id @default(uuid())
+  assessmentId  String
+  sectionTitle  String
+  questionText  String
+  questionType  QuestionType
+  value         Float // Valor da resposta que gerou o achado
+  reference     String? // Referência normativa
+  justification String? // Justificativa do usuário
+  severity      FindingSeverity
+  evidenceCount Int             @default(0)
+  createdAt     DateTime        @default(now())
 
   // Relations
   assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
 
-  @@unique([assessmentId, dimensionId])
   @@index([assessmentId])
-  @@map("assessment_scores")
+  @@index([severity])
+  @@map("findings")
+}
+
+// ============================================
+// EVIDENCE (EVIDÊNCIAS)
+// ============================================
+
+model Evidence {
+  id           String   @id @default(uuid())
+  assessmentId String
+  fileName     String
+  fileUrl      String // URL no Supabase Storage
+  fileSize     Int // Tamanho em bytes
+  mimeType     String
+  uploadedBy   String // Supabase Auth user ID
+  uploadedAt   DateTime @default(now())
+
+  // Relations
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+  @@map("evidences")
 }
 
 // ============================================
@@ -209,32 +334,25 @@ model AssessmentScore {
 enum ActionStatus {
   PENDING
   IN_PROGRESS
-  COMPLETED
+  DONE
   CANCELLED
 }
 
-enum ActionCategory {
-  NR_COMPLIANCE // Norma Regulamentadora
-  PROCESS
-  TRAINING
-  MANAGEMENT
-  OTHER
-}
-
 model ActionPlan {
-  id           String         @id @default(uuid())
+  id           String       @id @default(uuid())
   assessmentId String
   companyId    String
   title        String
   description  String
-  category     ActionCategory
-  priority     Int            @default(3) // 1=High, 3=Medium, 5=Low
-  responsible  String? // Supabase Auth user ID
+  reference    String? // Referência normativa relacionada
+  ownerUserId  String? // Supabase Auth user ID do responsável
   dueDate      DateTime?
-  status       ActionStatus   @default(PENDING)
-  aiGenerated  Boolean        @default(false)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  priority     Int          @default(2) // 1=High, 2=Medium, 3=Low
+  status       ActionStatus @default(PENDING)
+  createdBy    String // Supabase Auth user ID
+  aiGenerated  Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 
   // Relations
   assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
@@ -243,6 +361,7 @@ model ActionPlan {
   @@index([assessmentId])
   @@index([companyId])
   @@index([status])
+  @@index([priority])
   @@map("action_plans")
 }
 

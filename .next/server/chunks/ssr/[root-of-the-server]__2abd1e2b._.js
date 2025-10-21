@@ -206,14 +206,22 @@ async function getUserDisplayRole(userId) {
 
 __turbopack_context__.s([
     "cn",
-    ()=>cn
+    ()=>cn,
+    "getGravatarUrl",
+    ()=>getGravatarUrl
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/clsx/dist/clsx.mjs [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$tailwind$2d$merge$2f$dist$2f$bundle$2d$mjs$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/tailwind-merge/dist/bundle-mjs.mjs [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$md5$2f$md5$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/md5/md5.js [app-rsc] (ecmascript)");
+;
 ;
 ;
 function cn(...inputs) {
     return (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$tailwind$2d$merge$2f$dist$2f$bundle$2d$mjs$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["twMerge"])((0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["clsx"])(inputs));
+}
+function getGravatarUrl(email, size = 80) {
+    const hash = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$md5$2f$md5$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"])(email.toLowerCase().trim());
+    return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=mp`;
 }
 }),
 "[project]/components/ui/button.tsx [app-rsc] (ecmascript)", ((__turbopack_context__) => {

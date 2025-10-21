@@ -1,15 +1,41 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Users, Plus, Shield, UserCog } from 'lucide-react'
+import { Users, Plus, Shield, UserCog, Mail } from 'lucide-react'
+import { getAllUsers } from '@/app/actions/users'
+import Link from 'next/link'
 
-export default function UsersPage() {
-  const roles = [
-    { key: 'PLATFORM_ADMIN', label: 'Administrador da Plataforma', icon: Shield, color: 'text-red-600' },
-    { key: 'COMPANY_ADMIN', label: 'Administrador da Empresa', icon: UserCog, color: 'text-orange-600' },
-    { key: 'ENGINEER', label: 'Engenheiro SST', icon: Users, color: 'text-blue-600' },
-    { key: 'EMPLOYER', label: 'Funcionário', icon: Users, color: 'text-green-600' },
-    { key: 'VIEWER', label: 'Visualizador', icon: Users, color: 'text-gray-600' },
-  ]
+export default async function UsersPage() {
+  const result = await getAllUsers()
+
+  if (result.error) {
+    return (
+      <div className="p-8">
+        <Card className="border-destructive">
+          <CardHeader>
+            <CardTitle className="text-destructive">Erro</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>{result.error}</p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  const users = result.users || []
+
+  const roleIcons = {
+    PLATFORM_ADMIN: { icon: Shield, color: 'bg-red-100 text-red-700', label: 'Admin Plataforma' },
+    COMPANY_ADMIN: { icon: UserCog, color: 'bg-orange-100 text-orange-700', label: 'Admin Empresa' },
+    ENGINEER: { icon: Users, color: 'bg-blue-100 text-blue-700', label: 'Engenheiro SST' },
+    EMPLOYER: { icon: Users, color: 'bg-green-100 text-green-700', label: 'Funcionário' },
+    VIEWER: { icon: Users, color: 'bg-gray-100 text-gray-700', label: 'Visualizador' },
+  }
+
+  const roleCounts = users.reduce((acc, user) => {
+    acc[user.role] = (acc[user.role] || 0) + 1
+    return acc
+  }, {} as Record<string, number>)
 
   return (
     <div className="p-8 space-y-8">
@@ -17,32 +43,31 @@ export default function UsersPage() {
         <div>
           <h1 className="text-3xl font-bold text-primary">Usuários</h1>
           <p className="text-muted-foreground">
-            Gerencie os usuários e suas permissões
+            Gerencie os usuários e suas permissões ({users.length} total)
           </p>
         </div>
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" />
-          Convidar Usuário
-        </Button>
       </div>
 
       {/* Roles Overview */}
       <div>
         <h2 className="text-xl font-semibold mb-4">Papéis e Permissões</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {roles.map((role) => {
-            const Icon = role.icon
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+          {Object.entries(roleIcons).map(([key, config]) => {
+            const Icon = config.icon
             return (
-              <Card key={role.key}>
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <Icon className={`h-5 w-5 ${role.color}`} />
-                    <CardTitle className="text-base">{role.label}</CardTitle>
+              <Card key={key}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center gap-2">
+                    <div className={`p-2 rounded-lg ${config.color}`}>
+                      <Icon className="h-4 w-4" />
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-primary mb-1">0</div>
-                  <p className="text-sm text-muted-foreground">usuários</p>
+                  <div className="text-2xl font-bold text-primary mb-1">
+                    {roleCounts[key] || 0}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{config.label}</p>
                 </CardContent>
               </Card>
             )
@@ -53,17 +78,65 @@ export default function UsersPage() {
       {/* Users List */}
       <div>
         <h2 className="text-xl font-semibold mb-4">Lista de Usuários</h2>
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Users className="h-16 w-16 text-muted-foreground/50 mb-4" />
-            <h3 className="text-lg font-semibold mb-2">
-              Nenhum usuário cadastrado
-            </h3>
-            <p className="text-muted-foreground text-center max-w-md mb-6">
-              Configure a autenticação do Supabase para começar a gerenciar usuários e convidar membros para sua empresa.
-            </p>
-          </CardContent>
-        </Card>
+        {users.length === 0 ? (
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <Users className="h-16 w-16 text-muted-foreground/50 mb-4" />
+              <h3 className="text-lg font-semibold mb-2">
+                Nenhum usuário encontrado
+              </h3>
+              <p className="text-muted-foreground text-center max-w-md">
+                Comece criando sua conta ou convidando membros para suas empresas
+              </p>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card>
+            <CardContent className="p-0">
+              <div className="divide-y">
+                {users.map((user) => {
+                  const roleConfig = roleIcons[user.role]
+                  const RoleIcon = roleConfig.icon
+                  
+                  return (
+                    <div key={user.id} className="p-4 hover:bg-muted/50 transition-colors">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4 flex-1">
+                          <div className={`p-3 rounded-lg ${roleConfig.color}`}>
+                            <RoleIcon className="h-5 w-5" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="font-semibold">
+                              {user.name || user.email || 'Usuário sem nome'}
+                            </div>
+                            <div className="text-sm text-muted-foreground flex items-center gap-2">
+                              <Mail className="h-3 w-3" />
+                              {user.email || user.userId}
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-sm font-medium">{user.company.name}</div>
+                            <div className="text-xs text-muted-foreground">
+                              {roleConfig.label}
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
+                              ${user.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : 
+                                user.status === 'INVITED' ? 'bg-yellow-100 text-yellow-700' : 
+                                'bg-gray-100 text-gray-700'}`}>
+                              {user.status}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       {/* Roles Description */}

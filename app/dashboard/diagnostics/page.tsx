@@ -1,16 +1,43 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus, BarChart3, Clock, CheckCircle2 } from 'lucide-react'
+import { Plus, BarChart3, CheckCircle2, Clock, AlertCircle, FileEdit } from 'lucide-react'
 import Link from 'next/link'
+import { getAssessments } from '@/app/actions/assessments'
 
-export default function DiagnosticsPage() {
+export default async function DiagnosticsPage() {
+  const result = await getAssessments()
+
+  if (result.error) {
+    return (
+      <div className="p-8">
+        <Card className="border-destructive">
+          <CardHeader>
+            <CardTitle className="text-destructive">Erro</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>{result.error}</p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  const assessments = result.assessments || []
+
+  const statusConfig = {
+    DRAFT: { icon: FileEdit, color: 'text-gray-600', bg: 'bg-gray-100', label: 'Rascunho' },
+    IN_PROGRESS: { icon: Clock, color: 'text-blue-600', bg: 'bg-blue-100', label: 'Em Andamento' },
+    SUBMITTED: { icon: AlertCircle, color: 'text-yellow-600', bg: 'bg-yellow-100', label: 'Submetido' },
+    COMPLETED: { icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-100', label: 'Concluído' },
+  }
+
   return (
     <div className="p-8 space-y-8">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-primary">Diagnósticos IMSST</h1>
           <p className="text-muted-foreground">
-            Avaliação de maturidade em Segurança e Saúde do Trabalho
+            Avaliação de maturidade em Segurança e Saúde do Trabalho ({assessments.length} total)
           </p>
         </div>
         <Link href="/dashboard/diagnostics/new">
@@ -80,8 +107,7 @@ export default function DiagnosticsPage() {
       <div>
         <h2 className="text-xl font-semibold mb-4">Diagnósticos Realizados</h2>
         
-        <div className="grid gap-4">
-          {/* Empty State */}
+        {assessments.length === 0 ? (
           <Card>
             <CardContent className="flex flex-col items-center justify-center py-12">
               <BarChart3 className="h-16 w-16 text-muted-foreground/50 mb-4" />
@@ -99,44 +125,87 @@ export default function DiagnosticsPage() {
               </Link>
             </CardContent>
           </Card>
+        ) : (
+          <div className="grid gap-4">
+            {assessments.map((assessment) => {
+              const status = statusConfig[assessment.status]
+              const StatusIcon = status.icon
+              const totalQuestions = 25
+              const progress = (assessment._count.answers / totalQuestions) * 100
+              
+              return (
+                <Card key={assessment.id} className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <CardTitle>{assessment.title}</CardTitle>
+                        <CardDescription className="mt-1">
+                          {assessment.company.name} • Criado em {new Date(assessment.createdAt).toLocaleDateString('pt-BR')}
+                        </CardDescription>
+                        {assessment.description && (
+                          <p className="text-sm text-muted-foreground mt-2">
+                            {assessment.description}
+                          </p>
+                        )}
+                      </div>
+                      <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${status.bg} ${status.color}`}>
+                        <StatusIcon className="h-4 w-4" />
+                        <span className="text-sm font-medium">{status.label}</span>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {assessment.status !== 'COMPLETED' && (
+                        <div>
+                          <div className="flex justify-between text-sm mb-2">
+                            <span className="text-muted-foreground">Progresso</span>
+                            <span className="font-medium">
+                              {assessment._count.answers}/{totalQuestions} perguntas
+                            </span>
+                          </div>
+                          <div className="w-full bg-secondary rounded-full h-2">
+                            <div 
+                              className="bg-primary h-2 rounded-full transition-all"
+                              style={{ width: `${progress}%` }}
+                            />
+                          </div>
+                        </div>
+                      )}
 
-          {/* Example Assessment Cards (commented for future use) */}
-          {/* 
-          <Card>
-            <CardHeader>
-              <div className="flex justify-between items-start">
-                <div>
-                  <CardTitle>Diagnóstico Q1 2025</CardTitle>
-                  <CardDescription>
-                    Criado em 15 de Janeiro de 2025
-                  </CardDescription>
-                </div>
-                <div className="flex items-center gap-2 text-green-600">
-                  <CheckCircle2 className="h-4 w-4" />
-                  <span className="text-sm font-medium">Concluído</span>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="text-2xl font-bold text-primary">Nível 3</div>
-                  <div className="text-sm text-muted-foreground">Definido</div>
-                </div>
-                <div className="flex-1 text-center">
-                  <div className="text-2xl font-bold text-primary">72%</div>
-                  <div className="text-sm text-muted-foreground">Pontuação Geral</div>
-                </div>
-                <div className="flex-1 text-right">
-                  <Button variant="outline" size="sm">
-                    Ver Relatório
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          */}
-        </div>
+                      <div className="flex items-center gap-4">
+                        {assessment.status === 'COMPLETED' && assessment.scores.length > 0 && (
+                          <>
+                            <div className="flex-1">
+                              <div className="text-2xl font-bold text-primary">
+                                Nível {Math.round(assessment.scores.reduce((acc, s) => acc + s.level, 0) / assessment.scores.length)}
+                              </div>
+                              <div className="text-sm text-muted-foreground">Maturidade Média</div>
+                            </div>
+                            <div className="flex-1 text-center">
+                              <div className="text-2xl font-bold text-primary">
+                                {Math.round(assessment.scores.reduce((acc, s) => acc + s.score, 0) / assessment.scores.length)}%
+                              </div>
+                              <div className="text-sm text-muted-foreground">Pontuação Geral</div>
+                            </div>
+                          </>
+                        )}
+                        
+                        <div className="flex gap-2 ml-auto">
+                          <Link href={`/dashboard/diagnostics/${assessment.id}`}>
+                            <Button variant="outline" size="sm">
+                              {assessment.status === 'COMPLETED' ? 'Ver Resultados' : 'Continuar'}
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )

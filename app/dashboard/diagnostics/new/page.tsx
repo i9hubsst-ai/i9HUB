@@ -1,34 +1,59 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+import { createAssessment } from '@/app/actions/assessments'
+import { getCompanies } from '@/app/actions/companies'
 
 export default function NewDiagnosticPage() {
-  const router = useRouter()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [companyId, setCompanyId] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [companies, setCompanies] = useState<any[]>([])
+
+  useEffect(() => {
+    async function loadCompanies() {
+      const result = await getCompanies()
+      if (result.success && result.companies) {
+        setCompanies(result.companies)
+        if (result.companies.length > 0) {
+          setCompanyId(result.companies[0].id)
+        }
+      }
+    }
+    loadCompanies()
+  }, [])
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setError('')
+
+    if (!companyId) {
+      setError('Selecione uma empresa')
+      setLoading(false)
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('description', description)
 
     try {
-      // TODO: Implementar criação de assessment via API
-      console.log('Creating assessment:', { title, description })
-      
-      // Simulação
-      setTimeout(() => {
-        router.push('/dashboard/diagnostics')
-      }, 1000)
-    } catch (error) {
-      console.error('Error creating assessment:', error)
+      const result = await createAssessment(companyId, formData)
+      if (result?.error) {
+        setError(result.error)
+      }
+    } catch (err) {
+      setError('Erro ao criar diagnóstico')
     } finally {
       setLoading(false)
     }
@@ -60,6 +85,28 @@ export default function NewDiagnosticPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleCreate} className="space-y-6">
+              {error && (
+                <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-lg text-sm">
+                  {error}
+                </div>
+              )}
+
+              <div className="space-y-2">
+                <Label htmlFor="company">Empresa</Label>
+                <Select value={companyId} onValueChange={setCompanyId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione uma empresa" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {companies.map((company) => (
+                      <SelectItem key={company.id} value={company.id}>
+                        {company.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="title">Título do Diagnóstico</Label>
                 <Input
@@ -90,38 +137,25 @@ export default function NewDiagnosticPage() {
                 <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
                   <li>Você responderá 25 perguntas divididas em 5 dimensões</li>
                   <li>O sistema calculará automaticamente seu nível de maturidade (1-5)</li>
-                  <li>Um plano de ação personalizado será gerado por IA</li>
                   <li>Você poderá gerar relatórios em PDF com os resultados</li>
+                  <li>Planos de ação podem ser criados baseados nas respostas</li>
                 </ol>
               </div>
 
               <div className="flex gap-4">
-                <Button type="submit" disabled={loading || !title}>
+                <Button type="submit" disabled={loading || !title || !companyId}>
                   {loading ? 'Criando...' : 'Criar Diagnóstico'}
                 </Button>
-                <Button 
-                  type="button" 
-                  variant="outline"
-                  onClick={() => router.push('/dashboard/diagnostics')}
-                >
-                  Cancelar
-                </Button>
+                <Link href="/dashboard/diagnostics">
+                  <Button 
+                    type="button" 
+                    variant="outline"
+                  >
+                    Cancelar
+                  </Button>
+                </Link>
               </div>
             </form>
-          </CardContent>
-        </Card>
-
-        <Card className="mt-6 border-yellow-200 bg-yellow-50">
-          <CardHeader>
-            <CardTitle className="text-yellow-800">⚠️ Configuração Necessária</CardTitle>
-          </CardHeader>
-          <CardContent className="text-sm text-yellow-700">
-            <p>
-              Para criar diagnósticos, é necessário configurar as credenciais do Supabase e executar as migrações do banco de dados.
-            </p>
-            <p className="mt-2">
-              Consulte o README.md para instruções detalhadas de configuração.
-            </p>
           </CardContent>
         </Card>
       </div>

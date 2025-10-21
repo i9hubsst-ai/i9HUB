@@ -1,37 +1,32 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { login } from '@/app/actions/auth'
 
 export default function LoginPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setError('')
 
+    const formData = new FormData(e.currentTarget)
+    
     try {
-      // TODO: Implementar autenticação com Supabase
-      console.log('Login attempt:', { email })
-      
-      // Temporário: simular sucesso
-      setTimeout(() => {
-        router.push('/dashboard')
-      }, 1000)
+      const result = await login(formData)
+      if (result?.error) {
+        setError(result.error)
+      }
     } catch (err) {
-      setError('Erro ao fazer login. Verifique suas credenciais.')
-      console.error(err)
+      setError('Erro ao fazer login. Tente novamente.')
     } finally {
       setLoading(false)
     }
@@ -61,7 +56,7 @@ export default function LoginPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
                 <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-lg text-sm">
                   {error}
@@ -72,11 +67,11 @@ export default function LoginPage() {
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="seu@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   required
+                  disabled={loading}
                 />
               </div>
               
@@ -84,11 +79,11 @@ export default function LoginPage() {
                 <Label htmlFor="password">Senha</Label>
                 <Input
                   id="password"
+                  name="password"
                   type="password"
                   placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   required
+                  disabled={loading}
                 />
               </div>
               

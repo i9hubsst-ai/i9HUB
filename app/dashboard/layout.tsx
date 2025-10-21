@@ -1,12 +1,21 @@
 import { Building2, LayoutDashboard, BarChart3, FileText, Users, Bot } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { getCurrentUser } from '@/lib/auth'
+import { UserNav } from '@/components/dashboard/user-nav'
+import { redirect } from 'next/navigation'
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect('/auth/login')
+  }
+
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
     { icon: BarChart3, label: 'Diagnósticos', href: '/dashboard/diagnostics' },
@@ -57,8 +66,16 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1">
-        {children}
+      <main className="flex-1 flex flex-col">
+        {/* Top Header */}
+        <header className="h-16 border-b bg-card flex items-center justify-end px-6">
+          <UserNav user={{ email: user.email!, name: user.user_metadata?.name }} />
+        </header>
+        
+        {/* Page Content */}
+        <div className="flex-1 overflow-auto">
+          {children}
+        </div>
       </main>
     </div>
   )

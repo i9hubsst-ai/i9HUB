@@ -14,6 +14,7 @@
 
 ### ✅ Completed Features
 - **Authentication System**: Full Supabase integration (login, register, password reset, logout)
+- **Email Confirmation**: Callback route configured for email verification (/auth/callback)
 - **Multi-Tenant Security**: Application-level isolation with ACTIVE membership validation on all server actions
 - **Company Management**: Complete CRUD with role-based permissions
 - **User Management**: Invitation system using Supabase Admin API with service role key
@@ -93,6 +94,7 @@ Key entities:
 NEXT_PUBLIC_SUPABASE_URL=✅ configured
 NEXT_PUBLIC_SUPABASE_ANON_KEY=✅ configured
 SUPABASE_SERVICE_ROLE_KEY=✅ configured
+NEXT_PUBLIC_SITE_URL=✅ configured (https://839c63d9-dbb8-437d-83b2-ef0aa41ae08a-00-3nwxw68s56w08.riker.replit.dev)
 DATABASE_URL=✅ configured
 OPENAI_API_KEY=✅ configured (ready for AI features)
 SESSION_SECRET=✅ configured
@@ -195,13 +197,22 @@ npm run seed         # Populate with demo data
   - Configured Next.js workflow on port 5000
   - Created comprehensive seed script for demo data
 
+## Email Confirmation Setup
+
+**⚠️ Importante:** Para que os links de confirmação de email funcionem, configure no painel do Supabase:
+
+1. Acesse **Authentication** → **URL Configuration**
+2. Adicione a seguinte URL nas **Redirect URLs**:
+   ```
+   https://839c63d9-dbb8-437d-83b2-ef0aa41ae08a-00-3nwxw68s56w08.riker.replit.dev/auth/callback
+   ```
+3. Salve as alterações
+
+**Documentação completa:** Veja `SUPABASE_CONFIG.md` para instruções detalhadas
+
 ## Known Issues
 
-- Supabase credentials not yet configured (waiting for user)
-- Authentication endpoints not yet implemented
-- Diagnostic submission API not connected to database
-- PDF generation pending implementation
-- OpenAI integration pending API key
+- None - Sistema operacional e seguro
 
 ## Notes
 

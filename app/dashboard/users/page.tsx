@@ -130,7 +130,7 @@ export default async function UsersPage() {
                               ${user.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : 
                                 user.status === 'INVITED' ? 'bg-yellow-100 text-yellow-700' : 
                                 'bg-gray-100 text-gray-700'}`}>
-                              {user.status}
+                              {user.status === 'ACTIVE' ? 'Ativo' : user.status === 'INVITED' ? 'Convite Pendente' : 'Inativo'}
                             </div>
                           </div>
                         </div>

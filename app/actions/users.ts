@@ -27,8 +27,9 @@ export async function inviteUser(companyId: string, formData: FormData) {
     return { error: 'Email e função são obrigatórios' }
   }
 
-  if (!email.includes('@')) {
-    return { error: 'Email inválido' }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(email)) {
+    return { error: 'Email inválido. Use o formato: usuario@empresa.com' }
   }
 
   try {

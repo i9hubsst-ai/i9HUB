@@ -71,9 +71,10 @@ async function inviteUser(companyId, formData) {
             error: 'Email e função são obrigatórios'
         };
     }
-    if (!email.includes('@')) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
         return {
-            error: 'Email inválido'
+            error: 'Email inválido. Use o formato: usuario@empresa.com'
         };
     }
     try {
@@ -1254,7 +1255,7 @@ async function UsersPage() {
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: `inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
                               ${user.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : user.status === 'INVITED' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700'}`,
-                                                            children: user.status
+                                                            children: user.status === 'ACTIVE' ? 'Ativo' : user.status === 'INVITED' ? 'Convite Pendente' : 'Inativo'
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/dashboard/users/page.tsx",
                                                             lineNumber: 129,

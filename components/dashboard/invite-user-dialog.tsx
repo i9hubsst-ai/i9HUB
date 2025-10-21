@@ -78,7 +78,7 @@ export function InviteUserDialog({ companies }: InviteUserDialogProps) {
         <DialogHeader>
           <DialogTitle>Convidar Novo Usuário</DialogTitle>
           <DialogDescription>
-            Adicione um usuário existente a uma empresa e defina seu papel
+            Envie um convite por email para um novo usuário acessar a plataforma
           </DialogDescription>
         </DialogHeader>
 
@@ -91,12 +91,12 @@ export function InviteUserDialog({ companies }: InviteUserDialogProps) {
               id="email"
               name="email"
               type="email"
-              placeholder="usuario@exemplo.com"
+              placeholder="usuario@empresa.com"
               required
               disabled={loading}
             />
             <p className="text-xs text-muted-foreground">
-              O usuário deve ter uma conta criada no sistema
+              Um email será enviado com instruções para criar a senha
             </p>
           </div>
 

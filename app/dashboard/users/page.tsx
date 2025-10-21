@@ -2,10 +2,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Users, Plus, Shield, UserCog, Mail } from 'lucide-react'
 import { getAllUsers } from '@/app/actions/users'
+import { getCompanies } from '@/app/actions/companies'
+import { InviteUserDialog } from '@/components/dashboard/invite-user-dialog'
 import Link from 'next/link'
 
 export default async function UsersPage() {
   const result = await getAllUsers()
+  const companiesResult = await getCompanies()
 
   if (result.error) {
     return (
@@ -23,6 +26,7 @@ export default async function UsersPage() {
   }
 
   const users = result.users || []
+  const companies = companiesResult.companies || []
 
   const roleIcons = {
     PLATFORM_ADMIN: { icon: Shield, color: 'bg-red-100 text-red-700', label: 'Admin Plataforma' },
@@ -46,6 +50,7 @@ export default async function UsersPage() {
             Gerencie os usuários e suas permissões ({users.length} total)
           </p>
         </div>
+        <InviteUserDialog companies={companies} />
       </div>
 
       {/* Roles Overview */}

@@ -1,0 +1,294 @@
+Implementar no i9HUBSST um módulo de diagnóstico com:
+
+Templates temáticos (NR-12, NR-35, ISO 45001, ISO 14001, IMSST geral, CUSTOM), gerados/otimizados pela IA-TemplateBuilder em um único passo (seções + perguntas + regras).
+
+Aplicação do diagnóstico (Sim/Não e/ou Score 1–5, com justificativa e anexos).
+
+Cálculo determinístico de pontuação e nível (1–5).
+
+Relatório narrativo + Plano de Ação priorizado pela IA-ReportWriter.
+
+Stack
+
+Next.js 15 (App Router), React, TS, Tailwind, shadcn/ui, Recharts
+
+Supabase (Auth, Postgres, Storage) + RLS por company_id
+
+Prisma ORM + Zod
+
+OpenAI (duas rotas: TemplateBuilder e ReportWriter)
+
+PDF (React-PDF ou PDFKit)
+
+Modelos de Dados (essencial)
+
+Templates
+
+diagnostic_templates(id, name, description, type['NR','ISO','IMSST','CUSTOM'], version, status['draft','published','archived'], created_by, created_at)
+
+diagnostic_sections(id, template_id, title, "order")
+
+diagnostic_questions(id, section_id, text, type['boolean','score'], weight float, reference text, requires_justification bool, requires_evidence bool, source['manual','ai'], version_of uuid?, approved bool, active bool)
+
+Execução
+
+assessments(id, company_id, template_id, title, status['draft','submitted','scored'], overall_score numeric, overall_level smallint, created_by, created_at, submitted_at, scored_at)
+
+assessment_answers(id, assessment_id, question_id, user_id, value numeric, justification text, evidence_urls text[], updated_at)
+
+assessment_scores(id, assessment_id, section_id, raw_score numeric, weighted_score numeric, level smallint)
+
+action_plans(id, assessment_id, company_id, title, description, reference, owner_user_id, due_date, status['pending','in_progress','done'], created_by, created_at, priority smallint)
+
+Regras de Resposta
+
+Tipos:
+
+boolean: Sim=1, Não=0
+
+score: valores de 1 a 5
+
+Justificativa obrigatória quando: boolean=0 (Não) ou score ≤ 3.
+
+Evidências: upload opcional (pode ser obrigatório por template via flag requires_evidence).
+
+Cálculo (determinístico, sem IA)
+
+Por pergunta: pontos = value × weight
+
+Por seção: score_seção = (Σ pontos / Σ pesos) × 100
+
+Geral: média ponderada das seções → overall_score (0–100)
+
+Nível IMSST:
+
+0–20 → 1 (Inicial)
+
+21–40 → 2 (Básico)
+
+41–60 → 3 (Definido)
+
+61–80 → 4 (Gerenciado)
+
+81–100 → 5 (Otimizado)
+
+IA-TemplateBuilder (única IA para Templates)
+
+Função: gerar/editar em um único passo toda a estrutura do template: seções, perguntas, tipo (boolean/score), peso, referências normativas, flags de justificativa/evidência e sugestões de versão para perguntas já existentes.
+
+Endpoint: POST /api/ai/template-builder
+Input (exemplo):
+
+{
+  "theme": "NR-12",
+  "templateName": "NR-12 – Máquinas (Fábrica)",
+  "targetDetail": "alto",
+  "companyContext": { "cnae": "28.29-1/00", "size": "médio", "perfilRisco": "metal-mecânico" },
+  "existingTemplateId": null
+}
+
+
+Output (JSON a persistir):
+
+{
+  "template": {
+    "name": "NR-12 – Máquinas (Fábrica)",
+    "description": "Adequação de máquinas e dispositivos...",
+    "type": "NR",
+    "version": "1.0",
+    "sections": [
+      {
+        "title": "Inventário e Documentação",
+        "order": 1,
+        "questions": [
+          {
+            "text": "Existe inventário de máquinas atualizado e acessível?",
+            "type": "boolean",
+            "weight": 1.0,
+            "reference": "NR-12.153",
+            "requires_justification": true,
+            "requires_evidence": true
+          },
+          {
+            "text": "Manuais do fabricante estão disponíveis para todos os equipamentos?",
+            "type": "score",
+            "weight": 1.0,
+            "reference": "NR-12.112",
+            "requires_justification": false,
+            "requires_evidence": false
+          }
+        ]
+      },
+      {
+        "title": "Proteções e Dispositivos de Segurança",
+        "order": 2,
+        "questions": [
+          {
+            "text": "As proteções fixas e móveis atendem aos requisitos de distância mínima?",
+            "type": "score",
+            "weight": 1.5,
+            "reference": "NR-12 Anexo I",
+            "requires_justification": true,
+            "requires_evidence": true
+          }
+        ]
+      }
+    ],
+    "improvements": [
+      {
+        "existingQuestionId": "uuid-existente",
+        "suggestedVersion": {
+          "text": "Reformule para especificar periodicidade de revisão do inventário...",
+          "type": "boolean",
+          "weight": 1.0,
+          "reference": "NR-12.153",
+          "requires_justification": true,
+          "requires_evidence": true
+        },
+        "reason": "clareza e auditabilidade"
+      }
+    ]
+  }
+}
+
+
+Comportamento:
+
+Se existingTemplateId for informado, a IA faz diff e retorna improvements[] (versões de substituição).
+
+Todos os itens retornam como approved=false até o usuário (PlatformAdmin) aprovar/publicar.
+
+Persistir em: diagnostic_templates/sections/questions com source='ai', approved=false (ou true após aprovação).
+
+IA-ReportWriter (IA para Relatório + Ações)
+
+Função: ler os Achados (respostas, justificativas, anexos), o score calculado e o template para produzir:
+
+Resumo executivo com pontos fortes e fracos por seção;
+
+Riscos/impactos;
+
+Plano de Ação priorizado (título, descrição, referência, prazo sugerido, prioridade 1–3, responsável sugerido).
+
+Endpoint: POST /api/ai/report-writer
+Input (exemplo):
+
+{
+  "assessment": {
+    "id": "uuid",
+    "title": "Diagnóstico NR-12 – Abril/2025",
+    "company": { "name": "Cliente X", "cnae": "28.29-1/00" },
+    "template": { "name": "NR-12 – Máquinas (Fábrica)", "version": "1.0" },
+    "scores": { "overall": 63.2, "level": 3, "bySection": [{ "title": "Inventário", "score": 42.0 }, { "title": "Proteções", "score": 75.0 }] },
+    "findings": [
+      {
+        "section": "Inventário e Documentação",
+        "question": "Existe inventário de máquinas atualizado e acessível?",
+        "type": "boolean",
+        "value": 0,
+        "reference": "NR-12.153",
+        "justification": "Inventário de 2022, sem novas linhas.",
+        "evidenceCount": 1
+      },
+      {
+        "section": "Proteções e Dispositivos de Segurança",
+        "question": "As proteções fixas e móveis atendem aos requisitos...",
+        "type": "score",
+        "value": 3,
+        "reference": "NR-12 Anexo I",
+        "justification": "Pontos com distância abaixo do mínimo.",
+        "evidenceCount": 2
+      }
+    ]
+  }
+}
+
+
+Output (JSON a persistir/mostrar):
+
+{
+  "executive_summary": "O nível de maturidade é 3 (Definido)...",
+  "strengths": ["Proteções com bom atendimento na maioria das máquinas..."],
+  "weaknesses": ["Inventário desatualizado desde 2022...", "Distâncias mínimas não atendidas em alguns pontos..."],
+  "risks": [
+    { "description": "Risco de aprisionamento em zonas de perigo", "reference": "NR-12 Anexo I" }
+  ],
+  "actions": [
+    {
+      "title": "Atualizar inventário de máquinas e fluxos",
+      "description": "Realizar revisão completa do inventário, incluindo novas linhas...",
+      "reference": "NR-12.153",
+      "priority": 1,
+      "due_in_days": 30,
+      "suggested_owner_role": "Engineer"
+    },
+    {
+      "title": "Reavaliar proteções e adequar distâncias mínimas",
+      "description": "Inspecionar zonas de risco e instalar espaçadores/conjuntos...",
+      "reference": "NR-12 Anexo I",
+      "priority": 1,
+      "due_in_days": 45,
+      "suggested_owner_role": "CompanyAdmin"
+    }
+  ]
+}
+
+
+Comportamento:
+
+O cálculo numérico não é da IA; já entra no input.
+
+A IA retorna narrativa e ações sugeridas; o usuário aprova/edita e então salvamos em action_plans (status pending).
+
+Antes de criar novas ações, checar duplicidade por título/referência/estado (evitar clones).
+
+Fluxos principais
+
+Template (PlatformAdmin)
+
+Criar/editar template → IA-TemplateBuilder sugere seções + perguntas + versões.
+
+Aprovar perguntas → Publicar template.
+
+Aplicação (Engineer/CompanyAdmin)
+
+Criar diagnóstico a partir do template publicado.
+
+Responder (Sim/Não / 1–5), justificar quando exigido, anexar evidências.
+
+Submeter → sistema calcula overall_score e overall_level.
+
+Relatório + Ações (ReportWriter)
+
+Enviar Achados + scores → IA-ReportWriter retorna resumo e plano de ação.
+
+Aprovar/ajustar ações → salvar action_plans com prioridades/prazos/responsáveis.
+
+APIs (mínimo)
+POST /api/templates
+POST /api/templates/:id/publish
+GET  /api/templates[?type=NR|ISO|IMSST|CUSTOM]
+
+POST /api/ai/template-builder      // Gera/edita template (tudo de uma vez)
+POST /api/ai/report-writer         // Gera narrativa + ações a partir de Achados
+
+POST /api/diagnostics              // cria assessment (com template_id)
+GET  /api/diagnostics
+GET  /api/diagnostics/:id
+PUT  /api/diagnostics/:id          // salva respostas
+POST /api/diagnostics/:id/submit   // calcula score/level
+GET  /api/diagnostics/:id/report   // dados + PDF
+
+Critérios de aceite
+
+IA-TemplateBuilder gera/ajusta templates completos (seções + perguntas + flags + referências) em uma chamada.
+
+IA-ReportWriter produz narrativa e plano de ação priorizado a partir dos Achados.
+
+Respostas suportam boolean e score 1–5, com justificativa/evidência conforme regras.
+
+Cálculo determinístico e RLS por empresa ativos.
+
+Aprovação humana antes de publicar template e ações.
+
+Exportação em PDF com resumo + gráficos + ações.

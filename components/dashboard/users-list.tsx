@@ -200,8 +200,10 @@ export function UsersList({ users }: UsersListProps) {
         <EditUserProfileDialog
           open={!!editingProfile}
           onOpenChange={(open: boolean) => {
-            if (!open) setEditingProfile(null)
-            else router.refresh()
+            if (!open) {
+              setEditingProfile(null)
+              router.refresh()
+            }
           }}
           user={editingProfile}
         />

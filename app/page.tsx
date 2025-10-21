@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -49,25 +50,17 @@ export default function Home() {
           </ul>
         </div>
         
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-left">
-          <h3 className="text-lg font-semibold text-yellow-800 mb-2">
-            ⚙️ Configuração Necessária
-          </h3>
-          <p className="text-yellow-700">
-            Para ativar todas as funcionalidades, configure as credenciais do Supabase e OpenAI nas variáveis de ambiente.
-          </p>
-          <p className="text-sm text-yellow-600 mt-2">
-            Veja o arquivo <code className="bg-yellow-100 px-2 py-1 rounded">.env.example</code> para referência.
-          </p>
-        </div>
-        
         <div className="flex gap-4 justify-center">
-          <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-6 rounded-lg transition-colors">
-            Fazer Login
-          </button>
-          <button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-3 px-6 rounded-lg transition-colors">
-            Saiba Mais
-          </button>
+          <Link href="/auth/login">
+            <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-6 rounded-lg transition-colors">
+              Fazer Login
+            </button>
+          </Link>
+          <Link href="/auth/register">
+            <button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-3 px-6 rounded-lg transition-colors">
+              Criar Conta
+            </button>
+          </Link>
         </div>
       </div>
     </div>

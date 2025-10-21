@@ -10,36 +10,43 @@
 - Role-based access control (5 user roles)
 - Dashboard with analytics and reporting capabilities
 
-## Current Status (January 2025)
+## Current Status (October 2025)
 
-### ✅ Completed
-- Project structure with Next.js 15 + TypeScript + Tailwind CSS
-- Prisma database schema (11 models: companies, memberships, assessments, questions, etc.)
-- HUBSST branding (navy blue #1e3a5f + lime green #84cc16)
-- Seed script with 2 demo companies, 5 IMSST dimensions, 25 questions
-- shadcn/ui components integrated (button, card, input, sidebar, etc.)
-- Core pages:
-  - Landing page with logo
-  - Login page (auth/login)
-  - Dashboard with stats cards
-  - Diagnostics page with IMSST info
-  - Companies management page
-  - Users management page
-  - Action plans page
-- Dashboard layout with sidebar navigation
-- README with comprehensive setup instructions
+### ✅ Completed Features
+- **Authentication System**: Full Supabase integration (login, register, password reset, logout)
+- **Multi-Tenant Security**: Application-level isolation with ACTIVE membership validation on all server actions
+- **Company Management**: Complete CRUD with role-based permissions
+- **User Management**: Invitation system using Supabase Admin API with service role key
+- **Diagnostic Flow**: Create assessments, answer 25 questions, auto-calculate maturity scores
+- **Data Visualization**: Radar charts showing IMSST maturity scores across 5 dimensions (Recharts)
+- **Dashboard**: Real-time statistics from database (companies, assessments, users, action plans)
+- **Security Reviewed**: Multi-tenant isolation validated by architect after 3 security review rounds
+- **Landing Page**: Working navigation with functional login/register buttons
 
 ### 🔄 In Progress
-- Supabase authentication integration (awaiting user credentials)
-- OpenAI API integration for AI assistants (awaiting API key)
+- None - Core MVP completed
 
-### ⏳ Pending
-- Database migration to Supabase (waiting for DATABASE_URL)
-- User registration and invitation system
-- Full diagnostic flow implementation (answer questions → calculate scores → generate report)
-- PDF report generation with radar charts
-- Row Level Security (RLS) policies in Supabase
-- Real-time AI assistant integration
+### ⏳ Future Features
+- PDF report generation with radar charts (@react-pdf/renderer)
+- AI-powered assessment generation using OpenAI (API key configured, feature not implemented)
+- AI-generated personalized action plans based on diagnostic results
+- Row Level Security (RLS) policies in Supabase database
+- Automated authorization tests for assessment flows
+
+## Security Architecture
+
+### Multi-Tenant Isolation
+- **Application-level authorization**: All server actions validate ACTIVE membership before data access
+- **Cross-tenant protection**: Users cannot access/modify data from other companies
+- **Assessment security**: getAssessments, getAssessmentById, saveAnswer, submitAssessment all enforce membership checks
+- **Admin operations**: Separate Supabase admin client (lib/supabase/admin.ts) with service role key for user invitations
+- **Security validation**: Architect-approved after identifying and fixing 3 critical vulnerabilities
+
+### Design Decisions (October 2025)
+- Using `findFirst` instead of `findUnique` when filtering by status to avoid Prisma errors
+- Application-level security preferred over RLS policies for now (allows faster iteration)
+- Service role key isolated in admin client to prevent accidental misuse
+- All assessment operations require ACTIVE membership (not just any membership)
 
 ## Architecture
 
@@ -83,12 +90,12 @@ Key entities:
 
 ### Required Secrets
 ```env
-NEXT_PUBLIC_SUPABASE_URL=<pending>
-NEXT_PUBLIC_SUPABASE_ANON_KEY=<pending>
-SUPABASE_SERVICE_ROLE_KEY=<pending>
-DATABASE_URL=<configured>
-OPENAI_API_KEY=<pending>
-SESSION_SECRET=<configured>
+NEXT_PUBLIC_SUPABASE_URL=✅ configured
+NEXT_PUBLIC_SUPABASE_ANON_KEY=✅ configured
+SUPABASE_SERVICE_ROLE_KEY=✅ configured
+DATABASE_URL=✅ configured
+OPENAI_API_KEY=✅ configured (ready for AI features)
+SESSION_SECRET=✅ configured
 ```
 
 ### Feature Flags

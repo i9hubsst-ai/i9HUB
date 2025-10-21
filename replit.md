@@ -20,11 +20,14 @@
   - Create new companies with CNPJ validation (Platform Admins only)
   - View all companies with statistics (users, assessments, action plans)
   - Edit and delete companies
-- **User Management**: Complete invitation and role management system
+- **User Management**: Complete CRUD system with invitation and role management
   - Invite users to companies via email (Platform Admin: any company, Company Admin: own company only)
   - Assign roles: Platform Admin, Company Admin, Engineer, Employer, Viewer
   - View all users with role badges and status indicators
-  - User list with Gravatar integration
+  - Edit user roles with dropdown dialog
+  - Remove users from companies with confirmation modal
+  - Resend invites for pending users (status INVITED)
+  - User list with Gravatar integration and action menu
 - **Diagnostic Flow**: Create assessments, answer 25 questions, auto-calculate maturity scores
 - **Data Visualization**: Radar charts showing IMSST maturity scores across 5 dimensions (Recharts)
 - **Dashboard**: Real-time statistics from database (companies, assessments, users, action plans)
@@ -208,6 +211,15 @@ npm run seed         # Populate with demo data
 
 ## Recent Changes
 
+- **2025-10-21**: Complete User Management CRUD Implementation
+  - Added edit user role functionality with EditUserRoleDialog component
+  - Implemented resend invite feature for users with status INVITED
+  - Created UsersList client component with dropdown action menu
+  - Added remove user with confirmation modal (AlertDialog)
+  - Context-aware actions: "Reenviar Convite" only shows for INVITED users
+  - All actions validate permissions (Platform Admin vs Company Admin)
+  - Improved UX with loading states, error messages, and success feedback
+  
 - **2025-10-21**: Improved User Invitation Flow with Supabase Admin API
   - Implemented automatic user creation via Supabase `auth.admin.inviteUserByEmail()`
   - Users no longer need to create accounts first - Admin sends invite directly

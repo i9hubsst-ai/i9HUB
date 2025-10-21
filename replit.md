@@ -1,208 +1,7 @@
-# i9HUBSST - Replit Project Documentation
-
-## Project Overview
-
-**i9HUBSST** is a comprehensive SaaS platform for Occupational Health and Safety (SST) Management in Brazil, featuring:
-
-- Multi-tenant architecture with row-level security (RLS)
-- IMSST maturity diagnostic system (5 dimensions, 25 questions)
-- AI-powered assessment generation and action plan creation using OpenAI
-- Role-based access control (5 user roles)
-- Dashboard with analytics and reporting capabilities
-
-## Current Status (October 2025)
-
-### ✅ Completed Features
-- **Authentication System**: Full Supabase integration (login, register, password reset, logout)
-- **Email Confirmation**: Callback route configured for email verification (/auth/callback)
-- **Multi-Tenant Security**: Application-level isolation with ACTIVE membership validation on all server actions
-- **Company Management**: Complete CRUD with role-based permissions
-  - Create new companies with CNPJ validation (Platform Admins only)
-  - View all companies with statistics (users, assessments, action plans)
-  - Edit and delete companies
-- **User Management**: Complete CRUD system with invitation and role management
-  - Invite users to companies via email (Platform Admin: any company, Company Admin: own company only)
-  - Assign roles: Platform Admin, Company Admin, Engineer, Employer, Viewer
-  - View all users with role badges and status indicators
-  - Edit user roles with dropdown dialog
-  - Remove users from companies with confirmation modal
-  - Resend invites for pending users (status INVITED)
-  - User list with Gravatar integration and action menu
-- **Employee Management**: Complete CRUD for employee/worker registry with Brazilian compliance fields
-  - Civil identification: full name, CPF (with validation), birth date, gender, marital status, nationality
-  - Contact info: email, phone, emergency contact (name + phone)
-  - Employment bond: employee number, admission date, contract type (CLT/intern/outsourced/temporary/autonomous), work schedule, unit/site, department, position, CBO code, immediate supervisor
-  - CPF validation with Brazilian algorithm
-  - Formatted fields (CPF: XXX.XXX.XXX-XX, Phone: (XX) XXXXX-XXXX)
-  - Role-based permissions: Platform Admin (all companies), Company Admin (own company only)
-  - Statistics dashboard (total employees, active, CLT contracts, companies)
-  - Unique constraints: CPF and employee number per company
-- **Diagnostic Flow**: Create assessments, answer 25 questions, auto-calculate maturity scores
-- **Data Visualization**: Radar charts showing IMSST maturity scores across 5 dimensions (Recharts)
-- **Dashboard**: Real-time statistics from database (companies, assessments, users, action plans)
-- **Security Reviewed**: Multi-tenant isolation validated by architect after multiple security review rounds
-- **Landing Page**: Working navigation with functional login/register buttons
-- **Platform Admin Management**: User i9hubsst promoted to Platform Admin with display badge in UserNav component
-
-### 🔄 In Progress
-- None - Core MVP completed
-
-### ⏳ Future Features
-- PDF report generation with radar charts (@react-pdf/renderer)
-- AI-powered assessment generation using OpenAI (API key configured, feature not implemented)
-- AI-generated personalized action plans based on diagnostic results
-- Row Level Security (RLS) policies in Supabase database
-- Automated authorization tests for assessment flows
-
-## Security Architecture
-
-### Multi-Tenant Isolation
-- **Application-level authorization**: All server actions validate ACTIVE membership before data access
-- **Cross-tenant protection**: Users cannot access/modify data from other companies
-- **Assessment security**: getAssessments, getAssessmentById, saveAnswer, submitAssessment all enforce membership checks
-- **Admin operations**: Separate Supabase admin client (lib/supabase/admin.ts) with service role key for user invitations
-- **Security validation**: Architect-approved after identifying and fixing 3 critical vulnerabilities
-
-### Design Decisions (October 2025)
-- Using `findFirst` instead of `findUnique` when filtering by status to avoid Prisma errors
-- Application-level security preferred over RLS policies for now (allows faster iteration)
-- Service role key isolated in admin client to prevent accidental misuse
-- All assessment operations require ACTIVE membership (not just any membership)
-
-## Architecture
-
-### Tech Stack
-- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
-- **UI Components**: shadcn/ui, Radix UI, Lucide icons
-- **Backend**: Next.js Server Actions
-- **Database**: Supabase PostgreSQL
-- **ORM**: Prisma 6.17.1
-- **Authentication**: Supabase Auth
-- **AI**: OpenAI API (GPT models)
-- **Charts**: Recharts
-- **PDF**: React-PDF / jsPDF
-
-### Database Schema
-
-Key entities:
-- `companies` - Multi-tenant company records
-- `memberships` - User-company-role relationships
-- `platform_admins` - Global administrators
-- `module_permissions` - Granular permissions for Employers
-- `imsst_dimensions` - 5 SST maturity dimensions
-- `imsst_questions` - Assessment questions (Likert, multiple choice, yes/no)
-- `assessments` - Diagnostic instances
-- `assessment_answers` - User responses
-- `assessment_scores` - Calculated maturity scores per dimension
-- `action_plans` - AI-generated improvement actions
-- `audit_logs` - Compliance and tracking
-
-### User Roles
-
-| Role | Access | Multi-Company |
-|------|--------|---------------|
-| PLATFORM_ADMIN | Full system access | ✓ All companies |
-| COMPANY_ADMIN | Manage one company | ✗ Single company only |
-| ENGINEER | Apply diagnostics, generate reports | ✓ Multiple companies |
-| EMPLOYER | Limited access per module permissions | ✗ Single company only |
-| VIEWER | Read-only access | ✓ Multiple companies |
-
-## Environment Configuration
-
-### Required Secrets
-```env
-NEXT_PUBLIC_SUPABASE_URL=✅ configured
-NEXT_PUBLIC_SUPABASE_ANON_KEY=✅ configured
-SUPABASE_SERVICE_ROLE_KEY=✅ configured
-NEXT_PUBLIC_SITE_URL=✅ configured (https://839c63d9-dbb8-437d-83b2-ef0aa41ae08a-00-3nwxw68s56w08.riker.replit.dev)
-DATABASE_URL=✅ configured
-OPENAI_API_KEY=✅ configured (ready for AI features)
-SESSION_SECRET=✅ configured
-```
-
-### Feature Flags
-- `ENABLE_GOOGLE_SSO=false` (future)
-- `ENABLE_PDF_EXPORT=true`
-- `ALLOW_COMPANYADMIN_ASSIGN_EMPLOYER_PERMS=true`
-
-## Development Workflow
-
-### Running Locally
-```bash
-npm install
-npm run dev  # Runs on port 5000
-```
-
-### Database Setup
-```bash
-npx prisma generate  # Generate Prisma Client
-npx prisma db push   # Push schema to Supabase
-npm run seed         # Populate with demo data
-```
-
-### Seed Data
-- 2 companies: TechSafety Indústria Ltda, SafeWork Serviços
-- 5 IMSST dimensions (Liderança, Processos, Conformidade, Capacitação, Dados)
-- 25 questions (5 per dimension, all Likert scale)
-
-## Project Structure
-
-```
-/app
-  /auth
-    /login - Login page
-  /dashboard
-    /page.tsx - Main dashboard
-    /layout.tsx - Sidebar layout
-    /diagnostics - IMSST assessments
-    /companies - Company management
-    /users - User management
-    /actions - Action plans
-  /globals.css - HUBSST brand colors
-/components/ui - shadcn components
-/lib
-  /supabase - Client/server Supabase helpers
-  /auth.ts - Authentication utilities
-  /prisma.ts - Prisma client singleton
-/prisma
-  /schema.prisma - Database schema
-  /seed.ts - Seed script
-/public/images
-  /hubsst-logo.png - HUBSST logo
-```
-
-## Next Steps
-
-1. **User configures Supabase credentials**
-   - NEXT_PUBLIC_SUPABASE_URL
-   - NEXT_PUBLIC_SUPABASE_ANON_KEY
-   - SUPABASE_SERVICE_ROLE_KEY
-
-2. **Run database migrations**
-   ```bash
-   npx prisma db push
-   npm run seed
-   ```
-
-3. **Configure OpenAI API** (optional for MVP)
-
-4. **Implement authentication flow**
-   - Sign up / Sign in with Supabase
-   - Session management
-   - Protected routes
-
-5. **Build diagnostic flow**
-   - Question rendering component
-   - Answer submission
-   - Score calculation algorithm
-   - AI action plan generation
-
-6. **RLS policies in Supabase**
-   - Ensure data isolation by company_id
-   - Role-based query filtering
+## Overview
+i9HUBSST is a comprehensive SaaS platform for Occupational Health and Safety (SST) Management in Brazil. Its core purpose is to provide a multi-tenant solution for businesses to manage their SST compliance, featuring an IMSST maturity diagnostic system, AI-powered assessment generation, and action plan creation. The platform aims to streamline SST processes, improve compliance, and offer valuable insights through analytics and reporting, targeting SMBs in Brazil.
 
 ## User Preferences
-
 - Language: Portuguese (pt-BR)
 - Theme: Clean light palette with teal accent
   - Primary: #343a40 (cinza escuro)
@@ -218,99 +17,45 @@ npm run seed         # Populate with demo data
 - Focus: SST compliance for Brazilian companies
 - Target: SMBs needing structured SST management
 
-## Recent Changes
+## System Architecture
 
-- **2025-10-21**: Employee Management System (Complete CRUD)
-  - Created Employee model in Prisma schema with all SST compliance fields
-  - Added enums: Gender, MaritalStatus, ContractType
-  - Implemented server actions: createEmployee, updateEmployee, deleteEmployee, getEmployees
-  - Created /dashboard/employees page with statistics cards
-  - Built AddEmployeeDialog with 3-section form (Identification, Contact, Employment)
-  - Built EditEmployeeDialog with same validations and field requirements
-  - Created EmployeesList component with cards, actions menu (edit/delete), confirmation modals
-  - Implemented Brazilian validators: CPF validation algorithm, CPF formatter, phone formatter
-  - Unique constraints prevent duplicate CPF or employee numbers per company
-  - All CRUD operations validate permissions (Platform Admin vs Company Admin)
+### UI/UX Decisions
+The platform utilizes a clean light palette with a teal accent, reduced typography (text-sm base), and smaller border radii (0.375rem) for a modern, uncluttered look. Chart colors are distinct for better data visualization. The design prioritizes SST compliance for Brazilian companies and targets SMBs.
 
-- **2025-10-21**: Complete User Management CRUD Implementation
-  - Added edit user role functionality with EditUserRoleDialog component
-  - Implemented resend invite feature for users with status INVITED
-  - Created UsersList client component with dropdown action menu
-  - Added remove user with confirmation modal (AlertDialog)
-  - Context-aware actions: "Reenviar Convite" only shows for INVITED users
-  - All actions validate permissions (Platform Admin vs Company Admin)
-  - Improved UX with loading states, error messages, and success feedback
-  
-- **2025-10-21**: Improved User Invitation Flow with Supabase Admin API
-  - Implemented automatic user creation via Supabase `auth.admin.inviteUserByEmail()`
-  - Users no longer need to create accounts first - Admin sends invite directly
-  - Email automatically sent with password setup instructions
-  - Membership created with INVITED status (changes to ACTIVE after first login)
-  - Added status badges on user list: "Ativo" (green), "Convite Pendente" (yellow), "Inativo" (gray)
-  - Improved email validation with proper regex pattern
-  - Prevent duplicate invites (same email + same company)
-  - Updated InviteUserDialog UX with clear messaging about email invitation
-  
-- **2025-10-21**: User and Company Management System
-  - Implemented complete user invitation system with role-based permissions
-  - Created InviteUserDialog component with company and role selection
-  - Added "Convidar Usuário" button on users page (Platform Admin and Company Admin)
-  - Fixed Select components to properly capture and submit form values
-  - Security validated: Platform Admin can invite to any company, Company Admin only to their own
-  
-- **2025-10-21**: Design system modernization
-  - Applied lighter color palette based on reference image
-  - Reduced border radius from 10px to 6px for cleaner look
-  - Decreased font sizes across the system (text-sm base)
-  - Updated chart colors to more distinct palette
-  - Improved contrast ratios in both light and dark themes
-  - Configured Next.js for Gravatar remote images
-  
-- **2025-10-21**: Platform admin and visual improvements
-  - User i9hubsst promoted to Platform Admin
-  - Integrated Gravatar for user profile photos
-  - Fixed role display in UserNav and user list
+### Technical Implementations
+- **Authentication System**: Supabase integrated for login, registration, password reset, and email confirmation.
+- **Multi-Tenant Security**: Implemented at the application level with active membership validation on all server actions to ensure data isolation. A separate Supabase admin client with a service role key manages user invitations securely.
+- **User Management**: Comprehensive CRUD for users, including invitation by email, role assignment (Platform Admin, Company Admin, Engineer, Employer, Viewer), profile editing, and removal. Gravatar integration for user photos.
+- **Company Management**: Complete CRUD for company records with CNPJ validation and role-based permissions.
+- **Employee Management**: Full CRUD for employee records, adhering to Brazilian compliance fields (CPF validation, formatted fields) with role-based permissions.
+- **Diagnostic Flow**: System for creating IMSST assessments, answering 25 questions across 5 dimensions, and auto-calculating maturity scores.
+- **Data Visualization**: Radar charts (using Recharts) for displaying IMSST maturity scores.
+- **Dashboard**: Provides real-time statistics on companies, assessments, users, and action plans.
+- **AI Features**: Planned integration of OpenAI API for AI-powered assessment generation and personalized action plans.
 
-- **2025-01-20**: Initial project setup complete
-  - Created database schema with multi-tenant architecture
-  - Implemented core page structure (dashboard, diagnostics, companies, users, actions)
-  - Integrated HUBSST branding and logo
-  - Configured Next.js workflow on port 5000
-  - Created comprehensive seed script for demo data
+### Feature Specifications
+- **IMSST Maturity Diagnostic**: 5 dimensions, 25 questions, with score calculation.
+- **Role-Based Access Control**: 5 distinct user roles with varying levels of access and multi-company capabilities.
+- **PDF Report Generation**: Planned feature for generating reports with radar charts.
+- **Row Level Security (RLS)**: Planned implementation in Supabase for enhanced data isolation.
 
-## Email Configuration (Supabase)
+### System Design Choices
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS, shadcn/ui, Radix UI, Lucide icons.
+- **Backend**: Next.js Server Actions.
+- **Database**: Supabase PostgreSQL.
+- **ORM**: Prisma 6.17.1.
+- **Authentication**: Supabase Auth.
+- **Data Model**: Key entities include `companies`, `memberships`, `platform_admins`, `imsst_dimensions`, `imsst_questions`, `assessments`, `assessment_answers`, `assessment_scores`, `action_plans`, and `audit_logs`.
+- **Security**: Application-level authorization is prioritized for faster iteration, with plans to integrate RLS. All assessment operations enforce ACTIVE membership.
 
-**⚠️ Configuração Obrigatória:** Para que o sistema de convites funcione corretamente:
-
-### 1. Redirect URLs
-Acesse **Authentication** → **URL Configuration** e adicione:
-```
-https://839c63d9-dbb8-437d-83b2-ef0aa41ae08a-00-3nwxw68s56w08.riker.replit.dev/auth/callback
-```
-
-### 2. Email Templates
-Acesse **Authentication** → **Email Templates** e configure:
-- **Invite User**: Template usado quando Admin convida um novo usuário
-- **Confirm Signup**: Template para confirmação de email (cadastro manual)
-- **Magic Link**: Template para login sem senha (opcional)
-
-### 3. Fluxo de Convite
-Quando um Admin convida um usuário:
-1. Sistema verifica se email já existe no Supabase Auth
-2. Se não existe: chama `auth.admin.inviteUserByEmail()` que envia email automaticamente
-3. Membership criada com status `INVITED`
-4. Usuário recebe email com link para definir senha
-5. Após definir senha e fazer primeiro login, status muda para `ACTIVE` (implementação futura)
-
-**Documentação completa:** Veja `SUPABASE_CONFIG.md` para instruções detalhadas
-
-## Known Issues
-
-- None - Sistema operacional e seguro
-
-## Notes
-
-- All database operations use Prisma ORM for type safety
-- RLS policies must be configured in Supabase dashboard after credentials setup
-- The system supports both Portuguese and English interfaces (currently PT-BR only)
-- AI features require valid OpenAI API key
+## External Dependencies
+- **Supabase**: Backend-as-a-Service for database (PostgreSQL), authentication, and storage.
+- **OpenAI API**: For AI-powered assessment generation and action plan creation.
+- **Recharts**: JavaScript charting library for data visualization (radar charts).
+- **Prisma**: ORM for database interaction.
+- **shadcn/ui**: UI component library.
+- **Radix UI**: Low-level UI component library.
+- **Lucide icons**: Icon library.
+- **Next.js**: React framework for frontend and backend (Server Actions).
+- **Tailwind CSS**: Utility-first CSS framework.
+- **React-PDF / jsPDF**: Libraries planned for PDF report generation.

@@ -1,4 +1,5 @@
 {
+  "/api/ai/template-builder/route": "app/api/ai/template-builder/route.js",
   "/auth/login/page": "app/auth/login/page.js",
   "/dashboard/page": "app/dashboard/page.js",
   "/dashboard/templates/new/page": "app/dashboard/templates/new/page.js",

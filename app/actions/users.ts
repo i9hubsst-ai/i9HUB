@@ -27,35 +27,60 @@ export async function inviteUser(companyId: string, formData: FormData) {
     return { error: 'Email e função são obrigatórios' }
   }
 
+  if (!email.includes('@')) {
+    return { error: 'Email inválido' }
+  }
+
   try {
     const supabaseAdmin = createAdminClient()
     
-    const { data: existingUser, error: userError } = await supabaseAdmin.auth.admin.listUsers()
-    const targetUser = existingUser?.users.find(u => u.email === email)
+    // Check if user already exists in Supabase Auth
+    const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers()
+    let targetUser = existingUsers?.users.find(u => u.email?.toLowerCase() === email.toLowerCase())
 
-    if (!targetUser) {
-      return { error: 'Usuário não encontrado. O usuário precisa criar uma conta primeiro.' }
-    }
-
-    const existingMembership = await prisma.membership.findUnique({
-      where: {
-        userId_companyId: {
-          userId: targetUser.id,
-          companyId,
+    // Check if there's already a membership for this email/company
+    if (targetUser) {
+      const existingMembership = await prisma.membership.findUnique({
+        where: {
+          userId_companyId: {
+            userId: targetUser.id,
+            companyId,
+          }
         }
-      }
-    })
+      })
 
-    if (existingMembership) {
-      return { error: 'Este usuário já está associado a esta empresa' }
+      if (existingMembership) {
+        if (existingMembership.status === 'INVITED') {
+          return { error: 'Este usuário já tem um convite pendente para esta empresa' }
+        }
+        return { error: 'Este usuário já está associado a esta empresa' }
+      }
     }
 
+    // If user doesn't exist, invite them via Supabase
+    if (!targetUser) {
+      const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
+        data: {
+          invited_by: user.id,
+          company_id: companyId,
+        }
+      })
+
+      if (inviteError) {
+        console.error('Erro ao enviar convite Supabase:', inviteError)
+        return { error: 'Erro ao enviar convite por email' }
+      }
+
+      targetUser = inviteData.user
+    }
+
+    // Create membership with INVITED status
     const membership = await prisma.membership.create({
       data: {
         userId: targetUser.id,
         companyId,
         role: userRole,
-        status: 'ACTIVE',
+        status: 'INVITED',
       }
     })
 

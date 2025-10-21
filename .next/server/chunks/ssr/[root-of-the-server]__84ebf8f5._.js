@@ -71,34 +71,60 @@ async function inviteUser(companyId, formData) {
             error: 'Email e função são obrigatórios'
         };
     }
+    if (!email.includes('@')) {
+        return {
+            error: 'Email inválido'
+        };
+    }
     try {
         const supabaseAdmin = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$admin$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createAdminClient"])();
-        const { data: existingUser, error: userError } = await supabaseAdmin.auth.admin.listUsers();
-        const targetUser = existingUser?.users.find((u)=>u.email === email);
-        if (!targetUser) {
-            return {
-                error: 'Usuário não encontrado. O usuário precisa criar uma conta primeiro.'
-            };
-        }
-        const existingMembership = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.findUnique({
-            where: {
-                userId_companyId: {
-                    userId: targetUser.id,
-                    companyId
+        // Check if user already exists in Supabase Auth
+        const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
+        let targetUser = existingUsers?.users.find((u)=>u.email?.toLowerCase() === email.toLowerCase());
+        // Check if there's already a membership for this email/company
+        if (targetUser) {
+            const existingMembership = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.findUnique({
+                where: {
+                    userId_companyId: {
+                        userId: targetUser.id,
+                        companyId
+                    }
                 }
+            });
+            if (existingMembership) {
+                if (existingMembership.status === 'INVITED') {
+                    return {
+                        error: 'Este usuário já tem um convite pendente para esta empresa'
+                    };
+                }
+                return {
+                    error: 'Este usuário já está associado a esta empresa'
+                };
             }
-        });
-        if (existingMembership) {
-            return {
-                error: 'Este usuário já está associado a esta empresa'
-            };
         }
+        // If user doesn't exist, invite them via Supabase
+        if (!targetUser) {
+            const { data: inviteData, error: inviteError } = await supabaseAdmin.auth.admin.inviteUserByEmail(email, {
+                data: {
+                    invited_by: user.id,
+                    company_id: companyId
+                }
+            });
+            if (inviteError) {
+                console.error('Erro ao enviar convite Supabase:', inviteError);
+                return {
+                    error: 'Erro ao enviar convite por email'
+                };
+            }
+            targetUser = inviteData.user;
+        }
+        // Create membership with INVITED status
         const membership = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.create({
             data: {
                 userId: targetUser.id,
                 companyId,
                 role: userRole,
-                status: 'ACTIVE'
+                status: 'INVITED'
             }
         });
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])(`/dashboard/companies/${companyId}`);

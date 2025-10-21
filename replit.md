@@ -208,13 +208,22 @@ npm run seed         # Populate with demo data
 
 ## Recent Changes
 
+- **2025-10-21**: Improved User Invitation Flow with Supabase Admin API
+  - Implemented automatic user creation via Supabase `auth.admin.inviteUserByEmail()`
+  - Users no longer need to create accounts first - Admin sends invite directly
+  - Email automatically sent with password setup instructions
+  - Membership created with INVITED status (changes to ACTIVE after first login)
+  - Added status badges on user list: "Ativo" (green), "Convite Pendente" (yellow), "Inativo" (gray)
+  - Improved email validation with proper regex pattern
+  - Prevent duplicate invites (same email + same company)
+  - Updated InviteUserDialog UX with clear messaging about email invitation
+  
 - **2025-10-21**: User and Company Management System
   - Implemented complete user invitation system with role-based permissions
   - Created InviteUserDialog component with company and role selection
   - Added "Convidar Usuário" button on users page (Platform Admin and Company Admin)
   - Fixed Select components to properly capture and submit form values
   - Security validated: Platform Admin can invite to any company, Company Admin only to their own
-  - Prevent duplicate memberships (same user + company combination)
   
 - **2025-10-21**: Design system modernization
   - Applied lighter color palette based on reference image
@@ -236,16 +245,29 @@ npm run seed         # Populate with demo data
   - Configured Next.js workflow on port 5000
   - Created comprehensive seed script for demo data
 
-## Email Confirmation Setup
+## Email Configuration (Supabase)
 
-**⚠️ Importante:** Para que os links de confirmação de email funcionem, configure no painel do Supabase:
+**⚠️ Configuração Obrigatória:** Para que o sistema de convites funcione corretamente:
 
-1. Acesse **Authentication** → **URL Configuration**
-2. Adicione a seguinte URL nas **Redirect URLs**:
-   ```
-   https://839c63d9-dbb8-437d-83b2-ef0aa41ae08a-00-3nwxw68s56w08.riker.replit.dev/auth/callback
-   ```
-3. Salve as alterações
+### 1. Redirect URLs
+Acesse **Authentication** → **URL Configuration** e adicione:
+```
+https://839c63d9-dbb8-437d-83b2-ef0aa41ae08a-00-3nwxw68s56w08.riker.replit.dev/auth/callback
+```
+
+### 2. Email Templates
+Acesse **Authentication** → **Email Templates** e configure:
+- **Invite User**: Template usado quando Admin convida um novo usuário
+- **Confirm Signup**: Template para confirmação de email (cadastro manual)
+- **Magic Link**: Template para login sem senha (opcional)
+
+### 3. Fluxo de Convite
+Quando um Admin convida um usuário:
+1. Sistema verifica se email já existe no Supabase Auth
+2. Se não existe: chama `auth.admin.inviteUserByEmail()` que envia email automaticamente
+3. Membership criada com status `INVITED`
+4. Usuário recebe email com link para definir senha
+5. Após definir senha e fazer primeiro login, status muda para `ACTIVE` (implementação futura)
 
 **Documentação completa:** Veja `SUPABASE_CONFIG.md` para instruções detalhadas
 

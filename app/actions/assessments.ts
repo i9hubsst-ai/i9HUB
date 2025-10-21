@@ -127,16 +127,24 @@ export async function getAssessmentById(assessmentId: string) {
       where: { id: assessmentId },
       include: {
         company: true,
-        answers: {
+        template: {
           include: {
-            question: {
+            sections: {
               include: {
-                dimension: true
+                questions: true
               }
             }
           }
         },
+        answers: {
+          include: {
+            question: true
+          }
+        },
         scores: true,
+        findings: true,
+        evidences: true,
+        actionPlans: true,
       }
     })
 
@@ -164,29 +172,49 @@ export async function getAssessmentById(assessmentId: string) {
   }
 }
 
-export async function getQuestions() {
+export async function getTemplates() {
   try {
-    const dimensions = await prisma.iMSSTDimension.findMany({
+    const templates = await prisma.diagnosticTemplate.findMany({
+      where: {
+        status: 'PUBLISHED'
+      },
       include: {
-        questions: {
+        sections: {
+          include: {
+            questions: {
+              where: {
+                active: true,
+                approved: true
+              },
+              orderBy: {
+                createdAt: 'asc'
+              }
+            }
+          },
           orderBy: {
             order: 'asc'
           }
         }
       },
       orderBy: {
-        order: 'asc'
+        createdAt: 'desc'
       }
     })
 
-    return { success: true, dimensions }
+    return { success: true, templates }
   } catch (error) {
-    console.error('Erro ao buscar perguntas:', error)
-    return { error: 'Erro ao buscar perguntas' }
+    console.error('Erro ao buscar templates:', error)
+    return { error: 'Erro ao buscar templates' }
   }
 }
 
-export async function saveAnswer(assessmentId: string, questionId: string, value: number) {
+export async function saveAnswer(
+  assessmentId: string, 
+  questionId: string, 
+  value: number,
+  justification?: string,
+  evidenceUrls?: string[]
+) {
   const user = await getCurrentUser()
   if (!user) {
     return { error: 'Não autorizado' }
@@ -228,12 +256,16 @@ export async function saveAnswer(assessmentId: string, questionId: string, value
       create: {
         assessmentId,
         questionId,
-        answeredBy: user.id,
+        userId: user.id,
         value,
+        justification,
+        evidenceUrls: evidenceUrls || [],
       },
       update: {
         value,
-        answeredBy: user.id,
+        userId: user.id,
+        justification,
+        evidenceUrls: evidenceUrls || [],
       }
     })
 
@@ -264,13 +296,20 @@ export async function submitAssessment(assessmentId: string) {
     const assessment = await prisma.assessment.findUnique({
       where: { id: assessmentId },
       include: {
-        answers: {
+        template: {
           include: {
-            question: {
+            sections: {
               include: {
-                dimension: true
+                questions: {
+                  where: { active: true }
+                }
               }
             }
+          }
+        },
+        answers: {
+          include: {
+            question: true
           }
         }
       }
@@ -278,6 +317,10 @@ export async function submitAssessment(assessmentId: string) {
 
     if (!assessment) {
       return { error: 'Diagnóstico não encontrado' }
+    }
+
+    if (!assessment.template) {
+      return { error: 'Este diagnóstico não possui um template associado' }
     }
 
     const isAdmin = await isPlatformAdmin(user.id)
@@ -293,60 +336,78 @@ export async function submitAssessment(assessmentId: string) {
       return { error: 'Sem permissão para submeter este diagnóstico' }
     }
 
-    const totalQuestions = await prisma.question.count()
+    // Calcular scores por seção usando o novo schema
+    const totalQuestions = assessment.template.sections.reduce(
+      (sum, section) => sum + section.questions.length, 
+      0
+    )
     
     if (assessment.answers.length < totalQuestions) {
       return { error: `Por favor, responda todas as ${totalQuestions} perguntas antes de finalizar` }
     }
 
-    const dimensions = await prisma.iMSSTDimension.findMany({
-      include: {
-        questions: true
-      }
-    })
+    const sectionScores: { sectionId: string; rawScore: number; weightedScore: number; level: number }[] = []
 
-    for (const dimension of dimensions) {
-      const dimensionAnswers = assessment.answers.filter(
-        a => a.question.dimensionId === dimension.id
+    for (const section of assessment.template.sections) {
+      const sectionAnswers = assessment.answers.filter(
+        a => section.questions.some(q => q.id === a.questionId)
       )
 
-      const sum = dimensionAnswers.reduce((acc, answer) => {
-        const value = typeof answer.value === 'number' ? answer.value : 0
-        return acc + value * answer.question.weight
-      }, 0)
+      if (sectionAnswers.length === 0) continue
 
-      const maxScore = dimensionAnswers.reduce((acc, answer) => {
-        return acc + (5 * answer.question.weight)
-      }, 0)
+      // Calcular score ponderado da seção
+      let rawScore = 0
+      let totalWeight = 0
 
-      const score = (sum / maxScore) * 100
-      const level = Math.ceil(score / 20)
+      for (const answer of sectionAnswers) {
+        const question = section.questions.find(q => q.id === answer.questionId)
+        if (!question) continue
+
+        rawScore += answer.value * question.weight
+        totalWeight += question.weight * (question.type === 'BOOLEAN' ? 1 : 5)
+      }
+
+      const weightedScore = totalWeight > 0 ? (rawScore / totalWeight) * 100 : 0
+      const level = Math.min(5, Math.max(1, Math.ceil(weightedScore / 20)))
+
+      sectionScores.push({ sectionId: section.id, rawScore, weightedScore, level })
 
       await prisma.assessmentScore.upsert({
         where: {
-          assessmentId_dimensionId: {
+          assessmentId_sectionId: {
             assessmentId,
-            dimensionId: dimension.id,
+            sectionId: section.id,
           }
         },
         create: {
           assessmentId,
-          dimensionId: dimension.id,
-          score,
-          level: Math.max(1, Math.min(5, level)),
+          sectionId: section.id,
+          rawScore,
+          weightedScore,
+          level,
         },
         update: {
-          score,
-          level: Math.max(1, Math.min(5, level)),
+          rawScore,
+          weightedScore,
+          level,
         }
       })
     }
 
+    // Calcular overall score (média ponderada de todas as seções)
+    const overallScore = sectionScores.length > 0 
+      ? sectionScores.reduce((sum, s) => sum + s.weightedScore, 0) / sectionScores.length 
+      : 0
+    const overallLevel = Math.min(5, Math.max(1, Math.ceil(overallScore / 20)))
+
     await prisma.assessment.update({
       where: { id: assessmentId },
       data: {
-        status: 'COMPLETED',
+        status: 'SCORED',
         submittedAt: new Date(),
+        scoredAt: new Date(),
+        overallScore,
+        overallLevel,
       }
     })
 

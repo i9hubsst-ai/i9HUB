@@ -7,13 +7,12 @@ export default function Home() {
       <div className="max-w-4xl w-full text-center space-y-8">
         <div className="flex justify-center">
           <Image
-            src={`/images/hubsst-logo-new.png?v=${Date.now()}`}
+            src="/images/hubsst-logo-new.png?v=2"
             alt="HUBSST Logo"
             width={300}
             height={300}
             priority
             className="drop-shadow-2xl"
-            unoptimized
           />
         </div>
         

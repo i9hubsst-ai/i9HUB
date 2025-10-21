@@ -45,7 +45,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-md space-y-6">
         <div className="flex justify-center">
           <Image
-            src="/images/hubsst-logo.png"
+            src="/images/hubsst-logo-new.png?v=2"
             alt="HUBSST Logo"
             width={120}
             height={120}

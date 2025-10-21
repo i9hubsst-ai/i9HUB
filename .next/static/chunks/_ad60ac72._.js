@@ -1635,6 +1635,252 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }
 }),
+"[project]/app/actions/data:fa2191 [app-client] (ecmascript) <text/javascript>", ((__turbopack_context__) => {
+"use strict";
+
+/* __next_internal_action_entry_do_not_use__ [{"6064812192ee2706570b06dd3db20ef25759e19527":"updateUserProfile"},"app/actions/users.ts",""] */ __turbopack_context__.s([
+    "updateUserProfile",
+    ()=>updateUserProfile
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-client-wrapper.js [app-client] (ecmascript)");
+"use turbopack no side effects";
+;
+var updateUserProfile = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createServerReference"])("6064812192ee2706570b06dd3db20ef25759e19527", __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["callServer"], void 0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["findSourceMapURL"], "updateUserProfile"); //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4vdXNlcnMudHMiXSwic291cmNlc0NvbnRlbnQiOlsiJ3VzZSBzZXJ2ZXInXG5cbmltcG9ydCB7IHJldmFsaWRhdGVQYXRoIH0gZnJvbSAnbmV4dC9jYWNoZSdcbmltcG9ydCB7IHByaXNtYSB9IGZyb20gJ0AvbGliL3ByaXNtYSdcbmltcG9ydCB7IGdldEN1cnJlbnRVc2VyLCBpc1BsYXRmb3JtQWRtaW4sIGdldFVzZXJSb2xlIH0gZnJvbSAnQC9saWIvYXV0aCdcbmltcG9ydCB7IFJvbGUsIE1lbWJlcnNoaXBTdGF0dXMgfSBmcm9tICdAcHJpc21hL2NsaWVudCdcbmltcG9ydCB7IGNyZWF0ZUNsaWVudCB9IGZyb20gJ0AvbGliL3N1cGFiYXNlL3NlcnZlcidcbmltcG9ydCB7IGNyZWF0ZUFkbWluQ2xpZW50IH0gZnJvbSAnQC9saWIvc3VwYWJhc2UvYWRtaW4nXG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBpbnZpdGVVc2VyKGNvbXBhbnlJZDogc3RyaW5nLCBmb3JtRGF0YTogRm9ybURhdGEpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcbiAgY29uc3Qgcm9sZSA9IGF3YWl0IGdldFVzZXJSb2xlKHVzZXIuaWQsIGNvbXBhbnlJZClcblxuICBpZiAoIWlzQWRtaW4gJiYgcm9sZSAhPT0gJ0NPTVBBTllfQURNSU4nKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgYWRtaW5pc3RyYWRvcmVzIHBvZGVtIGNvbnZpZGFyIHVzdcOhcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWwgPSBmb3JtRGF0YS5nZXQoJ2VtYWlsJykgYXMgc3RyaW5nXG4gIGNvbnN0IHVzZXJSb2xlID0gZm9ybURhdGEuZ2V0KCdyb2xlJykgYXMgUm9sZVxuXG4gIGlmICghZW1haWwgfHwgIXVzZXJSb2xlKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFbWFpbCBlIGZ1bsOnw6NvIHPDo28gb2JyaWdhdMOzcmlvcycgfVxuICB9XG5cbiAgY29uc3QgZW1haWxSZWdleCA9IC9eW15cXHNAXStAW15cXHNAXStcXC5bXlxcc0BdKyQvXG4gIGlmICghZW1haWxSZWdleC50ZXN0KGVtYWlsKSkge1xuICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgaW52w6FsaWRvLiBVc2UgbyBmb3JtYXRvOiB1c3VhcmlvQGVtcHJlc2EuY29tJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IHN1cGFiYXNlQWRtaW4gPSBjcmVhdGVBZG1pbkNsaWVudCgpXG4gICAgXG4gICAgLy8gQ2hlY2sgaWYgdXNlciBhbHJlYWR5IGV4aXN0cyBpbiBTdXBhYmFzZSBBdXRoXG4gICAgY29uc3QgeyBkYXRhOiBleGlzdGluZ1VzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcbiAgICBsZXQgdGFyZ2V0VXNlciA9IGV4aXN0aW5nVXNlcnM/LnVzZXJzLmZpbmQodSA9PiB1LmVtYWlsPy50b0xvd2VyQ2FzZSgpID09PSBlbWFpbC50b0xvd2VyQ2FzZSgpKVxuXG4gICAgLy8gQ2hlY2sgaWYgdGhlcmUncyBhbHJlYWR5IGEgbWVtYmVyc2hpcCBmb3IgdGhpcyBlbWFpbC9jb21wYW55XG4gICAgaWYgKHRhcmdldFVzZXIpIHtcbiAgICAgIGNvbnN0IGV4aXN0aW5nTWVtYmVyc2hpcCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRVbmlxdWUoe1xuICAgICAgICB3aGVyZToge1xuICAgICAgICAgIHVzZXJJZF9jb21wYW55SWQ6IHtcbiAgICAgICAgICAgIHVzZXJJZDogdGFyZ2V0VXNlci5pZCxcbiAgICAgICAgICAgIGNvbXBhbnlJZCxcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH0pXG5cbiAgICAgIGlmIChleGlzdGluZ01lbWJlcnNoaXApIHtcbiAgICAgICAgaWYgKGV4aXN0aW5nTWVtYmVyc2hpcC5zdGF0dXMgPT09ICdJTlZJVEVEJykge1xuICAgICAgICAgIHJldHVybiB7IGVycm9yOiAnRXN0ZSB1c3XDoXJpbyBqw6EgdGVtIHVtIGNvbnZpdGUgcGVuZGVudGUgcGFyYSBlc3RhIGVtcHJlc2EnIH1cbiAgICAgICAgfVxuICAgICAgICByZXR1cm4geyBlcnJvcjogJ0VzdGUgdXN1w6FyaW8gasOhIGVzdMOhIGFzc29jaWFkbyBhIGVzdGEgZW1wcmVzYScgfVxuICAgICAgfVxuICAgIH1cblxuICAgIC8vIElmIHVzZXIgZG9lc24ndCBleGlzdCwgaW52aXRlIHRoZW0gdmlhIFN1cGFiYXNlXG4gICAgaWYgKCF0YXJnZXRVc2VyKSB7XG4gICAgICBjb25zdCB7IGRhdGE6IGludml0ZURhdGEsIGVycm9yOiBpbnZpdGVFcnJvciB9ID0gYXdhaXQgc3VwYWJhc2VBZG1pbi5hdXRoLmFkbWluLmludml0ZVVzZXJCeUVtYWlsKGVtYWlsLCB7XG4gICAgICAgIGRhdGE6IHtcbiAgICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICAgIGNvbXBhbnlfaWQ6IGNvbXBhbnlJZCxcbiAgICAgICAgfVxuICAgICAgfSlcblxuICAgICAgaWYgKGludml0ZUVycm9yKSB7XG4gICAgICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gZW52aWFyIGNvbnZpdGUgU3VwYWJhc2U6JywgaW52aXRlRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyBlbnZpYXIgY29udml0ZSBwb3IgZW1haWwnIH1cbiAgICAgIH1cblxuICAgICAgdGFyZ2V0VXNlciA9IGludml0ZURhdGEudXNlclxuICAgIH1cblxuICAgIC8vIENyZWF0ZSBtZW1iZXJzaGlwIHdpdGggSU5WSVRFRCBzdGF0dXNcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuY3JlYXRlKHtcbiAgICAgIGRhdGE6IHtcbiAgICAgICAgdXNlcklkOiB0YXJnZXRVc2VyLmlkLFxuICAgICAgICBjb21wYW55SWQsXG4gICAgICAgIHJvbGU6IHVzZXJSb2xlLFxuICAgICAgICBzdGF0dXM6ICdJTlZJVEVEJyxcbiAgICAgIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvY29tcGFuaWVzLyR7Y29tcGFueUlkfWApXG4gICAgcmV2YWxpZGF0ZVBhdGgoJy9kYXNoYm9hcmQvdXNlcnMnKVxuICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIG1lbWJlcnNoaXAgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gY29udmlkYXIgdXN1w6FyaW86JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGNvbnZpZGFyIHVzdcOhcmlvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIHJlc2VuZEludml0ZShtZW1iZXJzaGlwSWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZFVuaXF1ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgaWYgKCFtZW1iZXJzaGlwKSB7XG4gICAgICByZXR1cm4geyBlcnJvcjogJ01lbWJybyBuw6NvIGVuY29udHJhZG8nIH1cbiAgICB9XG5cbiAgICBpZiAobWVtYmVyc2hpcC5zdGF0dXMgIT09ICdJTlZJVEVEJykge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgY29udml0ZXMgcGVuZGVudGVzIHBvZGVtIHNlciByZWVudmlhZG9zJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IHJvbGUgPSBhd2FpdCBnZXRVc2VyUm9sZSh1c2VyLmlkLCBtZW1iZXJzaGlwLmNvbXBhbnlJZClcblxuICAgIGlmICghaXNBZG1pbiAmJiByb2xlICE9PSAnQ09NUEFOWV9BRE1JTicpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnU2VtIHBlcm1pc3PDo28gcGFyYSByZWVudmlhciBjb252aXRlcycgfVxuICAgIH1cblxuICAgIC8vIEdldCB1c2VyIGVtYWlsIGZyb20gU3VwYWJhc2VcbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXIgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5nZXRVc2VyQnlJZChtZW1iZXJzaGlwLnVzZXJJZClcblxuICAgIGlmICghYXV0aFVzZXIudXNlcj8uZW1haWwpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgZG8gdXN1w6FyaW8gbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgLy8gRm9yIHVzZXJzIHdpdGggc3RhdHVzIElOVklURUQgdGhhdCBoYXZlbid0IGNvbmZpcm1lZCB0aGVpciBlbWFpbCB5ZXQsXG4gICAgLy8gd2UgbmVlZCB0byBkZWxldGUgYW5kIHJlY3JlYXRlIHRoZW0gdG8gcmVzZW5kIHRoZSBpbnZpdGUgZW1haWxcbiAgICAvLyBUaGlzIGlzIG5lY2Vzc2FyeSBiZWNhdXNlIFN1cGFiYXNlJ3MgaW52aXRlVXNlckJ5RW1haWwgZmFpbHMgd2l0aCBcImVtYWlsX2V4aXN0c1wiIFxuICAgIC8vIGZvciB1c2VycyB0aGF0IGhhdmVuJ3QgY29uZmlybWVkIHlldFxuICAgIFxuICAgIC8vIENoZWNrIGlmIHVzZXIgaGFzIGNvbmZpcm1lZCB0aGVpciBlbWFpbFxuICAgIGlmICghYXV0aFVzZXIudXNlci5lbWFpbF9jb25maXJtZWRfYXQpIHtcbiAgICAgIC8vIFVzZXIgaGFzbid0IGNvbmZpcm1lZCB5ZXQgLSBkZWxldGUgYW5kIHJlY3JlYXRlIHRvIHJlc2VuZCBpbnZpdGVcbiAgICAgIGNvbnN0IHsgZXJyb3I6IGRlbGV0ZUVycm9yIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4uZGVsZXRlVXNlcihtZW1iZXJzaGlwLnVzZXJJZClcbiAgICAgIFxuICAgICAgaWYgKGRlbGV0ZUVycm9yKSB7XG4gICAgICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gcHJlcGFyYXIgcmVlbnZpbzonLCBkZWxldGVFcnJvcilcbiAgICAgICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIHByZXBhcmFyIHJlZW52aW8gZGUgY29udml0ZScgfVxuICAgICAgfVxuXG4gICAgICAvLyBSZWNyZWF0ZSB1c2VyIHdpdGggc2FtZSBlbWFpbFxuICAgICAgY29uc3QgeyBkYXRhOiBuZXdVc2VyLCBlcnJvcjogY3JlYXRlRXJyb3IgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi5pbnZpdGVVc2VyQnlFbWFpbChcbiAgICAgICAgYXV0aFVzZXIudXNlci5lbWFpbCxcbiAgICAgICAge1xuICAgICAgICAgIHJlZGlyZWN0VG86IGAke3Byb2Nlc3MuZW52Lk5FWFRfUFVCTElDX1NJVEVfVVJMfS9hdXRoL2NhbGxiYWNrYCxcbiAgICAgICAgICBkYXRhOiB7XG4gICAgICAgICAgICBpbnZpdGVkX2J5OiB1c2VyLmlkLFxuICAgICAgICAgICAgY29tcGFueV9pZDogbWVtYmVyc2hpcC5jb21wYW55SWQsXG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICApXG5cbiAgICAgIGlmIChjcmVhdGVFcnJvcikge1xuICAgICAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlZW52aWFyIGNvbnZpdGU6JywgY3JlYXRlRXJyb3IpXG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyByZWVudmlhciBjb252aXRlIHBvciBlbWFpbCcgfVxuICAgICAgfVxuXG4gICAgICAvLyBVcGRhdGUgbWVtYmVyc2hpcCB3aXRoIG5ldyB1c2VyIElEXG4gICAgICBhd2FpdCBwcmlzbWEubWVtYmVyc2hpcC51cGRhdGUoe1xuICAgICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH0sXG4gICAgICAgIGRhdGE6IHsgdXNlcklkOiBuZXdVc2VyLnVzZXIhLmlkIH1cbiAgICAgIH0pXG5cbiAgICAgIHJldmFsaWRhdGVQYXRoKGAvZGFzaGJvYXJkL2NvbXBhbmllcy8ke21lbWJlcnNoaXAuY29tcGFueUlkfWApXG4gICAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlIH1cbiAgICB9XG5cbiAgICAvLyBVc2VyIGhhcyBjb25maXJtZWQgZW1haWwgLSB0aGV5IHNob3VsZCBsb2dpbiBub3JtYWxseVxuICAgIHJldHVybiB7IGVycm9yOiAnRXN0ZSB1c3XDoXJpbyBqw6EgY29uZmlybW91IG8gZW1haWwuIEVsZSBkZXZlIGZhemVyIGxvZ2luIG5vcm1hbG1lbnRlLicgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gcmVlbnZpYXIgY29udml0ZTonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gcmVlbnZpYXIgY29udml0ZScgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiB1cGRhdGVVc2VyUm9sZShtZW1iZXJzaGlwSWQ6IHN0cmluZywgbmV3Um9sZTogUm9sZSkge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZFVuaXF1ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgaWYgKCFtZW1iZXJzaGlwKSB7XG4gICAgICByZXR1cm4geyBlcnJvcjogJ01lbWJybyBuw6NvIGVuY29udHJhZG8nIH1cbiAgICB9XG5cbiAgICBjb25zdCBpc0FkbWluID0gYXdhaXQgaXNQbGF0Zm9ybUFkbWluKHVzZXIuaWQpXG4gICAgY29uc3Qgcm9sZSA9IGF3YWl0IGdldFVzZXJSb2xlKHVzZXIuaWQsIG1lbWJlcnNoaXAuY29tcGFueUlkKVxuXG4gICAgaWYgKCFpc0FkbWluICYmIHJvbGUgIT09ICdDT01QQU5ZX0FETUlOJykge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdTZW0gcGVybWlzc8OjbyBwYXJhIGFsdGVyYXIgZnVuw6fDtWVzJyB9XG4gICAgfVxuXG4gICAgY29uc3QgdXBkYXRlZCA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLnVwZGF0ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH0sXG4gICAgICBkYXRhOiB7IHJvbGU6IG5ld1JvbGUgfVxuICAgIH0pXG5cbiAgICByZXZhbGlkYXRlUGF0aChgL2Rhc2hib2FyZC9jb21wYW5pZXMvJHttZW1iZXJzaGlwLmNvbXBhbnlJZH1gKVxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlLCBtZW1iZXJzaGlwOiB1cGRhdGVkIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGF0dWFsaXphciBmdW7Dp8OjbzonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYXR1YWxpemFyIGZ1bsOnw6NvJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIHJlbW92ZVVzZXJGcm9tQ29tcGFueShtZW1iZXJzaGlwSWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBjb25zdCBtZW1iZXJzaGlwID0gYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZmluZFVuaXF1ZSh7XG4gICAgICB3aGVyZTogeyBpZDogbWVtYmVyc2hpcElkIH1cbiAgICB9KVxuXG4gICAgaWYgKCFtZW1iZXJzaGlwKSB7XG4gICAgICByZXR1cm4geyBlcnJvcjogJ01lbWJybyBuw6NvIGVuY29udHJhZG8nIH1cbiAgICB9XG5cbiAgICBjb25zdCBpc0FkbWluID0gYXdhaXQgaXNQbGF0Zm9ybUFkbWluKHVzZXIuaWQpXG4gICAgY29uc3Qgcm9sZSA9IGF3YWl0IGdldFVzZXJSb2xlKHVzZXIuaWQsIG1lbWJlcnNoaXAuY29tcGFueUlkKVxuXG4gICAgaWYgKCFpc0FkbWluICYmIHJvbGUgIT09ICdDT01QQU5ZX0FETUlOJykge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdTZW0gcGVybWlzc8OjbyBwYXJhIHJlbW92ZXIgdXN1w6FyaW9zJyB9XG4gICAgfVxuXG4gICAgYXdhaXQgcHJpc21hLm1lbWJlcnNoaXAuZGVsZXRlKHtcbiAgICAgIHdoZXJlOiB7IGlkOiBtZW1iZXJzaGlwSWQgfVxuICAgIH0pXG5cbiAgICByZXZhbGlkYXRlUGF0aChgL2Rhc2hib2FyZC9jb21wYW5pZXMvJHttZW1iZXJzaGlwLmNvbXBhbnlJZH1gKVxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3VzZXJzJylcbiAgICByZXR1cm4geyBzdWNjZXNzOiB0cnVlIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIHJlbW92ZXIgdXN1w6FyaW86JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIHJlbW92ZXIgdXN1w6FyaW8nIH1cbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gdXBkYXRlVXNlclByb2ZpbGUodXNlcklkOiBzdHJpbmcsIGRhdGE6IHsgbmFtZT86IHN0cmluZzsgZW1haWw/OiBzdHJpbmcgfSkge1xuICBjb25zdCBjdXJyZW50VXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCFjdXJyZW50VXNlcikge1xuICAgIHJldHVybiB7IGVycm9yOiAnTsOjbyBhdXRvcml6YWRvJyB9XG4gIH1cblxuICAvLyBPbmx5IGFsbG93IHVwZGF0aW5nIG93biBwcm9maWxlIG9yIGlmIFBsYXRmb3JtIEFkbWluXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4oY3VycmVudFVzZXIuaWQpXG4gIGlmICghaXNBZG1pbiAmJiBjdXJyZW50VXNlci5pZCAhPT0gdXNlcklkKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdWb2PDqiBzw7MgcG9kZSBlZGl0YXIgc2V1IHByw7NwcmlvIHBlcmZpbCcgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIFxuICAgIC8vIFVwZGF0ZSB1c2VyIGluIFN1cGFiYXNlIEF1dGhcbiAgICBjb25zdCB1cGRhdGVEYXRhOiBhbnkgPSB7fVxuICAgIFxuICAgIGlmIChkYXRhLmVtYWlsKSB7XG4gICAgICBjb25zdCBlbWFpbFJlZ2V4ID0gL15bXlxcc0BdK0BbXlxcc0BdK1xcLlteXFxzQF0rJC9cbiAgICAgIGlmICghZW1haWxSZWdleC50ZXN0KGRhdGEuZW1haWwpKSB7XG4gICAgICAgIHJldHVybiB7IGVycm9yOiAnRW1haWwgaW52w6FsaWRvJyB9XG4gICAgICB9XG4gICAgICB1cGRhdGVEYXRhLmVtYWlsID0gZGF0YS5lbWFpbFxuICAgIH1cbiAgICBcbiAgICBpZiAoZGF0YS5uYW1lKSB7XG4gICAgICB1cGRhdGVEYXRhLnVzZXJfbWV0YWRhdGEgPSB7IG5hbWU6IGRhdGEubmFtZSB9XG4gICAgfVxuXG4gICAgY29uc3QgeyBkYXRhOiB1cGRhdGVkVXNlciwgZXJyb3IgfSA9IGF3YWl0IHN1cGFiYXNlQWRtaW4uYXV0aC5hZG1pbi51cGRhdGVVc2VyQnlJZChcbiAgICAgIHVzZXJJZCxcbiAgICAgIHVwZGF0ZURhdGFcbiAgICApXG5cbiAgICBpZiAoZXJyb3IpIHtcbiAgICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYXR1YWxpemFyIHVzdcOhcmlvIG5vIFN1cGFiYXNlOicsIGVycm9yKVxuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGF0dWFsaXphciBwZXJmaWwnIH1cbiAgICB9XG5cbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdXNlcjogdXBkYXRlZFVzZXIgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYXR1YWxpemFyIHBlcmZpbDonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYXR1YWxpemFyIHBlcmZpbCcgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBnZXRDb21wYW55VXNlcnMoY29tcGFueUlkOiBzdHJpbmcpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcbiAgY29uc3Qgcm9sZSA9IGF3YWl0IGdldFVzZXJSb2xlKHVzZXIuaWQsIGNvbXBhbnlJZClcblxuICBpZiAoIWlzQWRtaW4gJiYgIXJvbGUpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ1NlbSBwZXJtaXNzw6NvIHBhcmEgYWNlc3NhciB1c3XDoXJpb3MgZGVzdGEgZW1wcmVzYScgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBjb25zdCBtZW1iZXJzaGlwcyA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRNYW55KHtcbiAgICAgIHdoZXJlOiB7IGNvbXBhbnlJZCB9LFxuICAgICAgaW5jbHVkZToge1xuICAgICAgICBjb21wYW55OiB0cnVlXG4gICAgICB9LFxuICAgICAgb3JkZXJCeToge1xuICAgICAgICBjcmVhdGVkQXQ6ICdkZXNjJ1xuICAgICAgfVxuICAgIH0pXG5cbiAgICBjb25zdCBzdXBhYmFzZUFkbWluID0gY3JlYXRlQWRtaW5DbGllbnQoKVxuICAgIGNvbnN0IHsgZGF0YTogYXV0aFVzZXJzIH0gPSBhd2FpdCBzdXBhYmFzZUFkbWluLmF1dGguYWRtaW4ubGlzdFVzZXJzKClcblxuICAgIGNvbnN0IHVzZXJzV2l0aERldGFpbHMgPSBtZW1iZXJzaGlwcy5tYXAobWVtYmVyc2hpcCA9PiB7XG4gICAgICBjb25zdCBhdXRoVXNlciA9IGF1dGhVc2Vycz8udXNlcnMuZmluZCh1ID0+IHUuaWQgPT09IG1lbWJlcnNoaXAudXNlcklkKVxuICAgICAgcmV0dXJuIHtcbiAgICAgICAgLi4ubWVtYmVyc2hpcCxcbiAgICAgICAgZW1haWw6IGF1dGhVc2VyPy5lbWFpbCxcbiAgICAgICAgbmFtZTogYXV0aFVzZXI/LnVzZXJfbWV0YWRhdGE/Lm5hbWUsXG4gICAgICB9XG4gICAgfSlcblxuICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIHVzZXJzOiB1c2Vyc1dpdGhEZXRhaWxzIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGJ1c2NhciB1c3XDoXJpb3M6JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGJ1c2NhciB1c3XDoXJpb3MnIH1cbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gZ2V0QWxsVXNlcnMoKSB7XG4gIGNvbnN0IHVzZXIgPSBhd2FpdCBnZXRDdXJyZW50VXNlcigpXG4gIGlmICghdXNlcikge1xuICAgIHJldHVybiB7IGVycm9yOiAnTsOjbyBhdXRvcml6YWRvJyB9XG4gIH1cblxuICBjb25zdCBpc0FkbWluID0gYXdhaXQgaXNQbGF0Zm9ybUFkbWluKHVzZXIuaWQpXG5cbiAgdHJ5IHtcbiAgICBsZXQgbWVtYmVyc2hpcHNcblxuICAgIGlmIChpc0FkbWluKSB7XG4gICAgICBtZW1iZXJzaGlwcyA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRNYW55KHtcbiAgICAgICAgaW5jbHVkZToge1xuICAgICAgICAgIGNvbXBhbnk6IHRydWVcbiAgICAgICAgfSxcbiAgICAgICAgb3JkZXJCeToge1xuICAgICAgICAgIGNyZWF0ZWRBdDogJ2Rlc2MnXG4gICAgICAgIH1cbiAgICAgIH0pXG4gICAgfSBlbHNlIHtcbiAgICAgIGNvbnN0IHVzZXJNZW1iZXJzaGlwcyA9IGF3YWl0IHByaXNtYS5tZW1iZXJzaGlwLmZpbmRNYW55KHtcbiAgICAgICAgd2hlcmU6IHtcbiAgICAgICAgICB1c2VySWQ6IHVzZXIuaWQsXG4gICAgICAgICAgc3RhdHVzOiAnQUNUSVZFJ1xuICAgICAgICB9LFxuICAgICAgICBzZWxlY3Q6IHtcbiAgICAgICAgICBjb21wYW55SWQ6IHRydWVcbiAgICAgICAgfVxuICAgICAgfSlcblxuICAgICAgY29uc3QgY29tcGFueUlkcyA9IHVzZXJNZW1iZXJzaGlwcy5tYXAobSA9PiBtLmNvbXBhbnlJZClcblxuICAgICAgbWVtYmVyc2hpcHMgPSBhd2FpdCBwcmlzbWEubWVtYmVyc2hpcC5maW5kTWFueSh7XG4gICAgICAgIHdoZXJlOiB7XG4gICAgICAgICAgY29tcGFueUlkOiB7XG4gICAgICAgICAgICBpbjogY29tcGFueUlkc1xuICAgICAgICAgIH1cbiAgICAgICAgfSxcbiAgICAgICAgaW5jbHVkZToge1xuICAgICAgICAgIGNvbXBhbnk6IHRydWVcbiAgICAgICAgfSxcbiAgICAgICAgb3JkZXJCeToge1xuICAgICAgICAgIGNyZWF0ZWRBdDogJ2Rlc2MnXG4gICAgICAgIH1cbiAgICAgIH0pXG4gICAgfVxuXG4gICAgY29uc3Qgc3VwYWJhc2VBZG1pbiA9IGNyZWF0ZUFkbWluQ2xpZW50KClcbiAgICBjb25zdCB7IGRhdGE6IGF1dGhVc2VycyB9ID0gYXdhaXQgc3VwYWJhc2VBZG1pbi5hdXRoLmFkbWluLmxpc3RVc2VycygpXG5cbiAgICAvLyBHZXQgYWxsIHBsYXRmb3JtIGFkbWlucyB0byBvdmVycmlkZSB0aGVpciByb2xlIGRpc3BsYXlcbiAgICBjb25zdCBwbGF0Zm9ybUFkbWlucyA9IGF3YWl0IHByaXNtYS5wbGF0Zm9ybUFkbWluLmZpbmRNYW55KHtcbiAgICAgIHNlbGVjdDoge1xuICAgICAgICB1c2VySWQ6IHRydWVcbiAgICAgIH1cbiAgICB9KVxuICAgIGNvbnN0IHBsYXRmb3JtQWRtaW5JZHMgPSBuZXcgU2V0KHBsYXRmb3JtQWRtaW5zLm1hcChwYSA9PiBwYS51c2VySWQpKVxuXG4gICAgY29uc3QgdXNlcnNXaXRoRGV0YWlscyA9IG1lbWJlcnNoaXBzLm1hcChtZW1iZXJzaGlwID0+IHtcbiAgICAgIGNvbnN0IGF1dGhVc2VyID0gYXV0aFVzZXJzPy51c2Vycy5maW5kKHUgPT4gdS5pZCA9PT0gbWVtYmVyc2hpcC51c2VySWQpXG4gICAgICBcbiAgICAgIC8vIElmIHVzZXIgaXMgYSBwbGF0Zm9ybSBhZG1pbiwgb3ZlcnJpZGUgdGhlaXIgcm9sZSBmb3IgZGlzcGxheVxuICAgICAgY29uc3QgZWZmZWN0aXZlUm9sZSA9IHBsYXRmb3JtQWRtaW5JZHMuaGFzKG1lbWJlcnNoaXAudXNlcklkKSBcbiAgICAgICAgPyAnUExBVEZPUk1fQURNSU4nIGFzIFJvbGVcbiAgICAgICAgOiBtZW1iZXJzaGlwLnJvbGVcblxuICAgICAgcmV0dXJuIHtcbiAgICAgICAgLi4ubWVtYmVyc2hpcCxcbiAgICAgICAgcm9sZTogZWZmZWN0aXZlUm9sZSxcbiAgICAgICAgZW1haWw6IGF1dGhVc2VyPy5lbWFpbCxcbiAgICAgICAgbmFtZTogYXV0aFVzZXI/LnVzZXJfbWV0YWRhdGE/Lm5hbWUsXG4gICAgICB9XG4gICAgfSlcblxuICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUsIHVzZXJzOiB1c2Vyc1dpdGhEZXRhaWxzIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGJ1c2NhciB1c3XDoXJpb3M6JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGJ1c2NhciB1c3XDoXJpb3MnIH1cbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gbWFrZVBsYXRmb3JtQWRtaW4odXNlcklkOiBzdHJpbmcpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcbiAgaWYgKCFpc0FkbWluKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgYWRtaW5pc3RyYWRvcmVzIGRhIHBsYXRhZm9ybWEgcG9kZW0gcHJvbW92ZXIgdXN1w6FyaW9zJyB9XG4gIH1cblxuICB0cnkge1xuICAgIGNvbnN0IGFkbWluID0gYXdhaXQgcHJpc21hLnBsYXRmb3JtQWRtaW4uY3JlYXRlKHtcbiAgICAgIGRhdGE6IHtcbiAgICAgICAgdXNlcklkLFxuICAgICAgfVxuICAgIH0pXG5cbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC91c2VycycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgYWRtaW4gfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gcHJvbW92ZXIgdXN1w6FyaW86JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFc3RlIHVzdcOhcmlvIGrDoSDDqSBhZG1pbmlzdHJhZG9yIGRhIHBsYXRhZm9ybWEnIH1cbiAgfVxufVxuIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiIrUkE0UHNCIn0=
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
+"[project]/components/dashboard/edit-user-profile-dialog.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "EditUserProfileDialog",
+    ()=>EditUserProfileDialog
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/dialog.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/input.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/label.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$fa2191__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:fa2191 [app-client] (ecmascript) <text/javascript>");
+;
+var _s = __turbopack_context__.k.signature();
+'use client';
+;
+;
+;
+;
+;
+;
+;
+function EditUserProfileDialog(param) {
+    let { user, open, onOpenChange } = param;
+    _s();
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [name, setName] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [email, setEmail] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "EditUserProfileDialog.useEffect": ()=>{
+            if (user && open) {
+                setName(user.name || '');
+                setEmail(user.email || '');
+            }
+        }
+    }["EditUserProfileDialog.useEffect"], [
+        user,
+        open
+    ]);
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+        if (!email.trim()) {
+            setError('Email é obrigatório');
+            setLoading(false);
+            return;
+        }
+        const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$fa2191__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["updateUserProfile"])(user.userId, {
+            name: name.trim() || undefined,
+            email: email.trim()
+        });
+        if (result.error) {
+            setError(result.error);
+            setLoading(false);
+        } else {
+            onOpenChange(false);
+            setLoading(false);
+        }
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
+        open: open,
+        onOpenChange: onOpenChange,
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogContent"], {
+            className: "max-w-md",
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogHeader"], {
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogTitle"], {
+                            children: "Editar Perfil"
+                        }, void 0, false, {
+                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                            lineNumber: 63,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
+                            children: "Atualize o nome e email do usuário"
+                        }, void 0, false, {
+                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                            lineNumber: 64,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                    lineNumber: 62,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                    onSubmit: handleSubmit,
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "space-y-4 py-4",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "space-y-2",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+                                            htmlFor: "name",
+                                            children: "Nome Completo"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                                            lineNumber: 72,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                                            id: "name",
+                                            value: name,
+                                            onChange: (e)=>setName(e.target.value),
+                                            placeholder: "Digite o nome completo"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                                            lineNumber: 73,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                                    lineNumber: 71,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "space-y-2",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+                                            htmlFor: "email",
+                                            children: "Email *"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                                            lineNumber: 82,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
+                                            id: "email",
+                                            type: "email",
+                                            value: email,
+                                            onChange: (e)=>setEmail(e.target.value),
+                                            placeholder: "usuario@empresa.com",
+                                            required: true
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                                            lineNumber: 83,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                                    lineNumber: 81,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                            lineNumber: 70,
+                            columnNumber: 11
+                        }, this),
+                        error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "text-sm text-destructive bg-destructive/10 p-3 rounded-md mb-4",
+                            children: error
+                        }, void 0, false, {
+                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                            lineNumber: 95,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogFooter"], {
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                    type: "button",
+                                    variant: "outline",
+                                    onClick: ()=>onOpenChange(false),
+                                    disabled: loading,
+                                    children: "Cancelar"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                                    lineNumber: 101,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                    type: "submit",
+                                    disabled: loading,
+                                    children: [
+                                        loading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                            className: "mr-2 h-4 w-4 animate-spin"
+                                        }, void 0, false, {
+                                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                                            lineNumber: 110,
+                                            columnNumber: 27
+                                        }, this),
+                                        "Salvar"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                                    lineNumber: 109,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                            lineNumber: 100,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+                    lineNumber: 69,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+            lineNumber: 61,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/components/dashboard/edit-user-profile-dialog.tsx",
+        lineNumber: 60,
+        columnNumber: 5
+    }, this);
+}
+_s(EditUserProfileDialog, "XF906LKE86ToqSRCoGEpMulB1C0=");
+_c = EditUserProfileDialog;
+var _c;
+__turbopack_context__.k.register(_c, "EditUserProfileDialog");
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
 "[project]/app/actions/data:200d32 [app-client] (ecmascript) <text/javascript>", ((__turbopack_context__) => {
 "use strict";
 
@@ -1688,12 +1934,14 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$cog$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCog$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user-cog.js [app-client] (ecmascript) <export default as UserCog>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-client] (ecmascript) <export default as User>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$dashboard$2f$edit$2d$user$2d$role$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/dashboard/edit-user-role-dialog.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$dashboard$2f$edit$2d$user$2d$profile$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/dashboard/edit-user-profile-dialog.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$200d32__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:200d32 [app-client] (ecmascript) <text/javascript>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$557595__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:557595 [app-client] (ecmascript) <text/javascript>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
+;
 ;
 ;
 ;
@@ -2059,6 +2307,18 @@ function UsersList(param) {
                 lineNumber: 194,
                 columnNumber: 9
             }, this),
+            editingProfile && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$dashboard$2f$edit$2d$user$2d$profile$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["EditUserProfileDialog"], {
+                open: !!editingProfile,
+                onOpenChange: (open)=>{
+                    if (!open) setEditingProfile(null);
+                    else router.refresh();
+                },
+                user: editingProfile
+            }, void 0, false, {
+                fileName: "[project]/components/dashboard/users-list.tsx",
+                lineNumber: 200,
+                columnNumber: 9
+            }, this),
             editingUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$dashboard$2f$edit$2d$user$2d$role$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["EditUserRoleDialog"], {
                 open: !!editingUser,
                 onOpenChange: (open)=>{
@@ -2068,7 +2328,7 @@ function UsersList(param) {
                 user: editingUser
             }, void 0, false, {
                 fileName: "[project]/components/dashboard/users-list.tsx",
-                lineNumber: 200,
+                lineNumber: 211,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialog"], {
@@ -2082,7 +2342,7 @@ function UsersList(param) {
                                     children: "Remover Usuário"
                                 }, void 0, false, {
                                     fileName: "[project]/components/dashboard/users-list.tsx",
-                                    lineNumber: 213,
+                                    lineNumber: 224,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogDescription"], {
@@ -2092,7 +2352,7 @@ function UsersList(param) {
                                             children: (removingUser === null || removingUser === void 0 ? void 0 : removingUser.name) || (removingUser === null || removingUser === void 0 ? void 0 : removingUser.email)
                                         }, void 0, false, {
                                             fileName: "[project]/components/dashboard/users-list.tsx",
-                                            lineNumber: 215,
+                                            lineNumber: 226,
                                             columnNumber: 46
                                         }, this),
                                         " da empresa ",
@@ -2100,31 +2360,31 @@ function UsersList(param) {
                                             children: removingUser === null || removingUser === void 0 ? void 0 : removingUser.company.name
                                         }, void 0, false, {
                                             fileName: "[project]/components/dashboard/users-list.tsx",
-                                            lineNumber: 215,
+                                            lineNumber: 226,
                                             columnNumber: 118
                                         }, this),
                                         "?",
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                             fileName: "[project]/components/dashboard/users-list.tsx",
-                                            lineNumber: 216,
+                                            lineNumber: 227,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                             fileName: "[project]/components/dashboard/users-list.tsx",
-                                            lineNumber: 216,
+                                            lineNumber: 227,
                                             columnNumber: 21
                                         }, this),
                                         "Esta ação não pode ser desfeita."
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/dashboard/users-list.tsx",
-                                    lineNumber: 214,
+                                    lineNumber: 225,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/dashboard/users-list.tsx",
-                            lineNumber: 212,
+                            lineNumber: 223,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogFooter"], {
@@ -2134,7 +2394,7 @@ function UsersList(param) {
                                     children: "Cancelar"
                                 }, void 0, false, {
                                     fileName: "[project]/components/dashboard/users-list.tsx",
-                                    lineNumber: 221,
+                                    lineNumber: 232,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$alert$2d$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AlertDialogAction"], {
@@ -2144,24 +2404,24 @@ function UsersList(param) {
                                     children: loading === (removingUser === null || removingUser === void 0 ? void 0 : removingUser.id) ? 'Removendo...' : 'Remover'
                                 }, void 0, false, {
                                     fileName: "[project]/components/dashboard/users-list.tsx",
-                                    lineNumber: 224,
+                                    lineNumber: 235,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/dashboard/users-list.tsx",
-                            lineNumber: 220,
+                            lineNumber: 231,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/dashboard/users-list.tsx",
-                    lineNumber: 211,
+                    lineNumber: 222,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/dashboard/users-list.tsx",
-                lineNumber: 210,
+                lineNumber: 221,
                 columnNumber: 7
             }, this)
         ]
@@ -2181,4 +2441,4 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 }),
 ]);
 
-//# sourceMappingURL=_d280806e._.js.map
+//# sourceMappingURL=_ad60ac72._.js.map

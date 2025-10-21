@@ -175,7 +175,7 @@
         }
       },
       "layer": {
-        "app/dashboard/users/page": "rsc"
+        "app/dashboard/users/page": "action-browser"
       },
       "exportedName": "updateUserProfile",
       "filename": "app/actions/users.ts"

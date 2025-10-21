@@ -19,8 +19,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Mail, MoreVertical, Pencil, Trash2, Send, Users, Shield, UserCog } from 'lucide-react'
+import { Mail, MoreVertical, Pencil, Trash2, Send, Users, Shield, UserCog, User } from 'lucide-react'
 import { EditUserRoleDialog } from './edit-user-role-dialog'
+import { EditUserProfileDialog } from './edit-user-profile-dialog'
 import { resendInvite, removeUserFromCompany } from '@/app/actions/users'
 import { Role } from '@prisma/client'
 import { useRouter } from 'next/navigation'
@@ -54,6 +55,7 @@ const roleIcons = {
 export function UsersList({ users }: UsersListProps) {
   const router = useRouter()
   const [editingUser, setEditingUser] = useState<User | null>(null)
+  const [editingProfile, setEditingProfile] = useState<User | null>(null)
   const [removingUser, setRemovingUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState('')
@@ -154,6 +156,10 @@ export function UsersList({ users }: UsersListProps) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => setEditingProfile(user)}>
+                          <User className="h-4 w-4 mr-2" />
+                          Editar Perfil
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => setEditingUser(user)}>
                           <Pencil className="h-4 w-4 mr-2" />
                           Editar Papel
@@ -188,6 +194,17 @@ export function UsersList({ users }: UsersListProps) {
         <div className="bg-destructive/10 text-destructive p-3 rounded-lg text-sm mt-4">
           {error}
         </div>
+      )}
+
+      {editingProfile && (
+        <EditUserProfileDialog
+          open={!!editingProfile}
+          onOpenChange={(open: boolean) => {
+            if (!open) setEditingProfile(null)
+            else router.refresh()
+          }}
+          user={editingProfile}
+        />
       )}
 
       {editingUser && (

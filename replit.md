@@ -185,22 +185,33 @@ npm run seed         # Populate with demo data
 ## User Preferences
 
 - Language: Portuguese (pt-BR)
-- Theme: Modern gray & turquoise palette
-  - Primary: #393e46 (grafite escuro)
-  - Accent: #4ecca3 (turquesa)
-  - Secondary: #505762 (cinza médio)
-  - Borders/Muted: #d4d4d4 (cinza claro)
+- Theme: Clean light palette with teal accent
+  - Primary: #343a40 (cinza escuro)
+  - Accent: #17a2b8 (teal/turquesa)
+  - Secondary: #6c757d (cinza médio)
+  - Borders: #dee2e6 (cinza claro)
   - Background: #ffffff (branco)
-  - Cards: #eeeeee (cinza clarinho)
+  - Cards: #ffffff (branco com bordas sutis)
+  - Sidebar: #f8f9fa (cinza muito claro)
+  - Chart colors: #17a2b8 (teal), #20c997 (verde), #6610f2 (roxo), #fd7e14 (laranja), #6c757d (cinza)
+- Typography: Reduzida (text-sm no body, headings proporcionalmente menores)
+- Border radius: 0.375rem (6px) - arredondamentos menores
 - Focus: SST compliance for Brazilian companies
 - Target: SMBs needing structured SST management
 
 ## Recent Changes
 
+- **2025-10-21**: Design system modernization
+  - Applied lighter color palette based on reference image
+  - Reduced border radius from 10px to 6px for cleaner look
+  - Decreased font sizes across the system (text-sm base)
+  - Updated chart colors to more distinct palette
+  - Improved contrast ratios in both light and dark themes
+  - Configured Next.js for Gravatar remote images
+  
 - **2025-10-21**: Platform admin and visual improvements
   - User i9hubsst promoted to Platform Admin
   - Integrated Gravatar for user profile photos
-  - Updated color palette to modern gray & turquesa theme
   - Fixed role display in UserNav and user list
 
 - **2025-01-20**: Initial project setup complete

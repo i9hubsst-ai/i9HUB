@@ -22,6 +22,7 @@ model Company {
 
   // Relations
   memberships       Membership[]
+  employees         Employee[]
   assessments       Assessment[]
   actionPlans       ActionPlan[]
   modulePermissions ModulePermission[]
@@ -240,6 +241,77 @@ model ActionPlan {
   @@index([companyId])
   @@index([status])
   @@map("action_plans")
+}
+
+// ============================================
+// EMPLOYEE MANAGEMENT
+// ============================================
+
+enum Gender {
+  MALE      // Masculino
+  FEMALE    // Feminino
+  OTHER     // Outro
+}
+
+enum MaritalStatus {
+  SINGLE    // Solteiro(a)
+  MARRIED   // Casado(a)
+  DIVORCED  // Divorciado(a)
+  WIDOWED   // Viúvo(a)
+  OTHER     // Outro
+}
+
+enum ContractType {
+  CLT       // Consolidação das Leis do Trabalho
+  INTERN    // Estágio
+  OUTSOURCED // Terceirizado
+  TEMPORARY // Temporário
+  AUTONOMOUS // Autônomo
+}
+
+model Employee {
+  id        String   @id @default(uuid())
+  companyId String
+  userId    String?  // Optional: linked Supabase Auth user (if employee has system access)
+
+  // Identificação Civil
+  fullName      String
+  cpf           String
+  birthDate     DateTime
+  gender        Gender?
+  maritalStatus MaritalStatus?
+  nationality   String         @default("Brasileira")
+
+  // Contato
+  email                String
+  phone                String?
+  emergencyContactName String?
+  emergencyContactPhone String?
+
+  // Vínculo Trabalhista
+  employeeNumber String   // Matrícula interna
+  admissionDate  DateTime
+  contractType   ContractType
+  workSchedule   String?  // Jornada/turno (ex: "8h às 17h", "Turno A")
+  unit           String?  // Unidade/obra
+  department     String?  // Setor/área/linha
+  position       String   // Cargo/função
+  cboCode        String?  // Código CBO
+  supervisor     String?  // Superior imediato
+
+  // Metadata
+  status    MembershipStatus @default(ACTIVE)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  // Relations
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, cpf])
+  @@unique([companyId, employeeNumber])
+  @@index([companyId])
+  @@index([userId])
+  @@map("employees")
 }
 
 // ============================================

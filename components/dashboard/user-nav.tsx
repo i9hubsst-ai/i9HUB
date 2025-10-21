@@ -15,6 +15,7 @@ interface UserNavProps {
   user: {
     email?: string
     name?: string
+    role?: string
   }
 }
 
@@ -41,6 +42,11 @@ export function UserNav({ user }: UserNavProps) {
             <p className="text-xs leading-none text-muted-foreground">
               {user.email}
             </p>
+            {user.role && (
+              <p className="text-xs font-medium text-accent mt-1">
+                {user.role}
+              </p>
+            )}
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

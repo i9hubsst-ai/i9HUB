@@ -1,4 +1,8 @@
 {
+  "/dashboard/actions/page": "app/dashboard/actions/page.js",
+  "/dashboard/diagnostics/new/page": "app/dashboard/diagnostics/new/page.js",
+  "/dashboard/diagnostics/page": "app/dashboard/diagnostics/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js"
 }

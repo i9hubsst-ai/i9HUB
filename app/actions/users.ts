@@ -233,10 +233,25 @@ export async function getAllUsers() {
     const supabaseAdmin = createAdminClient()
     const { data: authUsers } = await supabaseAdmin.auth.admin.listUsers()
 
+    // Get all platform admins to override their role display
+    const platformAdmins = await prisma.platformAdmin.findMany({
+      select: {
+        userId: true
+      }
+    })
+    const platformAdminIds = new Set(platformAdmins.map(pa => pa.userId))
+
     const usersWithDetails = memberships.map(membership => {
       const authUser = authUsers?.users.find(u => u.id === membership.userId)
+      
+      // If user is a platform admin, override their role for display
+      const effectiveRole = platformAdminIds.has(membership.userId) 
+        ? 'PLATFORM_ADMIN' as Role
+        : membership.role
+
       return {
         ...membership,
+        role: effectiveRole,
         email: authUser?.email,
         name: authUser?.user_metadata?.name,
       }

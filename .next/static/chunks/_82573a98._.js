@@ -556,6 +556,21 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }
 }),
+"[project]/app/actions/data:0b5fcc [app-client] (ecmascript) <text/javascript>", ((__turbopack_context__) => {
+"use strict";
+
+/* __next_internal_action_entry_do_not_use__ [{"0036b80d6f455add1825877b528078e708fc55d3f9":"getPublishedTemplates"},"app/actions/templates.ts",""] */ __turbopack_context__.s([
+    "getPublishedTemplates",
+    ()=>getPublishedTemplates
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-client-wrapper.js [app-client] (ecmascript)");
+"use turbopack no side effects";
+;
+var getPublishedTemplates = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createServerReference"])("0036b80d6f455add1825877b528078e708fc55d3f9", __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["callServer"], void 0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$client$2d$wrapper$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["findSourceMapURL"], "getPublishedTemplates"); //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4vdGVtcGxhdGVzLnRzIl0sInNvdXJjZXNDb250ZW50IjpbIid1c2Ugc2VydmVyJ1xuXG5pbXBvcnQgeyBwcmlzbWEgfSBmcm9tICdAL2xpYi9wcmlzbWEnXG5pbXBvcnQgeyByZXZhbGlkYXRlUGF0aCB9IGZyb20gJ25leHQvY2FjaGUnXG5pbXBvcnQgeyBnZXRDdXJyZW50VXNlciwgaXNQbGF0Zm9ybUFkbWluIH0gZnJvbSAnQC9saWIvYXV0aCdcbmltcG9ydCB7IFRlbXBsYXRlU3RhdHVzIH0gZnJvbSAnQHByaXNtYS9jbGllbnQnXG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBnZXRBbGxUZW1wbGF0ZXMoKSB7XG4gIHRyeSB7XG4gICAgY29uc3QgdGVtcGxhdGVzID0gYXdhaXQgcHJpc21hLmRpYWdub3N0aWNUZW1wbGF0ZS5maW5kTWFueSh7XG4gICAgICBpbmNsdWRlOiB7XG4gICAgICAgIHNlY3Rpb25zOiB7XG4gICAgICAgICAgaW5jbHVkZToge1xuICAgICAgICAgICAgcXVlc3Rpb25zOiB7XG4gICAgICAgICAgICAgIHdoZXJlOiB7IGFjdGl2ZTogdHJ1ZSB9LFxuICAgICAgICAgICAgICBvcmRlckJ5OiB7IGNyZWF0ZWRBdDogJ2FzYycgfVxuICAgICAgICAgICAgfVxuICAgICAgICAgIH0sXG4gICAgICAgICAgb3JkZXJCeTogeyBvcmRlcjogJ2FzYycgfVxuICAgICAgICB9LFxuICAgICAgICBfY291bnQ6IHtcbiAgICAgICAgICBzZWxlY3Q6IHtcbiAgICAgICAgICAgIHNlY3Rpb25zOiB0cnVlLFxuICAgICAgICAgICAgYXNzZXNzbWVudHM6IHRydWVcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH0sXG4gICAgICBvcmRlckJ5OiB7IGNyZWF0ZWRBdDogJ2Rlc2MnIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdGVtcGxhdGVzIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGJ1c2NhciB0ZW1wbGF0ZXM6JywgZXJyb3IpXG4gICAgcmV0dXJuIHsgZXJyb3I6ICdFcnJvIGFvIGJ1c2NhciB0ZW1wbGF0ZXMnIH1cbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gZ2V0VGVtcGxhdGVCeUlkKHRlbXBsYXRlSWQ6IHN0cmluZykge1xuICB0cnkge1xuICAgIGNvbnN0IHRlbXBsYXRlID0gYXdhaXQgcHJpc21hLmRpYWdub3N0aWNUZW1wbGF0ZS5maW5kVW5pcXVlKHtcbiAgICAgIHdoZXJlOiB7IGlkOiB0ZW1wbGF0ZUlkIH0sXG4gICAgICBpbmNsdWRlOiB7XG4gICAgICAgIHNlY3Rpb25zOiB7XG4gICAgICAgICAgaW5jbHVkZToge1xuICAgICAgICAgICAgcXVlc3Rpb25zOiB7XG4gICAgICAgICAgICAgIHdoZXJlOiB7IGFjdGl2ZTogdHJ1ZSB9LFxuICAgICAgICAgICAgICBvcmRlckJ5OiB7IGNyZWF0ZWRBdDogJ2FzYycgfVxuICAgICAgICAgICAgfVxuICAgICAgICAgIH0sXG4gICAgICAgICAgb3JkZXJCeTogeyBvcmRlcjogJ2FzYycgfVxuICAgICAgICB9LFxuICAgICAgICBfY291bnQ6IHtcbiAgICAgICAgICBzZWxlY3Q6IHsgYXNzZXNzbWVudHM6IHRydWUgfVxuICAgICAgICB9XG4gICAgICB9XG4gICAgfSlcblxuICAgIGlmICghdGVtcGxhdGUpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnVGVtcGxhdGUgbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdGVtcGxhdGUgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYnVzY2FyIHRlbXBsYXRlOicsIGVycm9yKVxuICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyBidXNjYXIgdGVtcGxhdGUnIH1cbiAgfVxufVxuXG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gdXBkYXRlVGVtcGxhdGVTdGF0dXModGVtcGxhdGVJZDogc3RyaW5nLCBzdGF0dXM6IFRlbXBsYXRlU3RhdHVzKSB7XG4gIGNvbnN0IHVzZXIgPSBhd2FpdCBnZXRDdXJyZW50VXNlcigpXG4gIGlmICghdXNlcikge1xuICAgIHJldHVybiB7IGVycm9yOiAnTsOjbyBhdXRvcml6YWRvJyB9XG4gIH1cblxuICBjb25zdCBpc0FkbWluID0gYXdhaXQgaXNQbGF0Zm9ybUFkbWluKHVzZXIuaWQpXG4gIGlmICghaXNBZG1pbikge1xuICAgIHJldHVybiB7IGVycm9yOiAnQXBlbmFzIGFkbWluaXN0cmFkb3JlcyBwb2RlbSBhbHRlcmFyIG8gc3RhdHVzIGRlIHRlbXBsYXRlcycgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICBhd2FpdCBwcmlzbWEuZGlhZ25vc3RpY1RlbXBsYXRlLnVwZGF0ZSh7XG4gICAgICB3aGVyZTogeyBpZDogdGVtcGxhdGVJZCB9LFxuICAgICAgZGF0YTogeyBzdGF0dXMgfVxuICAgIH0pXG5cbiAgICByZXZhbGlkYXRlUGF0aCgnL2Rhc2hib2FyZC90ZW1wbGF0ZXMnKVxuICAgIHJldHVybiB7IHN1Y2Nlc3M6IHRydWUgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYXR1YWxpemFyIHN0YXR1cyBkbyB0ZW1wbGF0ZTonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYXR1YWxpemFyIHN0YXR1cyBkbyB0ZW1wbGF0ZScgfVxuICB9XG59XG5cbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBkZWxldGVUZW1wbGF0ZSh0ZW1wbGF0ZUlkOiBzdHJpbmcpIHtcbiAgY29uc3QgdXNlciA9IGF3YWl0IGdldEN1cnJlbnRVc2VyKClcbiAgaWYgKCF1c2VyKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdOw6NvIGF1dG9yaXphZG8nIH1cbiAgfVxuXG4gIGNvbnN0IGlzQWRtaW4gPSBhd2FpdCBpc1BsYXRmb3JtQWRtaW4odXNlci5pZClcbiAgaWYgKCFpc0FkbWluKSB7XG4gICAgcmV0dXJuIHsgZXJyb3I6ICdBcGVuYXMgYWRtaW5pc3RyYWRvcmVzIHBvZGVtIGV4Y2x1aXIgdGVtcGxhdGVzJyB9XG4gIH1cblxuICB0cnkge1xuICAgIC8vIFZlcmlmaWNhciBzZSBow6EgYXNzZXNzbWVudHMgdXNhbmRvIGVzdGUgdGVtcGxhdGVcbiAgICBjb25zdCBhc3Nlc3NtZW50Q291bnQgPSBhd2FpdCBwcmlzbWEuYXNzZXNzbWVudC5jb3VudCh7XG4gICAgICB3aGVyZTogeyB0ZW1wbGF0ZUlkIH1cbiAgICB9KVxuXG4gICAgaWYgKGFzc2Vzc21lbnRDb3VudCA+IDApIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiBgTsOjbyDDqSBwb3Nzw612ZWwgZXhjbHVpci4gRXhpc3RlbSAke2Fzc2Vzc21lbnRDb3VudH0gZGlhZ27Ds3N0aWNvcyB1c2FuZG8gZXN0ZSB0ZW1wbGF0ZS5gIH1cbiAgICB9XG5cbiAgICBhd2FpdCBwcmlzbWEuZGlhZ25vc3RpY1RlbXBsYXRlLmRlbGV0ZSh7XG4gICAgICB3aGVyZTogeyBpZDogdGVtcGxhdGVJZCB9XG4gICAgfSlcblxuICAgIHJldmFsaWRhdGVQYXRoKCcvZGFzaGJvYXJkL3RlbXBsYXRlcycpXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSB9XG4gIH0gY2F0Y2ggKGVycm9yKSB7XG4gICAgY29uc29sZS5lcnJvcignRXJybyBhbyBleGNsdWlyIHRlbXBsYXRlOicsIGVycm9yKVxuICAgIHJldHVybiB7IGVycm9yOiAnRXJybyBhbyBleGNsdWlyIHRlbXBsYXRlJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGdldFB1Ymxpc2hlZFRlbXBsYXRlcygpIHtcbiAgdHJ5IHtcbiAgICBjb25zdCB0ZW1wbGF0ZXMgPSBhd2FpdCBwcmlzbWEuZGlhZ25vc3RpY1RlbXBsYXRlLmZpbmRNYW55KHtcbiAgICAgIHdoZXJlOiB7IHN0YXR1czogJ1BVQkxJU0hFRCcgfSxcbiAgICAgIHNlbGVjdDoge1xuICAgICAgICBpZDogdHJ1ZSxcbiAgICAgICAgbmFtZTogdHJ1ZSxcbiAgICAgICAgZGVzY3JpcHRpb246IHRydWUsXG4gICAgICAgIHR5cGU6IHRydWUsXG4gICAgICAgIF9jb3VudDoge1xuICAgICAgICAgIHNlbGVjdDogeyBzZWN0aW9uczogdHJ1ZSB9XG4gICAgICAgIH1cbiAgICAgIH0sXG4gICAgICBvcmRlckJ5OiB7IG5hbWU6ICdhc2MnIH1cbiAgICB9KVxuXG4gICAgcmV0dXJuIHsgc3VjY2VzczogdHJ1ZSwgdGVtcGxhdGVzIH1cbiAgfSBjYXRjaCAoZXJyb3IpIHtcbiAgICBjb25zb2xlLmVycm9yKCdFcnJvIGFvIGJ1c2NhciB0ZW1wbGF0ZXMgcHVibGljYWRvczonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYnVzY2FyIHRlbXBsYXRlcyBwdWJsaWNhZG9zJyB9XG4gIH1cbn1cblxuZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGFwcGx5VGVtcGxhdGVUb0Fzc2Vzc21lbnQoYXNzZXNzbWVudElkOiBzdHJpbmcsIHRlbXBsYXRlSWQ6IHN0cmluZykge1xuICBjb25zdCB1c2VyID0gYXdhaXQgZ2V0Q3VycmVudFVzZXIoKVxuICBpZiAoIXVzZXIpIHtcbiAgICByZXR1cm4geyBlcnJvcjogJ07Do28gYXV0b3JpemFkbycgfVxuICB9XG5cbiAgdHJ5IHtcbiAgICAvLyBWZXJpZmljYXIgc2UgbyBhc3Nlc3NtZW50IGV4aXN0ZSBlIHNlIG8gdXN1w6FyaW8gdGVtIHBlcm1pc3PDo29cbiAgICBjb25zdCBhc3Nlc3NtZW50ID0gYXdhaXQgcHJpc21hLmFzc2Vzc21lbnQuZmluZFVuaXF1ZSh7XG4gICAgICB3aGVyZTogeyBpZDogYXNzZXNzbWVudElkIH0sXG4gICAgICBzZWxlY3Q6IHsgY29tcGFueUlkOiB0cnVlLCBzdGF0dXM6IHRydWUgfVxuICAgIH0pXG5cbiAgICBpZiAoIWFzc2Vzc21lbnQpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnRGlhZ27Ds3N0aWNvIG7Do28gZW5jb250cmFkbycgfVxuICAgIH1cblxuICAgIGlmIChhc3Nlc3NtZW50LnN0YXR1cyAhPT0gJ0RSQUZUJykge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdTw7Mgw6kgcG9zc8OtdmVsIGFwbGljYXIgdGVtcGxhdGUgZW0gZGlhZ27Ds3N0aWNvcyBjb20gc3RhdHVzIERSQUZUJyB9XG4gICAgfVxuXG4gICAgY29uc3QgaXNBZG1pbiA9IGF3YWl0IGlzUGxhdGZvcm1BZG1pbih1c2VyLmlkKVxuICAgIGNvbnN0IG1lbWJlcnNoaXAgPSBhd2FpdCBwcmlzbWEubWVtYmVyc2hpcC5maW5kRmlyc3Qoe1xuICAgICAgd2hlcmU6IHtcbiAgICAgICAgdXNlcklkOiB1c2VyLmlkLFxuICAgICAgICBjb21wYW55SWQ6IGFzc2Vzc21lbnQuY29tcGFueUlkLFxuICAgICAgICBzdGF0dXM6ICdBQ1RJVkUnXG4gICAgICB9XG4gICAgfSlcblxuICAgIGlmICghaXNBZG1pbiAmJiAhbWVtYmVyc2hpcCkge1xuICAgICAgcmV0dXJuIHsgZXJyb3I6ICdTZW0gcGVybWlzc8OjbyBwYXJhIG1vZGlmaWNhciBlc3RlIGRpYWduw7NzdGljbycgfVxuICAgIH1cblxuICAgIC8vIEJ1c2NhciBvIHRlbXBsYXRlIGNvbSBzZcOnw7VlcyBlIHBlcmd1bnRhc1xuICAgIGNvbnN0IHRlbXBsYXRlID0gYXdhaXQgcHJpc21hLmRpYWdub3N0aWNUZW1wbGF0ZS5maW5kVW5pcXVlKHtcbiAgICAgIHdoZXJlOiB7IGlkOiB0ZW1wbGF0ZUlkIH0sXG4gICAgICBpbmNsdWRlOiB7XG4gICAgICAgIHNlY3Rpb25zOiB7XG4gICAgICAgICAgaW5jbHVkZToge1xuICAgICAgICAgICAgcXVlc3Rpb25zOiB7XG4gICAgICAgICAgICAgIHdoZXJlOiB7IGFjdGl2ZTogdHJ1ZSB9LFxuICAgICAgICAgICAgICBvcmRlckJ5OiB7IGNyZWF0ZWRBdDogJ2FzYycgfVxuICAgICAgICAgICAgfVxuICAgICAgICAgIH0sXG4gICAgICAgICAgb3JkZXJCeTogeyBvcmRlcjogJ2FzYycgfVxuICAgICAgICB9XG4gICAgICB9XG4gICAgfSlcblxuICAgIGlmICghdGVtcGxhdGUpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnVGVtcGxhdGUgbsOjbyBlbmNvbnRyYWRvJyB9XG4gICAgfVxuXG4gICAgaWYgKHRlbXBsYXRlLnN0YXR1cyAhPT0gJ1BVQkxJU0hFRCcpIHtcbiAgICAgIHJldHVybiB7IGVycm9yOiAnQXBlbmFzIHRlbXBsYXRlcyBwdWJsaWNhZG9zIHBvZGVtIHNlciBhcGxpY2Fkb3MnIH1cbiAgICB9XG5cbiAgICAvLyBDb3BpYXIgc2XDp8O1ZXMgZSBwZXJndW50YXMgZG8gdGVtcGxhdGUgcGFyYSBvIGFzc2Vzc21lbnRcbiAgICBmb3IgKGNvbnN0IHRlbXBsYXRlU2VjdGlvbiBvZiB0ZW1wbGF0ZS5zZWN0aW9ucykge1xuICAgICAgY29uc3QgbmV3U2VjdGlvbiA9IGF3YWl0IHByaXNtYS5kaWFnbm9zdGljU2VjdGlvbi5jcmVhdGUoe1xuICAgICAgICBkYXRhOiB7XG4gICAgICAgICAgdGVtcGxhdGVJZDogdGVtcGxhdGVTZWN0aW9uLnRlbXBsYXRlSWQsXG4gICAgICAgICAgdGl0bGU6IHRlbXBsYXRlU2VjdGlvbi50aXRsZSxcbiAgICAgICAgICBvcmRlcjogdGVtcGxhdGVTZWN0aW9uLm9yZGVyXG4gICAgICAgIH1cbiAgICAgIH0pXG5cbiAgICAgIC8vIENvcGlhciBwZXJndW50YXMgZGEgc2XDp8Ojb1xuICAgICAgZm9yIChjb25zdCB0ZW1wbGF0ZVF1ZXN0aW9uIG9mIHRlbXBsYXRlU2VjdGlvbi5xdWVzdGlvbnMpIHtcbiAgICAgICAgYXdhaXQgcHJpc21hLmRpYWdub3N0aWNRdWVzdGlvbi5jcmVhdGUoe1xuICAgICAgICAgIGRhdGE6IHtcbiAgICAgICAgICAgIHNlY3Rpb25JZDogbmV3U2VjdGlvbi5pZCxcbiAgICAgICAgICAgIHRleHQ6IHRlbXBsYXRlUXVlc3Rpb24udGV4dCxcbiAgICAgICAgICAgIHR5cGU6IHRlbXBsYXRlUXVlc3Rpb24udHlwZSxcbiAgICAgICAgICAgIHdlaWdodDogdGVtcGxhdGVRdWVzdGlvbi53ZWlnaHQsXG4gICAgICAgICAgICByZWZlcmVuY2U6IHRlbXBsYXRlUXVlc3Rpb24ucmVmZXJlbmNlLFxuICAgICAgICAgICAgcmVxdWlyZXNKdXN0aWZpY2F0aW9uOiB0ZW1wbGF0ZVF1ZXN0aW9uLnJlcXVpcmVzSnVzdGlmaWNhdGlvbixcbiAgICAgICAgICAgIHJlcXVpcmVzRXZpZGVuY2U6IHRlbXBsYXRlUXVlc3Rpb24ucmVxdWlyZXNFdmlkZW5jZSxcbiAgICAgICAgICAgIHNvdXJjZTogdGVtcGxhdGVRdWVzdGlvbi5zb3VyY2UsXG4gICAgICAgICAgICBhcHByb3ZlZDogdGVtcGxhdGVRdWVzdGlvbi5hcHByb3ZlZCxcbiAgICAgICAgICAgIGFjdGl2ZTogdHJ1ZVxuICAgICAgICAgIH1cbiAgICAgICAgfSlcbiAgICAgIH1cbiAgICB9XG5cbiAgICAvLyBBc3NvY2lhciBvIHRlbXBsYXRlIGFvIGFzc2Vzc21lbnRcbiAgICBhd2FpdCBwcmlzbWEuYXNzZXNzbWVudC51cGRhdGUoe1xuICAgICAgd2hlcmU6IHsgaWQ6IGFzc2Vzc21lbnRJZCB9LFxuICAgICAgZGF0YTogeyB0ZW1wbGF0ZUlkIH1cbiAgICB9KVxuXG4gICAgcmV2YWxpZGF0ZVBhdGgoYC9kYXNoYm9hcmQvZGlhZ25vc3RpY3MvJHthc3Nlc3NtZW50SWR9YClcbiAgICByZXR1cm4geyBcbiAgICAgIHN1Y2Nlc3M6IHRydWUsIFxuICAgICAgc2VjdGlvbnNDb3VudDogdGVtcGxhdGUuc2VjdGlvbnMubGVuZ3RoLFxuICAgICAgcXVlc3Rpb25zQ291bnQ6IHRlbXBsYXRlLnNlY3Rpb25zLnJlZHVjZSgoc3VtLCBzKSA9PiBzdW0gKyBzLnF1ZXN0aW9ucy5sZW5ndGgsIDApXG4gICAgfVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ0Vycm8gYW8gYXBsaWNhciB0ZW1wbGF0ZTonLCBlcnJvcilcbiAgICByZXR1cm4geyBlcnJvcjogJ0Vycm8gYW8gYXBsaWNhciB0ZW1wbGF0ZSBhbyBkaWFnbsOzc3RpY28nIH1cbiAgfVxufVxuIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJ1U0E4SHNCIn0=
+if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
+    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
+}
+}),
 "[project]/app/dashboard/diagnostics/new/page.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -571,12 +586,15 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/label.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/select.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-left.js [app-client] (ecmascript) <export default as ArrowLeft>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/file-text.js [app-client] (ecmascript) <export default as FileText>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$1024a1__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:1024a1 [app-client] (ecmascript) <text/javascript>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$ac173e__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:ac173e [app-client] (ecmascript) <text/javascript>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$0b5fcc__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__ = __turbopack_context__.i("[project]/app/actions/data:0b5fcc [app-client] (ecmascript) <text/javascript>");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
+;
 ;
 ;
 ;
@@ -592,21 +610,29 @@ function NewDiagnosticPage() {
     const [title, setTitle] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [description, setDescription] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [companyId, setCompanyId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [templateId, setTemplateId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [companies, setCompanies] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [templates, setTemplates] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "NewDiagnosticPage.useEffect": ()=>{
-            async function loadCompanies() {
-                const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$ac173e__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["getCompanies"])();
-                if (result.success && result.companies) {
-                    setCompanies(result.companies);
-                    if (result.companies.length > 0) {
-                        setCompanyId(result.companies[0].id);
+            async function loadData() {
+                const [companiesResult, templatesResult] = await Promise.all([
+                    (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$ac173e__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["getCompanies"])(),
+                    (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$0b5fcc__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["getPublishedTemplates"])()
+                ]);
+                if (companiesResult.success && companiesResult.companies) {
+                    setCompanies(companiesResult.companies);
+                    if (companiesResult.companies.length > 0) {
+                        setCompanyId(companiesResult.companies[0].id);
                     }
                 }
+                if (templatesResult.success && templatesResult.templates) {
+                    setTemplates(templatesResult.templates);
+                }
             }
-            loadCompanies();
+            loadData();
         }
     }["NewDiagnosticPage.useEffect"], []);
     const handleCreate = async (e)=>{
@@ -621,6 +647,9 @@ function NewDiagnosticPage() {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
+        if (templateId) {
+            formData.append('templateId', templateId);
+        }
         try {
             const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$data$3a$1024a1__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["createAssessment"])(companyId, formData);
             if (result === null || result === void 0 ? void 0 : result.error) {
@@ -645,14 +674,14 @@ function NewDiagnosticPage() {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                lineNumber: 70,
+                                lineNumber: 83,
                                 columnNumber: 11
                             }, this),
                             "Voltar para Diagnósticos"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                        lineNumber: 66,
+                        lineNumber: 79,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -660,7 +689,7 @@ function NewDiagnosticPage() {
                         children: "Novo Diagnóstico IMSST"
                     }, void 0, false, {
                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                        lineNumber: 73,
+                        lineNumber: 86,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -668,13 +697,13 @@ function NewDiagnosticPage() {
                         children: "Crie uma nova avaliação de maturidade SST para sua empresa"
                     }, void 0, false, {
                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                        lineNumber: 74,
+                        lineNumber: 87,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                lineNumber: 65,
+                lineNumber: 78,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -687,20 +716,20 @@ function NewDiagnosticPage() {
                                     children: "Informações do Diagnóstico"
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                    lineNumber: 82,
+                                    lineNumber: 95,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
                                     children: "Preencha os dados básicos para iniciar a avaliação"
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                    lineNumber: 83,
+                                    lineNumber: 96,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                            lineNumber: 81,
+                            lineNumber: 94,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -713,7 +742,7 @@ function NewDiagnosticPage() {
                                         children: error
                                     }, void 0, false, {
                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                        lineNumber: 90,
+                                        lineNumber: 103,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -724,7 +753,7 @@ function NewDiagnosticPage() {
                                                 children: "Empresa"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 96,
+                                                lineNumber: 109,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -736,12 +765,12 @@ function NewDiagnosticPage() {
                                                             placeholder: "Selecione uma empresa"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                            lineNumber: 99,
+                                                            lineNumber: 112,
                                                             columnNumber: 21
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                        lineNumber: 98,
+                                                        lineNumber: 111,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -750,24 +779,24 @@ function NewDiagnosticPage() {
                                                                 children: company.name
                                                             }, company.id, false, {
                                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                                lineNumber: 103,
+                                                                lineNumber: 116,
                                                                 columnNumber: 23
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                        lineNumber: 101,
+                                                        lineNumber: 114,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 97,
+                                                lineNumber: 110,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                        lineNumber: 95,
+                                        lineNumber: 108,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -778,7 +807,7 @@ function NewDiagnosticPage() {
                                                 children: "Título do Diagnóstico"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 112,
+                                                lineNumber: 125,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -789,7 +818,7 @@ function NewDiagnosticPage() {
                                                 required: true
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 113,
+                                                lineNumber: 126,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -797,13 +826,13 @@ function NewDiagnosticPage() {
                                                 children: "Escolha um nome que ajude a identificar este diagnóstico"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 120,
+                                                lineNumber: 133,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                        lineNumber: 111,
+                                        lineNumber: 124,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -814,7 +843,7 @@ function NewDiagnosticPage() {
                                                 children: "Descrição (opcional)"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 126,
+                                                lineNumber: 139,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -825,13 +854,119 @@ function NewDiagnosticPage() {
                                                 onChange: (e)=>setDescription(e.target.value)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 127,
+                                                lineNumber: 140,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                        lineNumber: 125,
+                                        lineNumber: 138,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "space-y-2",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+                                                htmlFor: "template",
+                                                children: "Template (opcional)"
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                lineNumber: 150,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
+                                                value: templateId,
+                                                onValueChange: setTemplateId,
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {
+                                                            placeholder: "Sem template - criar diagnóstico vazio"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                            lineNumber: 153,
+                                                            columnNumber: 21
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                        lineNumber: 152,
+                                                        columnNumber: 19
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                                value: "",
+                                                                children: "Sem template"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                                lineNumber: 156,
+                                                                columnNumber: 21
+                                                            }, this),
+                                                            templates.map((template)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                                    value: template.id,
+                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "flex items-center gap-2",
+                                                                        children: [
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"], {
+                                                                                className: "h-4 w-4"
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                                                lineNumber: 160,
+                                                                                columnNumber: 27
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                children: template.name
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                                                lineNumber: 161,
+                                                                                columnNumber: 27
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                                className: "text-xs text-muted-foreground",
+                                                                                children: [
+                                                                                    "(",
+                                                                                    template._count.sections,
+                                                                                    " seções)"
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                                                lineNumber: 162,
+                                                                                columnNumber: 27
+                                                                            }, this)
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                                        lineNumber: 159,
+                                                                        columnNumber: 25
+                                                                    }, this)
+                                                                }, template.id, false, {
+                                                                    fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                                    lineNumber: 158,
+                                                                    columnNumber: 23
+                                                                }, this))
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                        lineNumber: 155,
+                                                        columnNumber: 19
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                lineNumber: 151,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "text-sm text-muted-foreground",
+                                                children: templateId ? 'Template será aplicado automaticamente com todas as seções e perguntas' : 'Você poderá criar seções e perguntas manualmente'
+                                            }, void 0, false, {
+                                                fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                                lineNumber: 170,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
+                                        lineNumber: 149,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -842,7 +977,7 @@ function NewDiagnosticPage() {
                                                 children: "O que acontece a seguir?"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 137,
+                                                lineNumber: 178,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ol", {
@@ -852,40 +987,40 @@ function NewDiagnosticPage() {
                                                         children: "Você responderá 25 perguntas divididas em 5 dimensões"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                        lineNumber: 139,
+                                                        lineNumber: 180,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                                                         children: "O sistema calculará automaticamente seu nível de maturidade (1-5)"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                        lineNumber: 140,
+                                                        lineNumber: 181,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                                                         children: "Você poderá gerar relatórios em PDF com os resultados"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                        lineNumber: 141,
+                                                        lineNumber: 182,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                                                         children: "Planos de ação podem ser criados baseados nas respostas"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                        lineNumber: 142,
+                                                        lineNumber: 183,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 138,
+                                                lineNumber: 179,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                        lineNumber: 136,
+                                        lineNumber: 177,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -897,7 +1032,7 @@ function NewDiagnosticPage() {
                                                 children: loading ? 'Criando...' : 'Criar Diagnóstico'
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 147,
+                                                lineNumber: 188,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -908,50 +1043,50 @@ function NewDiagnosticPage() {
                                                     children: "Cancelar"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                    lineNumber: 151,
+                                                    lineNumber: 192,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                                lineNumber: 150,
+                                                lineNumber: 191,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                        lineNumber: 146,
+                                        lineNumber: 187,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                                lineNumber: 88,
+                                lineNumber: 101,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                            lineNumber: 87,
+                            lineNumber: 100,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                    lineNumber: 80,
+                    lineNumber: 93,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-                lineNumber: 79,
+                lineNumber: 92,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/dashboard/diagnostics/new/page.tsx",
-        lineNumber: 64,
+        lineNumber: 77,
         columnNumber: 5
     }, this);
 }
-_s(NewDiagnosticPage, "h45QZOycODj9TZIrCJi5XrAOwOo=");
+_s(NewDiagnosticPage, "06sQjAyr1++PCyN0ENDwiIbgdy0=");
 _c = NewDiagnosticPage;
 var _c;
 __turbopack_context__.k.register(_c, "NewDiagnosticPage");
@@ -961,4 +1096,4 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 }),
 ]);
 
-//# sourceMappingURL=_ff3b3ef8._.js.map
+//# sourceMappingURL=_82573a98._.js.map

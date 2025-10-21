@@ -6,30 +6,41 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, FileText } from 'lucide-react'
 import Link from 'next/link'
 import { createAssessment } from '@/app/actions/assessments'
 import { getCompanies } from '@/app/actions/companies'
+import { getPublishedTemplates } from '@/app/actions/templates'
 
 export default function NewDiagnosticPage() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [companyId, setCompanyId] = useState('')
+  const [templateId, setTemplateId] = useState<string>('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [companies, setCompanies] = useState<any[]>([])
+  const [templates, setTemplates] = useState<any[]>([])
 
   useEffect(() => {
-    async function loadCompanies() {
-      const result = await getCompanies()
-      if (result.success && result.companies) {
-        setCompanies(result.companies)
-        if (result.companies.length > 0) {
-          setCompanyId(result.companies[0].id)
+    async function loadData() {
+      const [companiesResult, templatesResult] = await Promise.all([
+        getCompanies(),
+        getPublishedTemplates()
+      ])
+      
+      if (companiesResult.success && companiesResult.companies) {
+        setCompanies(companiesResult.companies)
+        if (companiesResult.companies.length > 0) {
+          setCompanyId(companiesResult.companies[0].id)
         }
       }
+
+      if (templatesResult.success && templatesResult.templates) {
+        setTemplates(templatesResult.templates)
+      }
     }
-    loadCompanies()
+    loadData()
   }, [])
 
   const handleCreate = async (e: React.FormEvent) => {
@@ -46,6 +57,9 @@ export default function NewDiagnosticPage() {
     const formData = new FormData()
     formData.append('title', title)
     formData.append('description', description)
+    if (templateId) {
+      formData.append('templateId', templateId)
+    }
 
     try {
       const result = await createAssessment(companyId, formData)
@@ -130,6 +144,34 @@ export default function NewDiagnosticPage() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="template">Template (opcional)</Label>
+                <Select value={templateId} onValueChange={setTemplateId}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sem template - criar diagnóstico vazio" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="">Sem template</SelectItem>
+                    {templates.map((template) => (
+                      <SelectItem key={template.id} value={template.id}>
+                        <div className="flex items-center gap-2">
+                          <FileText className="h-4 w-4" />
+                          <span>{template.name}</span>
+                          <span className="text-xs text-muted-foreground">
+                            ({template._count.sections} seções)
+                          </span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-sm text-muted-foreground">
+                  {templateId 
+                    ? 'Template será aplicado automaticamente com todas as seções e perguntas'
+                    : 'Você poderá criar seções e perguntas manualmente'}
+                </p>
               </div>
 
               <div className="bg-accent/10 p-4 rounded-lg">

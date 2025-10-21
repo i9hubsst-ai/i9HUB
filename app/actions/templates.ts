@@ -209,11 +209,9 @@ export async function applyTemplateToAssessment(assessmentId: string, templateId
     for (const templateSection of template.sections) {
       const newSection = await prisma.diagnosticSection.create({
         data: {
-          assessmentId,
-          name: templateSection.name,
-          description: templateSection.description,
-          order: templateSection.order,
-          weight: templateSection.weight
+          templateId: templateSection.templateId,
+          title: templateSection.title,
+          order: templateSection.order
         }
       })
 
@@ -223,10 +221,13 @@ export async function applyTemplateToAssessment(assessmentId: string, templateId
           data: {
             sectionId: newSection.id,
             text: templateQuestion.text,
-            description: templateQuestion.description,
+            type: templateQuestion.type,
             weight: templateQuestion.weight,
-            questionType: templateQuestion.questionType,
             reference: templateQuestion.reference,
+            requiresJustification: templateQuestion.requiresJustification,
+            requiresEvidence: templateQuestion.requiresEvidence,
+            source: templateQuestion.source,
+            approved: templateQuestion.approved,
             active: true
           }
         })

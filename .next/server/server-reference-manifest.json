@@ -89,6 +89,12 @@
     },
     "4051481793cd425c8bc78f7e16b9d5cbe7834143cf": {
       "workers": {
+        "app/auth/login/page": {
+          "moduleId": "[project]/.next-internal/server/app/auth/login/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "login",
+          "filename": "app/actions/auth.ts"
+        },
         "app/dashboard/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/dashboard.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
@@ -109,6 +115,7 @@
         }
       },
       "layer": {
+        "app/auth/login/page": "action-browser",
         "app/dashboard/page": "rsc",
         "app/dashboard/templates/new/page": "rsc",
         "app/dashboard/templates/page": "rsc"
@@ -249,6 +256,21 @@
       },
       "filename": "app/actions/templates.ts",
       "exportedName": "updateTemplateStatus"
+    },
+    "004ed6e341ee5d96918f9a878a5490b164664d2f42": {
+      "workers": {
+        "app/setup/page": {
+          "moduleId": "[project]/.next-internal/server/app/setup/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/setup/page.tsx [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "app/setup/page.tsx"
+        }
+      },
+      "layer": {
+        "app/setup/page": "rsc"
+      },
+      "filename": "app/setup/page.tsx",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
     }
   },
   "edge": {},

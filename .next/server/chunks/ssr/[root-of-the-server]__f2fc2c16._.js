@@ -388,7 +388,7 @@ function Button({ className, variant, size, asChild = false, ...props }) {
 "[project]/app/setup/page.tsx [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"0042f1793cc0e36da5ad95a6a496571db521e069bd":"$$RSC_SERVER_ACTION_0"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"004ed6e341ee5d96918f9a878a5490b164664d2f42":"$$RSC_SERVER_ACTION_0"},"",""] */ __turbopack_context__.s([
     "$$RSC_SERVER_ACTION_0",
     ()=>$$RSC_SERVER_ACTION_0,
     "default",
@@ -435,7 +435,7 @@ const $$RSC_SERVER_ACTION_0 = async function setupFirstAdmin() {
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/setup?error=true');
     }
 };
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])($$RSC_SERVER_ACTION_0, "0042f1793cc0e36da5ad95a6a496571db521e069bd", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])($$RSC_SERVER_ACTION_0, "004ed6e341ee5d96918f9a878a5490b164664d2f42", null);
 var setupFirstAdmin = $$RSC_SERVER_ACTION_0;
 async function SetupPage() {
     const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
@@ -719,7 +719,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$setup$2f$page$2e$tsx_
 "use strict";
 
 __turbopack_context__.s([
-    "0042f1793cc0e36da5ad95a6a496571db521e069bd",
+    "004ed6e341ee5d96918f9a878a5490b164664d2f42",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$setup$2f$page$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["$$RSC_SERVER_ACTION_0"]
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$setup$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$setup$2f$page$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/setup/page/actions.js { ACTIONS_MODULE0 => "[project]/app/setup/page.tsx [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');

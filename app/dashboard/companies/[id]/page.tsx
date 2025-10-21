@@ -5,8 +5,9 @@ import { getCompanyById } from '@/app/actions/companies'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-export default async function CompanyDetailPage({ params }: { params: { id: string } }) {
-  const result = await getCompanyById(params.id)
+export default async function CompanyDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const result = await getCompanyById(id)
 
   if (result.error || !result.company) {
     notFound()

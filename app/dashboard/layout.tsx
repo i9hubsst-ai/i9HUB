@@ -1,4 +1,4 @@
-import { Building2, LayoutDashboard, BarChart3, FileText, Users, Bot, UserCog } from 'lucide-react'
+import { Building2, LayoutDashboard, BarChart3, FileText, Users, Bot, UserCog, Layers } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getCurrentUser, getUserDisplayRole } from '@/lib/auth'
@@ -21,6 +21,7 @@ export default async function DashboardLayout({
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
     { icon: BarChart3, label: 'Diagnósticos', href: '/dashboard/diagnostics' },
+    { icon: Layers, label: 'Templates', href: '/dashboard/templates' },
     { icon: FileText, label: 'Planos de Ação', href: '/dashboard/actions' },
     { icon: Building2, label: 'Empresas', href: '/dashboard/companies' },
     { icon: Users, label: 'Usuários', href: '/dashboard/users' },

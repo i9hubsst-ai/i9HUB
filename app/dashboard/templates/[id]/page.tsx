@@ -2,12 +2,13 @@ import { Metadata } from 'next'
 import { redirect, notFound } from 'next/navigation'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { TemplateActions } from './template-actions'
+import { TemplateSectionsView } from '@/components/dashboard/template-sections-view'
 
 export const metadata: Metadata = {
   title: 'Detalhes do Template | i9HUBSST',
@@ -115,61 +116,7 @@ export default async function TemplateDetailPage({ params }: { params: Promise<{
         </CardContent>
       </Card>
 
-      <div className="space-y-4">
-        <h2 className="text-lg font-semibold">Seções e Perguntas</h2>
-        {template.sections.map((section) => (
-          <Card key={section.id}>
-            <CardHeader>
-              <CardTitle className="text-base">
-                {section.order}. {section.title}
-              </CardTitle>
-              <CardDescription>
-                {section.questions.length} pergunta(s)
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {section.questions.map((question, idx) => (
-                  <div
-                    key={question.id}
-                    className="flex items-start gap-3 p-3 rounded-md bg-gray-50 text-sm"
-                  >
-                    <span className="font-medium text-gray-500 min-w-[2rem]">
-                      {idx + 1}.
-                    </span>
-                    <div className="flex-1">
-                      <p className="text-gray-900">{question.text}</p>
-                      <div className="flex flex-wrap gap-2 mt-2 text-xs text-gray-600">
-                        <span className="bg-white px-2 py-0.5 rounded border">
-                          Tipo: {question.type}
-                        </span>
-                        <span className="bg-white px-2 py-0.5 rounded border">
-                          Peso: {question.weight}
-                        </span>
-                        {question.reference && (
-                          <span className="bg-white px-2 py-0.5 rounded border">
-                            {question.reference}
-                          </span>
-                        )}
-                        {question.requiresJustification && (
-                          <span className="bg-orange-100 text-orange-800 px-2 py-0.5 rounded border border-orange-200">
-                            Justificativa obrigatória
-                          </span>
-                        )}
-                        {question.requiresEvidence && (
-                          <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200">
-                            Evidência obrigatória
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <TemplateSectionsView sections={template.sections} />
     </div>
   )
 }

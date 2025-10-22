@@ -2,11 +2,13 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  extensions = [vector]
 }
 
 // ============================================
@@ -463,4 +465,58 @@ model AuditLog {
   @@index([companyId])
   @@index([createdAt])
   @@map("audit_logs")
+}
+
+// ============================================
+// RAG SYSTEM - Knowledge Base & Embeddings
+// ============================================
+
+// MTE Standards (Normas Regulamentadoras)
+model MteStandard {
+  id           String   @id @default(uuid())
+  nrNumber     String // e.g., "NR-12", "NR-35"
+  title        String // e.g., "Segurança em Máquinas e Equipamentos"
+  section      String   @default("") // Specific section/item (e.g., "12.38", "35.4.5.1"), empty string = full standard
+  content      String   @db.Text // Full text content
+  version      String // e.g., "2022.1"
+  sourceUrl    String? // Official MTE URL
+  lastVerified DateTime @default(now()) // Last time we verified the content
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  embeddings KnowledgeEmbedding[]
+
+  @@unique([nrNumber, section, version])
+  @@index([nrNumber])
+  @@map("mte_standards")
+}
+
+enum EmbeddingSourceType {
+  TEMPLATE
+  ASSESSMENT
+  ACTION_PLAN
+  MTE_STANDARD
+  ISO_STANDARD
+  BEST_PRACTICE
+}
+
+// Vector embeddings for RAG search
+model KnowledgeEmbedding {
+  id         String              @id @default(uuid())
+  sourceType EmbeddingSourceType
+  sourceId   String // ID of the template, assessment, or standard
+  content    String              @db.Text // Original text content
+  metadata   Json? // Additional context (e.g., company sector, template type)
+  embedding  Unsupported("vector(1536)")? // OpenAI ada-002 embedding dimension
+  createdAt  DateTime            @default(now())
+  updatedAt  DateTime            @updatedAt
+
+  // Relations (optional, for referencing source)
+  mteStandard   MteStandard? @relation(fields: [mteStandardId], references: [id], onDelete: Cascade)
+  mteStandardId String?
+
+  @@index([sourceType])
+  @@index([sourceId])
+  @@map("knowledge_embeddings")
 }

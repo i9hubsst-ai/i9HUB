@@ -34,7 +34,7 @@ The platform utilizes a clean light palette with a teal accent, reduced typograp
 - **Data Visualization**: Radar charts (using Recharts) for displaying IMSST maturity scores.
 - **Dashboard**: Provides real-time statistics on companies, assessments, users, and action plans.
 - **AI Features**: Google Gemini API integrated for AI-powered diagnostic template generation and template review/improvement suggestions with 60 requests/min free tier. The AI can analyze existing templates and suggest improvements for completeness, clarity, proper referencing, and structural organization.
-- **RAG Knowledge System (Phase 1 Implemented)**: Retrieval-Augmented Generation (RAG) system using pgvector for semantic search over SST knowledge base. Database tables created for storing MTE Standards (Normas Regulamentadoras) with full text content, versioning, and source URLs. Knowledge embeddings table supports vectorized storage of templates, assessments, action plans, and official standards for AI-powered contextual responses. Script for importing NR standards (NR-12, NR-35 sample content) implemented. Future phases will include: embedding generation service, vector similarity search API, and integration with template/diagnostic/action plan generation to provide AI with relevant normative context and historical patterns.
+- **RAG Knowledge System (Phases 1-3 Complete)**: Retrieval-Augmented Generation (RAG) system using pgvector for semantic search over SST knowledge base. Complete infrastructure includes: (1) Database schema with `mte_standards` table for Brazilian regulatory norms and `knowledge_embeddings` table with vector support (pgvector 1536-dimensional embeddings); (2) Web scraping service (`scripts/rag/scrape-mte-standards.ts`) for importing MTE standards (NR-12, NR-35 implemented); (3) Embedding generation service using OpenAI text-embedding-3-small model with intelligent text chunking and token management (`lib/services/embedding-service.ts`); (4) RAG search service (`lib/services/rag-service.ts`) with semantic search, context building for AI prompts, and related standards discovery; (5) HTTP API endpoint (`/api/rag/search`) for vector similarity queries; (6) Production scripts for generating embeddings (`scripts/rag/generate-embeddings.ts`) and demo/seed data (`scripts/rag/seed-sample-embeddings.ts`). System uses cosine distance for similarity scoring and supports filtering by source type (MTE_STANDARD, TEMPLATE, ASSESSMENT, ACTION_PLAN). Ready for integration with template/diagnostic/action plan generation to provide AI with relevant normative context.
 
 ### Feature Specifications
 - **IMSST Maturity Diagnostic**: 5 dimensions, 25 questions, with score calculation.
@@ -53,7 +53,7 @@ The platform utilizes a clean light palette with a teal accent, reduced typograp
 
 ## External Dependencies
 - **Supabase**: Backend-as-a-Service for database (PostgreSQL), authentication, and storage.
-- **OpenAI API**: For AI-powered assessment generation and action plan creation.
+- **OpenAI API**: For AI-powered assessment generation, action plan creation, and RAG embedding generation (text-embedding-3-small model).
 - **Recharts**: JavaScript charting library for data visualization (radar charts).
 - **Prisma**: ORM for database interaction.
 - **shadcn/ui**: UI component library.

@@ -42,19 +42,24 @@ export async function searchKnowledge(
     const { embedding: queryEmbedding } = await generateEmbedding(query)
     const embeddingVector = `[${queryEmbedding.join(',')}]`
 
-    // 2. Construir WHERE clause para filtros
+    // 2. Construir parâmetros e WHERE clause
+    // Importante: construir array de params ANTES de montar SQL para evitar problemas com índices
+    const params: any[] = [embeddingVector] // $1 sempre é o embedding
     let whereClause = ''
-    const params: any[] = []
     
     if (sourceTypes && sourceTypes.length > 0) {
-      whereClause += ` AND ke.source_type = ANY($${params.length + 1}::text[])`
       params.push(sourceTypes)
+      whereClause += ` AND ke."sourceType" = ANY($${params.length}::"EmbeddingSourceType"[])`
     }
 
     if (nrNumbers && nrNumbers.length > 0) {
-      whereClause += ` AND (ke.metadata->>'nrNumber') = ANY($${params.length + 1}::text[])`
       params.push(nrNumbers)
+      whereClause += ` AND (ke.metadata->>'nrNumber') = ANY($${params.length}::text[])`
     }
+
+    // Adicionar limit como último parâmetro
+    params.push(limit)
+    const limitParam = params.length
 
     // 3. Busca vetorial usando pgvector
     // Nota: pgvector usa operador <=> para distância de cosseno
@@ -62,18 +67,15 @@ export async function searchKnowledge(
       SELECT 
         ke.id,
         ke.content,
-        ke.source_type as "sourceType",
-        ke.source_id as "sourceId",
+        ke."sourceType",
+        ke."sourceId",
         ke.metadata,
         1 - (ke.embedding <=> $1::vector) as similarity
       FROM knowledge_embeddings ke
       WHERE 1=1 ${whereClause}
       ORDER BY ke.embedding <=> $1::vector
-      LIMIT $${params.length + 1}
+      LIMIT $${limitParam}
     `
-
-    params.unshift(embeddingVector) // embedding é sempre primeiro parâmetro
-    params.push(limit)
 
     const results = await prisma.$queryRawUnsafe<any[]>(sql, ...params)
 

@@ -57,9 +57,9 @@ async function generateMteStandardsEmbeddings() {
           
           await prisma.$executeRawUnsafe(
             `INSERT INTO knowledge_embeddings 
-              (id, source_type, source_id, content, metadata, embedding, mte_standard_id, created_at, updated_at)
+              (id, "sourceType", "sourceId", content, metadata, embedding, "mteStandardId", "createdAt", "updatedAt")
             VALUES 
-              (gen_random_uuid(), $1, $2, $3, $4::jsonb, $5::vector, $6, NOW(), NOW())`,
+              (gen_random_uuid(), $1::"EmbeddingSourceType", $2, $3, $4::jsonb, $5::vector, $6, NOW(), NOW())`,
             'MTE_STANDARD',
             standard.id,
             chunk,

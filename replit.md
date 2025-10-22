@@ -34,6 +34,7 @@ The platform utilizes a clean light palette with a teal accent, reduced typograp
 - **Data Visualization**: Radar charts (using Recharts) for displaying IMSST maturity scores.
 - **Dashboard**: Provides real-time statistics on companies, assessments, users, and action plans.
 - **AI Features**: Google Gemini API integrated for AI-powered diagnostic template generation and template review/improvement suggestions with 60 requests/min free tier. The AI can analyze existing templates and suggest improvements for completeness, clarity, proper referencing, and structural organization.
+- **RAG Knowledge System (Phase 1 Implemented)**: Retrieval-Augmented Generation (RAG) system using pgvector for semantic search over SST knowledge base. Database tables created for storing MTE Standards (Normas Regulamentadoras) with full text content, versioning, and source URLs. Knowledge embeddings table supports vectorized storage of templates, assessments, action plans, and official standards for AI-powered contextual responses. Script for importing NR standards (NR-12, NR-35 sample content) implemented. Future phases will include: embedding generation service, vector similarity search API, and integration with template/diagnostic/action plan generation to provide AI with relevant normative context and historical patterns.
 
 ### Feature Specifications
 - **IMSST Maturity Diagnostic**: 5 dimensions, 25 questions, with score calculation.
@@ -47,7 +48,7 @@ The platform utilizes a clean light palette with a teal accent, reduced typograp
 - **Database**: Supabase PostgreSQL.
 - **ORM**: Prisma 6.17.1.
 - **Authentication**: Supabase Auth.
-- **Data Model**: Key entities include `companies`, `memberships`, `platform_admins`, `imsst_dimensions`, `imsst_questions`, `assessments`, `assessment_answers`, `assessment_scores`, `action_plans`, and `audit_logs`.
+- **Data Model**: Key entities include `companies`, `memberships`, `platform_admins`, `imsst_dimensions`, `imsst_questions`, `assessments`, `assessment_answers`, `assessment_scores`, `action_plans`, `audit_logs`, `mte_standards` (RAG knowledge base), and `knowledge_embeddings` (vector storage for RAG).
 - **Security**: Application-level authorization is prioritized for faster iteration, with plans to integrate RLS. All assessment operations enforce ACTIVE membership.
 
 ## External Dependencies

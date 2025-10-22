@@ -169,7 +169,8 @@ export function TemplateEditForm({ template }: TemplateEditFormProps) {
           type: q.type,
           weight: q.weight,
           reference: q.reference && q.reference.trim() !== '' ? q.reference : null,
-          requiresJustification: q.requiresJustification
+          requiresJustification: q.requiresJustification,
+          requiresEvidence: q.requiresEvidence
         }))
       }))
     })

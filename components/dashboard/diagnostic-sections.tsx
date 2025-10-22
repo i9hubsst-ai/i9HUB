@@ -18,6 +18,7 @@ interface Question {
   weight: number
   reference: string | null
   requiresJustification: boolean
+  requiresEvidence: boolean
 }
 
 interface Section {

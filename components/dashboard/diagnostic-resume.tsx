@@ -9,28 +9,34 @@ interface DiagnosticResumeProps {
 }
 
 export function DiagnosticResume({ assessment }: DiagnosticResumeProps) {
-  // Mock data - será substituído quando implementarmos o cálculo real
-  const sections = [
-    { title: 'Gov', score: 3.2, label: 'Governança e Liderança' },
-    { title: 'PGR', score: 3.5, label: 'PGR e Gerenciamento de Riscos' },
-    { title: 'CIP', score: 2.8, label: 'CIPA e Participação' },
-    { title: 'SES', score: 3.9, label: 'SESMT e Competências' },
-    { title: 'Pre', score: 2.1, label: 'Preparação para Emergências' },
-  ]
+  // Dados reais dos scores por seção
+  const sections = (assessment.scores || []).map((score: any) => ({
+    title: score.section?.title?.substring(0, 3) || 'N/A',
+    score: score.weightedScore / 20, // Converte de 0-100 para 0-5
+    label: score.section?.title || 'Sem título',
+    fullScore: score.weightedScore
+  }))
 
-  const radarData = sections.map(section => ({
+  const radarData = sections.map((section: any) => ({
     section: section.title,
     score: section.score,
   }))
 
-  const overallScore = sections.reduce((sum, s) => sum + s.score, 0) / sections.length
-  const overallLevel = Math.ceil(overallScore)
+  // Calcular score geral e nível de maturidade
+  const overallScore = assessment.overallScore 
+    ? assessment.overallScore / 20  // Converte de 0-100 para 0-5
+    : sections.length > 0 
+      ? sections.reduce((sum: number, s: any) => sum + s.score, 0) / sections.length 
+      : 0
 
-  const levelLabel = ['', 'Inicial', 'Básico', 'Intermediário', 'Avançado', 'Otimizado'][overallLevel] || 'Intermediário'
+  const overallLevel = assessment.overallLevel || Math.ceil(overallScore)
 
-  // Contagem de achados (mock)
-  const nonCompliantCount = 2
-  const opportunityCount = 1
+  const levelLabel = ['', 'Inicial', 'Básico', 'Intermediário', 'Avançado', 'Otimizado'][overallLevel] || 'Inicial'
+
+  // Contagem real de achados
+  const findings = assessment.findings || []
+  const nonCompliantCount = findings.filter((f: any) => f.severity === 'HIGH').length
+  const opportunityCount = findings.filter((f: any) => f.severity === 'MEDIUM' || f.severity === 'LOW').length
 
   return (
     <div className="space-y-6">
@@ -119,16 +125,29 @@ export function DiagnosticResume({ assessment }: DiagnosticResumeProps) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-muted-foreground">Perguntas Respondidas</span>
-            <span className="font-semibold">8 de 8</span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-            <div 
-              className="bg-teal-600 h-3 rounded-full transition-all"
-              style={{ width: '100%' }}
-            />
-          </div>
+          {(() => {
+            const totalQuestions = assessment.template?.sections?.reduce(
+              (total: number, section: any) => total + (section.questions?.length || 0), 
+              0
+            ) || 0
+            const answeredQuestions = assessment.answers?.length || 0
+            const progressPercent = totalQuestions > 0 ? (answeredQuestions / totalQuestions) * 100 : 0
+
+            return (
+              <>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm text-muted-foreground">Perguntas Respondidas</span>
+                  <span className="font-semibold">{answeredQuestions} de {totalQuestions}</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                  <div 
+                    className="bg-teal-600 h-3 rounded-full transition-all"
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
+              </>
+            )
+          })()}
         </CardContent>
       </Card>
 
@@ -139,7 +158,7 @@ export function DiagnosticResume({ assessment }: DiagnosticResumeProps) {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {sections.map((section, index) => (
+            {sections.map((section: any, index: number) => (
               <div key={index} className="flex items-center gap-4">
                 <div className="w-48 font-medium text-sm">{section.label}</div>
                 <div className="flex-1">

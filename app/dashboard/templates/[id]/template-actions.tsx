@@ -98,6 +98,14 @@ export function TemplateActions({ templateId, status }: TemplateActionsProps) {
     <>
       <div className="flex gap-2">
         <Button 
+          size="sm" 
+          className="gap-2 bg-teal-600 hover:bg-teal-700"
+          onClick={handleEdit}
+        >
+          <Edit className="h-4 w-4" />
+          Editar Template
+        </Button>
+        <Button 
           variant="outline" 
           size="sm" 
           className="gap-2"
@@ -116,19 +124,11 @@ export function TemplateActions({ templateId, status }: TemplateActionsProps) {
             </>
           )}
         </Button>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="gap-2"
-          onClick={handleEdit}
-        >
-          <Edit className="h-4 w-4" />
-          Editar
-        </Button>
         {status === 'DRAFT' && (
           <Button 
+            variant="outline"
             size="sm" 
-            className="gap-2 bg-teal-600 hover:bg-teal-700"
+            className="gap-2"
             onClick={() => setShowPublishDialog(true)}
           >
             <CheckCircle2 className="h-4 w-4" />

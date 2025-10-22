@@ -243,13 +243,14 @@ model AssessmentAnswer {
   userId        String // Supabase Auth user ID
   value         Float // 0 (Não) ou 1 (Sim) para BOOLEAN; 1-5 para SCORE
   justification String?
-  evidenceUrls  String[] // Array de URLs de evidências no Supabase Storage
+  evidenceUrls  String[] // Array de URLs de evidências no Supabase Storage (deprecated - use evidences relation)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
   // Relations
   assessment Assessment         @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
   question   DiagnosticQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  evidences  Evidence[]         // Evidências anexadas a esta resposta
 
   @@unique([assessmentId, questionId])
   @@index([assessmentId])
@@ -313,6 +314,7 @@ model Finding {
 model Evidence {
   id           String   @id @default(uuid())
   assessmentId String
+  answerId     String? // Link para resposta específica (opcional)
   fileName     String
   fileUrl      String // URL no Supabase Storage
   fileSize     Int // Tamanho em bytes
@@ -321,9 +323,11 @@ model Evidence {
   uploadedAt   DateTime @default(now())
 
   // Relations
-  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  assessment Assessment        @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  answer     AssessmentAnswer? @relation(fields: [answerId], references: [id], onDelete: Cascade)
 
   @@index([assessmentId])
+  @@index([answerId])
   @@map("evidences")
 }
 

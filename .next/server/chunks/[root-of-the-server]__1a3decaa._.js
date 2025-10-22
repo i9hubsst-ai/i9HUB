@@ -310,7 +310,8 @@ async function POST(request) {
                                         type: question.type,
                                         weight: question.weight,
                                         reference: question.reference,
-                                        requiresJustification: question.requiresJustification
+                                        requiresJustification: question.requiresJustification,
+                                        requiresEvidence: question.requiresEvidence
                                     }))
                             }
                         }))

@@ -1,6 +1,6 @@
 {
   "node": {
-    "00cedfcc92a4d44087e4698f9ddfbc986cbddc47f2": {
+    "00f8883ef96ef5c631f06187c209b354d3dd692cc1": {
       "workers": {
         "app/dashboard/templates/[id]/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
@@ -15,7 +15,7 @@
       "exportedName": "logout",
       "filename": "app/actions/auth.ts"
     },
-    "402e643d3c7f31ce94b555510ab4277bfbf54e936a": {
+    "4010aebd6371c6feead759626c0391c073ea1e58ac": {
       "workers": {
         "app/dashboard/templates/[id]/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
@@ -30,37 +30,7 @@
       "exportedName": "signup",
       "filename": "app/actions/auth.ts"
     },
-    "403251505a1e172fdb97c1deb3aeb0335378d56d29": {
-      "workers": {
-        "app/dashboard/templates/[id]/page": {
-          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": false,
-          "exportedName": "login",
-          "filename": "app/actions/auth.ts"
-        }
-      },
-      "layer": {
-        "app/dashboard/templates/[id]/page": "rsc"
-      },
-      "exportedName": "login",
-      "filename": "app/actions/auth.ts"
-    },
-    "40423aba6059f87938d0389073365c5852a63fdbd7": {
-      "workers": {
-        "app/dashboard/templates/[id]/page": {
-          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": false,
-          "exportedName": "resetPassword",
-          "filename": "app/actions/auth.ts"
-        }
-      },
-      "layer": {
-        "app/dashboard/templates/[id]/page": "rsc"
-      },
-      "exportedName": "resetPassword",
-      "filename": "app/actions/auth.ts"
-    },
-    "40da1e881a1e596b3a26ee1a98cb7d80d6e6e0ba16": {
+    "4016825733e652b94cf4561ec8a5d9684fcab13423": {
       "workers": {
         "app/dashboard/templates/[id]/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
@@ -75,7 +45,37 @@
       "exportedName": "updatePassword",
       "filename": "app/actions/auth.ts"
     },
-    "40a411ffb0cda75731bf776e1fdc17ea07a06a2f4a": {
+    "402b7960d17e224f6e9c5f286eaef88ef6c00a99d8": {
+      "workers": {
+        "app/dashboard/templates/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "resetPassword",
+          "filename": "app/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/templates/[id]/page": "rsc"
+      },
+      "exportedName": "resetPassword",
+      "filename": "app/actions/auth.ts"
+    },
+    "402e569670a1070d3577cfb7f73bbf22ea7167e65c": {
+      "workers": {
+        "app/dashboard/templates/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "login",
+          "filename": "app/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/templates/[id]/page": "rsc"
+      },
+      "exportedName": "login",
+      "filename": "app/actions/auth.ts"
+    },
+    "40098f0176bbdf3205863d464bc6e13b0467a9801e": {
       "workers": {
         "app/dashboard/templates/[id]/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",

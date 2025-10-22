@@ -2,12 +2,15 @@ import { notFound } from 'next/navigation'
 import { getAssessmentById } from '@/app/actions/assessments'
 import { DiagnosticTabs } from '@/components/dashboard/diagnostic-tabs'
 
+export const revalidate = 0
+
 export default async function DiagnosticDetailPage({ 
   params 
 }: { 
-  params: { id: string } 
+  params: Promise<{ id: string }> 
 }) {
-  const result = await getAssessmentById(params.id)
+  const { id } = await params
+  const result = await getAssessmentById(id)
 
   if (result.error || !result.assessment) {
     notFound()

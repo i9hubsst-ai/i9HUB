@@ -69,6 +69,14 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
     return initial
   })
   
+  const [answerIds, setAnswerIds] = useState<Record<string, string>>(() => {
+    const initial: Record<string, string> = {}
+    assessment.answers.forEach(answer => {
+      initial[answer.questionId] = answer.id
+    })
+    return initial
+  })
+  
   const [saving, setSaving] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string | undefined>>({})
 
@@ -92,12 +100,6 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
 
   const handleAnswer = async (questionId: string, value: number, requiresJustification: boolean) => {
     const currentAnswer = answers[questionId] || { value: null, justification: '' }
-    const needsJustification = requiresJustification && (value === 0 || value <= 3)
-    
-    if (needsJustification && !currentAnswer.justification.trim()) {
-      setErrors({ ...errors, [questionId]: 'Justificativa obrigatória para esta resposta' })
-      return
-    }
 
     const newErrors = { ...errors }
     delete newErrors[questionId]
@@ -119,6 +121,11 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
     
     if ('error' in result) {
       setErrors({ ...errors, [questionId]: result.error })
+    } else if (result.answer) {
+      setAnswerIds(prev => ({
+        ...prev,
+        [questionId]: result.answer.id
+      }))
     }
     
     setSaving(null)
@@ -154,6 +161,11 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
     
     if ('error' in result) {
       setErrors({ ...errors, [questionId]: result.error })
+    } else if (result.answer) {
+      setAnswerIds(prev => ({
+        ...prev,
+        [questionId]: result.answer.id
+      }))
     }
     
     setSaving(null)
@@ -184,11 +196,11 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
           </CardHeader>
           <CardContent className="space-y-6">
             {section.questions.map((question, idx) => {
-              const answer = answers[question.id]
-              const hasAnswer = answer && answer.value !== null
-              const needsJustification = question.requiresJustification && hasAnswer
-              const needsEvidence = question.requiresEvidence && hasAnswer
-              const hasJustification = answer?.justification && answer.justification.trim().length > 0
+              const localAnswer = answers[question.id]
+              const answerId = answerIds[question.id]
+              const savedAnswer = assessment.answers.find(a => a.questionId === question.id)
+              const hasAnswer = localAnswer && localAnswer.value !== null
+              const hasJustification = localAnswer?.justification && localAnswer.justification.trim().length > 0
               const error = errors[question.id]
               const isSaving = saving === question.id
 
@@ -206,19 +218,33 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                             Referência: {question.reference}
                           </p>
                         )}
+                        {(question.requiresJustification || question.requiresEvidence) && (
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {question.requiresJustification && (
+                              <span className="text-xs bg-orange-100 text-orange-800 px-2 py-0.5 rounded border border-orange-200">
+                                Justificativa obrigatória
+                              </span>
+                            )}
+                            {question.requiresEvidence && (
+                              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200">
+                                Evidência obrigatória
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex flex-wrap gap-2">
                         {question.type === 'BOOLEAN' ? (
                           <>
                             <Button
-                              variant={answer?.value === 1 ? 'default' : 'outline'}
+                              variant={localAnswer?.value === 1 ? 'default' : 'outline'}
                               size="sm"
                               onClick={() => handleAnswer(question.id, 1, question.requiresJustification)}
                               disabled={isReadOnly || isSaving}
-                              className={answer?.value === 1 ? 'bg-green-600 hover:bg-green-700' : ''}
+                              className={localAnswer?.value === 1 ? 'bg-green-600 hover:bg-green-700' : ''}
                             >
-                              {isSaving && answer?.value === 1 ? (
+                              {isSaving && localAnswer?.value === 1 ? (
                                 <Loader2 className="mr-2 h-3 w-3 animate-spin" />
                               ) : (
                                 <Check className="mr-2 h-3 w-3" />
@@ -226,13 +252,13 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                               Sim
                             </Button>
                             <Button
-                              variant={answer?.value === 0 ? 'default' : 'outline'}
+                              variant={localAnswer?.value === 0 ? 'default' : 'outline'}
                               size="sm"
                               onClick={() => handleAnswer(question.id, 0, question.requiresJustification)}
                               disabled={isReadOnly || isSaving}
-                              className={answer?.value === 0 ? 'bg-red-600 hover:bg-red-700' : ''}
+                              className={localAnswer?.value === 0 ? 'bg-red-600 hover:bg-red-700' : ''}
                             >
-                              {isSaving && answer?.value === 0 ? (
+                              {isSaving && localAnswer?.value === 0 ? (
                                 <Loader2 className="mr-2 h-3 w-3 animate-spin" />
                               ) : (
                                 <X className="mr-2 h-3 w-3" />
@@ -245,13 +271,13 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                             {[1, 2, 3, 4, 5].map((score) => (
                               <Button
                                 key={score}
-                                variant={answer?.value === score ? 'default' : 'outline'}
+                                variant={localAnswer?.value === score ? 'default' : 'outline'}
                                 size="sm"
                                 onClick={() => handleAnswer(question.id, score, question.requiresJustification)}
                                 disabled={isReadOnly || isSaving}
-                                className={answer?.value === score ? 'bg-teal-600 hover:bg-teal-700' : ''}
+                                className={localAnswer?.value === score ? 'bg-teal-600 hover:bg-teal-700' : ''}
                               >
-                                {isSaving && answer?.value === score && (
+                                {isSaving && localAnswer?.value === score && (
                                   <Loader2 className="mr-1 h-3 w-3 animate-spin" />
                                 )}
                                 {score}
@@ -264,14 +290,14 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                         )}
                       </div>
 
-                      {needsJustification && (
+                      {question.requiresJustification && hasAnswer && (
                         <div className="space-y-2">
                           <Label htmlFor={`justification-${question.id}`} className="text-sm font-medium text-orange-700">
                             Justificativa obrigatória *
                           </Label>
                           <Textarea
                             id={`justification-${question.id}`}
-                            value={answer.justification}
+                            value={localAnswer?.justification || ''}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleJustificationChange(question.id, e.target.value)}
                             placeholder="Descreva a justificativa para esta resposta..."
                             className="min-h-[80px] text-sm"
@@ -281,7 +307,7 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => answer.value !== null && handleJustificationSave(question.id, answer.value)}
+                              onClick={() => localAnswer?.value !== null && handleJustificationSave(question.id, localAnswer.value)}
                               disabled={isSaving}
                             >
                               {isSaving ? (
@@ -300,12 +326,12 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                         </div>
                       )}
 
-                      {needsEvidence && (
+                      {question.requiresEvidence && hasAnswer && answerId && (
                         <div className="pt-2 border-t border-gray-100">
                           <EvidenceUpload
                             assessmentId={assessment.id}
-                            answerId={answer?.id || ''}
-                            existingEvidences={answer?.evidences || []}
+                            answerId={answerId}
+                            existingEvidences={savedAnswer?.evidences || []}
                             disabled={isReadOnly}
                           />
                         </div>

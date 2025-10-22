@@ -1226,6 +1226,17 @@ function DiagnosticSections(param) {
             return initial;
         }
     }["DiagnosticSections.useState"]);
+    const [answerIds, setAnswerIds] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
+        "DiagnosticSections.useState": ()=>{
+            const initial = {};
+            assessment.answers.forEach({
+                "DiagnosticSections.useState": (answer)=>{
+                    initial[answer.questionId] = answer.id;
+                }
+            }["DiagnosticSections.useState"]);
+            return initial;
+        }
+    }["DiagnosticSections.useState"]);
     const [saving, setSaving] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [errors, setErrors] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({});
     if (!assessment.template) {
@@ -1239,7 +1250,7 @@ function DiagnosticSections(param) {
                             className: "h-12 w-12 text-muted-foreground mx-auto"
                         }, void 0, false, {
                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                            lineNumber: 80,
+                            lineNumber: 88,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1247,7 +1258,7 @@ function DiagnosticSections(param) {
                             children: "Template não encontrado"
                         }, void 0, false, {
                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                            lineNumber: 81,
+                            lineNumber: 89,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1255,23 +1266,23 @@ function DiagnosticSections(param) {
                             children: "Este diagnóstico não possui um template associado."
                         }, void 0, false, {
                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                            lineNumber: 82,
+                            lineNumber: 90,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                    lineNumber: 79,
+                    lineNumber: 87,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                lineNumber: 78,
+                lineNumber: 86,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-            lineNumber: 77,
+            lineNumber: 85,
             columnNumber: 7
         }, this);
     }
@@ -1281,14 +1292,6 @@ function DiagnosticSections(param) {
             value: null,
             justification: ''
         };
-        const needsJustification = requiresJustification && (value === 0 || value <= 3);
-        if (needsJustification && !currentAnswer.justification.trim()) {
-            setErrors({
-                ...errors,
-                [questionId]: 'Justificativa obrigatória para esta resposta'
-            });
-            return;
-        }
         const newErrors = {
             ...errors
         };
@@ -1308,6 +1311,11 @@ function DiagnosticSections(param) {
                 ...errors,
                 [questionId]: result.error
             });
+        } else if (result.answer) {
+            setAnswerIds((prev)=>({
+                    ...prev,
+                    [questionId]: result.answer.id
+                }));
         }
         setSaving(null);
     };
@@ -1341,6 +1349,11 @@ function DiagnosticSections(param) {
                 ...errors,
                 [questionId]: result.error
             });
+        } else if (result.answer) {
+            setAnswerIds((prev)=>({
+                    ...prev,
+                    [questionId]: result.answer.id
+                }));
         }
         setSaving(null);
     };
@@ -1356,7 +1369,7 @@ function DiagnosticSections(param) {
                             className: "h-4 w-4 text-blue-600"
                         }, void 0, false, {
                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                            lineNumber: 167,
+                            lineNumber: 179,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1364,18 +1377,18 @@ function DiagnosticSections(param) {
                             children: "Diagnóstico finalizado - Somente leitura"
                         }, void 0, false, {
                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                            lineNumber: 168,
+                            lineNumber: 180,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                    lineNumber: 166,
+                    lineNumber: 178,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                lineNumber: 165,
+                lineNumber: 177,
                 columnNumber: 9
             }, this),
             assessment.template.sections.map((section)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1387,7 +1400,7 @@ function DiagnosticSections(param) {
                                     children: section.title
                                 }, void 0, false, {
                                     fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                    lineNumber: 178,
+                                    lineNumber: 190,
                                     columnNumber: 13
                                 }, this),
                                 section.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1395,23 +1408,23 @@ function DiagnosticSections(param) {
                                     children: section.description
                                 }, void 0, false, {
                                     fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                    lineNumber: 182,
+                                    lineNumber: 194,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                            lineNumber: 177,
+                            lineNumber: 189,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
                             className: "space-y-6",
                             children: section.questions.map((question, idx)=>{
-                                const answer = answers[question.id];
-                                const hasAnswer = answer && answer.value !== null;
-                                const needsJustification = question.requiresJustification && hasAnswer;
-                                const needsEvidence = question.requiresEvidence && hasAnswer;
-                                const hasJustification = (answer === null || answer === void 0 ? void 0 : answer.justification) && answer.justification.trim().length > 0;
+                                const localAnswer = answers[question.id];
+                                const answerId = answerIds[question.id];
+                                const savedAnswer = assessment.answers.find((a)=>a.questionId === question.id);
+                                const hasAnswer = localAnswer && localAnswer.value !== null;
+                                const hasJustification = (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.justification) && localAnswer.justification.trim().length > 0;
                                 const error = errors[question.id];
                                 const isSaving = saving === question.id;
                                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1427,7 +1440,7 @@ function DiagnosticSections(param) {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                lineNumber: 198,
+                                                lineNumber: 210,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1440,7 +1453,7 @@ function DiagnosticSections(param) {
                                                                 children: question.text
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                lineNumber: 203,
+                                                                lineNumber: 215,
                                                                 columnNumber: 25
                                                             }, this),
                                                             question.reference && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1451,13 +1464,38 @@ function DiagnosticSections(param) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                lineNumber: 205,
+                                                                lineNumber: 217,
+                                                                columnNumber: 27
+                                                            }, this),
+                                                            (question.requiresJustification || question.requiresEvidence) && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "flex flex-wrap gap-2 mt-2",
+                                                                children: [
+                                                                    question.requiresJustification && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: "text-xs bg-orange-100 text-orange-800 px-2 py-0.5 rounded border border-orange-200",
+                                                                        children: "Justificativa obrigatória"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
+                                                                        lineNumber: 224,
+                                                                        columnNumber: 31
+                                                                    }, this),
+                                                                    question.requiresEvidence && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: "text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200",
+                                                                        children: "Evidência obrigatória"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
+                                                                        lineNumber: 229,
+                                                                        columnNumber: 31
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
+                                                                lineNumber: 222,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                        lineNumber: 202,
+                                                        lineNumber: 214,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1465,57 +1503,57 @@ function DiagnosticSections(param) {
                                                         children: question.type === 'BOOLEAN' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                                    variant: (answer === null || answer === void 0 ? void 0 : answer.value) === 1 ? 'default' : 'outline',
+                                                                    variant: (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) === 1 ? 'default' : 'outline',
                                                                     size: "sm",
                                                                     onClick: ()=>handleAnswer(question.id, 1, question.requiresJustification),
                                                                     disabled: isReadOnly || isSaving,
-                                                                    className: (answer === null || answer === void 0 ? void 0 : answer.value) === 1 ? 'bg-green-600 hover:bg-green-700' : '',
+                                                                    className: (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) === 1 ? 'bg-green-600 hover:bg-green-700' : '',
                                                                     children: [
-                                                                        isSaving && (answer === null || answer === void 0 ? void 0 : answer.value) === 1 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                                                        isSaving && (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) === 1 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
                                                                             className: "mr-2 h-3 w-3 animate-spin"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                            lineNumber: 222,
+                                                                            lineNumber: 248,
                                                                             columnNumber: 33
                                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
                                                                             className: "mr-2 h-3 w-3"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                            lineNumber: 224,
+                                                                            lineNumber: 250,
                                                                             columnNumber: 33
                                                                         }, this),
                                                                         "Sim"
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                    lineNumber: 214,
+                                                                    lineNumber: 240,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                                    variant: (answer === null || answer === void 0 ? void 0 : answer.value) === 0 ? 'default' : 'outline',
+                                                                    variant: (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) === 0 ? 'default' : 'outline',
                                                                     size: "sm",
                                                                     onClick: ()=>handleAnswer(question.id, 0, question.requiresJustification),
                                                                     disabled: isReadOnly || isSaving,
-                                                                    className: (answer === null || answer === void 0 ? void 0 : answer.value) === 0 ? 'bg-red-600 hover:bg-red-700' : '',
+                                                                    className: (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) === 0 ? 'bg-red-600 hover:bg-red-700' : '',
                                                                     children: [
-                                                                        isSaving && (answer === null || answer === void 0 ? void 0 : answer.value) === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                                                        isSaving && (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
                                                                             className: "mr-2 h-3 w-3 animate-spin"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                            lineNumber: 236,
+                                                                            lineNumber: 262,
                                                                             columnNumber: 33
                                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
                                                                             className: "mr-2 h-3 w-3"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                            lineNumber: 238,
+                                                                            lineNumber: 264,
                                                                             columnNumber: 33
                                                                         }, this),
                                                                         "Não"
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                    lineNumber: 228,
+                                                                    lineNumber: 254,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
@@ -1528,24 +1566,24 @@ function DiagnosticSections(param) {
                                                                     4,
                                                                     5
                                                                 ].map((score)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                                                        variant: (answer === null || answer === void 0 ? void 0 : answer.value) === score ? 'default' : 'outline',
+                                                                        variant: (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) === score ? 'default' : 'outline',
                                                                         size: "sm",
                                                                         onClick: ()=>handleAnswer(question.id, score, question.requiresJustification),
                                                                         disabled: isReadOnly || isSaving,
-                                                                        className: (answer === null || answer === void 0 ? void 0 : answer.value) === score ? 'bg-teal-600 hover:bg-teal-700' : '',
+                                                                        className: (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) === score ? 'bg-teal-600 hover:bg-teal-700' : '',
                                                                         children: [
-                                                                            isSaving && (answer === null || answer === void 0 ? void 0 : answer.value) === score && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                                                            isSaving && (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) === score && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
                                                                                 className: "mr-1 h-3 w-3 animate-spin"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                                lineNumber: 255,
+                                                                                lineNumber: 281,
                                                                                 columnNumber: 35
                                                                             }, this),
                                                                             score
                                                                         ]
                                                                     }, score, true, {
                                                                         fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                        lineNumber: 246,
+                                                                        lineNumber: 272,
                                                                         columnNumber: 31
                                                                     }, this)),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1553,17 +1591,17 @@ function DiagnosticSections(param) {
                                                                     children: "(1=Muito Baixo, 5=Excelente)"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                    lineNumber: 260,
+                                                                    lineNumber: 286,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
                                                         }, void 0, true)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                        lineNumber: 211,
+                                                        lineNumber: 237,
                                                         columnNumber: 23
                                                     }, this),
-                                                    needsJustification && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    question.requiresJustification && hasAnswer && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "space-y-2",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
@@ -1572,25 +1610,25 @@ function DiagnosticSections(param) {
                                                                 children: "Justificativa obrigatória *"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                lineNumber: 269,
+                                                                lineNumber: 295,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
                                                                 id: "justification-".concat(question.id),
-                                                                value: answer.justification,
+                                                                value: (localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.justification) || '',
                                                                 onChange: (e)=>handleJustificationChange(question.id, e.target.value),
                                                                 placeholder: "Descreva a justificativa para esta resposta...",
                                                                 className: "min-h-[80px] text-sm",
                                                                 disabled: isReadOnly
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                lineNumber: 272,
+                                                                lineNumber: 298,
                                                                 columnNumber: 27
                                                             }, this),
                                                             !isReadOnly && hasJustification && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                                                 size: "sm",
                                                                 variant: "outline",
-                                                                onClick: ()=>answer.value !== null && handleJustificationSave(question.id, answer.value),
+                                                                onClick: ()=>(localAnswer === null || localAnswer === void 0 ? void 0 : localAnswer.value) !== null && handleJustificationSave(question.id, localAnswer.value),
                                                                 disabled: isSaving,
                                                                 children: isSaving ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
                                                                     children: [
@@ -1598,7 +1636,7 @@ function DiagnosticSections(param) {
                                                                             className: "mr-2 h-3 w-3 animate-spin"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                            lineNumber: 289,
+                                                                            lineNumber: 315,
                                                                             columnNumber: 35
                                                                         }, this),
                                                                         "Salvando..."
@@ -1609,7 +1647,7 @@ function DiagnosticSections(param) {
                                                                             className: "mr-2 h-3 w-3"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                            lineNumber: 294,
+                                                                            lineNumber: 320,
                                                                             columnNumber: 35
                                                                         }, this),
                                                                         "Salvar Justificativa"
@@ -1617,30 +1655,30 @@ function DiagnosticSections(param) {
                                                                 }, void 0, true)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                lineNumber: 281,
+                                                                lineNumber: 307,
                                                                 columnNumber: 29
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                        lineNumber: 268,
+                                                        lineNumber: 294,
                                                         columnNumber: 25
                                                     }, this),
-                                                    needsEvidence && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    question.requiresEvidence && hasAnswer && answerId && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "pt-2 border-t border-gray-100",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$dashboard$2f$evidence$2d$upload$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["EvidenceUpload"], {
                                                             assessmentId: assessment.id,
-                                                            answerId: (answer === null || answer === void 0 ? void 0 : answer.id) || '',
-                                                            existingEvidences: (answer === null || answer === void 0 ? void 0 : answer.evidences) || [],
+                                                            answerId: answerId,
+                                                            existingEvidences: (savedAnswer === null || savedAnswer === void 0 ? void 0 : savedAnswer.evidences) || [],
                                                             disabled: isReadOnly
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                            lineNumber: 305,
+                                                            lineNumber: 331,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                        lineNumber: 304,
+                                                        lineNumber: 330,
                                                         columnNumber: 25
                                                     }, this),
                                                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1650,53 +1688,53 @@ function DiagnosticSections(param) {
                                                                 className: "h-3 w-3"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                                lineNumber: 316,
+                                                                lineNumber: 342,
                                                                 columnNumber: 27
                                                             }, this),
                                                             error
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                        lineNumber: 315,
+                                                        lineNumber: 341,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                                lineNumber: 201,
+                                                lineNumber: 213,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                        lineNumber: 197,
+                                        lineNumber: 209,
                                         columnNumber: 19
                                     }, this)
                                 }, question.id, false, {
                                     fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                                    lineNumber: 196,
+                                    lineNumber: 208,
                                     columnNumber: 17
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                            lineNumber: 185,
+                            lineNumber: 197,
                             columnNumber: 11
                         }, this)
                     ]
                 }, section.id, true, {
                     fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-                    lineNumber: 176,
+                    lineNumber: 188,
                     columnNumber: 9
                 }, this))
         ]
     }, void 0, true, {
         fileName: "[project]/components/dashboard/diagnostic-sections.tsx",
-        lineNumber: 163,
+        lineNumber: 175,
         columnNumber: 5
     }, this);
 }
-_s(DiagnosticSections, "y4956fsGFoqz3dkUGQoU1RQONvk=");
+_s(DiagnosticSections, "kUU75x299WDNXbUA+9O53u16WT4=");
 _c = DiagnosticSections;
 var _c;
 __turbopack_context__.k.register(_c, "DiagnosticSections");

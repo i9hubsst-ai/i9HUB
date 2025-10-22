@@ -518,7 +518,7 @@ __turbopack_context__.n(__TURBOPACK__imported__module__$5b$project$5d2f$componen
 "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"0091763d6f80e88135cfb100958db3e5ae87d9a6cf":"logout","4026d94dfb4c4c980b9308dc8d58accf99f029ae8b":"signup","40c968a099a629990f9b0371616f2f87940f850ecd":"login","40dfc9788b51d601428dba7b36c25153a35bb09e9c":"updatePassword","40fc31c8691714bac2b4cfc21b4515fc4b1f7b791a":"resetPassword"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"00f286cfd933f5ed0b6b627286981d0d0e024ae67e":"logout","401aac184c89ceb8a4ee60f1c59c91bc9acf55e0a1":"signup","4024f0c702577aef4e03c73db6d3f5278b7bb33c49":"resetPassword","409e38117851d305b72a00b0d454396594c7f7b93c":"login","40d8b9d2850b2c15f8b88db83558ed543071dc8154":"updatePassword"},"",""] */ __turbopack_context__.s([
     "login",
     ()=>login,
     "logout",
@@ -648,11 +648,11 @@ async function updatePassword(formData) {
     resetPassword,
     updatePassword
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(login, "40c968a099a629990f9b0371616f2f87940f850ecd", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(signup, "4026d94dfb4c4c980b9308dc8d58accf99f029ae8b", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(logout, "0091763d6f80e88135cfb100958db3e5ae87d9a6cf", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(resetPassword, "40fc31c8691714bac2b4cfc21b4515fc4b1f7b791a", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updatePassword, "40dfc9788b51d601428dba7b36c25153a35bb09e9c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(login, "409e38117851d305b72a00b0d454396594c7f7b93c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(signup, "401aac184c89ceb8a4ee60f1c59c91bc9acf55e0a1", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(logout, "00f286cfd933f5ed0b6b627286981d0d0e024ae67e", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(resetPassword, "4024f0c702577aef4e03c73db6d3f5278b7bb33c49", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updatePassword, "40d8b9d2850b2c15f8b88db83558ed543071dc8154", null);
 }),
 "[project]/components/dashboard/user-nav.tsx [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";

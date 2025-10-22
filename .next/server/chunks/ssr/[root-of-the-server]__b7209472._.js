@@ -2,7 +2,7 @@ module.exports = [
 "[project]/app/actions/assessments.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"002bf3d939da3b85ebb0306bb7d29556864af8cd70":"getTemplates","4037a89d8fa9c660dd0a02a4c9d4d5ab7b8e9cf369":"deleteAssessment","4043c312b6cdd900965370c770d8e05693dc3790b7":"getAssessments","4069a0a5766854ddfb4e8edec306a96d4b56ce8a01":"getAssessmentById","40edcab69aa939fd793ca19edced638294fb9e235e":"submitAssessment","60d141a060a702c2cc20887d53ff45c0ef22d3f1fd":"createAssessment","7cfceb697006ef40eee4d98b9101ed33ec22a5f7fe":"saveAnswer"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"0029ea02ead9662ed97af0b43c07e57d3a007d1293":"getTemplates","408f65a0194ad93ed5112f40d8d671589af3c3479b":"submitAssessment","40a0ce6a881eb18d654d777d34da35132d0a640460":"deleteAssessment","40a1b26a3f6759c35ee6d32f877b5f7f157029bab7":"getAssessmentById","40a38dee0693acd37968f94b64134ab2028d1e07ea":"getAssessments","6065689128d7a97a33a43939e3af746040ee7933cc":"createAssessment","7cd7f47ebabac9ba55921f2678c105741b26d0df5c":"saveAnswer"},"",""] */ __turbopack_context__.s([
     "createAssessment",
     ()=>createAssessment,
     "deleteAssessment",
@@ -20,12 +20,9 @@ module.exports = [
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/server-reference.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/cache.js [app-rsc] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$api$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/next/dist/api/navigation.react-server.js [app-rsc] (ecmascript) <locals>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/components/navigation.react-server.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/prisma.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/auth.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$validate$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-validate.js [app-rsc] (ecmascript)");
-;
 ;
 ;
 ;
@@ -67,7 +64,10 @@ async function createAssessment(companyId, formData) {
             }
         });
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/dashboard/diagnostics');
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])(`/dashboard/diagnostics/${assessment.id}`);
+        return {
+            success: true,
+            assessmentId: assessment.id
+        };
     } catch (error) {
         console.error('Erro ao criar diagnóstico:', error);
         return {
@@ -523,18 +523,18 @@ async function deleteAssessment(assessmentId) {
     submitAssessment,
     deleteAssessment
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createAssessment, "60d141a060a702c2cc20887d53ff45c0ef22d3f1fd", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAssessments, "4043c312b6cdd900965370c770d8e05693dc3790b7", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAssessmentById, "4069a0a5766854ddfb4e8edec306a96d4b56ce8a01", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getTemplates, "002bf3d939da3b85ebb0306bb7d29556864af8cd70", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(saveAnswer, "7cfceb697006ef40eee4d98b9101ed33ec22a5f7fe", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(submitAssessment, "40edcab69aa939fd793ca19edced638294fb9e235e", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteAssessment, "4037a89d8fa9c660dd0a02a4c9d4d5ab7b8e9cf369", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createAssessment, "6065689128d7a97a33a43939e3af746040ee7933cc", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAssessments, "40a38dee0693acd37968f94b64134ab2028d1e07ea", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAssessmentById, "40a1b26a3f6759c35ee6d32f877b5f7f157029bab7", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getTemplates, "0029ea02ead9662ed97af0b43c07e57d3a007d1293", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(saveAnswer, "7cd7f47ebabac9ba55921f2678c105741b26d0df5c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(submitAssessment, "408f65a0194ad93ed5112f40d8d671589af3c3479b", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteAssessment, "40a0ce6a881eb18d654d777d34da35132d0a640460", null);
 }),
 "[project]/app/actions/findings.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"402e35e09072fcd170c7b6ea4de18cd2ca403692c7":"generateFindings","4052ea7c36108de1e888d959bce8b6cde867e9f571":"deleteFinding","40b6b1ae5a4e04c8e69ea8494251a7bc4f8ac04fbb":"getFindings"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"4019a18984cfc4e78f3438f233161ab44de9baca45":"deleteFinding","4036f0cf3eff8ce2c93967f08955f09453664036e4":"generateFindings","40735b10d084a7a99aded786c23f0df6e71722703c":"getFindings"},"",""] */ __turbopack_context__.s([
     "deleteFinding",
     ()=>deleteFinding,
     "generateFindings",
@@ -776,9 +776,9 @@ async function deleteFinding(findingId) {
     getFindings,
     deleteFinding
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(generateFindings, "402e35e09072fcd170c7b6ea4de18cd2ca403692c7", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getFindings, "40b6b1ae5a4e04c8e69ea8494251a7bc4f8ac04fbb", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteFinding, "4052ea7c36108de1e888d959bce8b6cde867e9f571", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(generateFindings, "4036f0cf3eff8ce2c93967f08955f09453664036e4", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getFindings, "40735b10d084a7a99aded786c23f0df6e71722703c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteFinding, "4019a18984cfc4e78f3438f233161ab44de9baca45", null);
 }),
 "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
 "use strict";
@@ -807,35 +807,35 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2
 "use strict";
 
 __turbopack_context__.s([
-    "002bf3d939da3b85ebb0306bb7d29556864af8cd70",
+    "0029ea02ead9662ed97af0b43c07e57d3a007d1293",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getTemplates"],
-    "0091763d6f80e88135cfb100958db3e5ae87d9a6cf",
+    "00f286cfd933f5ed0b6b627286981d0d0e024ae67e",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["logout"],
-    "4026d94dfb4c4c980b9308dc8d58accf99f029ae8b",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
-    "402e35e09072fcd170c7b6ea4de18cd2ca403692c7",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["generateFindings"],
-    "4037a89d8fa9c660dd0a02a4c9d4d5ab7b8e9cf369",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteAssessment"],
-    "4043c312b6cdd900965370c770d8e05693dc3790b7",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAssessments"],
-    "4052ea7c36108de1e888d959bce8b6cde867e9f571",
+    "4019a18984cfc4e78f3438f233161ab44de9baca45",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteFinding"],
-    "4069a0a5766854ddfb4e8edec306a96d4b56ce8a01",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAssessmentById"],
-    "40b6b1ae5a4e04c8e69ea8494251a7bc4f8ac04fbb",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getFindings"],
-    "40c968a099a629990f9b0371616f2f87940f850ecd",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"],
-    "40dfc9788b51d601428dba7b36c25153a35bb09e9c",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"],
-    "40edcab69aa939fd793ca19edced638294fb9e235e",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["submitAssessment"],
-    "40fc31c8691714bac2b4cfc21b4515fc4b1f7b791a",
+    "401aac184c89ceb8a4ee60f1c59c91bc9acf55e0a1",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
+    "4024f0c702577aef4e03c73db6d3f5278b7bb33c49",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resetPassword"],
-    "60d141a060a702c2cc20887d53ff45c0ef22d3f1fd",
+    "4036f0cf3eff8ce2c93967f08955f09453664036e4",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["generateFindings"],
+    "40735b10d084a7a99aded786c23f0df6e71722703c",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getFindings"],
+    "408f65a0194ad93ed5112f40d8d671589af3c3479b",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["submitAssessment"],
+    "409e38117851d305b72a00b0d454396594c7f7b93c",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"],
+    "40a0ce6a881eb18d654d777d34da35132d0a640460",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteAssessment"],
+    "40a1b26a3f6759c35ee6d32f877b5f7f157029bab7",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAssessmentById"],
+    "40a38dee0693acd37968f94b64134ab2028d1e07ea",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAssessments"],
+    "40d8b9d2850b2c15f8b88db83558ed543071dc8154",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"],
+    "6065689128d7a97a33a43939e3af746040ee7933cc",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createAssessment"],
-    "7cfceb697006ef40eee4d98b9101ed33ec22a5f7fe",
+    "7cd7f47ebabac9ba55921f2678c105741b26d0df5c",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["saveAnswer"]
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$dashboard$2f$diagnostics$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE1__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE2__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ACTIONS_MODULE1 => "[project]/app/actions/assessments.ts [app-rsc] (ecmascript)", ACTIONS_MODULE2 => "[project]/app/actions/findings.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');

@@ -2,7 +2,7 @@ module.exports = [
 "[project]/app/actions/templates.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"00684ee0a26a988fdf03b6b89fa88267aaf4f6a26d":"getAllTemplates","009a747fe65fc0cb39e85cb386ce99e2a853343b53":"getPublishedTemplates","4059713e9d9bb8b94c7ed601c0d6dbebb7a50d29ba":"deleteTemplate","40733b531254e2977bb25960d28d18a481466a1aea":"publishTemplate","40985833c4310d0f61d26f2506d40ac7441eb33fdc":"getTemplateById","608fe72c7ef0d0cdb4cbb7a67de22bf1e0e4f506ee":"updateTemplateStatus","60b1c0b71341e930cdb3cf7ccf817c89cb99a17d5c":"applyTemplateToAssessment","60f741c09d49b0dde20d9909423dc3aba7d6743796":"updateTemplate"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"0057eb6eea8d7623312e1eb21da637324dbb4278d6":"getPublishedTemplates","00e7cdcd47be964f555ece41f78f94bc0d3b0aeae5":"getAllTemplates","40a500a929d53f5ef51754d7e65c3529967ef6429e":"getTemplateById","40b1b5942ed2dc27466bc78059cb1d3a84b6a0fc97":"deleteTemplate","40e4945438f06f8c417d2acc0afb9f9a6554713503":"publishTemplate","607c0e15bc99e120f2986d6031943e9ea05b02da32":"applyTemplateToAssessment","607fd97c870344ff8b3c293ef398690c07bb7cb735":"updateTemplateStatus","60f5296e0d646cd64bf543a2d699455d5bffe6092a":"updateTemplate"},"",""] */ __turbopack_context__.s([
     "applyTemplateToAssessment",
     ()=>applyTemplateToAssessment,
     "deleteTemplate",
@@ -473,14 +473,14 @@ async function applyTemplateToAssessment(assessmentId, templateId) {
     updateTemplate,
     applyTemplateToAssessment
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllTemplates, "00684ee0a26a988fdf03b6b89fa88267aaf4f6a26d", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getTemplateById, "40985833c4310d0f61d26f2506d40ac7441eb33fdc", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplateStatus, "608fe72c7ef0d0cdb4cbb7a67de22bf1e0e4f506ee", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteTemplate, "4059713e9d9bb8b94c7ed601c0d6dbebb7a50d29ba", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getPublishedTemplates, "009a747fe65fc0cb39e85cb386ce99e2a853343b53", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(publishTemplate, "40733b531254e2977bb25960d28d18a481466a1aea", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplate, "60f741c09d49b0dde20d9909423dc3aba7d6743796", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(applyTemplateToAssessment, "60b1c0b71341e930cdb3cf7ccf817c89cb99a17d5c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllTemplates, "00e7cdcd47be964f555ece41f78f94bc0d3b0aeae5", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getTemplateById, "40a500a929d53f5ef51754d7e65c3529967ef6429e", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplateStatus, "607fd97c870344ff8b3c293ef398690c07bb7cb735", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteTemplate, "40b1b5942ed2dc27466bc78059cb1d3a84b6a0fc97", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getPublishedTemplates, "0057eb6eea8d7623312e1eb21da637324dbb4278d6", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(publishTemplate, "40e4945438f06f8c417d2acc0afb9f9a6554713503", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplate, "60f5296e0d646cd64bf543a2d699455d5bffe6092a", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(applyTemplateToAssessment, "607c0e15bc99e120f2986d6031943e9ea05b02da32", null);
 }),
 "[project]/.next-internal/server/app/dashboard/templates/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
 "use strict";
@@ -506,31 +506,31 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$
 "use strict";
 
 __turbopack_context__.s([
-    "00684ee0a26a988fdf03b6b89fa88267aaf4f6a26d",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAllTemplates"],
-    "0091763d6f80e88135cfb100958db3e5ae87d9a6cf",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["logout"],
-    "009a747fe65fc0cb39e85cb386ce99e2a853343b53",
+    "0057eb6eea8d7623312e1eb21da637324dbb4278d6",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getPublishedTemplates"],
-    "4026d94dfb4c4c980b9308dc8d58accf99f029ae8b",
+    "00e7cdcd47be964f555ece41f78f94bc0d3b0aeae5",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAllTemplates"],
+    "00f286cfd933f5ed0b6b627286981d0d0e024ae67e",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["logout"],
+    "401aac184c89ceb8a4ee60f1c59c91bc9acf55e0a1",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
-    "4059713e9d9bb8b94c7ed601c0d6dbebb7a50d29ba",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteTemplate"],
-    "40733b531254e2977bb25960d28d18a481466a1aea",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["publishTemplate"],
-    "40985833c4310d0f61d26f2506d40ac7441eb33fdc",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getTemplateById"],
-    "40c968a099a629990f9b0371616f2f87940f850ecd",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"],
-    "40dfc9788b51d601428dba7b36c25153a35bb09e9c",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"],
-    "40fc31c8691714bac2b4cfc21b4515fc4b1f7b791a",
+    "4024f0c702577aef4e03c73db6d3f5278b7bb33c49",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resetPassword"],
-    "608fe72c7ef0d0cdb4cbb7a67de22bf1e0e4f506ee",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateTemplateStatus"],
-    "60b1c0b71341e930cdb3cf7ccf817c89cb99a17d5c",
+    "409e38117851d305b72a00b0d454396594c7f7b93c",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"],
+    "40a500a929d53f5ef51754d7e65c3529967ef6429e",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getTemplateById"],
+    "40b1b5942ed2dc27466bc78059cb1d3a84b6a0fc97",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteTemplate"],
+    "40d8b9d2850b2c15f8b88db83558ed543071dc8154",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"],
+    "40e4945438f06f8c417d2acc0afb9f9a6554713503",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["publishTemplate"],
+    "607c0e15bc99e120f2986d6031943e9ea05b02da32",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["applyTemplateToAssessment"],
-    "60f741c09d49b0dde20d9909423dc3aba7d6743796",
+    "607fd97c870344ff8b3c293ef398690c07bb7cb735",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateTemplateStatus"],
+    "60f5296e0d646cd64bf543a2d699455d5bffe6092a",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updateTemplate"]
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$dashboard$2f$templates$2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE1__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/dashboard/templates/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ACTIONS_MODULE1 => "[project]/app/actions/templates.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');

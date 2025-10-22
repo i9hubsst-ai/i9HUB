@@ -98,7 +98,7 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
 
   const isReadOnly = assessment.status !== 'IN_PROGRESS' && assessment.status !== 'DRAFT'
 
-  const handleAnswer = async (questionId: string, value: number, requiresJustification: boolean) => {
+  const handleAnswer = async (questionId: string, value: number, requiresJustification: boolean, requiresEvidence: boolean) => {
     const currentAnswer = answers[questionId] || { value: null, justification: '' }
 
     const newErrors = { ...errors }
@@ -110,25 +110,27 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
       [questionId]: { ...currentAnswer, value }
     }))
 
-    setSaving(questionId)
-    
-    const result = await saveAnswer(
-      assessment.id,
-      questionId,
-      value,
-      currentAnswer.justification.trim() || undefined
-    )
-    
-    if ('error' in result) {
-      setErrors({ ...errors, [questionId]: result.error })
-    } else if (result.answer) {
-      setAnswerIds(prev => ({
-        ...prev,
-        [questionId]: result.answer.id
-      }))
+    if (!requiresJustification && !requiresEvidence) {
+      setSaving(questionId)
+      
+      const result = await saveAnswer(
+        assessment.id,
+        questionId,
+        value,
+        undefined
+      )
+      
+      if ('error' in result) {
+        setErrors({ ...errors, [questionId]: result.error })
+      } else if (result.answer) {
+        setAnswerIds(prev => ({
+          ...prev,
+          [questionId]: result.answer.id
+        }))
+      }
+      
+      setSaving(null)
     }
-    
-    setSaving(null)
   }
 
   const handleJustificationChange = (questionId: string, justification: string) => {
@@ -142,11 +144,16 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
     setErrors(newErrors)
   }
 
-  const handleJustificationSave = async (questionId: string, value: number) => {
+  const handleSaveResponse = async (questionId: string, requiresJustification: boolean) => {
     const currentAnswer = answers[questionId]
     
     if (!currentAnswer || currentAnswer.value === null) {
-      setErrors({ ...errors, [questionId]: 'Responda a pergunta primeiro' })
+      setErrors({ ...errors, [questionId]: 'Selecione uma resposta primeiro' })
+      return
+    }
+
+    if (requiresJustification && !currentAnswer.justification.trim()) {
+      setErrors({ ...errors, [questionId]: 'Justificativa obrigatória para esta resposta' })
       return
     }
 
@@ -240,7 +247,7 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                             <Button
                               variant={localAnswer?.value === 1 ? 'default' : 'outline'}
                               size="sm"
-                              onClick={() => handleAnswer(question.id, 1, question.requiresJustification)}
+                              onClick={() => handleAnswer(question.id, 1, question.requiresJustification, question.requiresEvidence)}
                               disabled={isReadOnly || isSaving}
                               className={localAnswer?.value === 1 ? 'bg-green-600 hover:bg-green-700' : ''}
                             >
@@ -254,7 +261,7 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                             <Button
                               variant={localAnswer?.value === 0 ? 'default' : 'outline'}
                               size="sm"
-                              onClick={() => handleAnswer(question.id, 0, question.requiresJustification)}
+                              onClick={() => handleAnswer(question.id, 0, question.requiresJustification, question.requiresEvidence)}
                               disabled={isReadOnly || isSaving}
                               className={localAnswer?.value === 0 ? 'bg-red-600 hover:bg-red-700' : ''}
                             >
@@ -273,7 +280,7 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                                 key={score}
                                 variant={localAnswer?.value === score ? 'default' : 'outline'}
                                 size="sm"
-                                onClick={() => handleAnswer(question.id, score, question.requiresJustification)}
+                                onClick={() => handleAnswer(question.id, score, question.requiresJustification, question.requiresEvidence)}
                                 disabled={isReadOnly || isSaving}
                                 className={localAnswer?.value === score ? 'bg-teal-600 hover:bg-teal-700' : ''}
                               >
@@ -290,24 +297,28 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                         )}
                       </div>
 
-                      {question.requiresJustification && hasAnswer && (
+                      {(question.requiresJustification || question.requiresEvidence) && hasAnswer && (
                         <div className="space-y-2">
-                          <Label htmlFor={`justification-${question.id}`} className="text-sm font-medium text-orange-700">
-                            Justificativa obrigatória *
-                          </Label>
-                          <Textarea
-                            id={`justification-${question.id}`}
-                            value={localAnswer?.justification || ''}
-                            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleJustificationChange(question.id, e.target.value)}
-                            placeholder="Descreva a justificativa para esta resposta..."
-                            className="min-h-[80px] text-sm"
-                            disabled={isReadOnly}
-                          />
-                          {!isReadOnly && hasJustification && (
+                          {question.requiresJustification && (
+                            <>
+                              <Label htmlFor={`justification-${question.id}`} className="text-sm font-medium text-orange-700">
+                                Justificativa obrigatória *
+                              </Label>
+                              <Textarea
+                                id={`justification-${question.id}`}
+                                value={localAnswer?.justification || ''}
+                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleJustificationChange(question.id, e.target.value)}
+                                placeholder="Descreva a justificativa para esta resposta..."
+                                className="min-h-[80px] text-sm"
+                                disabled={isReadOnly}
+                              />
+                            </>
+                          )}
+                          {!isReadOnly && (
                             <Button
                               size="sm"
-                              variant="outline"
-                              onClick={() => localAnswer?.value !== null && handleJustificationSave(question.id, localAnswer.value)}
+                              className="bg-teal-600 hover:bg-teal-700"
+                              onClick={() => handleSaveResponse(question.id, question.requiresJustification)}
                               disabled={isSaving}
                             >
                               {isSaving ? (
@@ -318,12 +329,19 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                               ) : (
                                 <>
                                   <Check className="mr-2 h-3 w-3" />
-                                  Salvar Justificativa
+                                  {answerId ? 'Atualizar Resposta' : 'Salvar Resposta'}
                                 </>
                               )}
                             </Button>
                           )}
                         </div>
+                      )}
+
+                      {!question.requiresJustification && !question.requiresEvidence && hasAnswer && answerId && !isReadOnly && (
+                        <p className="text-xs text-green-600 flex items-center gap-1">
+                          <Check className="h-3 w-3" />
+                          Resposta salva com sucesso
+                        </p>
                       )}
 
                       {question.requiresEvidence && hasAnswer && answerId && (

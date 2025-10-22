@@ -17,7 +17,7 @@ interface DiagnosticTabsProps {
 
 const tabs = [
   { id: 'resumo', label: 'Resumo' },
-  { id: 'sections', label: 'Seções & Perguntas' },
+  { id: 'sections', label: 'Perguntas & Respostas' },
   { id: 'achados', label: 'Achados' },
   { id: 'plano', label: 'Plano de Ação' },
   { id: 'evidencias', label: 'Evidências' },

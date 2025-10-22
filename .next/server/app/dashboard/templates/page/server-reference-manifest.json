@@ -135,6 +135,21 @@
       "exportedName": "deleteTemplate",
       "filename": "app/actions/templates.ts"
     },
+    "408cac856790f07988c475ef494270c498297de47c": {
+      "workers": {
+        "app/dashboard/templates/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "publishTemplate",
+          "filename": "app/actions/templates.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/templates/page": "rsc"
+      },
+      "exportedName": "publishTemplate",
+      "filename": "app/actions/templates.ts"
+    },
     "6035594d2973f0b80468bdf04b929cb171623113a2": {
       "workers": {
         "app/dashboard/templates/page": {
@@ -148,6 +163,21 @@
         "app/dashboard/templates/page": "action-browser"
       },
       "exportedName": "updateTemplateStatus",
+      "filename": "app/actions/templates.ts"
+    },
+    "605458daccf6d85e09545650da6d962234072dbdbb": {
+      "workers": {
+        "app/dashboard/templates/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updateTemplate",
+          "filename": "app/actions/templates.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/templates/page": "rsc"
+      },
+      "exportedName": "updateTemplate",
       "filename": "app/actions/templates.ts"
     },
     "6082bfdc21de2f5c9e8bc7eb79c0c36e1fe1e6082c": {

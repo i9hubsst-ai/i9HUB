@@ -147,6 +147,158 @@ export async function getPublishedTemplates() {
   }
 }
 
+export async function publishTemplate(templateId: string) {
+  return updateTemplateStatus(templateId, 'PUBLISHED')
+}
+
+export async function updateTemplate(
+  templateId: string,
+  data: {
+    name: string
+    description: string
+    sections: Array<{
+      id?: string
+      title: string
+      order: number
+      questions: Array<{
+        id?: string
+        text: string
+        type: string
+        weight: number
+        reference?: string
+        requiresJustification: boolean
+      }>
+    }>
+  }
+) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  const isAdmin = await isPlatformAdmin(user.id)
+  if (!isAdmin) {
+    return { error: 'Apenas administradores podem editar templates' }
+  }
+
+  try {
+    // Verificar se template existe
+    const template = await prisma.diagnosticTemplate.findUnique({
+      where: { id: templateId },
+      include: {
+        sections: {
+          include: { questions: true }
+        }
+      }
+    })
+
+    if (!template) {
+      return { error: 'Template não encontrado' }
+    }
+
+    // Atualizar template e suas seções/perguntas
+    await prisma.$transaction(async (tx) => {
+      // Atualizar informações básicas do template
+      await tx.diagnosticTemplate.update({
+        where: { id: templateId },
+        data: {
+          name: data.name,
+          description: data.description
+        }
+      })
+
+      // IDs de seções e perguntas que devem ser mantidos
+      const sectionIdsToKeep = data.sections.filter(s => s.id).map(s => s.id!)
+      const questionIdsToKeep = data.sections
+        .flatMap(s => s.questions.filter(q => q.id).map(q => q.id!))
+
+      // Deletar seções que foram removidas
+      await tx.diagnosticSection.deleteMany({
+        where: {
+          templateId,
+          id: { notIn: sectionIdsToKeep }
+        }
+      })
+
+      // Processar cada seção
+      for (const section of data.sections) {
+        if (section.id) {
+          // Atualizar seção existente
+          await tx.diagnosticSection.update({
+            where: { id: section.id },
+            data: {
+              title: section.title,
+              order: section.order
+            }
+          })
+
+          // Deletar perguntas removidas desta seção
+          await tx.diagnosticQuestion.deleteMany({
+            where: {
+              sectionId: section.id,
+              id: { notIn: section.questions.filter(q => q.id).map(q => q.id!) }
+            }
+          })
+
+          // Processar perguntas
+          for (const question of section.questions) {
+            if (question.id) {
+              // Atualizar pergunta existente
+              await tx.diagnosticQuestion.update({
+                where: { id: question.id },
+                data: {
+                  text: question.text,
+                  type: question.type,
+                  weight: question.weight,
+                  reference: question.reference,
+                  requiresJustification: question.requiresJustification
+                }
+              })
+            } else {
+              // Criar nova pergunta
+              await tx.diagnosticQuestion.create({
+                data: {
+                  sectionId: section.id,
+                  text: question.text,
+                  type: question.type,
+                  weight: question.weight,
+                  reference: question.reference,
+                  requiresJustification: question.requiresJustification
+                }
+              })
+            }
+          }
+        } else {
+          // Criar nova seção com suas perguntas
+          await tx.diagnosticSection.create({
+            data: {
+              templateId,
+              title: section.title,
+              order: section.order,
+              questions: {
+                create: section.questions.map(q => ({
+                  text: q.text,
+                  type: q.type,
+                  weight: q.weight,
+                  reference: q.reference,
+                  requiresJustification: q.requiresJustification
+                }))
+              }
+            }
+          })
+        }
+      }
+    })
+
+    revalidatePath('/dashboard/templates')
+    revalidatePath(`/dashboard/templates/${templateId}`)
+    return { success: true }
+  } catch (error) {
+    console.error('Erro ao atualizar template:', error)
+    return { error: 'Erro ao atualizar template' }
+  }
+}
+
 export async function applyTemplateToAssessment(assessmentId: string, templateId: string) {
   const user = await getCurrentUser()
   if (!user) {

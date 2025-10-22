@@ -165,7 +165,7 @@ export async function updateTemplate(
         text: string
         type: string
         weight: number
-        reference?: string
+        reference?: string | null
         requiresJustification: boolean
       }>
     }>

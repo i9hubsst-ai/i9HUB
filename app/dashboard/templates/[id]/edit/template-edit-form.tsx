@@ -164,7 +164,7 @@ export function TemplateEditForm({ template }: TemplateEditFormProps) {
           text: q.text,
           type: q.type,
           weight: q.weight,
-          reference: q.reference || undefined,
+          reference: q.reference && q.reference.trim() !== '' ? q.reference : null,
           requiresJustification: q.requiresJustification
         }))
       }))

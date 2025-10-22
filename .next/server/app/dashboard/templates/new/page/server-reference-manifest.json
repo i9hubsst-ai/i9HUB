@@ -1,6 +1,6 @@
 {
   "node": {
-    "00709ebe7226af6992d559e830ec0cc46dd6429523": {
+    "008b45aea31b6124d8a652ddd75e6b5ac9454994fc": {
       "workers": {
         "app/dashboard/templates/new/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/templates/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
@@ -15,22 +15,7 @@
       "exportedName": "logout",
       "filename": "app/actions/auth.ts"
     },
-    "408f894dbc6ac232e87c7c86fceb36c206f007b980": {
-      "workers": {
-        "app/dashboard/templates/new/page": {
-          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": false,
-          "exportedName": "resetPassword",
-          "filename": "app/actions/auth.ts"
-        }
-      },
-      "layer": {
-        "app/dashboard/templates/new/page": "rsc"
-      },
-      "exportedName": "resetPassword",
-      "filename": "app/actions/auth.ts"
-    },
-    "4093bffd6a07b03d8e36d0bed8d6f00de33838868b": {
+    "4056d99359c2dff588c07a8f8b14d895d270765d9b": {
       "workers": {
         "app/dashboard/templates/new/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/templates/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
@@ -45,22 +30,7 @@
       "exportedName": "updatePassword",
       "filename": "app/actions/auth.ts"
     },
-    "40c8e9095fad53a2cc3775dd3da4eceaa619566467": {
-      "workers": {
-        "app/dashboard/templates/new/page": {
-          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": false,
-          "exportedName": "signup",
-          "filename": "app/actions/auth.ts"
-        }
-      },
-      "layer": {
-        "app/dashboard/templates/new/page": "rsc"
-      },
-      "exportedName": "signup",
-      "filename": "app/actions/auth.ts"
-    },
-    "40e93de654bab61f2480643e94247a865c2b3a9698": {
+    "40c224a50a334d604e3dcdac10375a605172aae3b9": {
       "workers": {
         "app/dashboard/templates/new/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/templates/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
@@ -73,6 +43,36 @@
         "app/dashboard/templates/new/page": "rsc"
       },
       "exportedName": "login",
+      "filename": "app/actions/auth.ts"
+    },
+    "40cd0a6e1c8cf2968175e51f42351b0188630e05cc": {
+      "workers": {
+        "app/dashboard/templates/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "resetPassword",
+          "filename": "app/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/templates/new/page": "rsc"
+      },
+      "exportedName": "resetPassword",
+      "filename": "app/actions/auth.ts"
+    },
+    "40df79ce90be30daaf4a773557d7a08df9661f9db9": {
+      "workers": {
+        "app/dashboard/templates/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "signup",
+          "filename": "app/actions/auth.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/templates/new/page": "rsc"
+      },
+      "exportedName": "signup",
       "filename": "app/actions/auth.ts"
     }
   },

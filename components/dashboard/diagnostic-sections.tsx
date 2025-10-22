@@ -166,6 +166,8 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
       currentAnswer.justification.trim() || undefined
     )
     
+    setSaving(null)
+    
     if ('error' in result) {
       setErrors({ ...errors, [questionId]: result.error })
     } else if (result.answer) {
@@ -174,8 +176,6 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
         [questionId]: result.answer.id
       }))
     }
-    
-    setSaving(null)
   }
 
   return (
@@ -333,6 +333,12 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                                 </>
                               )}
                             </Button>
+                          )}
+                          {answerId && (
+                            <p className="text-xs text-green-600 flex items-center gap-1">
+                              <Check className="h-3 w-3" />
+                              Resposta salva com sucesso
+                            </p>
                           )}
                         </div>
                       )}

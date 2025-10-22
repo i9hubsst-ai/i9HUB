@@ -1,3 +1,11 @@
 {
+  "/auth/login/page": "app/auth/login/page.js",
+  "/dashboard/diagnostics/[id]/page": "app/dashboard/diagnostics/[id]/page.js",
+  "/dashboard/diagnostics/page": "app/dashboard/diagnostics/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/templates/[id]/edit/page": "app/dashboard/templates/[id]/edit/page.js",
+  "/dashboard/templates/[id]/page": "app/dashboard/templates/[id]/page.js",
+  "/dashboard/templates/page": "app/dashboard/templates/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js"
 }

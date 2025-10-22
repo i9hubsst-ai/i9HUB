@@ -297,6 +297,7 @@ export async function saveAnswer(
       })
     }
 
+    revalidatePath(`/dashboard/diagnostics/${assessmentId}`)
     return { success: true, answer }
   } catch (error) {
     console.error('Erro ao salvar resposta:', error)

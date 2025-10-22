@@ -47,15 +47,16 @@ Um template consiste em:
   - type: "BOOLEAN" (Sim/Não) ou "SCORE" (1-5)
   - weight: Peso de 1-10 (importância da pergunta)
   - reference: Referência normativa (ex: "NR-12 item 12.3.1")
-  - requiresJustification: true se resposta negativa/baixa exige justificativa
+  - requiresJustification: true/false - se a pergunta exige que o usuário forneça uma justificativa textual para qualquer resposta
+  - requiresEvidence: true/false - se a pergunta exige que o usuário anexe evidências (fotos/documentos) para qualquer resposta
 
 IMPORTANTE:
 - Gere SEMPRE entre 20-30 perguntas no total, distribuídas entre 4-6 seções
 - Use pesos maiores (7-10) para itens críticos de segurança
 - Use pesos menores (3-5) para itens de documentação
 - Mix equilibrado de BOOLEAN e SCORE (cerca de 60% BOOLEAN, 40% SCORE)
-- Perguntas BOOLEAN devem ter requiresJustification: true
-- Perguntas SCORE com peso ≥7 devem ter requiresJustification: true`
+- Use requiresJustification=true em perguntas onde a explicação da resposta é importante (ex: não conformidades, itens críticos)
+- Use requiresEvidence=true em perguntas onde é necessário comprovar com documentos/fotos (ex: treinamentos, certificados, equipamentos)`
 
     const userPrompt = `Gere um template de diagnóstico SST com as seguintes características:
 
@@ -78,7 +79,8 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
           "type": "BOOLEAN",
           "weight": 8,
           "reference": "NR-XX item X.X.X",
-          "requiresJustification": true
+          "requiresJustification": true,
+          "requiresEvidence": false
         }
       ]
     }

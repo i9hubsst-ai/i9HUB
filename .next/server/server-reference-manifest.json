@@ -2,8 +2,26 @@
   "node": {
     "00db0a1fbc56f856b3ae246c74f565c6bf576ac959": {
       "workers": {
+        "app/dashboard/diagnostics/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "app/actions/auth.ts"
+        },
         "app/dashboard/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/dashboard.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "logout",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/templates/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "logout",
           "filename": "app/actions/auth.ts"
@@ -22,7 +40,10 @@
         }
       },
       "layer": {
+        "app/dashboard/diagnostics/new/page": "rsc",
+        "app/dashboard/diagnostics/page": "rsc",
         "app/dashboard/page": "rsc",
+        "app/dashboard/templates/[id]/page": "rsc",
         "app/dashboard/templates/new/page": "rsc",
         "app/dashboard/templates/page": "rsc"
       },
@@ -31,8 +52,26 @@
     },
     "403273be97a9759e52c3096ef627e70c630a77d411": {
       "workers": {
+        "app/dashboard/diagnostics/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "signup",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "signup",
+          "filename": "app/actions/auth.ts"
+        },
         "app/dashboard/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/dashboard.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "signup",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/templates/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "signup",
           "filename": "app/actions/auth.ts"
@@ -51,7 +90,10 @@
         }
       },
       "layer": {
+        "app/dashboard/diagnostics/new/page": "rsc",
+        "app/dashboard/diagnostics/page": "rsc",
         "app/dashboard/page": "rsc",
+        "app/dashboard/templates/[id]/page": "rsc",
         "app/dashboard/templates/new/page": "rsc",
         "app/dashboard/templates/page": "rsc"
       },
@@ -60,8 +102,26 @@
     },
     "407efa791c26f52cf9b7786adb037e82b5593b57e7": {
       "workers": {
+        "app/dashboard/diagnostics/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "resetPassword",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "resetPassword",
+          "filename": "app/actions/auth.ts"
+        },
         "app/dashboard/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/dashboard.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "resetPassword",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/templates/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "resetPassword",
           "filename": "app/actions/auth.ts"
@@ -80,7 +140,10 @@
         }
       },
       "layer": {
+        "app/dashboard/diagnostics/new/page": "rsc",
+        "app/dashboard/diagnostics/page": "rsc",
         "app/dashboard/page": "rsc",
+        "app/dashboard/templates/[id]/page": "rsc",
         "app/dashboard/templates/new/page": "rsc",
         "app/dashboard/templates/page": "rsc"
       },
@@ -89,8 +152,26 @@
     },
     "4090368325187fd17a7820571a24619558f01d85bf": {
       "workers": {
+        "app/dashboard/diagnostics/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updatePassword",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updatePassword",
+          "filename": "app/actions/auth.ts"
+        },
         "app/dashboard/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/dashboard.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "updatePassword",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/templates/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "updatePassword",
           "filename": "app/actions/auth.ts"
@@ -109,7 +190,10 @@
         }
       },
       "layer": {
+        "app/dashboard/diagnostics/new/page": "rsc",
+        "app/dashboard/diagnostics/page": "rsc",
         "app/dashboard/page": "rsc",
+        "app/dashboard/templates/[id]/page": "rsc",
         "app/dashboard/templates/new/page": "rsc",
         "app/dashboard/templates/page": "rsc"
       },
@@ -118,8 +202,26 @@
     },
     "40b2ecb9104d91dbdd6946315f252c51dab0971404": {
       "workers": {
+        "app/dashboard/diagnostics/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "login",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "login",
+          "filename": "app/actions/auth.ts"
+        },
         "app/dashboard/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/dashboard.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "login",
+          "filename": "app/actions/auth.ts"
+        },
+        "app/dashboard/templates/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "login",
           "filename": "app/actions/auth.ts"
@@ -138,7 +240,10 @@
         }
       },
       "layer": {
+        "app/dashboard/diagnostics/new/page": "rsc",
+        "app/dashboard/diagnostics/page": "rsc",
         "app/dashboard/page": "rsc",
+        "app/dashboard/templates/[id]/page": "rsc",
         "app/dashboard/templates/new/page": "rsc",
         "app/dashboard/templates/page": "rsc"
       },
@@ -162,6 +267,12 @@
     },
     "00daf4ac42b4ae9dd8794def9587a79d50fee2524f": {
       "workers": {
+        "app/dashboard/diagnostics/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getPublishedTemplates",
+          "filename": "app/actions/templates.ts"
+        },
         "app/dashboard/templates/page": {
           "moduleId": "[project]/.next-internal/server/app/dashboard/templates/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
@@ -170,6 +281,7 @@
         }
       },
       "layer": {
+        "app/dashboard/diagnostics/new/page": "action-browser",
         "app/dashboard/templates/page": "rsc"
       },
       "filename": "app/actions/templates.ts",
@@ -249,6 +361,178 @@
       },
       "filename": "app/actions/templates.ts",
       "exportedName": "applyTemplateToAssessment"
+    },
+    "006e807e9ddde3f458d9325ca1bf6c42b6ba47a7ee": {
+      "workers": {
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getTemplates",
+          "filename": "app/actions/assessments.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/assessments.ts",
+      "exportedName": "getTemplates"
+    },
+    "40ca398360f964d2e172df98756f35aa2e4a83ccde": {
+      "workers": {
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "submitAssessment",
+          "filename": "app/actions/assessments.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/assessments.ts",
+      "exportedName": "submitAssessment"
+    },
+    "40d913084da6934694b1ad508552974ae89c64eb2b": {
+      "workers": {
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getAssessmentById",
+          "filename": "app/actions/assessments.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/assessments.ts",
+      "exportedName": "getAssessmentById"
+    },
+    "40e26b243e1e4f505f3661d5e7511c185a0b4b3948": {
+      "workers": {
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getAssessments",
+          "filename": "app/actions/assessments.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/assessments.ts",
+      "exportedName": "getAssessments"
+    },
+    "40e54053775d606f6ad498edf7886f10b872323db3": {
+      "workers": {
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteAssessment",
+          "filename": "app/actions/assessments.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/assessments.ts",
+      "exportedName": "deleteAssessment"
+    },
+    "609e82017fcdc379c10eaac9e530f66e58cd6b361c": {
+      "workers": {
+        "app/dashboard/diagnostics/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createAssessment",
+          "filename": "app/actions/assessments.ts"
+        },
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createAssessment",
+          "filename": "app/actions/assessments.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/new/page": "action-browser",
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/assessments.ts",
+      "exportedName": "createAssessment"
+    },
+    "7cbb1cabc7aa0a683c61f1e56bcc01a1603716b09c": {
+      "workers": {
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "saveAnswer",
+          "filename": "app/actions/assessments.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/assessments.ts",
+      "exportedName": "saveAnswer"
+    },
+    "40320510747d6a717ef80a0901f540f3719f547cac": {
+      "workers": {
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getFindings",
+          "filename": "app/actions/findings.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/findings.ts",
+      "exportedName": "getFindings"
+    },
+    "40730c155f0b9d9022c5ce6c67ac339d4ea7957657": {
+      "workers": {
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "generateFindings",
+          "filename": "app/actions/findings.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/findings.ts",
+      "exportedName": "generateFindings"
+    },
+    "40fd586c29ee4edff8d26c3865a82b80f4ca41f466": {
+      "workers": {
+        "app/dashboard/diagnostics/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "deleteFinding",
+          "filename": "app/actions/findings.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/page": "rsc"
+      },
+      "filename": "app/actions/findings.ts",
+      "exportedName": "deleteFinding"
+    },
+    "00eb47b224dc178934fc0cd1a3e0c5402c44a34e73": {
+      "workers": {
+        "app/dashboard/diagnostics/new/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/diagnostics/new/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/companies.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "getCompanies",
+          "filename": "app/actions/companies.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/diagnostics/new/page": "action-browser"
+      },
+      "filename": "app/actions/companies.ts",
+      "exportedName": "getCompanies"
     }
   },
   "edge": {},

@@ -16,7 +16,7 @@ export default function NewDiagnosticPage() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [companyId, setCompanyId] = useState('')
-  const [templateId, setTemplateId] = useState<string>('')
+  const [templateId, setTemplateId] = useState<string>('none')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [companies, setCompanies] = useState<any[]>([])
@@ -57,7 +57,7 @@ export default function NewDiagnosticPage() {
     const formData = new FormData()
     formData.append('title', title)
     formData.append('description', description)
-    if (templateId) {
+    if (templateId && templateId !== 'none') {
       formData.append('templateId', templateId)
     }
 
@@ -153,7 +153,7 @@ export default function NewDiagnosticPage() {
                     <SelectValue placeholder="Sem template - criar diagnóstico vazio" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Sem template</SelectItem>
+                    <SelectItem value="none">Sem template</SelectItem>
                     {templates.map((template) => (
                       <SelectItem key={template.id} value={template.id}>
                         <div className="flex items-center gap-2">
@@ -168,7 +168,7 @@ export default function NewDiagnosticPage() {
                   </SelectContent>
                 </Select>
                 <p className="text-sm text-muted-foreground">
-                  {templateId 
+                  {templateId && templateId !== 'none'
                     ? 'Template será aplicado automaticamente com todas as seções e perguntas'
                     : 'Você poderá criar seções e perguntas manualmente'}
                 </p>

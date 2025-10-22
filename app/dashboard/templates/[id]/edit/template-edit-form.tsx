@@ -297,7 +297,7 @@ export function TemplateEditForm({ template }: TemplateEditFormProps) {
                             className="h-8 text-xs"
                           />
                         </div>
-                        <div>
+                        <div className="col-span-2">
                           <Label className="text-xs">Referência</Label>
                           <Input
                             value={question.reference}
@@ -306,7 +306,9 @@ export function TemplateEditForm({ template }: TemplateEditFormProps) {
                             className="h-8 text-xs"
                           />
                         </div>
-                        <div className="flex items-end">
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="flex items-center">
                           <label className="flex items-center gap-2 text-xs">
                             <input
                               type="checkbox"
@@ -316,7 +318,20 @@ export function TemplateEditForm({ template }: TemplateEditFormProps) {
                               }
                               className="rounded"
                             />
-                            Justificativa obrigatória
+                            <span className="text-orange-700 font-medium">Exigir Justificativa</span>
+                          </label>
+                        </div>
+                        <div className="flex items-center">
+                          <label className="flex items-center gap-2 text-xs">
+                            <input
+                              type="checkbox"
+                              checked={question.requiresEvidence}
+                              onChange={(e) =>
+                                updateQuestion(sectionIdx, qIdx, 'requiresEvidence', e.target.checked)
+                              }
+                              className="rounded"
+                            />
+                            <span className="text-blue-700 font-medium">Exigir Evidência</span>
                           </label>
                         </div>
                       </div>

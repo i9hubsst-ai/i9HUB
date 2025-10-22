@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { buildAIContext } from '@/lib/services/rag-service'
 
 const genai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY || '',
@@ -85,7 +86,44 @@ export async function POST(request: NextRequest) {
       level: s.level
     }))
 
+    // Buscar contexto normativo relevante via RAG
+    let ragContext = ''
+    let consultedStandards: string[] = []
+    
+    try {
+      // Construir query baseada nos achados mais graves e no tipo de template
+      const highSeverityFindings = assessment.findings
+        .filter(f => f.severity === 'HIGH')
+        .slice(0, 5) // Pegar top 5 mais graves
+      
+      const searchQueries = [
+        `${assessment.template?.name || ''} ${assessment.template?.type || ''}`,
+        ...highSeverityFindings.map(f => `${f.sectionTitle} ${f.questionText}`)
+      ]
+      
+      const searchQuery = searchQueries.join(' ')
+      
+      // Buscar apenas normas MTE relevantes
+      ragContext = await buildAIContext(searchQuery, {
+        includeStandards: true,
+        includeTemplates: false,
+        includeAssessments: false,
+        maxTokens: 2500 // Limite maior para planos de ação
+      })
+
+      // Extrair quais normas foram consultadas
+      const nrMatches = ragContext.match(/NR-\d+/g)
+      if (nrMatches) {
+        consultedStandards = [...new Set(nrMatches)]
+      }
+    } catch (error) {
+      console.log('Aviso: Não foi possível buscar contexto RAG:', error)
+      // Continuar sem contexto RAG se houver erro (graceful degradation)
+    }
+
     const systemPrompt = `Você é um consultor especialista em Segurança e Saúde no Trabalho (SST) no Brasil. Sua tarefa é analisar diagnósticos de SST e gerar:
+
+${ragContext ? `## CONTEXTO NORMATIVO RELEVANTE:\n${ragContext}\n\nIMPORTANTE: Use as informações do contexto normativo acima para fundamentar suas recomendações e referências nas ações.\n\n` : ''}
 
 1. **Resumo Executivo**: Análise clara e objetiva da situação geral da empresa
 2. **Plano de Ação Priorizado**: Lista de ações corretivas organizadas por prioridade
@@ -175,6 +213,8 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
           overallScore: assessment.overallScore,
           overallLevel: assessment.overallLevel,
           findingsCount: assessment.findings.length,
+          ragEnabled: ragContext.length > 0,
+          consultedStandards: consultedStandards,
           generatedAt: new Date().toISOString()
         }
       }

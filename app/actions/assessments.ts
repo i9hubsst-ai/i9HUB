@@ -168,18 +168,24 @@ export async function getAssessmentById(assessmentId: string) {
       return { error: 'Sem permissão para acessar este diagnóstico' }
     }
 
-    // Buscar informações do usuário criador
+    // Buscar informações do usuário criador via Supabase Auth
     let createdByUser = null
     try {
       const { createClient } = await import('@/lib/supabase/server')
       const supabase = await createClient()
-      const { data: userData } = await supabase.auth.admin.getUserById(assessment.createdBy)
-      createdByUser = userData?.user ? {
-        id: userData.user.id,
-        email: userData.user.email || 'Desconhecido',
-        name: userData.user.user_metadata?.name || userData.user.email?.split('@')[0] || 'Usuário'
-      } : null
+      
+      // Usar o client admin do Supabase para buscar dados do usuário
+      const { data, error } = await supabase.auth.admin.getUserById(assessment.createdBy)
+      
+      if (!error && data?.user) {
+        createdByUser = {
+          id: data.user.id,
+          email: data.user.email || 'Desconhecido',
+          name: data.user.user_metadata?.full_name || data.user.user_metadata?.name || data.user.email?.split('@')[0] || 'Usuário'
+        }
+      }
     } catch (error) {
+      // Falha silenciosa - não impede o carregamento do diagnóstico
       console.error('Erro ao buscar dados do usuário criador:', error)
     }
 

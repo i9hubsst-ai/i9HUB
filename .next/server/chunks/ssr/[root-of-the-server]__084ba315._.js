@@ -2,7 +2,7 @@ module.exports = [
 "[project]/app/actions/templates.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"00daf4ac42b4ae9dd8794def9587a79d50fee2524f":"getPublishedTemplates","00fc3ce4c85aa67234019829a8932dbc67b934b08b":"getAllTemplates","4025d088d6ca403f216c6811be888fe8853e31e297":"getTemplateById","4028f663db7184279e2d3ee7d56344d6eb6e58dbe1":"deleteTemplate","408cac856790f07988c475ef494270c498297de47c":"publishTemplate","6035594d2973f0b80468bdf04b929cb171623113a2":"updateTemplateStatus","605458daccf6d85e09545650da6d962234072dbdbb":"updateTemplate","6082bfdc21de2f5c9e8bc7eb79c0c36e1fe1e6082c":"applyTemplateToAssessment"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"006ec42a2553bf57d5845cadb649e4b9572ad0ee4c":"getAllTemplates","00f87fc016dd6f54167ffdf95cd302b0adb1a32a81":"getPublishedTemplates","40153c75a19cc90ced06158f35adfb5a484f0c2254":"deleteTemplate","402e022b3f41f912daf6dfced8107bbdde7e2f4e4a":"getTemplateById","40425647e1b6b80cae49b95bcb044ea9c7be58171c":"publishTemplate","605bf54c9ee5d5d211bcd50444d86faf48d5e4db4b":"updateTemplate","607cd4cfd8000c93ef67421c55a1925f27a8dab335":"updateTemplateStatus","60f27fa9d6b4460e6d5b8918d1ab82768e990fc30c":"applyTemplateToAssessment"},"",""] */ __turbopack_context__.s([
     "applyTemplateToAssessment",
     ()=>applyTemplateToAssessment,
     "deleteTemplate",
@@ -315,7 +315,8 @@ async function updateTemplate(templateId, data) {
                                     type: question.type,
                                     weight: question.weight,
                                     reference: question.reference,
-                                    requiresJustification: question.requiresJustification
+                                    requiresJustification: question.requiresJustification,
+                                    requiresEvidence: question.requiresEvidence
                                 }
                             });
                         } else {
@@ -327,7 +328,8 @@ async function updateTemplate(templateId, data) {
                                     type: question.type,
                                     weight: question.weight,
                                     reference: question.reference,
-                                    requiresJustification: question.requiresJustification
+                                    requiresJustification: question.requiresJustification,
+                                    requiresEvidence: question.requiresEvidence
                                 }
                             });
                         }
@@ -345,7 +347,8 @@ async function updateTemplate(templateId, data) {
                                         type: q.type,
                                         weight: q.weight,
                                         reference: q.reference,
-                                        requiresJustification: q.requiresJustification
+                                        requiresJustification: q.requiresJustification,
+                                        requiresEvidence: q.requiresEvidence
                                     }))
                             }
                         }
@@ -473,14 +476,14 @@ async function applyTemplateToAssessment(assessmentId, templateId) {
     updateTemplate,
     applyTemplateToAssessment
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllTemplates, "00fc3ce4c85aa67234019829a8932dbc67b934b08b", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getTemplateById, "4025d088d6ca403f216c6811be888fe8853e31e297", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplateStatus, "6035594d2973f0b80468bdf04b929cb171623113a2", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteTemplate, "4028f663db7184279e2d3ee7d56344d6eb6e58dbe1", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getPublishedTemplates, "00daf4ac42b4ae9dd8794def9587a79d50fee2524f", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(publishTemplate, "408cac856790f07988c475ef494270c498297de47c", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplate, "605458daccf6d85e09545650da6d962234072dbdbb", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(applyTemplateToAssessment, "6082bfdc21de2f5c9e8bc7eb79c0c36e1fe1e6082c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllTemplates, "006ec42a2553bf57d5845cadb649e4b9572ad0ee4c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getTemplateById, "402e022b3f41f912daf6dfced8107bbdde7e2f4e4a", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplateStatus, "607cd4cfd8000c93ef67421c55a1925f27a8dab335", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteTemplate, "40153c75a19cc90ced06158f35adfb5a484f0c2254", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getPublishedTemplates, "00f87fc016dd6f54167ffdf95cd302b0adb1a32a81", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(publishTemplate, "40425647e1b6b80cae49b95bcb044ea9c7be58171c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplate, "605bf54c9ee5d5d211bcd50444d86faf48d5e4db4b", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(applyTemplateToAssessment, "60f27fa9d6b4460e6d5b8918d1ab82768e990fc30c", null);
 }),
 "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
 "use strict";
@@ -499,18 +502,18 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$
 "use strict";
 
 __turbopack_context__.s([
-    "00db0a1fbc56f856b3ae246c74f565c6bf576ac959",
+    "004c5425eaeb09c9b625d178f54fab32e76ca96d31",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["logout"],
-    "403273be97a9759e52c3096ef627e70c630a77d411",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
-    "407efa791c26f52cf9b7786adb037e82b5593b57e7",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resetPassword"],
-    "408cac856790f07988c475ef494270c498297de47c",
+    "4017acd428bfe1e6ac9c7fe0671bb893857f7a0720",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"],
+    "40425647e1b6b80cae49b95bcb044ea9c7be58171c",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["publishTemplate"],
-    "4090368325187fd17a7820571a24619558f01d85bf",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"],
-    "40b2ecb9104d91dbdd6946315f252c51dab0971404",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"]
+    "40650c85758da6451f62f5d11d25aa00a5e3e0635a",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
+    "40ce0fdaaf41b6cb1dfaeb0abff18582098df1b3d7",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resetPassword"],
+    "40f2df53b5bae87659af86ab95605b0c53c1b51f26",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"]
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$dashboard$2f$templates$2f5b$id$5d2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE1__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ACTIONS_MODULE1 => "[project]/app/actions/templates.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/auth.ts [app-rsc] (ecmascript)");
@@ -1114,6 +1117,14 @@ async function TemplateDetailPage({ params }) {
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
                                                                         lineNumber: 155,
+                                                                        columnNumber: 27
+                                                                    }, this),
+                                                                    question.requiresEvidence && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: "bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200",
+                                                                        children: "Evidência obrigatória"
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
+                                                                        lineNumber: 160,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]

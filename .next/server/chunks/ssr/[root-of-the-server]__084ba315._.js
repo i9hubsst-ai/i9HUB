@@ -1,16 +1,501 @@
 module.exports = [
-"[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
+"[project]/app/actions/templates.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+/* __next_internal_action_entry_do_not_use__ [{"00daf4ac42b4ae9dd8794def9587a79d50fee2524f":"getPublishedTemplates","00fc3ce4c85aa67234019829a8932dbc67b934b08b":"getAllTemplates","4025d088d6ca403f216c6811be888fe8853e31e297":"getTemplateById","4028f663db7184279e2d3ee7d56344d6eb6e58dbe1":"deleteTemplate","408cac856790f07988c475ef494270c498297de47c":"publishTemplate","6035594d2973f0b80468bdf04b929cb171623113a2":"updateTemplateStatus","605458daccf6d85e09545650da6d962234072dbdbb":"updateTemplate","6082bfdc21de2f5c9e8bc7eb79c0c36e1fe1e6082c":"applyTemplateToAssessment"},"",""] */ __turbopack_context__.s([
+    "applyTemplateToAssessment",
+    ()=>applyTemplateToAssessment,
+    "deleteTemplate",
+    ()=>deleteTemplate,
+    "getAllTemplates",
+    ()=>getAllTemplates,
+    "getPublishedTemplates",
+    ()=>getPublishedTemplates,
+    "getTemplateById",
+    ()=>getTemplateById,
+    "publishTemplate",
+    ()=>publishTemplate,
+    "updateTemplate",
+    ()=>updateTemplate,
+    "updateTemplateStatus",
+    ()=>updateTemplateStatus
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/server-reference.js [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/prisma.ts [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/cache.js [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/auth.ts [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$validate$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-validate.js [app-rsc] (ecmascript)");
+;
+;
+;
+;
+async function getAllTemplates() {
+    try {
+        const templates = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticTemplate.findMany({
+            include: {
+                sections: {
+                    include: {
+                        questions: {
+                            where: {
+                                active: true
+                            },
+                            orderBy: {
+                                createdAt: 'asc'
+                            }
+                        }
+                    },
+                    orderBy: {
+                        order: 'asc'
+                    }
+                },
+                _count: {
+                    select: {
+                        sections: true,
+                        assessments: true
+                    }
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+        return {
+            success: true,
+            templates
+        };
+    } catch (error) {
+        console.error('Erro ao buscar templates:', error);
+        return {
+            error: 'Erro ao buscar templates'
+        };
+    }
+}
+async function getTemplateById(templateId) {
+    try {
+        const template = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticTemplate.findUnique({
+            where: {
+                id: templateId
+            },
+            include: {
+                sections: {
+                    include: {
+                        questions: {
+                            where: {
+                                active: true
+                            },
+                            orderBy: {
+                                createdAt: 'asc'
+                            }
+                        }
+                    },
+                    orderBy: {
+                        order: 'asc'
+                    }
+                },
+                _count: {
+                    select: {
+                        assessments: true
+                    }
+                }
+            }
+        });
+        if (!template) {
+            return {
+                error: 'Template não encontrado'
+            };
+        }
+        return {
+            success: true,
+            template
+        };
+    } catch (error) {
+        console.error('Erro ao buscar template:', error);
+        return {
+            error: 'Erro ao buscar template'
+        };
+    }
+}
+async function updateTemplateStatus(templateId, status) {
+    const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
+    if (!user) {
+        return {
+            error: 'Não autorizado'
+        };
+    }
+    const isAdmin = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isPlatformAdmin"])(user.id);
+    if (!isAdmin) {
+        return {
+            error: 'Apenas administradores podem alterar o status de templates'
+        };
+    }
+    try {
+        await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticTemplate.update({
+            where: {
+                id: templateId
+            },
+            data: {
+                status
+            }
+        });
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/dashboard/templates');
+        return {
+            success: true
+        };
+    } catch (error) {
+        console.error('Erro ao atualizar status do template:', error);
+        return {
+            error: 'Erro ao atualizar status do template'
+        };
+    }
+}
+async function deleteTemplate(templateId) {
+    const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
+    if (!user) {
+        return {
+            error: 'Não autorizado'
+        };
+    }
+    const isAdmin = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isPlatformAdmin"])(user.id);
+    if (!isAdmin) {
+        return {
+            error: 'Apenas administradores podem excluir templates'
+        };
+    }
+    try {
+        // Verificar se há assessments usando este template
+        const assessmentCount = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].assessment.count({
+            where: {
+                templateId
+            }
+        });
+        if (assessmentCount > 0) {
+            return {
+                error: `Não é possível excluir. Existem ${assessmentCount} diagnósticos usando este template.`
+            };
+        }
+        await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticTemplate.delete({
+            where: {
+                id: templateId
+            }
+        });
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/dashboard/templates');
+        return {
+            success: true
+        };
+    } catch (error) {
+        console.error('Erro ao excluir template:', error);
+        return {
+            error: 'Erro ao excluir template'
+        };
+    }
+}
+async function getPublishedTemplates() {
+    try {
+        const templates = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticTemplate.findMany({
+            where: {
+                status: 'PUBLISHED'
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                type: true,
+                _count: {
+                    select: {
+                        sections: true
+                    }
+                }
+            },
+            orderBy: {
+                name: 'asc'
+            }
+        });
+        return {
+            success: true,
+            templates
+        };
+    } catch (error) {
+        console.error('Erro ao buscar templates publicados:', error);
+        return {
+            error: 'Erro ao buscar templates publicados'
+        };
+    }
+}
+async function publishTemplate(templateId) {
+    return updateTemplateStatus(templateId, 'PUBLISHED');
+}
+async function updateTemplate(templateId, data) {
+    const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
+    if (!user) {
+        return {
+            error: 'Não autorizado'
+        };
+    }
+    const isAdmin = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isPlatformAdmin"])(user.id);
+    if (!isAdmin) {
+        return {
+            error: 'Apenas administradores podem editar templates'
+        };
+    }
+    try {
+        // Verificar se template existe
+        const template = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticTemplate.findUnique({
+            where: {
+                id: templateId
+            },
+            include: {
+                sections: {
+                    include: {
+                        questions: true
+                    }
+                }
+            }
+        });
+        if (!template) {
+            return {
+                error: 'Template não encontrado'
+            };
+        }
+        // Atualizar template e suas seções/perguntas
+        await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].$transaction(async (tx)=>{
+            // Atualizar informações básicas do template
+            await tx.diagnosticTemplate.update({
+                where: {
+                    id: templateId
+                },
+                data: {
+                    name: data.name,
+                    description: data.description
+                }
+            });
+            // IDs de seções e perguntas que devem ser mantidos
+            const sectionIdsToKeep = data.sections.filter((s)=>s.id).map((s)=>s.id);
+            const questionIdsToKeep = data.sections.flatMap((s)=>s.questions.filter((q)=>q.id).map((q)=>q.id));
+            // Deletar seções que foram removidas
+            await tx.diagnosticSection.deleteMany({
+                where: {
+                    templateId,
+                    id: {
+                        notIn: sectionIdsToKeep
+                    }
+                }
+            });
+            // Processar cada seção
+            for (const section of data.sections){
+                if (section.id) {
+                    // Atualizar seção existente
+                    await tx.diagnosticSection.update({
+                        where: {
+                            id: section.id
+                        },
+                        data: {
+                            title: section.title,
+                            order: section.order
+                        }
+                    });
+                    // Deletar perguntas removidas desta seção
+                    await tx.diagnosticQuestion.deleteMany({
+                        where: {
+                            sectionId: section.id,
+                            id: {
+                                notIn: section.questions.filter((q)=>q.id).map((q)=>q.id)
+                            }
+                        }
+                    });
+                    // Processar perguntas
+                    for (const question of section.questions){
+                        if (question.id) {
+                            // Atualizar pergunta existente
+                            await tx.diagnosticQuestion.update({
+                                where: {
+                                    id: question.id
+                                },
+                                data: {
+                                    text: question.text,
+                                    type: question.type,
+                                    weight: question.weight,
+                                    reference: question.reference,
+                                    requiresJustification: question.requiresJustification
+                                }
+                            });
+                        } else {
+                            // Criar nova pergunta
+                            await tx.diagnosticQuestion.create({
+                                data: {
+                                    sectionId: section.id,
+                                    text: question.text,
+                                    type: question.type,
+                                    weight: question.weight,
+                                    reference: question.reference,
+                                    requiresJustification: question.requiresJustification
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    // Criar nova seção com suas perguntas
+                    await tx.diagnosticSection.create({
+                        data: {
+                            templateId,
+                            title: section.title,
+                            order: section.order,
+                            questions: {
+                                create: section.questions.map((q)=>({
+                                        text: q.text,
+                                        type: q.type,
+                                        weight: q.weight,
+                                        reference: q.reference,
+                                        requiresJustification: q.requiresJustification
+                                    }))
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/dashboard/templates');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])(`/dashboard/templates/${templateId}`);
+        return {
+            success: true
+        };
+    } catch (error) {
+        console.error('Erro ao atualizar template:', error);
+        return {
+            error: 'Erro ao atualizar template'
+        };
+    }
+}
+async function applyTemplateToAssessment(assessmentId, templateId) {
+    const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
+    if (!user) {
+        return {
+            error: 'Não autorizado'
+        };
+    }
+    try {
+        // Verificar se o assessment existe e se o usuário tem permissão
+        const assessment = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].assessment.findUnique({
+            where: {
+                id: assessmentId
+            },
+            select: {
+                companyId: true,
+                status: true,
+                templateId: true
+            }
+        });
+        if (!assessment) {
+            return {
+                error: 'Diagnóstico não encontrado'
+            };
+        }
+        if (assessment.status !== 'DRAFT') {
+            return {
+                error: 'Só é possível aplicar template em diagnósticos com status DRAFT'
+            };
+        }
+        if (assessment.templateId) {
+            return {
+                error: 'Este diagnóstico já possui um template associado'
+            };
+        }
+        const isAdmin = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["isPlatformAdmin"])(user.id);
+        const membership = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.findFirst({
+            where: {
+                userId: user.id,
+                companyId: assessment.companyId,
+                status: 'ACTIVE'
+            }
+        });
+        if (!isAdmin && !membership) {
+            return {
+                error: 'Sem permissão para modificar este diagnóstico'
+            };
+        }
+        // Buscar o template com seções e perguntas para validação
+        const template = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].diagnosticTemplate.findUnique({
+            where: {
+                id: templateId
+            },
+            include: {
+                sections: {
+                    include: {
+                        questions: {
+                            where: {
+                                active: true
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        if (!template) {
+            return {
+                error: 'Template não encontrado'
+            };
+        }
+        if (template.status !== 'PUBLISHED') {
+            return {
+                error: 'Apenas templates publicados podem ser aplicados'
+            };
+        }
+        // Associar o template ao assessment
+        // As seções e perguntas já existem no template e serão acessadas via relacionamento
+        await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].assessment.update({
+            where: {
+                id: assessmentId
+            },
+            data: {
+                templateId
+            }
+        });
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])(`/dashboard/diagnostics/${assessmentId}`);
+        return {
+            success: true,
+            sectionsCount: template.sections.length,
+            questionsCount: template.sections.reduce((sum, s)=>sum + s.questions.length, 0)
+        };
+    } catch (error) {
+        console.error('Erro ao aplicar template:', error);
+        return {
+            error: 'Erro ao aplicar template ao diagnóstico'
+        };
+    }
+}
+;
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$validate$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ensureServerEntryExports"])([
+    getAllTemplates,
+    getTemplateById,
+    updateTemplateStatus,
+    deleteTemplate,
+    getPublishedTemplates,
+    publishTemplate,
+    updateTemplate,
+    applyTemplateToAssessment
+]);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllTemplates, "00fc3ce4c85aa67234019829a8932dbc67b934b08b", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getTemplateById, "4025d088d6ca403f216c6811be888fe8853e31e297", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplateStatus, "6035594d2973f0b80468bdf04b929cb171623113a2", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteTemplate, "4028f663db7184279e2d3ee7d56344d6eb6e58dbe1", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getPublishedTemplates, "00daf4ac42b4ae9dd8794def9587a79d50fee2524f", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(publishTemplate, "408cac856790f07988c475ef494270c498297de47c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateTemplate, "605458daccf6d85e09545650da6d962234072dbdbb", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(applyTemplateToAssessment, "6082bfdc21de2f5c9e8bc7eb79c0c36e1fe1e6082c", null);
+}),
+"[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
 "use strict";
 
 __turbopack_context__.s([]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/auth.ts [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/templates.ts [app-rsc] (ecmascript)");
+;
 ;
 ;
 ;
 ;
 ;
 }),
-"[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)", ((__turbopack_context__) => {
+"[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
 __turbopack_context__.s([
@@ -20,13 +505,16 @@ __turbopack_context__.s([
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
     "407efa791c26f52cf9b7786adb037e82b5593b57e7",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resetPassword"],
+    "408cac856790f07988c475ef494270c498297de47c",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["publishTemplate"],
     "4090368325187fd17a7820571a24619558f01d85bf",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"],
     "40b2ecb9104d91dbdd6946315f252c51dab0971404",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"]
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$dashboard$2f$templates$2f5b$id$5d2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');
+var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$dashboard$2f$templates$2f5b$id$5d2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE1__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ACTIONS_MODULE1 => "[project]/app/actions/templates.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/auth.ts [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$templates$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/templates.ts [app-rsc] (ecmascript)");
 }),
 "[project]/app/favicon.ico.mjs { IMAGE => \"[project]/app/favicon.ico (static in ecmascript)\" } [app-rsc] (structured image object, ecmascript, Next.js Server Component)", ((__turbopack_context__) => {
 
@@ -184,6 +672,42 @@ function Badge({ className, variant, ...props }) {
 }
 ;
 }),
+"[project]/app/dashboard/templates/[id]/template-actions.tsx [app-rsc] (client reference proxy) <module evaluation>", ((__turbopack_context__) => {
+"use strict";
+
+// This file is generated by next-core EcmascriptClientReferenceModule.
+__turbopack_context__.s([
+    "TemplateActions",
+    ()=>TemplateActions
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$server$2d$dom$2d$turbopack$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-server.js [app-rsc] (ecmascript)");
+;
+const TemplateActions = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$server$2d$dom$2d$turbopack$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerClientReference"])(function() {
+    throw new Error("Attempted to call TemplateActions() from the server but TemplateActions is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.");
+}, "[project]/app/dashboard/templates/[id]/template-actions.tsx <module evaluation>", "TemplateActions");
+}),
+"[project]/app/dashboard/templates/[id]/template-actions.tsx [app-rsc] (client reference proxy)", ((__turbopack_context__) => {
+"use strict";
+
+// This file is generated by next-core EcmascriptClientReferenceModule.
+__turbopack_context__.s([
+    "TemplateActions",
+    ()=>TemplateActions
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$server$2d$dom$2d$turbopack$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-server-dom-turbopack-server.js [app-rsc] (ecmascript)");
+;
+const TemplateActions = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$server$2d$dom$2d$turbopack$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerClientReference"])(function() {
+    throw new Error("Attempted to call TemplateActions() from the server but TemplateActions is on the client. It's not possible to invoke a client function from the server, it can only be rendered as a Component or passed to props of a Client Component.");
+}, "[project]/app/dashboard/templates/[id]/template-actions.tsx", "TemplateActions");
+}),
+"[project]/app/dashboard/templates/[id]/template-actions.tsx [app-rsc] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$dashboard$2f$templates$2f5b$id$5d2f$template$2d$actions$2e$tsx__$5b$app$2d$rsc$5d$__$28$client__reference__proxy$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i("[project]/app/dashboard/templates/[id]/template-actions.tsx [app-rsc] (client reference proxy) <module evaluation>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$dashboard$2f$templates$2f5b$id$5d2f$template$2d$actions$2e$tsx__$5b$app$2d$rsc$5d$__$28$client__reference__proxy$29$__ = __turbopack_context__.i("[project]/app/dashboard/templates/[id]/template-actions.tsx [app-rsc] (client reference proxy)");
+;
+__turbopack_context__.n(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$dashboard$2f$templates$2f5b$id$5d2f$template$2d$actions$2e$tsx__$5b$app$2d$rsc$5d$__$28$client__reference__proxy$29$__);
+}),
 "[project]/app/dashboard/templates/[id]/page.tsx [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -203,6 +727,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/badge.tsx [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-left.js [app-rsc] (ecmascript) <export default as ArrowLeft>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$dashboard$2f$templates$2f5b$id$5d2f$template$2d$actions$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/dashboard/templates/[id]/template-actions.tsx [app-rsc] (ecmascript)");
+;
 ;
 ;
 ;
@@ -355,48 +881,10 @@ async function TemplateDetailPage({ params }) {
                         lineNumber: 76,
                         columnNumber: 9
                     }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex gap-2",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Button"], {
-                                variant: "outline",
-                                size: "sm",
-                                className: "gap-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(Edit, {
-                                        className: "h-4 w-4"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                        lineNumber: 93,
-                                        columnNumber: 13
-                                    }, this),
-                                    "Editar"
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                lineNumber: 92,
-                                columnNumber: 11
-                            }, this),
-                            template.status === 'DRAFT' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Button"], {
-                                size: "sm",
-                                className: "gap-2 bg-teal-600 hover:bg-teal-700",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(CheckCircle2, {
-                                        className: "h-4 w-4"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                        lineNumber: 98,
-                                        columnNumber: 15
-                                    }, this),
-                                    "Publicar"
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                lineNumber: 97,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$dashboard$2f$templates$2f5b$id$5d2f$template$2d$actions$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["TemplateActions"], {
+                        templateId: template.id,
+                        status: template.status
+                    }, void 0, false, {
                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
                         lineNumber: 91,
                         columnNumber: 9
@@ -415,12 +903,12 @@ async function TemplateDetailPage({ params }) {
                             children: "Resumo"
                         }, void 0, false, {
                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                            lineNumber: 107,
+                            lineNumber: 96,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                        lineNumber: 106,
+                        lineNumber: 95,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -434,7 +922,7 @@ async function TemplateDetailPage({ params }) {
                                             children: "Seções"
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                            lineNumber: 112,
+                                            lineNumber: 101,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -442,13 +930,13 @@ async function TemplateDetailPage({ params }) {
                                             children: template.sections.length
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                            lineNumber: 113,
+                                            lineNumber: 102,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                    lineNumber: 111,
+                                    lineNumber: 100,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -458,7 +946,7 @@ async function TemplateDetailPage({ params }) {
                                             children: "Perguntas"
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                            lineNumber: 116,
+                                            lineNumber: 105,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -466,13 +954,13 @@ async function TemplateDetailPage({ params }) {
                                             children: totalQuestions
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                            lineNumber: 117,
+                                            lineNumber: 106,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                    lineNumber: 115,
+                                    lineNumber: 104,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -482,7 +970,7 @@ async function TemplateDetailPage({ params }) {
                                             children: "Criado em"
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                            lineNumber: 120,
+                                            lineNumber: 109,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -490,30 +978,30 @@ async function TemplateDetailPage({ params }) {
                                             children: new Date(template.createdAt).toLocaleDateString('pt-BR')
                                         }, void 0, false, {
                                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                            lineNumber: 121,
+                                            lineNumber: 110,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                    lineNumber: 119,
+                                    lineNumber: 108,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                            lineNumber: 110,
+                            lineNumber: 99,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                        lineNumber: 109,
+                        lineNumber: 98,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                lineNumber: 105,
+                lineNumber: 94,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -524,7 +1012,7 @@ async function TemplateDetailPage({ params }) {
                         children: "Seções e Perguntas"
                     }, void 0, false, {
                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                        lineNumber: 130,
+                        lineNumber: 119,
                         columnNumber: 9
                     }, this),
                     template.sections.map((section)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Card"], {
@@ -540,7 +1028,7 @@ async function TemplateDetailPage({ params }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                            lineNumber: 134,
+                                            lineNumber: 123,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["CardDescription"], {
@@ -550,13 +1038,13 @@ async function TemplateDetailPage({ params }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                            lineNumber: 137,
+                                            lineNumber: 126,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                    lineNumber: 133,
+                                    lineNumber: 122,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -573,7 +1061,7 @@ async function TemplateDetailPage({ params }) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                                        lineNumber: 148,
+                                                        lineNumber: 137,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -584,7 +1072,7 @@ async function TemplateDetailPage({ params }) {
                                                                 children: question.text
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                                                lineNumber: 152,
+                                                                lineNumber: 141,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -598,7 +1086,7 @@ async function TemplateDetailPage({ params }) {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                                                        lineNumber: 154,
+                                                                        lineNumber: 143,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -609,7 +1097,7 @@ async function TemplateDetailPage({ params }) {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                                                        lineNumber: 157,
+                                                                        lineNumber: 146,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     question.reference && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -617,7 +1105,7 @@ async function TemplateDetailPage({ params }) {
                                                                         children: question.reference
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                                                        lineNumber: 161,
+                                                                        lineNumber: 150,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     question.requiresJustification && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -625,47 +1113,47 @@ async function TemplateDetailPage({ params }) {
                                                                         children: "Justificativa obrigatória"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                                                        lineNumber: 166,
+                                                                        lineNumber: 155,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                                                lineNumber: 153,
+                                                                lineNumber: 142,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                                        lineNumber: 151,
+                                                        lineNumber: 140,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, question.id, true, {
                                                 fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                                lineNumber: 144,
+                                                lineNumber: 133,
                                                 columnNumber: 19
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                        lineNumber: 142,
+                                        lineNumber: 131,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                                    lineNumber: 141,
+                                    lineNumber: 130,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, section.id, true, {
                             fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                            lineNumber: 132,
+                            lineNumber: 121,
                             columnNumber: 11
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/dashboard/templates/[id]/page.tsx",
-                lineNumber: 129,
+                lineNumber: 118,
                 columnNumber: 7
             }, this)
         ]
@@ -688,4 +1176,4 @@ module.exports = mod;
 }),
 ];
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__00cac8f9._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__084ba315._.js.map

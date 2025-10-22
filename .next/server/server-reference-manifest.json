@@ -21,7 +21,7 @@
           "filename": "app/actions/auth.ts"
         },
         "app/dashboard/templates/[id]/page": {
-          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "logout",
           "filename": "app/actions/auth.ts"
@@ -71,7 +71,7 @@
           "filename": "app/actions/auth.ts"
         },
         "app/dashboard/templates/[id]/page": {
-          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "signup",
           "filename": "app/actions/auth.ts"
@@ -121,7 +121,7 @@
           "filename": "app/actions/auth.ts"
         },
         "app/dashboard/templates/[id]/page": {
-          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "resetPassword",
           "filename": "app/actions/auth.ts"
@@ -171,7 +171,7 @@
           "filename": "app/actions/auth.ts"
         },
         "app/dashboard/templates/[id]/page": {
-          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "updatePassword",
           "filename": "app/actions/auth.ts"
@@ -221,7 +221,7 @@
           "filename": "app/actions/auth.ts"
         },
         "app/dashboard/templates/[id]/page": {
-          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "login",
           "filename": "app/actions/auth.ts"
@@ -361,6 +361,21 @@
       },
       "filename": "app/actions/templates.ts",
       "exportedName": "applyTemplateToAssessment"
+    },
+    "408cac856790f07988c475ef494270c498297de47c": {
+      "workers": {
+        "app/dashboard/templates/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/dashboard/templates/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/templates.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "publishTemplate",
+          "filename": "app/actions/templates.ts"
+        }
+      },
+      "layer": {
+        "app/dashboard/templates/[id]/page": "action-browser"
+      },
+      "filename": "app/actions/templates.ts",
+      "exportedName": "publishTemplate"
     },
     "006e807e9ddde3f458d9325ca1bf6c42b6ba47a7ee": {
       "workers": {

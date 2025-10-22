@@ -3,7 +3,7 @@
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
-import { TemplateStatus } from '@prisma/client'
+import { TemplateStatus, QuestionType } from '@prisma/client'
 
 export async function getAllTemplates() {
   try {
@@ -248,7 +248,7 @@ export async function updateTemplate(
                 where: { id: question.id },
                 data: {
                   text: question.text,
-                  type: question.type,
+                  type: question.type as QuestionType,
                   weight: question.weight,
                   reference: question.reference,
                   requiresJustification: question.requiresJustification
@@ -260,7 +260,7 @@ export async function updateTemplate(
                 data: {
                   sectionId: section.id,
                   text: question.text,
-                  type: question.type,
+                  type: question.type as QuestionType,
                   weight: question.weight,
                   reference: question.reference,
                   requiresJustification: question.requiresJustification
@@ -278,7 +278,7 @@ export async function updateTemplate(
               questions: {
                 create: section.questions.map(q => ({
                   text: q.text,
-                  type: q.type,
+                  type: q.type as QuestionType,
                   weight: q.weight,
                   reference: q.reference,
                   requiresJustification: q.requiresJustification

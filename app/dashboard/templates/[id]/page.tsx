@@ -5,8 +5,9 @@ import { prisma } from '@/lib/prisma'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ArrowLeft, Edit, CheckCircle2 } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+import { TemplateActions } from './template-actions'
 
 export const metadata: Metadata = {
   title: 'Detalhes do Template | i9HUBSST',
@@ -87,18 +88,7 @@ export default async function TemplateDetailPage({ params }: { params: Promise<{
             </Badge>
           </div>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="gap-2">
-            <Edit className="h-4 w-4" />
-            Editar
-          </Button>
-          {template.status === 'DRAFT' && (
-            <Button size="sm" className="gap-2 bg-teal-600 hover:bg-teal-700">
-              <CheckCircle2 className="h-4 w-4" />
-              Publicar
-            </Button>
-          )}
-        </div>
+        <TemplateActions templateId={template.id} status={template.status} />
       </div>
 
       <Card>

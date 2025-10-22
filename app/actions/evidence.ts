@@ -34,16 +34,24 @@ export async function uploadEvidence(
       return { error: 'Resposta não encontrada neste diagnóstico' }
     }
 
-    const membership = await prisma.membership.findFirst({
-      where: {
-        userId: user.id,
-        companyId: assessment.companyId,
-        status: 'ACTIVE'
-      }
+    // Verificar se é Platform Admin
+    const isAdmin = await prisma.platformAdmin.findUnique({
+      where: { userId: user.id }
     })
 
-    if (!membership) {
-      return { error: 'Sem permissão para fazer upload de evidências neste diagnóstico' }
+    // Se não for admin, verificar membership ATIVO
+    if (!isAdmin) {
+      const membership = await prisma.membership.findFirst({
+        where: {
+          userId: user.id,
+          companyId: assessment.companyId,
+          status: 'ACTIVE'
+        }
+      })
+
+      if (!membership) {
+        return { error: 'Sem permissão para fazer upload de evidências neste diagnóstico' }
+      }
     }
 
     const file = formData.get('file') as File
@@ -121,23 +129,30 @@ export async function deleteEvidence(evidenceId: string, assessmentId: string) {
       return { error: 'Evidência não encontrada' }
     }
 
-    // Garantir que o usuário tem membership ativa na empresa
-    const membership = await prisma.membership.findFirst({
-      where: {
-        userId: user.id,
-        companyId: evidence.assessment.companyId,
-        status: 'ACTIVE'
-      }
+    // Verificar se é Platform Admin
+    const isAdmin = await prisma.platformAdmin.findUnique({
+      where: { userId: user.id }
     })
 
-    if (!membership) {
-      return { error: 'Sem permissão para excluir esta evidência' }
-    }
+    // Se não for admin, verificar membership ATIVO
+    if (!isAdmin) {
+      const membership = await prisma.membership.findFirst({
+        where: {
+          userId: user.id,
+          companyId: evidence.assessment.companyId,
+          status: 'ACTIVE'
+        }
+      })
 
-    // Verificar se pode deletar (apenas o próprio uploader ou admin/engineer)
-    if (evidence.uploadedBy !== user.id) {
-      if (!['COMPANY_ADMIN', 'ENGINEER'].includes(membership.role)) {
-        return { error: 'Apenas administradores ou engenheiros podem excluir evidências de outros usuários' }
+      if (!membership) {
+        return { error: 'Sem permissão para excluir esta evidência' }
+      }
+
+      // Verificar se pode deletar (apenas o próprio uploader ou admin/engineer)
+      if (evidence.uploadedBy !== user.id) {
+        if (!['COMPANY_ADMIN', 'ENGINEER'].includes(membership.role)) {
+          return { error: 'Apenas administradores ou engenheiros podem excluir evidências de outros usuários' }
+        }
       }
     }
 
@@ -176,16 +191,24 @@ export async function getEvidencesByAnswer(answerId: string) {
       return { error: 'Resposta não encontrada' }
     }
 
-    const membership = await prisma.membership.findFirst({
-      where: {
-        userId: user.id,
-        companyId: answer.assessment.companyId,
-        status: 'ACTIVE'
-      }
+    // Verificar se é Platform Admin
+    const isAdmin = await prisma.platformAdmin.findUnique({
+      where: { userId: user.id }
     })
 
-    if (!membership) {
-      return { error: 'Sem permissão para visualizar evidências deste diagnóstico' }
+    // Se não for admin, verificar membership ATIVO
+    if (!isAdmin) {
+      const membership = await prisma.membership.findFirst({
+        where: {
+          userId: user.id,
+          companyId: answer.assessment.companyId,
+          status: 'ACTIVE'
+        }
+      })
+
+      if (!membership) {
+        return { error: 'Sem permissão para visualizar evidências deste diagnóstico' }
+      }
     }
 
     const evidences = await prisma.evidence.findMany({

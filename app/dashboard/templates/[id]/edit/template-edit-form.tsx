@@ -19,6 +19,7 @@ interface Question {
   weight: number
   reference?: string
   requiresJustification: boolean
+  requiresEvidence: boolean
 }
 
 interface Section {
@@ -44,6 +45,7 @@ interface TemplateEditFormProps {
         weight: number
         reference: string | null
         requiresJustification: boolean
+        requiresEvidence: boolean
       }>
     }>
   }
@@ -64,7 +66,8 @@ export function TemplateEditForm({ template }: TemplateEditFormProps) {
         type: q.type,
         weight: q.weight,
         reference: q.reference || '',
-        requiresJustification: q.requiresJustification
+        requiresJustification: q.requiresJustification,
+        requiresEvidence: q.requiresEvidence
       }))
     }))
   )
@@ -99,7 +102,8 @@ export function TemplateEditForm({ template }: TemplateEditFormProps) {
       type: 'BOOLEAN',
       weight: 5,
       reference: '',
-      requiresJustification: false
+      requiresJustification: false,
+      requiresEvidence: false
     })
     setSections(updated)
   }

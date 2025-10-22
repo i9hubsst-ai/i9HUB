@@ -167,6 +167,7 @@ export async function updateTemplate(
         weight: number
         reference?: string | null
         requiresJustification: boolean
+        requiresEvidence: boolean
       }>
     }>
   }
@@ -251,7 +252,8 @@ export async function updateTemplate(
                   type: question.type as QuestionType,
                   weight: question.weight,
                   reference: question.reference,
-                  requiresJustification: question.requiresJustification
+                  requiresJustification: question.requiresJustification,
+                  requiresEvidence: question.requiresEvidence
                 }
               })
             } else {
@@ -263,7 +265,8 @@ export async function updateTemplate(
                   type: question.type as QuestionType,
                   weight: question.weight,
                   reference: question.reference,
-                  requiresJustification: question.requiresJustification
+                  requiresJustification: question.requiresJustification,
+                  requiresEvidence: question.requiresEvidence
                 }
               })
             }
@@ -281,7 +284,8 @@ export async function updateTemplate(
                   type: q.type as QuestionType,
                   weight: q.weight,
                   reference: q.reference,
-                  requiresJustification: q.requiresJustification
+                  requiresJustification: q.requiresJustification,
+                  requiresEvidence: q.requiresEvidence
                 }))
               }
             }

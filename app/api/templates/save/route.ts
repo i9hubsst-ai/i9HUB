@@ -16,6 +16,7 @@ interface SaveTemplateRequest {
       weight: number
       reference: string | null
       requiresJustification: boolean
+      requiresEvidence: boolean
     }>
   }>
 }
@@ -63,7 +64,8 @@ export async function POST(request: NextRequest) {
                 type: question.type,
                 weight: question.weight,
                 reference: question.reference,
-                requiresJustification: question.requiresJustification
+                requiresJustification: question.requiresJustification,
+                requiresEvidence: question.requiresEvidence
               }))
             }
           }))

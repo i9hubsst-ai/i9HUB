@@ -21,6 +21,7 @@ interface GeneratedSection {
     weight: number
     reference: string | null
     requiresJustification: boolean
+    requiresEvidence: boolean
   }>
 }
 

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { saveAnswer } from '@/app/actions/assessments'
-import { Check, X, AlertTriangle, Loader2, FileText } from 'lucide-react'
+import { Check, X, AlertTriangle, Loader2, FileText, ChevronDown, ChevronUp } from 'lucide-react'
 import { EvidenceUpload } from './evidence-upload'
 
 type QuestionType = 'BOOLEAN' | 'SCORE'
@@ -77,8 +77,16 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
     return initial
   })
   
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
   const [saving, setSaving] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string | undefined>>({})
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }))
+  }
 
   if (!assessment.template) {
     return (
@@ -191,17 +199,53 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
         </div>
       )}
 
-      {assessment.template.sections.map((section) => (
-        <Card key={section.id}>
-          <CardHeader>
-            <CardTitle className="text-base text-gray-900">
-              {section.title}
-            </CardTitle>
-            {section.description && (
-              <p className="text-sm text-gray-600 mt-1">{section.description}</p>
-            )}
-          </CardHeader>
-          <CardContent className="space-y-6">
+      {assessment.template.sections.map((section) => {
+        const isExpanded = expandedSections[section.id] || false
+        const sectionAnswers = section.questions.filter(q => {
+          const answer = answers[q.id]
+          return answer?.value !== undefined && answer?.value !== null
+        })
+        const progressText = `${sectionAnswers.length}/${section.questions.length} respondidas`
+        
+        return (
+          <Card key={section.id}>
+            <CardHeader 
+              className="cursor-pointer hover:bg-gray-50 transition-colors"
+              onClick={() => toggleSection(section.id)}
+            >
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3">
+                    <CardTitle className="text-base text-gray-900">
+                      {section.title}
+                    </CardTitle>
+                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+                      {progressText}
+                    </span>
+                  </div>
+                  {section.description && isExpanded && (
+                    <p className="text-sm text-gray-600 mt-1">{section.description}</p>
+                  )}
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="ml-2"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    toggleSection(section.id)
+                  }}
+                >
+                  {isExpanded ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+            </CardHeader>
+            {isExpanded && (
+              <CardContent className="space-y-6">
             {section.questions.map((question, idx) => {
               const localAnswer = answers[question.id]
               const answerId = answerIds[question.id]
@@ -372,9 +416,11 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                 </div>
               )
             })}
-          </CardContent>
-        </Card>
-      ))}
+              </CardContent>
+            )}
+          </Card>
+        )
+      })}
     </div>
   )
 }

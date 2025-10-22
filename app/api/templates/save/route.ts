@@ -56,7 +56,6 @@ export async function POST(request: NextRequest) {
         sections: {
           create: sections.map((section, idx) => ({
             title: section.title,
-            description: section.description,
             order: section.order || idx + 1,
             questions: {
               create: section.questions.map((question) => ({

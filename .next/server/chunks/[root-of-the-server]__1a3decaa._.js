@@ -298,8 +298,6 @@ async function POST(request) {
                 name,
                 description,
                 type: type,
-                source: 'AI',
-                approved: false,
                 status: 'DRAFT',
                 createdBy: user.id,
                 sections: {
@@ -313,10 +311,7 @@ async function POST(request) {
                                         type: question.type,
                                         weight: question.weight,
                                         reference: question.reference,
-                                        requiresJustification: question.requiresJustification,
-                                        source: 'AI',
-                                        approved: false,
-                                        active: true
+                                        requiresJustification: question.requiresJustification
                                     }))
                             }
                         }))

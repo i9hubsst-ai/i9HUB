@@ -156,6 +156,11 @@ export default async function TemplateDetailPage({ params }: { params: Promise<{
                             Justificativa obrigatória
                           </span>
                         )}
+                        {question.requiresEvidence && (
+                          <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200">
+                            Evidência obrigatória
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

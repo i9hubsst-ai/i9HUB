@@ -83,7 +83,6 @@ Retorne sugestões específicas e acionáveis no formato JSON.`
       questionsCount: template.sections.reduce((sum, s) => sum + s.questions.length, 0),
       sections: template.sections.map(section => ({
         title: section.title,
-        description: section.description,
         questionsCount: section.questions.length,
         questions: section.questions.map(q => ({
           text: q.text,

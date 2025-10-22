@@ -2,7 +2,7 @@ module.exports = [
 "[project]/app/actions/assessments.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"0029ea02ead9662ed97af0b43c07e57d3a007d1293":"getTemplates","408f65a0194ad93ed5112f40d8d671589af3c3479b":"submitAssessment","40a0ce6a881eb18d654d777d34da35132d0a640460":"deleteAssessment","40a1b26a3f6759c35ee6d32f877b5f7f157029bab7":"getAssessmentById","40a38dee0693acd37968f94b64134ab2028d1e07ea":"getAssessments","6065689128d7a97a33a43939e3af746040ee7933cc":"createAssessment","7cd7f47ebabac9ba55921f2678c105741b26d0df5c":"saveAnswer"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"00b49c527bc876693d44756f021d0a9f500730c311":"getTemplates","4040121c01ea9d1c384b03c8d1a7127ed343ebc3a9":"getAssessmentById","408902184f82b022630526c470bf227918c2c4e2c4":"submitAssessment","40ad66b50c0d0b9bd83775ff96383d1ec712bc085c":"deleteAssessment","40f9d7f25801c6f60229f228c2096c99101dd4912e":"getAssessments","6066d21eba6d3c2fa09f2e16187b69d0d4f14393e8":"createAssessment","7cfc1831769292d83bd0e13ae1f2577ad592c9fd79":"saveAnswer"},"",""] */ __turbopack_context__.s([
     "createAssessment",
     ()=>createAssessment,
     "deleteAssessment",
@@ -524,18 +524,18 @@ async function deleteAssessment(assessmentId) {
     submitAssessment,
     deleteAssessment
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createAssessment, "6065689128d7a97a33a43939e3af746040ee7933cc", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAssessments, "40a38dee0693acd37968f94b64134ab2028d1e07ea", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAssessmentById, "40a1b26a3f6759c35ee6d32f877b5f7f157029bab7", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getTemplates, "0029ea02ead9662ed97af0b43c07e57d3a007d1293", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(saveAnswer, "7cd7f47ebabac9ba55921f2678c105741b26d0df5c", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(submitAssessment, "408f65a0194ad93ed5112f40d8d671589af3c3479b", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteAssessment, "40a0ce6a881eb18d654d777d34da35132d0a640460", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createAssessment, "6066d21eba6d3c2fa09f2e16187b69d0d4f14393e8", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAssessments, "40f9d7f25801c6f60229f228c2096c99101dd4912e", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAssessmentById, "4040121c01ea9d1c384b03c8d1a7127ed343ebc3a9", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getTemplates, "00b49c527bc876693d44756f021d0a9f500730c311", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(saveAnswer, "7cfc1831769292d83bd0e13ae1f2577ad592c9fd79", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(submitAssessment, "408902184f82b022630526c470bf227918c2c4e2c4", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteAssessment, "40ad66b50c0d0b9bd83775ff96383d1ec712bc085c", null);
 }),
 "[project]/app/actions/findings.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"4019a18984cfc4e78f3438f233161ab44de9baca45":"deleteFinding","4036f0cf3eff8ce2c93967f08955f09453664036e4":"generateFindings","40735b10d084a7a99aded786c23f0df6e71722703c":"getFindings"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"400d88efb27ceae331b991578607e3dfb1a043066c":"deleteFinding","401eee3bdac19d05820ef8481e2d57dfa631e8cb84":"generateFindings","405882f33eabb88e0929430f30df7b378160ed0512":"getFindings"},"",""] */ __turbopack_context__.s([
     "deleteFinding",
     ()=>deleteFinding,
     "generateFindings",
@@ -777,14 +777,14 @@ async function deleteFinding(findingId) {
     getFindings,
     deleteFinding
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(generateFindings, "4036f0cf3eff8ce2c93967f08955f09453664036e4", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getFindings, "40735b10d084a7a99aded786c23f0df6e71722703c", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteFinding, "4019a18984cfc4e78f3438f233161ab44de9baca45", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(generateFindings, "401eee3bdac19d05820ef8481e2d57dfa631e8cb84", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getFindings, "405882f33eabb88e0929430f30df7b378160ed0512", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteFinding, "400d88efb27ceae331b991578607e3dfb1a043066c", null);
 }),
 "[project]/app/actions/evidence.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"409a271ff9104d0e6815f815992d4a86e218855b50":"getEvidencesByAnswer","60b6a357f8596eb4b959e0cb6e2f1e9d7940486d0f":"deleteEvidence","706a86c1917a703cc0cb97e3a94e9e2368d9028f85":"uploadEvidence"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"40d07058702abcd5d85e5dec14d4c4eee52b035b33":"getEvidencesByAnswer","60b9711029836948a7966e55b29acf974017440e59":"deleteEvidence","70a914f75bc389a4e6d5fed088a0d6152f27b3ad8c":"uploadEvidence"},"",""] */ __turbopack_context__.s([
     "deleteEvidence",
     ()=>deleteEvidence,
     "getEvidencesByAnswer",
@@ -809,6 +809,44 @@ async function uploadEvidence(assessmentId, answerId, formData) {
         };
     }
     try {
+        // Verificar autorização multi-tenant
+        const assessment = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].assessment.findUnique({
+            where: {
+                id: assessmentId
+            },
+            include: {
+                answers: {
+                    where: {
+                        id: answerId
+                    },
+                    select: {
+                        id: true
+                    }
+                }
+            }
+        });
+        if (!assessment) {
+            return {
+                error: 'Diagnóstico não encontrado'
+            };
+        }
+        if (assessment.answers.length === 0) {
+            return {
+                error: 'Resposta não encontrada neste diagnóstico'
+            };
+        }
+        const membership = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.findFirst({
+            where: {
+                userId: user.id,
+                companyId: assessment.companyId,
+                status: 'ACTIVE'
+            }
+        });
+        if (!membership) {
+            return {
+                error: 'Sem permissão para fazer upload de evidências neste diagnóstico'
+            };
+        }
         const file = formData.get('file');
         if (!file) {
             return {
@@ -875,10 +913,17 @@ async function deleteEvidence(evidenceId, assessmentId) {
         };
     }
     try {
-        // Verificar se o usuário tem permissão
+        // Verificar autorização multi-tenant PRIMEIRO
         const evidence = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].evidence.findUnique({
             where: {
                 id: evidenceId
+            },
+            include: {
+                assessment: {
+                    select: {
+                        companyId: true
+                    }
+                }
             }
         });
         if (!evidence) {
@@ -886,34 +931,27 @@ async function deleteEvidence(evidenceId, assessmentId) {
                 error: 'Evidência não encontrada'
             };
         }
-        if (evidence.uploadedBy !== user.id) {
-            // Verificar se é admin ou tem permissão na empresa
-            const assessment = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].assessment.findUnique({
-                where: {
-                    id: assessmentId
-                },
-                select: {
-                    companyId: true
-                }
-            });
-            if (!assessment) {
-                return {
-                    error: 'Diagnóstico não encontrado'
-                };
+        // Garantir que o usuário tem membership ativa na empresa
+        const membership = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.findFirst({
+            where: {
+                userId: user.id,
+                companyId: evidence.assessment.companyId,
+                status: 'ACTIVE'
             }
-            const membership = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.findFirst({
-                where: {
-                    userId: user.id,
-                    companyId: assessment.companyId,
-                    status: 'ACTIVE'
-                }
-            });
-            if (!membership || ![
+        });
+        if (!membership) {
+            return {
+                error: 'Sem permissão para excluir esta evidência'
+            };
+        }
+        // Verificar se pode deletar (apenas o próprio uploader ou admin/engineer)
+        if (evidence.uploadedBy !== user.id) {
+            if (![
                 'COMPANY_ADMIN',
                 'ENGINEER'
             ].includes(membership.role)) {
                 return {
-                    error: 'Sem permissão para excluir esta evidência'
+                    error: 'Apenas administradores ou engenheiros podem excluir evidências de outros usuários'
                 };
             }
         }
@@ -935,7 +973,43 @@ async function deleteEvidence(evidenceId, assessmentId) {
     }
 }
 async function getEvidencesByAnswer(answerId) {
+    const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
+    if (!user) {
+        return {
+            error: 'Não autorizado'
+        };
+    }
     try {
+        // Verificar autorização multi-tenant
+        const answer = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].assessmentAnswer.findUnique({
+            where: {
+                id: answerId
+            },
+            include: {
+                assessment: {
+                    select: {
+                        companyId: true
+                    }
+                }
+            }
+        });
+        if (!answer) {
+            return {
+                error: 'Resposta não encontrada'
+            };
+        }
+        const membership = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.findFirst({
+            where: {
+                userId: user.id,
+                companyId: answer.assessment.companyId,
+                status: 'ACTIVE'
+            }
+        });
+        if (!membership) {
+            return {
+                error: 'Sem permissão para visualizar evidências deste diagnóstico'
+            };
+        }
         const evidences = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].evidence.findMany({
             where: {
                 answerId
@@ -961,14 +1035,14 @@ async function getEvidencesByAnswer(answerId) {
     deleteEvidence,
     getEvidencesByAnswer
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(uploadEvidence, "706a86c1917a703cc0cb97e3a94e9e2368d9028f85", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteEvidence, "60b6a357f8596eb4b959e0cb6e2f1e9d7940486d0f", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getEvidencesByAnswer, "409a271ff9104d0e6815f815992d4a86e218855b50", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(uploadEvidence, "70a914f75bc389a4e6d5fed088a0d6152f27b3ad8c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteEvidence, "60b9711029836948a7966e55b29acf974017440e59", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getEvidencesByAnswer, "40d07058702abcd5d85e5dec14d4c4eee52b035b33", null);
 }),
 "[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/* __next_internal_action_entry_do_not_use__ [{"407c88123f381e05ddaf7c3b2dc7d911cde7c9dd65":"getActionPlans","709165a75fe58dfa706632291f867de2fc39e95c3b":"saveActionPlans"},"",""] */ __turbopack_context__.s([
+/* __next_internal_action_entry_do_not_use__ [{"40e1bfba26cca41f19481316766f63f0902f03400e":"getActionPlans","708bcd9ceb62d1587200f7857de4f1dfa8dc828914":"saveActionPlans"},"",""] */ __turbopack_context__.s([
     "getActionPlans",
     ()=>getActionPlans,
     "saveActionPlans",
@@ -1149,8 +1223,8 @@ async function getActionPlans(assessmentId) {
     saveActionPlans,
     getActionPlans
 ]);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(saveActionPlans, "709165a75fe58dfa706632291f867de2fc39e95c3b", null);
-(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getActionPlans, "407c88123f381e05ddaf7c3b2dc7d911cde7c9dd65", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(saveActionPlans, "708bcd9ceb62d1587200f7857de4f1dfa8dc828914", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getActionPlans, "40e1bfba26cca41f19481316766f63f0902f03400e", null);
 }),
 "[project]/.next-internal/server/app/dashboard/diagnostics/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/evidence.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
 "use strict";
@@ -1185,43 +1259,43 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$action$2d$
 "use strict";
 
 __turbopack_context__.s([
-    "0029ea02ead9662ed97af0b43c07e57d3a007d1293",
+    "00b49c527bc876693d44756f021d0a9f500730c311",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getTemplates"],
-    "00f286cfd933f5ed0b6b627286981d0d0e024ae67e",
+    "00bd8a938c174a4d0d4813d8ceb1416cda964eb8b9",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["logout"],
-    "4019a18984cfc4e78f3438f233161ab44de9baca45",
+    "400d88efb27ceae331b991578607e3dfb1a043066c",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteFinding"],
-    "401aac184c89ceb8a4ee60f1c59c91bc9acf55e0a1",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
-    "4024f0c702577aef4e03c73db6d3f5278b7bb33c49",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resetPassword"],
-    "4036f0cf3eff8ce2c93967f08955f09453664036e4",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["generateFindings"],
-    "40735b10d084a7a99aded786c23f0df6e71722703c",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getFindings"],
-    "407c88123f381e05ddaf7c3b2dc7d911cde7c9dd65",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$action$2d$plans$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getActionPlans"],
-    "408f65a0194ad93ed5112f40d8d671589af3c3479b",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["submitAssessment"],
-    "409e38117851d305b72a00b0d454396594c7f7b93c",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"],
-    "40a0ce6a881eb18d654d777d34da35132d0a640460",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteAssessment"],
-    "40a1b26a3f6759c35ee6d32f877b5f7f157029bab7",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAssessmentById"],
-    "40a38dee0693acd37968f94b64134ab2028d1e07ea",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAssessments"],
-    "40d8b9d2850b2c15f8b88db83558ed543071dc8154",
+    "40192651c15c935c7e79e36926b03ce59c53c1156d",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"],
-    "6065689128d7a97a33a43939e3af746040ee7933cc",
+    "401eee3bdac19d05820ef8481e2d57dfa631e8cb84",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["generateFindings"],
+    "4040121c01ea9d1c384b03c8d1a7127ed343ebc3a9",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAssessmentById"],
+    "405882f33eabb88e0929430f30df7b378160ed0512",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getFindings"],
+    "408902184f82b022630526c470bf227918c2c4e2c4",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["submitAssessment"],
+    "40ad66b50c0d0b9bd83775ff96383d1ec712bc085c",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteAssessment"],
+    "40e1bfba26cca41f19481316766f63f0902f03400e",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$action$2d$plans$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getActionPlans"],
+    "40ecf1f9786f070333422b2e3e6702c4b9787c5b32",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["resetPassword"],
+    "40eebbc330cb2410299fa706e46d7977c6bd3a5c63",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["login"],
+    "40f4575ef71c37a6451bf5aab942ee9feb4bc15d4b",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["signup"],
+    "40f9d7f25801c6f60229f228c2096c99101dd4912e",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getAssessments"],
+    "6066d21eba6d3c2fa09f2e16187b69d0d4f14393e8",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createAssessment"],
-    "60b6a357f8596eb4b959e0cb6e2f1e9d7940486d0f",
+    "60b9711029836948a7966e55b29acf974017440e59",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$evidence$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteEvidence"],
-    "706a86c1917a703cc0cb97e3a94e9e2368d9028f85",
-    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$evidence$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["uploadEvidence"],
-    "709165a75fe58dfa706632291f867de2fc39e95c3b",
+    "708bcd9ceb62d1587200f7857de4f1dfa8dc828914",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$action$2d$plans$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["saveActionPlans"],
-    "7cd7f47ebabac9ba55921f2678c105741b26d0df5c",
+    "70a914f75bc389a4e6d5fed088a0d6152f27b3ad8c",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$evidence$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["uploadEvidence"],
+    "7cfc1831769292d83bd0e13ae1f2577ad592c9fd79",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["saveAnswer"]
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$dashboard$2f$diagnostics$2f5b$id$5d2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE1__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE2__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE3__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$evidence$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE4__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$action$2d$plans$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/dashboard/diagnostics/[id]/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ACTIONS_MODULE1 => "[project]/app/actions/assessments.ts [app-rsc] (ecmascript)", ACTIONS_MODULE2 => "[project]/app/actions/findings.ts [app-rsc] (ecmascript)", ACTIONS_MODULE3 => "[project]/app/actions/evidence.ts [app-rsc] (ecmascript)", ACTIONS_MODULE4 => "[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');

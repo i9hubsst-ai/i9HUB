@@ -24,14 +24,16 @@ The platform utilizes a clean light palette with a teal accent, reduced typograp
 
 ### Technical Implementations
 - **Authentication System**: Supabase integrated for login, registration, password reset, and email confirmation.
-- **Multi-Tenant Security**: Implemented at the application level with active membership validation on all server actions to ensure data isolation. A separate Supabase admin client with a service role key manages user invitations securely.
+- **Multi-Tenant Security**: Implemented at the application level with active membership validation on all server actions to ensure data isolation. A separate Supabase admin client with a service role key manages user invitations securely. All evidence upload/deletion actions enforce strict tenant isolation.
 - **User Management**: Comprehensive CRUD for users, including invitation by email, role assignment (Platform Admin, Company Admin, Engineer, Employer, Viewer), profile editing, and removal. Gravatar integration for user photos.
 - **Company Management**: Complete CRUD for company records with CNPJ validation and role-based permissions.
 - **Employee Management**: Full CRUD for employee records, adhering to Brazilian compliance fields (CPF validation, formatted fields) with role-based permissions.
-- **Diagnostic Flow**: System for creating IMSST assessments, answering 25 questions across 5 dimensions, and auto-calculating maturity scores.
+- **Diagnostic Template System**: Comprehensive template management with DRAFT/PUBLISHED workflow, AI-powered template generation via Google Gemini, and full CRUD for templates, sections, and questions.
+- **Diagnostic Assessment Flow**: Complete diagnostic workflow with question responses (boolean/score), mandatory justifications for non-conformities, and evidence upload (documents/photos) linked to specific answers.
+- **Evidence Management**: Secure file upload system with multi-tenant authorization, supporting images, PDFs, and Office documents (max 10MB). Currently uses base64 data URLs (planned migration to Supabase Storage).
 - **Data Visualization**: Radar charts (using Recharts) for displaying IMSST maturity scores.
 - **Dashboard**: Provides real-time statistics on companies, assessments, users, and action plans.
-- **AI Features**: Planned integration of OpenAI API for AI-powered assessment generation and personalized action plans.
+- **AI Features**: Google Gemini API integrated for AI-powered diagnostic template generation with 60 requests/min free tier.
 
 ### Feature Specifications
 - **IMSST Maturity Diagnostic**: 5 dimensions, 25 questions, with score calculation.

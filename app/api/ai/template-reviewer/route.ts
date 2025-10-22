@@ -138,13 +138,23 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
 
     const content = response.text
     if (!content) {
+      console.error('IA não retornou conteúdo. Resposta:', response)
       return NextResponse.json(
         { error: 'IA não retornou conteúdo' },
         { status: 500 }
       )
     }
 
-    const reviewResult = JSON.parse(content)
+    let reviewResult
+    try {
+      reviewResult = JSON.parse(content)
+    } catch (error) {
+      console.error('Erro ao parsear JSON da IA:', content)
+      return NextResponse.json(
+        { error: 'Resposta da IA não é um JSON válido' },
+        { status: 500 }
+      )
+    }
 
     // Validar estrutura básica
     if (!reviewResult.suggestions || !Array.isArray(reviewResult.suggestions)) {

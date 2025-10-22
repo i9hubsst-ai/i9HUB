@@ -28,12 +28,12 @@ The platform utilizes a clean light palette with a teal accent, reduced typograp
 - **User Management**: Comprehensive CRUD for users, including invitation by email, role assignment (Platform Admin, Company Admin, Engineer, Employer, Viewer), profile editing, and removal. Gravatar integration for user photos.
 - **Company Management**: Complete CRUD for company records with CNPJ validation and role-based permissions.
 - **Employee Management**: Full CRUD for employee records, adhering to Brazilian compliance fields (CPF validation, formatted fields) with role-based permissions.
-- **Diagnostic Template System**: Comprehensive template management with DRAFT/PUBLISHED workflow, AI-powered template generation via Google Gemini, and full CRUD for templates, sections, and questions. Each question can be configured with `requiresJustification` and `requiresEvidence` flags to control whether users must provide textual justifications and/or upload evidence files for any response.
+- **Diagnostic Template System**: Comprehensive template management with DRAFT/PUBLISHED workflow, AI-powered template generation and AI-assisted review/improvement via Google Gemini, and full CRUD for templates, sections, and questions. Each question can be configured with `requiresJustification` and `requiresEvidence` flags to control whether users must provide textual justifications and/or upload evidence files for any response. Templates can be reviewed by AI for suggestions on completeness, quality, references, and structure.
 - **Diagnostic Assessment Flow**: Complete diagnostic workflow with question responses (boolean/score), template-driven justification and evidence requirements (configured per question via requiresJustification/requiresEvidence flags), and secure evidence upload (documents/photos) linked to specific answers.
 - **Evidence Management**: Secure file upload system with multi-tenant authorization, supporting images, PDFs, and Office documents (max 10MB). Currently uses base64 data URLs (planned migration to Supabase Storage).
 - **Data Visualization**: Radar charts (using Recharts) for displaying IMSST maturity scores.
 - **Dashboard**: Provides real-time statistics on companies, assessments, users, and action plans.
-- **AI Features**: Google Gemini API integrated for AI-powered diagnostic template generation with 60 requests/min free tier.
+- **AI Features**: Google Gemini API integrated for AI-powered diagnostic template generation and template review/improvement suggestions with 60 requests/min free tier. The AI can analyze existing templates and suggest improvements for completeness, clarity, proper referencing, and structural organization.
 
 ### Feature Specifications
 - **IMSST Maturity Diagnostic**: 5 dimensions, 25 questions, with score calculation.

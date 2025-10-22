@@ -185,7 +185,8 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
             {section.questions.map((question, idx) => {
               const answer = answers[question.id]
               const hasAnswer = answer && answer.value !== null
-              const needsJustification = question.requiresJustification && hasAnswer && answer.value !== null && (answer.value === 0 || answer.value <= 3)
+              const needsJustification = question.requiresJustification && hasAnswer
+              const needsEvidence = question.requiresEvidence && hasAnswer
               const hasJustification = answer?.justification && answer.justification.trim().length > 0
               const error = errors[question.id]
               const isSaving = saving === question.id
@@ -264,14 +265,14 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
 
                       {needsJustification && (
                         <div className="space-y-2">
-                          <Label htmlFor={`justification-${question.id}`} className="text-sm font-medium">
+                          <Label htmlFor={`justification-${question.id}`} className="text-sm font-medium text-orange-700">
                             Justificativa obrigatória *
                           </Label>
                           <Textarea
                             id={`justification-${question.id}`}
                             value={answer.justification}
                             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleJustificationChange(question.id, e.target.value)}
-                            placeholder="Descreva o motivo desta resposta não conforme..."
+                            placeholder="Descreva a justificativa para esta resposta..."
                             className="min-h-[80px] text-sm"
                             disabled={isReadOnly}
                           />
@@ -298,7 +299,7 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                         </div>
                       )}
 
-                      {hasAnswer && (
+                      {needsEvidence && (
                         <div className="pt-2 border-t border-gray-100">
                           <EvidenceUpload
                             assessmentId={assessment.id}

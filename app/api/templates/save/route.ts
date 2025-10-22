@@ -51,8 +51,6 @@ export async function POST(request: NextRequest) {
         name,
         description,
         type: type as any,
-        source: 'AI',
-        approved: false,
         status: 'DRAFT',
         createdBy: user.id,
         sections: {
@@ -66,10 +64,7 @@ export async function POST(request: NextRequest) {
                 type: question.type,
                 weight: question.weight,
                 reference: question.reference,
-                requiresJustification: question.requiresJustification,
-                source: 'AI',
-                approved: false,
-                active: true
+                requiresJustification: question.requiresJustification
               }))
             }
           }))

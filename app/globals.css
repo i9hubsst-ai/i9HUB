@@ -45,31 +45,31 @@
 
 :root {
   --radius: 0.375rem;
-  --background: #ffffff;
-  --foreground: #495057;
+  --background: #e8f5e9;
+  --foreground: #1b5e20;
   --card: #ffffff;
-  --card-foreground: #495057;
+  --card-foreground: #1b5e20;
   --popover: #ffffff;
-  --popover-foreground: #495057;
+  --popover-foreground: #1b5e20;
 
-  /* Primary - Cinza escuro */
-  --primary: #343a40;
+  /* Primary - Verde escuro */
+  --primary: #1b5e20;
   --primary-foreground: #ffffff;
 
   /* Secondary - Cinza médio claro */
   --secondary: #6c757d;
   --secondary-foreground: #ffffff;
 
-  --muted: #f8f9fa;
-  --muted-foreground: #6c757d;
+  --muted: #f1f8f4;
+  --muted-foreground: #388e3c;
 
   /* Teal/Turquesa Accent */
   --accent: #17a2b8;
   --accent-foreground: #ffffff;
 
   --destructive: #dc3545;
-  --border: #dee2e6;
-  --input: #ced4da;
+  --border: #c8e6c9;
+  --input: #a5d6a7;
   --ring: #17a2b8;
 
   /* Chart colors - IMSST dimensions */
@@ -79,15 +79,15 @@
   --chart-4: #fd7e14; /* Laranja */
   --chart-5: #6c757d; /* Cinza */
 
-  /* Sidebar - tema claro */
-  --sidebar: #f8f9fa;
-  --sidebar-foreground: #495057;
-  --sidebar-primary: #17a2b8;
+  /* Sidebar - verde escuro */
+  --sidebar: #1b5e20;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #43a047;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e9ecef;
-  --sidebar-accent-foreground: #495057;
-  --sidebar-border: #dee2e6;
-  --sidebar-ring: #17a2b8;
+  --sidebar-accent: #2e7d32;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2e7d32;
+  --sidebar-ring: #43a047;
 }
 
 .dark {

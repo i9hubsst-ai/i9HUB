@@ -31,7 +31,7 @@ export default async function DashboardLayout({
   return (
     <div className="min-h-screen bg-background flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-primary text-primary-foreground flex flex-col">
+      <aside className="w-64 bg-sidebar text-sidebar-foreground flex flex-col">
         <div className="p-6 border-b border-sidebar-border">
           <Link href="/dashboard" className="flex items-center gap-3">
             <Image

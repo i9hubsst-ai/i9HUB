@@ -140,7 +140,8 @@ export async function getAssessmentById(assessmentId: string) {
         },
         answers: {
           include: {
-            question: true
+            question: true,
+            evidences: true
           }
         },
         scores: true,

@@ -781,6 +781,190 @@ async function deleteFinding(findingId) {
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getFindings, "40735b10d084a7a99aded786c23f0df6e71722703c", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteFinding, "4019a18984cfc4e78f3438f233161ab44de9baca45", null);
 }),
+"[project]/app/actions/evidence.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+/* __next_internal_action_entry_do_not_use__ [{"409a271ff9104d0e6815f815992d4a86e218855b50":"getEvidencesByAnswer","60b6a357f8596eb4b959e0cb6e2f1e9d7940486d0f":"deleteEvidence","706a86c1917a703cc0cb97e3a94e9e2368d9028f85":"uploadEvidence"},"",""] */ __turbopack_context__.s([
+    "deleteEvidence",
+    ()=>deleteEvidence,
+    "getEvidencesByAnswer",
+    ()=>getEvidencesByAnswer,
+    "uploadEvidence",
+    ()=>uploadEvidence
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/server-reference.js [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/prisma.ts [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/auth.ts [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/cache.js [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$validate$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/action-validate.js [app-rsc] (ecmascript)");
+;
+;
+;
+;
+async function uploadEvidence(assessmentId, answerId, formData) {
+    const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
+    if (!user) {
+        return {
+            error: 'Não autorizado'
+        };
+    }
+    try {
+        const file = formData.get('file');
+        if (!file) {
+            return {
+                error: 'Nenhum arquivo fornecido'
+            };
+        }
+        // Validar tamanho (máx 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+            return {
+                error: 'Arquivo muito grande. Máximo: 10MB'
+            };
+        }
+        // Validar tipo
+        const allowedTypes = [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        ];
+        if (!allowedTypes.includes(file.type)) {
+            return {
+                error: 'Tipo de arquivo não permitido. Use imagens, PDF ou documentos Office.'
+            };
+        }
+        // Converter para base64 (temporário - posteriormente migrar para Supabase Storage)
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+        const base64 = buffer.toString('base64');
+        const dataUrl = `data:${file.type};base64,${base64}`;
+        // Salvar no banco
+        const evidence = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].evidence.create({
+            data: {
+                assessmentId,
+                answerId,
+                fileName: file.name,
+                fileUrl: dataUrl,
+                fileSize: file.size,
+                mimeType: file.type,
+                uploadedBy: user.id
+            }
+        });
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])(`/dashboard/diagnostics/${assessmentId}`);
+        return {
+            success: true,
+            evidence
+        };
+    } catch (error) {
+        console.error('Erro ao fazer upload de evidência:', error);
+        return {
+            error: 'Erro ao fazer upload do arquivo'
+        };
+    }
+}
+async function deleteEvidence(evidenceId, assessmentId) {
+    const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCurrentUser"])();
+    if (!user) {
+        return {
+            error: 'Não autorizado'
+        };
+    }
+    try {
+        // Verificar se o usuário tem permissão
+        const evidence = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].evidence.findUnique({
+            where: {
+                id: evidenceId
+            }
+        });
+        if (!evidence) {
+            return {
+                error: 'Evidência não encontrada'
+            };
+        }
+        if (evidence.uploadedBy !== user.id) {
+            // Verificar se é admin ou tem permissão na empresa
+            const assessment = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].assessment.findUnique({
+                where: {
+                    id: assessmentId
+                },
+                select: {
+                    companyId: true
+                }
+            });
+            if (!assessment) {
+                return {
+                    error: 'Diagnóstico não encontrado'
+                };
+            }
+            const membership = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].membership.findFirst({
+                where: {
+                    userId: user.id,
+                    companyId: assessment.companyId,
+                    status: 'ACTIVE'
+                }
+            });
+            if (!membership || ![
+                'COMPANY_ADMIN',
+                'ENGINEER'
+            ].includes(membership.role)) {
+                return {
+                    error: 'Sem permissão para excluir esta evidência'
+                };
+            }
+        }
+        // TODO: Se estiver usando Supabase Storage, deletar arquivo de lá também
+        await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].evidence.delete({
+            where: {
+                id: evidenceId
+            }
+        });
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])(`/dashboard/diagnostics/${assessmentId}`);
+        return {
+            success: true
+        };
+    } catch (error) {
+        console.error('Erro ao excluir evidência:', error);
+        return {
+            error: 'Erro ao excluir evidência'
+        };
+    }
+}
+async function getEvidencesByAnswer(answerId) {
+    try {
+        const evidences = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["prisma"].evidence.findMany({
+            where: {
+                answerId
+            },
+            orderBy: {
+                uploadedAt: 'desc'
+            }
+        });
+        return {
+            success: true,
+            evidences
+        };
+    } catch (error) {
+        console.error('Erro ao buscar evidências:', error);
+        return {
+            error: 'Erro ao buscar evidências'
+        };
+    }
+}
+;
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$validate$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ensureServerEntryExports"])([
+    uploadEvidence,
+    deleteEvidence,
+    getEvidencesByAnswer
+]);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(uploadEvidence, "706a86c1917a703cc0cb97e3a94e9e2368d9028f85", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteEvidence, "60b6a357f8596eb4b959e0cb6e2f1e9d7940486d0f", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getEvidencesByAnswer, "409a271ff9104d0e6815f815992d4a86e218855b50", null);
+}),
 "[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -968,13 +1152,14 @@ async function getActionPlans(assessmentId) {
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(saveActionPlans, "709165a75fe58dfa706632291f867de2fc39e95c3b", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getActionPlans, "407c88123f381e05ddaf7c3b2dc7d911cde7c9dd65", null);
 }),
-"[project]/.next-internal/server/app/dashboard/diagnostics/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
+"[project]/.next-internal/server/app/dashboard/diagnostics/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/evidence.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>", ((__turbopack_context__) => {
 "use strict";
 
 __turbopack_context__.s([]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/auth.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/assessments.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/findings.ts [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$evidence$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/evidence.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$action$2d$plans$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)");
 ;
 ;
@@ -993,8 +1178,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$action$2d$
 ;
 ;
 ;
+;
+;
 }),
-"[project]/.next-internal/server/app/dashboard/diagnostics/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)", ((__turbopack_context__) => {
+"[project]/.next-internal/server/app/dashboard/diagnostics/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/actions/assessments.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/actions/findings.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE3 => \"[project]/app/actions/evidence.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE4 => \"[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
 __turbopack_context__.s([
@@ -1028,15 +1215,20 @@ __turbopack_context__.s([
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["updatePassword"],
     "6065689128d7a97a33a43939e3af746040ee7933cc",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["createAssessment"],
+    "60b6a357f8596eb4b959e0cb6e2f1e9d7940486d0f",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$evidence$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["deleteEvidence"],
+    "706a86c1917a703cc0cb97e3a94e9e2368d9028f85",
+    ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$evidence$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["uploadEvidence"],
     "709165a75fe58dfa706632291f867de2fc39e95c3b",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$action$2d$plans$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["saveActionPlans"],
     "7cd7f47ebabac9ba55921f2678c105741b26d0df5c",
     ()=>__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["saveAnswer"]
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$dashboard$2f$diagnostics$2f5b$id$5d2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE1__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE2__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE3__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$action$2d$plans$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/dashboard/diagnostics/[id]/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ACTIONS_MODULE1 => "[project]/app/actions/assessments.ts [app-rsc] (ecmascript)", ACTIONS_MODULE2 => "[project]/app/actions/findings.ts [app-rsc] (ecmascript)", ACTIONS_MODULE3 => "[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');
+var __TURBOPACK__imported__module__$5b$project$5d2f2e$next$2d$internal$2f$server$2f$app$2f$dashboard$2f$diagnostics$2f5b$id$5d2f$page$2f$actions$2e$js__$7b$__ACTIONS_MODULE0__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE1__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE2__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE3__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$evidence$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29222c$__ACTIONS_MODULE4__$3d3e$__$225b$project$5d2f$app$2f$actions$2f$action$2d$plans$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$server__actions__loader$2c$__ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i('[project]/.next-internal/server/app/dashboard/diagnostics/[id]/page/actions.js { ACTIONS_MODULE0 => "[project]/app/actions/auth.ts [app-rsc] (ecmascript)", ACTIONS_MODULE1 => "[project]/app/actions/assessments.ts [app-rsc] (ecmascript)", ACTIONS_MODULE2 => "[project]/app/actions/findings.ts [app-rsc] (ecmascript)", ACTIONS_MODULE3 => "[project]/app/actions/evidence.ts [app-rsc] (ecmascript)", ACTIONS_MODULE4 => "[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)" } [app-rsc] (server actions loader, ecmascript) <locals>');
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$auth$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/auth.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$assessments$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/assessments.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$findings$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/findings.ts [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$evidence$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/evidence.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$actions$2f$action$2d$plans$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/actions/action-plans.ts [app-rsc] (ecmascript)");
 }),
 "[project]/app/favicon.ico.mjs { IMAGE => \"[project]/app/favicon.ico (static in ecmascript)\" } [app-rsc] (structured image object, ecmascript, Next.js Server Component)", ((__turbopack_context__) => {
@@ -1152,4 +1344,4 @@ module.exports = mod;
 }),
 ];
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__90f6c69a._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__72ca3e95._.js.map

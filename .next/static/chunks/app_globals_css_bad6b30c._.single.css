@@ -1849,6 +1849,10 @@
     border-color: var(--destructive);
   }
 
+  .border-gray-100 {
+    border-color: var(--color-gray-100);
+  }
+
   .border-gray-200 {
     border-color: var(--color-gray-200);
   }
@@ -3418,6 +3422,12 @@
   @media (hover: hover) {
     .hover\:text-sidebar-accent-foreground:hover {
       color: var(--sidebar-accent-foreground);
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:text-teal-700:hover {
+      color: var(--color-teal-700);
     }
   }
 

@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { saveAnswer } from '@/app/actions/assessments'
 import { Check, X, AlertTriangle, Loader2, FileText } from 'lucide-react'
+import { EvidenceUpload } from './evidence-upload'
 
 type QuestionType = 'BOOLEAN' | 'SCORE'
 
@@ -27,11 +28,21 @@ interface Section {
   questions: Question[]
 }
 
+interface Evidence {
+  id: string
+  fileName: string
+  fileUrl: string
+  fileSize: number
+  mimeType: string
+  uploadedAt: Date
+}
+
 interface Answer {
   id: string
   questionId: string
   value: number
   justification: string | null
+  evidences?: Evidence[]
 }
 
 interface DiagnosticSectionsProps {
@@ -284,6 +295,17 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
                               )}
                             </Button>
                           )}
+                        </div>
+                      )}
+
+                      {hasAnswer && (
+                        <div className="pt-2 border-t border-gray-100">
+                          <EvidenceUpload
+                            assessmentId={assessment.id}
+                            answerId={answer?.id || ''}
+                            existingEvidences={answer?.evidences || []}
+                            disabled={isReadOnly}
+                          />
                         </div>
                       )}
 

@@ -15,6 +15,37 @@ export async function uploadEvidence(
   }
 
   try {
+    // Verificar autorização multi-tenant
+    const assessment = await prisma.assessment.findUnique({
+      where: { id: assessmentId },
+      include: {
+        answers: {
+          where: { id: answerId },
+          select: { id: true }
+        }
+      }
+    })
+
+    if (!assessment) {
+      return { error: 'Diagnóstico não encontrado' }
+    }
+
+    if (assessment.answers.length === 0) {
+      return { error: 'Resposta não encontrada neste diagnóstico' }
+    }
+
+    const membership = await prisma.membership.findFirst({
+      where: {
+        userId: user.id,
+        companyId: assessment.companyId,
+        status: 'ACTIVE'
+      }
+    })
+
+    if (!membership) {
+      return { error: 'Sem permissão para fazer upload de evidências neste diagnóstico' }
+    }
+
     const file = formData.get('file') as File
     if (!file) {
       return { error: 'Nenhum arquivo fornecido' }
@@ -76,36 +107,37 @@ export async function deleteEvidence(evidenceId: string, assessmentId: string) {
   }
 
   try {
-    // Verificar se o usuário tem permissão
+    // Verificar autorização multi-tenant PRIMEIRO
     const evidence = await prisma.evidence.findUnique({
-      where: { id: evidenceId }
+      where: { id: evidenceId },
+      include: {
+        assessment: {
+          select: { companyId: true }
+        }
+      }
     })
 
     if (!evidence) {
       return { error: 'Evidência não encontrada' }
     }
 
-    if (evidence.uploadedBy !== user.id) {
-      // Verificar se é admin ou tem permissão na empresa
-      const assessment = await prisma.assessment.findUnique({
-        where: { id: assessmentId },
-        select: { companyId: true }
-      })
-
-      if (!assessment) {
-        return { error: 'Diagnóstico não encontrado' }
+    // Garantir que o usuário tem membership ativa na empresa
+    const membership = await prisma.membership.findFirst({
+      where: {
+        userId: user.id,
+        companyId: evidence.assessment.companyId,
+        status: 'ACTIVE'
       }
+    })
 
-      const membership = await prisma.membership.findFirst({
-        where: {
-          userId: user.id,
-          companyId: assessment.companyId,
-          status: 'ACTIVE'
-        }
-      })
+    if (!membership) {
+      return { error: 'Sem permissão para excluir esta evidência' }
+    }
 
-      if (!membership || !['COMPANY_ADMIN', 'ENGINEER'].includes(membership.role)) {
-        return { error: 'Sem permissão para excluir esta evidência' }
+    // Verificar se pode deletar (apenas o próprio uploader ou admin/engineer)
+    if (evidence.uploadedBy !== user.id) {
+      if (!['COMPANY_ADMIN', 'ENGINEER'].includes(membership.role)) {
+        return { error: 'Apenas administradores ou engenheiros podem excluir evidências de outros usuários' }
       }
     }
 
@@ -124,7 +156,38 @@ export async function deleteEvidence(evidenceId: string, assessmentId: string) {
 }
 
 export async function getEvidencesByAnswer(answerId: string) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
   try {
+    // Verificar autorização multi-tenant
+    const answer = await prisma.assessmentAnswer.findUnique({
+      where: { id: answerId },
+      include: {
+        assessment: {
+          select: { companyId: true }
+        }
+      }
+    })
+
+    if (!answer) {
+      return { error: 'Resposta não encontrada' }
+    }
+
+    const membership = await prisma.membership.findFirst({
+      where: {
+        userId: user.id,
+        companyId: answer.assessment.companyId,
+        status: 'ACTIVE'
+      }
+    })
+
+    if (!membership) {
+      return { error: 'Sem permissão para visualizar evidências deste diagnóstico' }
+    }
+
     const evidences = await prisma.evidence.findMany({
       where: { answerId },
       orderBy: { uploadedAt: 'desc' }

@@ -67,6 +67,8 @@ export function DiagnosticFindings({ assessment }: DiagnosticFindingsProps) {
   }
 
   if (findings.length === 0) {
+    const isCompleted = assessment.id && !['DRAFT', 'IN_PROGRESS'].includes(assessment.id)
+    
     return (
       <Card>
         <CardContent className="py-12">
@@ -76,7 +78,10 @@ export function DiagnosticFindings({ assessment }: DiagnosticFindingsProps) {
               Nenhum achado identificado
             </h3>
             <p className="text-sm text-muted-foreground max-w-md mx-auto">
-              Todas as respostas estão conformes. O diagnóstico não identificou não conformidades.
+              {isCompleted 
+                ? 'Todas as respostas estão conformes. O diagnóstico não identificou não conformidades.'
+                : 'Os achados serão gerados automaticamente quando você finalizar o diagnóstico. Achados são criados para: respostas "Não" em perguntas booleanas ou pontuação ≤ 3 em perguntas de escala.'
+              }
             </p>
           </div>
         </CardContent>

@@ -135,16 +135,41 @@ export function EvidenceUpload({
                 <p className="font-medium truncate">{evidence.fileName}</p>
                 <p className="text-gray-500">{formatFileSize(evidence.fileSize)}</p>
               </div>
-              {evidence.mimeType.startsWith('image/') && (
-                <a
-                  href={evidence.fileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-teal-600 hover:text-teal-700 underline"
-                >
-                  Ver
-                </a>
-              )}
+              <button
+                onClick={() => {
+                  const link = document.createElement('a')
+                  link.href = evidence.fileUrl
+                  link.download = evidence.fileName
+                  if (evidence.mimeType.startsWith('image/') || evidence.mimeType === 'application/pdf') {
+                    const win = window.open()
+                    if (win) {
+                      win.document.write(`
+                        <html>
+                          <head>
+                            <title>${evidence.fileName}</title>
+                            <style>
+                              body { margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f3f4f6; }
+                              img { max-width: 100%; max-height: 100vh; object-fit: contain; }
+                              iframe { width: 100vw; height: 100vh; border: none; }
+                            </style>
+                          </head>
+                          <body>
+                            ${evidence.mimeType.startsWith('image/') 
+                              ? `<img src="${evidence.fileUrl}" alt="${evidence.fileName}" />`
+                              : `<iframe src="${evidence.fileUrl}"></iframe>`
+                            }
+                          </body>
+                        </html>
+                      `)
+                    }
+                  } else {
+                    link.click()
+                  }
+                }}
+                className="text-teal-600 hover:text-teal-700 underline text-xs font-medium"
+              >
+                Ver
+              </button>
               {!disabled && (
                 <button
                   onClick={() => handleDelete(evidence.id)}

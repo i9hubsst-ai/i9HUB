@@ -168,7 +168,22 @@ export async function getAssessmentById(assessmentId: string) {
       return { error: 'Sem permissão para acessar este diagnóstico' }
     }
 
-    return { success: true, assessment }
+    // Buscar informações do usuário criador
+    let createdByUser = null
+    try {
+      const { createClient } = await import('@/lib/supabase/server')
+      const supabase = await createClient()
+      const { data: userData } = await supabase.auth.admin.getUserById(assessment.createdBy)
+      createdByUser = userData?.user ? {
+        id: userData.user.id,
+        email: userData.user.email || 'Desconhecido',
+        name: userData.user.user_metadata?.name || userData.user.email?.split('@')[0] || 'Usuário'
+      } : null
+    } catch (error) {
+      console.error('Erro ao buscar dados do usuário criador:', error)
+    }
+
+    return { success: true, assessment: { ...assessment, createdByUser } }
   } catch (error) {
     console.error('Erro ao buscar diagnóstico:', error)
     return { error: 'Erro ao buscar diagnóstico' }

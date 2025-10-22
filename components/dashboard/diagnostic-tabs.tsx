@@ -67,7 +67,9 @@ export function DiagnosticTabs({ assessment }: DiagnosticTabsProps) {
                 <User className="h-5 w-5 text-muted-foreground" />
                 <div>
                   <p className="text-sm text-muted-foreground">Autor</p>
-                  <p className="font-medium">user-xyz</p>
+                  <p className="font-medium">
+                    {assessment.createdByUser?.name || assessment.createdByUser?.email || 'Usuário'}
+                  </p>
                 </div>
               </div>
               

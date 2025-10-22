@@ -65,10 +65,12 @@ export default function NewDiagnosticPage() {
       const result = await createAssessment(companyId, formData)
       if (result?.error) {
         setError(result.error)
+        setLoading(false)
+      } else if (result?.success && result?.assessmentId) {
+        window.location.href = `/dashboard/diagnostics/${result.assessmentId}`
       }
     } catch (err) {
       setError('Erro ao criar diagnóstico')
-    } finally {
       setLoading(false)
     }
   }

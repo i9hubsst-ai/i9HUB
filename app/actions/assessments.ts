@@ -40,7 +40,7 @@ export async function createAssessment(companyId: string, formData: FormData) {
     })
 
     revalidatePath('/dashboard/diagnostics')
-    redirect(`/dashboard/diagnostics/${assessment.id}`)
+    return { success: true, assessmentId: assessment.id }
   } catch (error) {
     console.error('Erro ao criar diagnóstico:', error)
     return { error: 'Erro ao criar diagnóstico' }

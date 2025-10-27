@@ -12,6 +12,49 @@ datasource db {
 }
 
 // ============================================
+// AI AND KNOWLEDGE BASE
+// ============================================
+
+model AIPromptConfig {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  name          String
+  description   String?
+  systemPrompt  String   @db.Text
+  temperature   Float    @default(0.7)
+  category      String   // NR12, NR35, ISO45001, etc.
+  isActive      Boolean  @default(true)
+  createdBy     String   // userId
+  company       Company  @relation(fields: [companyId], references: [id])
+  companyId     String
+
+  @@index([category])
+  @@index([companyId])
+}
+
+model KnowledgeSource {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  type          String   // URL, PDF, TEXT
+  title         String
+  description   String?
+  content       String   @db.Text
+  category      String   // NR12, NR35, ISO45001, etc.
+  url           String?  // Para fontes online
+  fileKey       String?  // Para arquivos armazenados (PDFs)
+  embedding     Unsupported("vector")?  // Vetor de embedding para busca semântica
+  isActive      Boolean  @default(true)
+  createdBy     String   // userId
+  company       Company  @relation(fields: [companyId], references: [id])
+  companyId     String
+
+  @@index([category])
+  @@index([companyId])
+}
+
+// ============================================
 // CORE ENTITIES
 // ============================================
 
@@ -26,9 +69,11 @@ model Company {
   memberships       Membership[]
   employees         Employee[]
   assessments       Assessment[]
-  actionPlans       ActionPlan[]
+  actionPlans      ActionPlan[]
   modulePermissions ModulePermission[]
-  auditLogs         AuditLog[]
+  auditLogs        AuditLog[]
+  aiPrompts        AIPromptConfig[]
+  knowledgeSources KnowledgeSource[]
 
   @@map("companies")
 }
@@ -519,4 +564,42 @@ model KnowledgeEmbedding {
   @@index([sourceType])
   @@index([sourceId])
   @@map("knowledge_embeddings")
+}
+
+// ============================================
+// AI FEEDBACK SYSTEM
+// ============================================
+
+enum FeedbackType {
+  POSITIVE
+  NEGATIVE
+}
+
+enum FeedbackStatus {
+  PENDING     // Aguardando processamento
+  PROCESSED   // Já foi processado (adicionado à base de conhecimento)
+  REVIEWED    // Revisado manualmente
+  IGNORED     // Marcado para ignorar
+}
+
+model AIFeedback {
+  id          String         @id @default(uuid())
+  messageId   String         @unique // ID único da conversa
+  userId      String?        // Usuário que deu o feedback (opcional para analytics)
+  userQuery   String         @db.Text // Pergunta original do usuário
+  aiResponse  String         @db.Text // Resposta da IA que foi avaliada
+  feedback    FeedbackType   // POSITIVE ou NEGATIVE
+  status      FeedbackStatus @default(PENDING)
+  processedAt DateTime?      // Quando foi processado
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Metadata opcional para análise
+  metadata    Json? // Pode incluir: modelo usado, tempo de resposta, contexto RAG, etc.
+
+  @@index([feedback])
+  @@index([status])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("ai_feedbacks")
 }

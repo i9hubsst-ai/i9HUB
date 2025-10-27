@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { getCurrentUser, getUserDisplayRole } from '@/lib/auth'
 import { UserNav } from '@/components/dashboard/user-nav'
 import { redirect } from 'next/navigation'
+import { AIChatButton } from '@/components/dashboard/ai-assistant-button'
 
 export default async function DashboardLayout({
   children,
@@ -62,10 +63,7 @@ export default async function DashboardLayout({
         </nav>
 
         <div className="p-4 border-t border-sidebar-border">
-          <button className="flex items-center gap-3 px-4 py-3 w-full rounded-lg bg-accent hover:bg-accent/90 text-accent-foreground transition-colors">
-            <Bot className="h-5 w-5" />
-            <span className="font-medium">Assistente IA</span>
-          </button>
+          <AIChatButton />
         </div>
       </aside>
 

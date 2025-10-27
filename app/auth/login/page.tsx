@@ -37,7 +37,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-6">
         <div className="flex justify-center">
           <Image
-            src="/images/hubsst-logo-new.png?v=2"
+            src="/images/hubsst-logo.png"
             alt="HUBSST Logo"
             width={150}
             height={150}

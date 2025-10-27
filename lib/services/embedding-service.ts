@@ -1,10 +1,11 @@
 /**
- * Serviço de Geração de Embeddings usando OpenAI
+ * Serviço de Geração de Embeddings usando OpenAI - Enhanced for RAG
  * 
  * Este serviço é responsável por:
  * 1. Gerar embeddings vetoriais de textos usando OpenAI API
- * 2. Armazenar embeddings no banco de dados
- * 3. Prover interface para busca vetorial
+ * 2. Prover interface para busca vetorial RAG
+ * 3. Processar documentos para base de conhecimento
+ * 4. Suporte a feedback e aprendizado contínuo
  */
 
 import OpenAI from 'openai'
@@ -15,7 +16,7 @@ const openai = new OpenAI({
 
 export interface EmbeddingInput {
   text: string
-  sourceType: 'TEMPLATE' | 'ASSESSMENT' | 'ACTION_PLAN' | 'MTE_STANDARD' | 'ISO_STANDARD' | 'BEST_PRACTICE'
+  sourceType: 'TEMPLATE' | 'ASSESSMENT' | 'ACTION_PLAN' | 'MTE_STANDARD' | 'ISO_STANDARD' | 'BEST_PRACTICE' | 'CHAT_APPROVED' | 'NR_DOCUMENT'
   sourceId: string
   metadata?: Record<string, any>
 }
@@ -23,6 +24,27 @@ export interface EmbeddingInput {
 export interface EmbeddingResult {
   embedding: number[]
   tokensUsed: number
+}
+
+export interface DocumentChunk {
+  id: string
+  text: string
+  embedding?: number[]
+  metadata: {
+    source: string
+    type: 'nr' | 'iso' | 'template' | 'action_plan' | 'chat_approved'
+    category?: string
+    company_id?: string
+    nr_number?: string
+    created_at: Date
+    approved_by?: string
+  }
+}
+
+export interface SearchResult {
+  chunk: DocumentChunk
+  similarity: number
+  relevanceScore: number
 }
 
 /**
@@ -142,4 +164,167 @@ export function cosineSimilarity(vecA: number[], vecB: number[]): number {
   }
 
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB))
+}
+
+/**
+ * Processa documento para RAG: divide em chunks e gera embeddings
+ */
+export async function processDocumentForRAG(
+  content: string,
+  metadata: DocumentChunk['metadata']
+): Promise<DocumentChunk[]> {
+  try {
+    console.log(`📄 [RAG] Processando documento: ${metadata.source}`)
+    
+    // Divide em chunks menores
+    const textChunks = chunkText(content, 1500, 150)
+    
+    // Gera embeddings para todos os chunks
+    const embeddingResults = await generateEmbeddingsBatch(textChunks)
+    
+    // Cria DocumentChunks
+    const documentChunks: DocumentChunk[] = textChunks.map((text, index) => ({
+      id: `${metadata.source}_chunk_${index}`,
+      text: prepareTextForEmbedding(text),
+      embedding: embeddingResults[index]?.embedding,
+      metadata: {
+        ...metadata,
+        created_at: new Date(),
+      }
+    }))
+
+    console.log(`✅ [RAG] ${documentChunks.length} chunks processados para ${metadata.source}`)
+    return documentChunks
+  } catch (error) {
+    console.error('❌ [RAG] Erro ao processar documento:', error)
+    throw error
+  }
+}
+
+/**
+ * Busca semântica usando embeddings
+ */
+export async function semanticSearch(
+  query: string,
+  documentChunks: DocumentChunk[],
+  topK: number = 5,
+  minSimilarity: number = 0.7
+): Promise<SearchResult[]> {
+  try {
+    console.log(`🔍 [RAG] Buscando: "${query}" em ${documentChunks.length} chunks`)
+    
+    // Gera embedding da query
+    const queryResult = await generateEmbedding(query)
+    const queryEmbedding = queryResult.embedding
+    
+    // Calcula similaridade para todos os chunks
+    const results: SearchResult[] = documentChunks
+      .filter(chunk => chunk.embedding) // Só chunks com embedding
+      .map(chunk => {
+        const similarity = cosineSimilarity(queryEmbedding, chunk.embedding!)
+        
+        // Calcula score de relevância baseado em tipo e similaridade
+        let relevanceScore = similarity
+        
+        // Boost para tipos específicos
+        if (chunk.metadata.type === 'nr' && query.toLowerCase().includes('nr')) {
+          relevanceScore *= 1.2
+        }
+        if (chunk.metadata.type === 'template' && query.toLowerCase().includes('template')) {
+          relevanceScore *= 1.1
+        }
+        if (chunk.metadata.type === 'chat_approved') {
+          relevanceScore *= 1.15 // Prioriza conteúdo já aprovado
+        }
+        
+        return {
+          chunk,
+          similarity,
+          relevanceScore
+        }
+      })
+      .filter(result => result.similarity >= minSimilarity)
+      .sort((a, b) => b.relevanceScore - a.relevanceScore)
+      .slice(0, topK)
+
+    console.log(`✅ [RAG] ${results.length} resultados encontrados (similarity >= ${minSimilarity})`)
+    return results
+  } catch (error) {
+    console.error('❌ [RAG] Erro na busca semântica:', error)
+    throw error
+  }
+}
+
+/**
+ * Constrói contexto RAG a partir dos resultados da busca
+ */
+export function buildRAGContext(searchResults: SearchResult[], maxTokens: number = 3000): string {
+  let context = ''
+  let tokenCount = 0
+  
+  for (const result of searchResults) {
+    const chunkText = result.chunk.text
+    const chunkTokens = Math.ceil(chunkText.length / 4) // Aproximação de tokens
+    
+    if (tokenCount + chunkTokens > maxTokens) {
+      break
+    }
+    
+    // Adiciona metadados do source
+    const source = result.chunk.metadata.source
+    const type = result.chunk.metadata.type
+    const similarity = (result.similarity * 100).toFixed(1)
+    
+    context += `[FONTE: ${source} (${type}) - Relevância: ${similarity}%]\n`
+    context += `${chunkText}\n\n`
+    
+    tokenCount += chunkTokens
+  }
+  
+  console.log(`📝 [RAG] Contexto construído: ~${tokenCount} tokens de ${searchResults.length} fontes`)
+  return context
+}
+
+/**
+ * Pipeline RAG completo: busca + contexto + geração
+ */
+export async function ragPipeline(
+  query: string,
+  documentChunks: DocumentChunk[],
+  systemPrompt: string = ''
+): Promise<{
+  context: string
+  searchResults: SearchResult[]
+  enhancedPrompt: string
+}> {
+  try {
+    console.log(`🚀 [RAG] Iniciando pipeline para: "${query}"`)
+    
+    // 1. Busca semântica
+    const searchResults = await semanticSearch(query, documentChunks, 5, 0.65)
+    
+    // 2. Constrói contexto
+    const context = buildRAGContext(searchResults, 3000)
+    
+    // 3. Monta prompt enriquecido
+    const enhancedPrompt = `${systemPrompt}
+
+CONTEXTO ESPECÍFICO (baseado em documentos oficiais e conhecimento aprovado):
+${context}
+
+PERGUNTA DO USUÁRIO: ${query}
+
+Responda baseando-se prioritariamente no CONTEXTO ESPECÍFICO fornecido acima. Se o contexto não contiver informações suficientes, mencione isso na resposta.`
+
+    console.log(`✅ [RAG] Pipeline completo: ${searchResults.length} fontes, contexto de ~${Math.ceil(context.length/4)} tokens`)
+    
+    return {
+      context,
+      searchResults,
+      enhancedPrompt
+    }
+  } catch (error) {
+    console.error('❌ [RAG] Erro no pipeline:', error)
+    throw error
+  }
 }

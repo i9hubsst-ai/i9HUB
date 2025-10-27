@@ -7,27 +7,6 @@ export default async function DashboardPage() {
   const result = await getDashboardStats()
 
   if (result.error) {
-    // Se é erro de falta de admin, redirecionar para setup
-    if (result.error.includes('/setup')) {
-      return (
-        <div className="p-8">
-          <Card className="border-amber-500 bg-amber-50">
-            <CardHeader>
-              <CardTitle className="text-amber-900">Configuração Necessária</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-amber-800">{result.error}</p>
-              <Link href="/setup">
-                <button className="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors">
-                  Ir para Configuração Inicial
-                </button>
-              </Link>
-            </CardContent>
-          </Card>
-        </div>
-      )
-    }
-    
     return (
       <div className="p-8">
         <Card className="border-destructive">

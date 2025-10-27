@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -16,6 +17,15 @@ const nextConfig: NextConfig = {
         pathname: '/avatar/**',
       },
     ],
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/dashboard',
+        permanent: true,
+      },
+    ]
   },
   experimental: {
     serverActions: {

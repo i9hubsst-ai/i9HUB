@@ -60,19 +60,21 @@ export default function ForgotPasswordPage() {
           </CardHeader>
           <CardContent>
             {success ? (
-              <div className="bg-accent/10 text-accent-foreground px-4 py-3 rounded-lg text-sm text-center">
+              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm text-center shadow-sm">
                 Email enviado! Verifique sua caixa de entrada para resetar sua senha.
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
                 {error && (
-                  <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-lg text-sm">
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm shadow-sm">
                     {error}
                   </div>
                 )}
                 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                    Email
+                  </Label>
                   <Input
                     id="email"
                     name="email"
@@ -80,6 +82,7 @@ export default function ForgotPasswordPage() {
                     placeholder="seu@email.com"
                     required
                     disabled={loading}
+                    className="h-10 px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
                   />
                 </div>
                 

@@ -9,12 +9,6 @@ export async function getDashboardStats() {
     return { error: 'Não autorizado' }
   }
 
-  // Verificar se existe algum admin no sistema
-  const adminCount = await prisma.platformAdmin.count()
-  if (adminCount === 0) {
-    return { error: 'Nenhum administrador configurado. Acesse /setup para configurar.' }
-  }
-
   try {
     const isAdmin = await isPlatformAdmin(user.id)
 

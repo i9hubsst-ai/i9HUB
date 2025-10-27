@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
-import { buildAIContext } from '@/lib/services/rag-service'
+// import { buildAIContext } from '@/lib/services/rag-service' // Temporariamente desabilitado
 
 const genai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY || '',
@@ -47,19 +47,19 @@ export async function POST(request: NextRequest) {
       // Construir query de busca baseada no tipo e descrição
       const searchQuery = `${name} ${description} ${type}`
       
-      // Buscar apenas normas MTE relevantes
-      ragContext = await buildAIContext(searchQuery, {
-        includeStandards: true,
-        includeTemplates: false,
-        includeAssessments: false,
-        maxTokens: 2000 // Limite para não sobrecarregar o prompt
-      })
+      // Buscar apenas normas MTE relevantes (temporariamente desabilitado)
+      // ragContext = await buildAIContext(searchQuery, {
+      //   includeStandards: true,
+      //   includeTemplates: false,
+      //   includeAssessments: false,
+      //   maxTokens: 2000 // Limite para não sobrecarregar o prompt
+      // })
 
-      // Extrair quais normas foram consultadas (para metadata)
-      const nrMatches = ragContext.match(/NR-\d+/g)
-      if (nrMatches) {
-        consultedStandards = [...new Set(nrMatches)] // Remover duplicatas
-      }
+      // Extrair quais normas foram consultadas (para metadata) - temporariamente desabilitado
+      // const nrMatches = ragContext.match(/NR-\d+/g)
+      // if (nrMatches) {
+      //   consultedStandards = [...new Set(nrMatches)] // Remover duplicatas
+      // }
     } catch (error) {
       console.log('Aviso: Não foi possível buscar contexto RAG:', error)
       // Continuar sem contexto RAG se houver erro (graceful degradation)

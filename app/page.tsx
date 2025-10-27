@@ -7,12 +7,12 @@ export default function Home() {
       <div className="max-w-4xl w-full text-center space-y-8">
         <div className="flex justify-center">
           <Image
-            src="/images/hubsst-logo-new.png?v=2"
+            src="/images/hubsst-logo.png"
             alt="HUBSST Logo"
             width={300}
             height={300}
             priority
-            className="drop-shadow-2xl"
+            className="drop-shadow-lg"
           />
         </div>
         

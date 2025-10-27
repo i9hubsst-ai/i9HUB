@@ -128,7 +128,7 @@ export default async function DiagnosticsPage() {
         ) : (
           <div className="grid gap-4">
             {assessments.map((assessment) => {
-              const status = statusConfig[assessment.status]
+              const status = statusConfig[assessment.status as keyof typeof statusConfig]
               const StatusIcon = status.icon
               const totalQuestions = 25
               const progress = (assessment._count.answers / totalQuestions) * 100
@@ -184,7 +184,7 @@ export default async function DiagnosticsPage() {
                             </div>
                             <div className="flex-1 text-center">
                               <div className="text-2xl font-bold text-primary">
-                                {Math.round(assessment.scores.reduce((acc, s) => acc + s.score, 0) / assessment.scores.length)}%
+                                {Math.round(assessment.scores.reduce((acc, s) => acc + s.weightedScore, 0) / assessment.scores.length)}%
                               </div>
                               <div className="text-sm text-muted-foreground">Pontuação Geral</div>
                             </div>

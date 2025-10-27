@@ -1,0 +1,90 @@
+[
+  {
+    "type": "template",
+    "category": "NR12",
+    "title": "Auditoria de Prensas e Similares",
+    "description": "Template para avaliação de conformidade de prensas e equipamentos similares",
+    "sections": [
+      {
+        "title": "Sistemas de Segurança",
+        "description": "Avaliação dos dispositivos e sistemas de proteção",
+        "questions": [
+          {
+            "text": "As proteções fixas estão firmemente afixadas e requerem ferramenta para remoção?",
+            "type": "BOOLEAN",
+            "reference": "NR-12 item 12.38",
+            "weight": 3,
+            "requiresEvidence": true
+          },
+          {
+            "text": "Os dispositivos de parada de emergência atendem os requisitos da norma?",
+            "type": "BOOLEAN",
+            "reference": "NR-12 item 12.56",
+            "weight": 3,
+            "requiresEvidence": true
+          }
+        ]
+      },
+      {
+        "title": "Procedimentos Operacionais",
+        "description": "Verificação dos procedimentos e documentação",
+        "questions": [
+          {
+            "text": "Existe procedimento documentado para atividades de setup?",
+            "type": "BOOLEAN",
+            "reference": "NR-12 item 12.130",
+            "weight": 2,
+            "requiresEvidence": true
+          },
+          {
+            "text": "Os operadores possuem capacitação específica documentada?",
+            "type": "BOOLEAN",
+            "reference": "NR-12 item 12.138",
+            "weight": 2,
+            "requiresEvidence": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "action_plan",
+    "category": "NR12",
+    "findings": [
+      {
+        "finding": "Proteções fixas podem ser removidas sem ferramentas",
+        "actions": [
+          {
+            "description": "Substituir fixações por parafusos de segurança que necessitam de ferramenta",
+            "deadline": "15 dias",
+            "priority": "Alta",
+            "responsible": "Manutenção"
+          },
+          {
+            "description": "Implementar checklist diário de verificação das proteções",
+            "deadline": "7 dias",
+            "priority": "Média",
+            "responsible": "Operação"
+          }
+        ]
+      },
+      {
+        "finding": "Botão de emergência com difícil acesso",
+        "actions": [
+          {
+            "description": "Reposicionar botão de emergência para local de fácil acesso",
+            "deadline": "7 dias",
+            "priority": "Alta",
+            "responsible": "Manutenção"
+          },
+          {
+            "description": "Instalar botões de emergência adicionais nos pontos críticos",
+            "deadline": "30 dias",
+            "priority": "Alta",
+            "responsible": "Manutenção"
+          }
+        ]
+      }
+    ]
+  }
+]

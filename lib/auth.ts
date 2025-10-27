@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma'
-import { Role } from '@prisma/client'
+// import { Role } from '@prisma/client' // Temporariamente comentado - será usado via string literals
 
 export async function getCurrentUser() {
   const supabase = await createClient()
@@ -29,13 +29,41 @@ export async function getUserMemberships(userId: string) {
 }
 
 export async function isPlatformAdmin(userId: string): Promise<boolean> {
-  const admin = await prisma.platformAdmin.findUnique({
+  // Primeiro verifica se existe um registro por userId
+  const adminByUserId = await prisma.platformAdmin.findUnique({
     where: { userId }
   })
-  return !!admin
+  
+  if (adminByUserId) {
+    return true
+  }
+  
+  // Se não encontrou por userId, busca pelo email do usuário
+  const user = await getCurrentUser()
+  if (user?.email === 'i9.hubsst@gmail.com') {
+    // Se é o admin, verifica se já tem registro
+    try {
+      const existingAdmin = await prisma.platformAdmin.findUnique({
+        where: { userId }
+      })
+      
+      if (!existingAdmin) {
+        await prisma.platformAdmin.create({
+          data: { userId }
+        })
+      }
+      
+      return true
+    } catch (error) {
+      console.log('Admin já existe ou erro:', error)
+      return true // Considera como admin mesmo se houver erro
+    }
+  }
+  
+  return false
 }
 
-export async function getUserRole(userId: string, companyId: string): Promise<Role | null> {
+export async function getUserRole(userId: string, companyId: string): Promise<string | null> {
   const membership = await prisma.membership.findUnique({
     where: {
       userId_companyId: {
@@ -56,7 +84,7 @@ export async function requireAuth() {
   return user
 }
 
-export async function requireRole(userId: string, companyId: string, allowedRoles: Role[]) {
+export async function requireRole(userId: string, companyId: string, allowedRoles: string[]) {
   const role = await getUserRole(userId, companyId)
   const isAdmin = await isPlatformAdmin(userId)
   
@@ -69,7 +97,7 @@ export async function requireRole(userId: string, companyId: string, allowedRole
   return true
 }
 
-export async function getUserDisplayRole(userId: string): Promise<{ role: Role | 'PLATFORM_ADMIN', label: string }> {
+export async function getUserDisplayRole(userId: string): Promise<{ role: string, label: string }> {
   // Check if user is Platform Admin first
   const isAdmin = await isPlatformAdmin(userId)
   
@@ -93,7 +121,7 @@ export async function getUserDisplayRole(userId: string): Promise<{ role: Role |
   // Use the first membership's role
   const primaryRole = memberships[0].role
   
-  const roleLabels: Record<Role, string> = {
+  const roleLabels: Record<string, string> = {
     PLATFORM_ADMIN: 'Admin da Plataforma',
     COMPANY_ADMIN: 'Admin da Empresa',
     ENGINEER: 'Engenheiro SST',
@@ -105,4 +133,15 @@ export async function getUserDisplayRole(userId: string): Promise<{ role: Role |
     role: primaryRole,
     label: roleLabels[primaryRole]
   }
+}
+
+export async function getUserPrimaryCompanyId(userId: string): Promise<string | null> {
+  const memberships = await getUserMemberships(userId)
+  
+  if (memberships.length === 0) {
+    return null
+  }
+  
+  // Return the first active membership's companyId
+  return memberships[0].companyId
 }

@@ -8,39 +8,98 @@ import { prisma } from '@/lib/prisma'
 export async function login(formData: FormData) {
   const supabase = await createClient()
 
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+
+  if (!email || !password) {
+    return { error: 'Email e senha são obrigatórios' }
   }
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  try {
+    console.log('Iniciando processo de login para:', email)
+    
+    // Primeiro faz logout para garantir que não há sessão ativa
+    await supabase.auth.signOut()
+    
+    console.log('Logout realizado, tentando login...')
 
-  if (error) {
-    return { error: error.message }
+    // Tenta fazer login
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+    
+    console.log('Resultado do login:', error ? 'Erro' : 'Sucesso')
+
+    if (error) {
+      if (error.message?.includes('Invalid login credentials')) {
+        return { error: 'Email ou senha inválidos' }
+      }
+      return { error: error.message || 'Erro desconhecido' }
+    }
+
+    if (data.session) {
+      revalidatePath('/dashboard', 'layout')
+      redirect('/dashboard')
+    }
+    
+    return { error: 'Erro ao criar sessão' }
+  } catch (err) {
+    console.error('Error during login:', err)
+    return { error: 'Erro ao fazer login. Tente novamente.' }
   }
 
-  revalidatePath('/dashboard', 'layout')
-  redirect('/dashboard')
+    // Tenta fazer login
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (error) {
+      const errorMessage = (error as any)?.message || 'Erro desconhecido'
+      if (errorMessage.includes('Invalid login credentials')) {
+        return { error: 'Email ou senha inválidos' }
+      }
+      return { error: errorMessage }
+    }
+
+    revalidatePath('/dashboard', 'layout')
+    redirect('/dashboard')
 }
 
 export async function signup(formData: FormData) {
   const supabase = await createClient()
 
+  // Validação dos campos obrigatórios
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+  const name = formData.get('name') as string
+  
+  if (!email || !password || !name) {
+    return { error: 'Todos os campos são obrigatórios' }
+  }
+
+  // Validação básica de email
+  if (!email.includes('@')) {
+    return { error: 'E-mail inválido' }
+  }
+
   const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
+    email,
+    password,
     options: {
-      data: {
-        name: formData.get('name') as string,
-      },
+      data: { name },
       emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
     }
   }
 
-  const { data: authData, error } = await supabase.auth.signUp(data)
+  const { data: authData, error: authError } = await supabase.auth.signUp(data)
 
-  if (error) {
-    return { error: error.message }
+  if (authError) {
+    if (authError.message?.includes('email')) {
+      return { error: 'Este e-mail já está em uso' }
+    }
+    return { error: authError.message || 'Erro desconhecido' }
   }
 
   if (authData.user) {
@@ -48,25 +107,71 @@ export async function signup(formData: FormData) {
     const companyCnpj = formData.get('companyCnpj') as string
 
     if (companyName && companyCnpj) {
-      try {
-        const company = await prisma.company.create({
-          data: {
-            name: companyName,
-            cnpj: companyCnpj,
-          }
-        })
+      // Validação básica do CNPJ (remove caracteres especiais)
+      const cleanCnpj = companyCnpj.replace(/[^\d]/g, '')
+      console.log('CNPJ limpo:', cleanCnpj)
+      
+      if (cleanCnpj.length !== 14) {
+        return { error: 'CNPJ inválido' }
+      }
 
-        await prisma.membership.create({
+      try {
+        console.log('Procurando empresa existente...')
+        // Verifica se já existe empresa com este CNPJ
+        const existingCompany = await prisma.company.findUnique({
+          where: { cnpj: cleanCnpj }
+        })
+        console.log('Empresa encontrada:', existingCompany)
+
+        let companyId;
+        let isNewCompany = false;
+
+        if (existingCompany) {
+          console.log('Usando empresa existente')
+          // Se a empresa já existe, usa ela
+          companyId = existingCompany.id;
+        } else {
+          console.log('Criando nova empresa')
+          isNewCompany = true;
+          // Se não existe, cria uma nova
+          const newCompany = await prisma.company.create({
+            data: {
+              name: companyName,
+              cnpj: cleanCnpj,
+            }
+          });
+          companyId = newCompany.id;
+          console.log('Nova empresa criada:', newCompany)
+        }
+
+        console.log('Verificando membership existente...')
+        // Verifica se o usuário já tem vínculo com esta empresa
+        const existingMembership = await prisma.membership.findFirst({
+          where: {
+            userId: authData.user.id,
+            companyId: companyId
+          }
+        });
+        console.log('Membership encontrado:', existingMembership)
+
+        if (existingMembership) {
+          return { error: 'Você já está vinculado a esta empresa' }
+        }
+
+        console.log('Criando novo membership...')
+        // Cria o vínculo do usuário com a empresa
+        const membership = await prisma.membership.create({
           data: {
             userId: authData.user.id,
-            companyId: company.id,
-            role: 'COMPANY_ADMIN',
+            companyId: companyId,
+            role: isNewCompany ? 'COMPANY_ADMIN' : 'EMPLOYER',
             status: 'ACTIVE',
           }
         })
+        console.log('Membership criado:', membership)
       } catch (err) {
         console.error('Erro ao criar empresa:', err)
-        return { error: 'Erro ao criar empresa. Verifique se o CNPJ já não está cadastrado.' }
+        return { error: 'Erro ao criar empresa. Por favor, tente novamente.' }
       }
     }
   }
@@ -87,11 +192,11 @@ export async function resetPassword(formData: FormData) {
   const email = formData.get('email') as string
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/reset-password`,
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?type=recovery&next=/auth/reset-password`,
   })
 
   if (error) {
-    return { error: error.message }
+    return { error: error.message || 'Erro desconhecido' }
   }
 
   return { success: true }
@@ -106,7 +211,7 @@ export async function updatePassword(formData: FormData) {
   })
 
   if (error) {
-    return { error: error.message }
+    return { error: error.message || 'Erro desconhecido' }
   }
 
   revalidatePath('/', 'layout')

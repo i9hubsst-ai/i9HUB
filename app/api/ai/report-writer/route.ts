@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { GoogleGenAI } from '@google/genai'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { buildAIContext } from '@/lib/services/rag-service'
+// import { buildAIContext } from '@/lib/services/rag-service' // Temporariamente desabilitado
 
 const genai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY || '',
@@ -103,19 +103,19 @@ export async function POST(request: NextRequest) {
       
       const searchQuery = searchQueries.join(' ')
       
-      // Buscar apenas normas MTE relevantes
-      ragContext = await buildAIContext(searchQuery, {
-        includeStandards: true,
-        includeTemplates: false,
-        includeAssessments: false,
-        maxTokens: 2500 // Limite maior para planos de ação
-      })
+      // Buscar apenas normas MTE relevantes (temporariamente desabilitado)
+      // ragContext = await buildAIContext(searchQuery, {
+      //   includeStandards: true,
+      //   includeTemplates: false,
+      //   includeAssessments: false,
+      //   maxTokens: 2500 // Limite maior para planos de ação
+      // })
 
-      // Extrair quais normas foram consultadas
-      const nrMatches = ragContext.match(/NR-\d+/g)
-      if (nrMatches) {
-        consultedStandards = [...new Set(nrMatches)]
-      }
+      // Extrair quais normas foram consultadas (temporariamente desabilitado)
+      // const nrMatches = ragContext.match(/NR-\d+/g)
+      // if (nrMatches) {
+      //   consultedStandards = [...new Set(nrMatches)]
+      // }
     } catch (error) {
       console.log('Aviso: Não foi possível buscar contexto RAG:', error)
       // Continuar sem contexto RAG se houver erro (graceful degradation)

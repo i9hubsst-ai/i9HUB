@@ -32,9 +32,13 @@ export default function RegisterPage() {
       const result = await signup(formData)
       if (result?.error) {
         setError(result.error)
+        return
       }
+      // Se chegou aqui, significa que o cadastro foi bem sucedido
+      // O redirect já é feito dentro da action
     } catch (err) {
-      setError('Erro ao criar conta. Tente novamente.')
+      console.error('Erro no registro:', err)
+      setError('Erro inesperado ao criar conta. Por favor, tente novamente.')
     } finally {
       setLoading(false)
     }

@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server'
 import { geminiService } from '@/lib/services/gemini-service'
 
-export const runtime = "nodejs"
-export const dynamic = "force-dynamic"
-
 export async function POST(request: Request) {
   try {
     const { findings, context } = await request.json()

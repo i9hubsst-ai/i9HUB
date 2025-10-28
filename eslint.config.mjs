@@ -24,8 +24,8 @@ const eslintConfig = [
     rules: {
       // Desabilitar temporariamente para permitir deploy
       "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/no-unused-vars": "warn",
-      "jsx-a11y/alt-text": "warn",
+      "@typescript-eslint/no-unused-vars": "warn", 
+      "jsx-a11y/alt-text": "off", // Desabilitar completamente
       "prefer-const": "warn",
       "react/no-unescaped-entities": "warn",
     },

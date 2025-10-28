@@ -7,15 +7,6 @@ import crypto from 'crypto'
  * Não depende das sessões do Supabase
  */
 
-interface ResetToken {
-  id: string
-  userId: string
-  token: string
-  email: string
-  expiresAt: Date
-  used: boolean
-}
-
 /**
  * Gera um token único para reset de senha
  */

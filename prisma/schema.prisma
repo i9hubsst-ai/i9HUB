@@ -1,81 +1,429 @@
-// Prisma schema for i9HUBSST - Occupational Health and Safety Management Platform
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-  extensions = [vector]
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [uuid_ossp(map: "uuid-ossp", schema: "extensions"), vector]
 }
 
-// ============================================
-// AI AND KNOWLEDGE BASE
-// ============================================
-
 model AIPromptConfig {
-  id            String   @id @default(cuid())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  name          String
-  description   String?
-  systemPrompt  String   @db.Text
-  temperature   Float    @default(0.7)
-  category      String   // NR12, NR35, ISO45001, etc.
-  isActive      Boolean  @default(true)
-  createdBy     String   // userId
-  company       Company  @relation(fields: [companyId], references: [id])
-  companyId     String
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  name         String
+  description  String?
+  systemPrompt String
+  temperature  Float    @default(0.7)
+  category     String
+  isActive     Boolean  @default(true)
+  createdBy    String
+  companyId    String
+  company      Company  @relation(fields: [companyId], references: [id])
 
   @@index([category])
   @@index([companyId])
 }
 
 model KnowledgeSource {
-  id            String   @id @default(cuid())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  type          String   // URL, PDF, TEXT
-  title         String
-  description   String?
-  content       String   @db.Text
-  category      String   // NR12, NR35, ISO45001, etc.
-  url           String?  // Para fontes online
-  fileKey       String?  // Para arquivos armazenados (PDFs)
-  embedding     Unsupported("vector")?  // Vetor de embedding para busca semântica
-  isActive      Boolean  @default(true)
-  createdBy     String   // userId
-  company       Company  @relation(fields: [companyId], references: [id])
-  companyId     String
+  id          String                 @id @default(cuid())
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+  type        String
+  title       String
+  description String?
+  content     String
+  category    String
+  url         String?
+  fileKey     String?
+  embedding   Unsupported("vector")?
+  isActive    Boolean                @default(true)
+  createdBy   String
+  companyId   String
+  company     Company                @relation(fields: [companyId], references: [id])
 
   @@index([category])
   @@index([companyId])
 }
 
-// ============================================
-// CORE ENTITIES
-// ============================================
-
 model Company {
+  id                String             @id @default(uuid())
+  name              String
+  cnpj              String             @unique
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  aiPrompts         AIPromptConfig[]
+  knowledgeSources  KnowledgeSource[]
+  actionPlans       ActionPlan[]
+  assessments       Assessment[]
+  auditLogs         AuditLog[]
+  employees         Employee[]
+  memberships       Membership[]
+  modulePermissions ModulePermission[]
+
+  @@map("companies")
+}
+
+model Membership {
+  id         String           @id @default(uuid())
+  userId     String
+  companyId  String
+  employeeId String?          @unique
+  role       Role
+  status     MembershipStatus @default(INVITED)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  company    Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  employee   Employee?        @relation(fields: [employeeId], references: [id])
+
+  @@unique([userId, companyId])
+  @@index([userId])
+  @@index([companyId])
+  @@index([employeeId])
+  @@map("memberships")
+}
+
+model PlatformAdmin {
   id        String   @id @default(uuid())
-  name      String
-  cnpj      String   @unique
+  userId    String   @unique
+  createdAt DateTime @default(now())
+
+  @@map("platform_admins")
+}
+
+model ModulePermission {
+  id        String   @id @default(uuid())
+  userId    String
+  companyId String
+  moduleKey String
+  canRead   Boolean  @default(false)
+  canWrite  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, companyId, moduleKey])
+  @@index([userId, companyId])
+  @@map("module_permissions")
+}
+
+model DiagnosticTemplate {
+  id          String              @id @default(uuid())
+  name        String
+  description String?
+  type        TemplateType
+  version     String              @default("1.0")
+  status      TemplateStatus      @default(DRAFT)
+  createdBy   String
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  assessments Assessment[]
+  sections    DiagnosticSection[]
+
+  @@index([type])
+  @@index([status])
+  @@map("diagnostic_templates")
+}
+
+model DiagnosticSection {
+  id         String               @id @default(uuid())
+  templateId String
+  title      String
+  order      Int
+  createdAt  DateTime             @default(now())
+  scores     AssessmentScore[]
+  questions  DiagnosticQuestion[]
+  template   DiagnosticTemplate   @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@index([templateId])
+  @@map("diagnostic_sections")
+}
+
+model DiagnosticQuestion {
+  id                    String             @id @default(uuid())
+  sectionId             String
+  text                  String
+  type                  QuestionType
+  weight                Float              @default(1.0)
+  reference             String?
+  requiresJustification Boolean            @default(false)
+  requiresEvidence      Boolean            @default(false)
+  source                QuestionSource     @default(MANUAL)
+  versionOf             String?
+  approved              Boolean            @default(false)
+  active                Boolean            @default(true)
+  createdAt             DateTime           @default(now())
+  answers               AssessmentAnswer[]
+  section               DiagnosticSection  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@index([sectionId])
+  @@index([approved])
+  @@map("diagnostic_questions")
+}
+
+model IMSSTDimension {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  order       Int
+  createdAt   DateTime @default(now())
+
+  @@map("imsst_dimensions")
+}
+
+model Assessment {
+  id           String              @id @default(uuid())
+  companyId    String
+  templateId   String?
+  createdBy    String
+  title        String
+  description  String?
+  status       AssessmentStatus    @default(DRAFT)
+  overallScore Float?
+  overallLevel Int?
+  startedAt    DateTime?
+  submittedAt  DateTime?
+  scoredAt     DateTime?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  actionPlans  ActionPlan[]
+  answers      AssessmentAnswer[]
+  scores       AssessmentScore[]
+  company      Company             @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  template     DiagnosticTemplate? @relation(fields: [templateId], references: [id])
+  evidences    Evidence[]
+  findings     Finding[]
+
+  @@index([companyId])
+  @@index([templateId])
+  @@index([createdBy])
+  @@map("assessments")
+}
+
+model AssessmentAnswer {
+  id            String             @id @default(uuid())
+  assessmentId  String
+  questionId    String
+  userId        String
+  value         Float
+  justification String?
+  evidenceUrls  String[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  assessment    Assessment         @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  question      DiagnosticQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  evidences     Evidence[]
+
+  @@unique([assessmentId, questionId])
+  @@index([assessmentId])
+  @@index([userId])
+  @@map("assessment_answers")
+}
+
+model AssessmentScore {
+  id            String            @id @default(uuid())
+  assessmentId  String
+  sectionId     String
+  rawScore      Float
+  weightedScore Float
+  level         Int
+  createdAt     DateTime          @default(now())
+  assessment    Assessment        @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  section       DiagnosticSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@unique([assessmentId, sectionId])
+  @@index([assessmentId])
+  @@map("assessment_scores")
+}
+
+model Finding {
+  id            String          @id @default(uuid())
+  assessmentId  String
+  sectionTitle  String
+  questionText  String
+  questionType  QuestionType
+  value         Float
+  reference     String?
+  justification String?
+  severity      FindingSeverity
+  evidenceCount Int             @default(0)
+  createdAt     DateTime        @default(now())
+  assessment    Assessment      @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+  @@index([severity])
+  @@map("findings")
+}
+
+model Evidence {
+  id           String            @id @default(uuid())
+  assessmentId String
+  answerId     String?
+  fileName     String
+  fileUrl      String
+  fileSize     Int
+  mimeType     String
+  uploadedBy   String
+  uploadedAt   DateTime          @default(now())
+  answer       AssessmentAnswer? @relation(fields: [answerId], references: [id], onDelete: Cascade)
+  assessment   Assessment        @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+  @@index([answerId])
+  @@map("evidences")
+}
+
+model ActionPlan {
+  id           String       @id @default(uuid())
+  assessmentId String
+  companyId    String
+  title        String
+  description  String
+  reference    String?
+  ownerUserId  String?
+  dueDate      DateTime?
+  priority     Int          @default(2)
+  status       ActionStatus @default(PENDING)
+  createdBy    String
+  aiGenerated  Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  assessment   Assessment   @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  company      Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([assessmentId])
+  @@index([companyId])
+  @@index([status])
+  @@index([priority])
+  @@map("action_plans")
+}
+
+model Employee {
+  id                    String           @id @default(uuid())
+  companyId             String
+  userId                String?
+  fullName              String
+  cpf                   String
+  birthDate             DateTime
+  gender                Gender?
+  maritalStatus         MaritalStatus?
+  nationality           String           @default("Brasileira")
+  email                 String
+  phone                 String?
+  emergencyContactName  String?
+  emergencyContactPhone String?
+  employeeNumber        String
+  admissionDate         DateTime
+  contractType          ContractType
+  workSchedule          String?
+  unit                  String?
+  department            String?
+  position              String
+  cboCode               String?
+  supervisor            String?
+  status                MembershipStatus @default(ACTIVE)
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+  company               Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  membership            Membership?
+
+  @@unique([companyId, cpf])
+  @@unique([companyId, employeeNumber])
+  @@unique([companyId, userId])
+  @@index([companyId])
+  @@index([userId])
+  @@map("employees")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String
+  companyId String?
+  action    String
+  entity    String?
+  entityId  String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  company   Company? @relation(fields: [companyId], references: [id])
+
+  @@index([userId])
+  @@index([companyId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model MteStandard {
+  id           String               @id @default(uuid())
+  nrNumber     String
+  title        String
+  section      String               @default("")
+  content      String
+  version      String
+  sourceUrl    String?
+  lastVerified DateTime             @default(now())
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  embeddings   KnowledgeEmbedding[]
+
+  @@unique([nrNumber, section, version])
+  @@index([nrNumber])
+  @@map("mte_standards")
+}
+
+model KnowledgeEmbedding {
+  id            String                 @id @default(uuid())
+  sourceType    EmbeddingSourceType
+  sourceId      String
+  content       String
+  metadata      Json?
+  embedding     Unsupported("vector")?
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  mteStandardId String?
+  mteStandard   MteStandard?           @relation(fields: [mteStandardId], references: [id], onDelete: Cascade)
+
+  @@index([sourceType])
+  @@index([sourceId])
+  @@map("knowledge_embeddings")
+}
+
+model AIFeedback {
+  id          String         @id @default(uuid())
+  messageId   String         @unique
+  userId      String?
+  userQuery   String
+  aiResponse  String
+  feedback    FeedbackType
+  status      FeedbackStatus @default(PENDING)
+  processedAt DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  metadata    Json?
+
+  @@index([feedback])
+  @@index([status])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("ai_feedbacks")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  email     String
+  expiresAt DateTime
+  used      Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
-  memberships       Membership[]
-  employees         Employee[]
-  assessments       Assessment[]
-  actionPlans      ActionPlan[]
-  modulePermissions ModulePermission[]
-  auditLogs        AuditLog[]
-  aiPrompts        AIPromptConfig[]
-  knowledgeSources KnowledgeSource[]
-
-  @@map("companies")
+  @@index([token])
+  @@index([email])
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
 }
 
 enum Role {
@@ -92,66 +440,11 @@ enum MembershipStatus {
   INACTIVE
 }
 
-model Membership {
-  id         String           @id @default(uuid())
-  userId     String // Supabase Auth user ID
-  companyId  String
-  employeeId String?          @unique // Optional link to Employee data
-  role       Role
-  status     MembershipStatus @default(INVITED)
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
-
-  // Relations
-  company  Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  employee Employee? @relation(fields: [employeeId], references: [id], onDelete: SetNull)
-
-  @@unique([userId, companyId])
-  @@index([userId])
-  @@index([companyId])
-  @@index([employeeId])
-  @@map("memberships")
-}
-
-model PlatformAdmin {
-  id        String   @id @default(uuid())
-  userId    String   @unique // Supabase Auth user ID
-  createdAt DateTime @default(now())
-
-  @@map("platform_admins")
-}
-
-// ============================================
-// MODULE PERMISSIONS
-// ============================================
-
-model ModulePermission {
-  id        String   @id @default(uuid())
-  userId    String // Supabase Auth user ID
-  companyId String
-  moduleKey String // e.g., "diagnostics", "actions", "training"
-  canRead   Boolean  @default(false)
-  canWrite  Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, companyId, moduleKey])
-  @@index([userId, companyId])
-  @@map("module_permissions")
-}
-
-// ============================================
-// DIAGNOSTIC TEMPLATES SYSTEM
-// ============================================
-
 enum TemplateType {
-  NR        // Norma Regulamentadora (NR-12, NR-35, etc)
-  ISO       // ISO Standards (ISO 45001, ISO 14001, etc)
-  IMSST     // Sistema Geral IMSST
-  CUSTOM    // Custom templates
+  NR
+  ISO
+  IMSST
+  CUSTOM
 }
 
 enum TemplateStatus {
@@ -160,88 +453,14 @@ enum TemplateStatus {
   ARCHIVED
 }
 
-model DiagnosticTemplate {
-  id          String         @id @default(uuid())
-  name        String
-  description String?
-  type        TemplateType
-  version     String         @default("1.0")
-  status      TemplateStatus @default(DRAFT)
-  createdBy   String // Supabase Auth user ID
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-
-  // Relations
-  sections    DiagnosticSection[]
-  assessments Assessment[]
-
-  @@index([type])
-  @@index([status])
-  @@map("diagnostic_templates")
-}
-
-model DiagnosticSection {
-  id         String   @id @default(uuid())
-  templateId String
-  title      String
-  order      Int
-  createdAt  DateTime @default(now())
-
-  // Relations
-  template  DiagnosticTemplate   @relation(fields: [templateId], references: [id], onDelete: Cascade)
-  questions DiagnosticQuestion[]
-  scores    AssessmentScore[]
-
-  @@index([templateId])
-  @@map("diagnostic_sections")
-}
-
 enum QuestionType {
-  BOOLEAN // Sim/Não
-  SCORE   // 1-5 scale
+  BOOLEAN
+  SCORE
 }
 
 enum QuestionSource {
   MANUAL
   AI
-}
-
-model DiagnosticQuestion {
-  id                     String         @id @default(uuid())
-  sectionId              String
-  text                   String
-  type                   QuestionType
-  weight                 Float          @default(1.0)
-  reference              String? // Referência normativa (ex: "NR-12.153")
-  requiresJustification  Boolean        @default(false)
-  requiresEvidence       Boolean        @default(false)
-  source                 QuestionSource @default(MANUAL)
-  versionOf              String? // UUID da pergunta original se for versão
-  approved               Boolean        @default(false)
-  active                 Boolean        @default(true)
-  createdAt              DateTime       @default(now())
-
-  // Relations
-  section DiagnosticSection  @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  answers AssessmentAnswer[]
-
-  @@index([sectionId])
-  @@index([approved])
-  @@map("diagnostic_questions")
-}
-
-// ============================================
-// LEGACY IMSST SYSTEM (manter compatibilidade)
-// ============================================
-
-model IMSSTDimension {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  order       Int
-  createdAt   DateTime @default(now())
-
-  @@map("imsst_dimensions")
 }
 
 enum AssessmentStatus {
@@ -252,135 +471,11 @@ enum AssessmentStatus {
   COMPLETED
 }
 
-model Assessment {
-  id           String           @id @default(uuid())
-  companyId    String
-  templateId   String? // Link to DiagnosticTemplate
-  createdBy    String // Supabase Auth user ID
-  title        String
-  description  String?
-  status       AssessmentStatus @default(DRAFT)
-  overallScore Float? // 0-100
-  overallLevel Int? // 1-5 IMSST maturity level
-  startedAt    DateTime?
-  submittedAt  DateTime?
-  scoredAt     DateTime?
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-
-  // Relations
-  company     Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  template    DiagnosticTemplate?  @relation(fields: [templateId], references: [id], onDelete: SetNull)
-  answers     AssessmentAnswer[]
-  scores      AssessmentScore[]
-  findings    Finding[]
-  evidences   Evidence[]
-  actionPlans ActionPlan[]
-
-  @@index([companyId])
-  @@index([templateId])
-  @@index([createdBy])
-  @@map("assessments")
-}
-
-model AssessmentAnswer {
-  id            String   @id @default(uuid())
-  assessmentId  String
-  questionId    String
-  userId        String // Supabase Auth user ID
-  value         Float // 0 (Não) ou 1 (Sim) para BOOLEAN; 1-5 para SCORE
-  justification String?
-  evidenceUrls  String[] // Array de URLs de evidências no Supabase Storage (deprecated - use evidences relation)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  // Relations
-  assessment Assessment         @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  question   DiagnosticQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  evidences  Evidence[]         // Evidências anexadas a esta resposta
-
-  @@unique([assessmentId, questionId])
-  @@index([assessmentId])
-  @@index([userId])
-  @@map("assessment_answers")
-}
-
-model AssessmentScore {
-  id            String   @id @default(uuid())
-  assessmentId  String
-  sectionId     String // Link to DiagnosticSection
-  rawScore      Float // Soma dos pontos
-  weightedScore Float // Score ponderado 0-100
-  level         Int // 1-5 maturity level
-  createdAt     DateTime @default(now())
-
-  // Relations
-  assessment Assessment        @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  section    DiagnosticSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-
-  @@unique([assessmentId, sectionId])
-  @@index([assessmentId])
-  @@map("assessment_scores")
-}
-
-// ============================================
-// FINDINGS (ACHADOS)
-// ============================================
-
 enum FindingSeverity {
-  HIGH   // Alta (Não Conformidade crítica)
-  MEDIUM // Média (Oportunidade de melhoria)
-  LOW    // Baixa (Observação)
+  HIGH
+  MEDIUM
+  LOW
 }
-
-model Finding {
-  id            String          @id @default(uuid())
-  assessmentId  String
-  sectionTitle  String
-  questionText  String
-  questionType  QuestionType
-  value         Float // Valor da resposta que gerou o achado
-  reference     String? // Referência normativa
-  justification String? // Justificativa do usuário
-  severity      FindingSeverity
-  evidenceCount Int             @default(0)
-  createdAt     DateTime        @default(now())
-
-  // Relations
-  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-
-  @@index([assessmentId])
-  @@index([severity])
-  @@map("findings")
-}
-
-// ============================================
-// EVIDENCE (EVIDÊNCIAS)
-// ============================================
-
-model Evidence {
-  id           String   @id @default(uuid())
-  assessmentId String
-  answerId     String? // Link para resposta específica (opcional)
-  fileName     String
-  fileUrl      String // URL no Supabase Storage
-  fileSize     Int // Tamanho em bytes
-  mimeType     String
-  uploadedBy   String // Supabase Auth user ID
-  uploadedAt   DateTime @default(now())
-
-  // Relations
-  assessment Assessment        @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  answer     AssessmentAnswer? @relation(fields: [answerId], references: [id], onDelete: Cascade)
-
-  @@index([assessmentId])
-  @@index([answerId])
-  @@map("evidences")
-}
-
-// ============================================
-// ACTION PLANS
-// ============================================
 
 enum ActionStatus {
   PENDING
@@ -389,152 +484,26 @@ enum ActionStatus {
   CANCELLED
 }
 
-model ActionPlan {
-  id           String       @id @default(uuid())
-  assessmentId String
-  companyId    String
-  title        String
-  description  String
-  reference    String? // Referência normativa relacionada
-  ownerUserId  String? // Supabase Auth user ID do responsável
-  dueDate      DateTime?
-  priority     Int          @default(2) // 1=High, 2=Medium, 3=Low
-  status       ActionStatus @default(PENDING)
-  createdBy    String // Supabase Auth user ID
-  aiGenerated  Boolean      @default(false)
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-
-  // Relations
-  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  company    Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
-
-  @@index([assessmentId])
-  @@index([companyId])
-  @@index([status])
-  @@index([priority])
-  @@map("action_plans")
-}
-
-// ============================================
-// EMPLOYEE MANAGEMENT
-// ============================================
-
 enum Gender {
-  MALE      // Masculino
-  FEMALE    // Feminino
-  OTHER     // Outro
+  MALE
+  FEMALE
+  OTHER
 }
 
 enum MaritalStatus {
-  SINGLE    // Solteiro(a)
-  MARRIED   // Casado(a)
-  DIVORCED  // Divorciado(a)
-  WIDOWED   // Viúvo(a)
-  OTHER     // Outro
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+  OTHER
 }
 
 enum ContractType {
-  CLT       // Consolidação das Leis do Trabalho
-  INTERN    // Estágio
-  OUTSOURCED // Terceirizado
-  TEMPORARY // Temporário
-  AUTONOMOUS // Autônomo
-}
-
-model Employee {
-  id        String   @id @default(uuid())
-  companyId String
-  userId    String?  // Optional: linked Supabase Auth user (if employee has system access)
-
-  // Identificação Civil
-  fullName      String
-  cpf           String
-  birthDate     DateTime
-  gender        Gender?
-  maritalStatus MaritalStatus?
-  nationality   String         @default("Brasileira")
-
-  // Contato
-  email                String
-  phone                String?
-  emergencyContactName String?
-  emergencyContactPhone String?
-
-  // Vínculo Trabalhista
-  employeeNumber String   // Matrícula interna
-  admissionDate  DateTime
-  contractType   ContractType
-  workSchedule   String?  // Jornada/turno (ex: "8h às 17h", "Turno A")
-  unit           String?  // Unidade/obra
-  department     String?  // Setor/área/linha
-  position       String   // Cargo/função
-  cboCode        String?  // Código CBO
-  supervisor     String?  // Superior imediato
-
-  // Metadata
-  status    MembershipStatus @default(ACTIVE)
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-
-  // Relations
-  company    Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  membership Membership?
-
-  @@unique([companyId, cpf])
-  @@unique([companyId, employeeNumber])
-  @@unique([companyId, userId]) // Ensure one employee record per user per company
-  @@index([companyId])
-  @@index([userId])
-  @@map("employees")
-}
-
-// ============================================
-// AUDIT & LOGGING
-// ============================================
-
-model AuditLog {
-  id        String   @id @default(uuid())
-  userId    String // Supabase Auth user ID
-  companyId String?
-  action    String // e.g., "CREATE_ASSESSMENT", "UPDATE_USER_ROLE"
-  entity    String? // e.g., "assessment", "user"
-  entityId  String?
-  metadata  Json? // Additional context
-  createdAt DateTime @default(now())
-
-  // Relations
-  company Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
-
-  @@index([userId])
-  @@index([companyId])
-  @@index([createdAt])
-  @@map("audit_logs")
-}
-
-// ============================================
-// RAG SYSTEM - Knowledge Base & Embeddings
-// ============================================
-
-// MTE Standards (Normas Regulamentadoras)
-model MteStandard {
-  id           String   @id @default(uuid())
-  nrNumber     String // e.g., "NR-12", "NR-35"
-  title        String // e.g., "Segurança em Máquinas e Equipamentos"
-  section      String   @default("") // Specific section/item (e.g., "12.38", "35.4.5.1"), empty string = full standard
-  content      String   @db.Text // Full text content
-  version      String // e.g., "2022.1"
-  sourceUrl    String? // Official MTE URL
-  lastVerified DateTime @default(now()) // Last time we verified the content
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  // Relations
-  embeddings KnowledgeEmbedding[]
-
-  @@unique([nrNumber, section, version])
-  @@index([nrNumber])
-  @@map("mte_standards")
+  CLT
+  INTERN
+  OUTSOURCED
+  TEMPORARY
+  AUTONOMOUS
 }
 
 enum EmbeddingSourceType {
@@ -546,81 +515,14 @@ enum EmbeddingSourceType {
   BEST_PRACTICE
 }
 
-// Vector embeddings for RAG search
-model KnowledgeEmbedding {
-  id         String              @id @default(uuid())
-  sourceType EmbeddingSourceType
-  sourceId   String // ID of the template, assessment, or standard
-  content    String              @db.Text // Original text content
-  metadata   Json? // Additional context (e.g., company sector, template type)
-  embedding  Unsupported("vector(1536)")? // OpenAI ada-002 embedding dimension
-  createdAt  DateTime            @default(now())
-  updatedAt  DateTime            @updatedAt
-
-  // Relations (optional, for referencing source)
-  mteStandard   MteStandard? @relation(fields: [mteStandardId], references: [id], onDelete: Cascade)
-  mteStandardId String?
-
-  @@index([sourceType])
-  @@index([sourceId])
-  @@map("knowledge_embeddings")
-}
-
-// ============================================
-// AI FEEDBACK SYSTEM
-// ============================================
-
 enum FeedbackType {
   POSITIVE
   NEGATIVE
 }
 
 enum FeedbackStatus {
-  PENDING     // Aguardando processamento
-  PROCESSED   // Já foi processado (adicionado à base de conhecimento)
-  REVIEWED    // Revisado manualmente
-  IGNORED     // Marcado para ignorar
-}
-
-model AIFeedback {
-  id          String         @id @default(uuid())
-  messageId   String         @unique // ID único da conversa
-  userId      String?        // Usuário que deu o feedback (opcional para analytics)
-  userQuery   String         @db.Text // Pergunta original do usuário
-  aiResponse  String         @db.Text // Resposta da IA que foi avaliada
-  feedback    FeedbackType   // POSITIVE ou NEGATIVE
-  status      FeedbackStatus @default(PENDING)
-  processedAt DateTime?      // Quando foi processado
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-
-  // Metadata opcional para análise
-  metadata    Json? // Pode incluir: modelo usado, tempo de resposta, contexto RAG, etc.
-
-  @@index([feedback])
-  @@index([status])
-  @@index([userId])
-  @@index([createdAt])
-  @@map("ai_feedbacks")
-}
-
-// ============================================
-// PASSWORD RESET TOKENS
-// ============================================
-
-model PasswordResetToken {
-  id        String   @id @default(cuid())
-  userId    String   // ID do usuário no Supabase
-  token     String   @unique // Token único para reset
-  email     String   // Email do usuário
-  expiresAt DateTime // Data de expiração
-  used      Boolean  @default(false) // Se foi usado
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([token])
-  @@index([email])
-  @@index([userId])
-  @@index([expiresAt])
-  @@map("password_reset_tokens")
+  PENDING
+  PROCESSED
+  REVIEWED
+  IGNORED
 }

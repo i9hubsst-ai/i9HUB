@@ -12,7 +12,7 @@ async function main() {
   await prisma.assessmentScore.deleteMany()
   await prisma.assessmentAnswer.deleteMany()
   await prisma.assessment.deleteMany()
-  await prisma.question.deleteMany()
+  await prisma.diagnosticQuestion.deleteMany()
   await prisma.iMSSTDimension.deleteMany()
   await prisma.modulePermission.deleteMany()
   await prisma.membership.deleteMany()
@@ -127,13 +127,12 @@ async function main() {
   for (let i = 0; i < dimensoes.length; i++) {
     const perguntas = perguntasPorDimensao[i]
     for (let j = 0; j < perguntas.length; j++) {
-      await prisma.question.create({
+      await prisma.diagnosticQuestion.create({
         data: {
-          dimensionId: dimensoes[i].id,
+          sectionId: dimensoes[i].id,
           text: perguntas[j],
-          type: 'LIKERT',
+          type: 'SCORE',
           weight: 1.0,
-          order: j + 1,
         },
       })
     }
@@ -145,7 +144,7 @@ async function main() {
   console.log('\n📋 Resumo:')
   console.log(`   - ${(await prisma.company.count())} empresas`)
   console.log(`   - ${(await prisma.iMSSTDimension.count())} dimensões IMSST`)
-  console.log(`   - ${(await prisma.question.count())} perguntas`)
+  console.log(`   - ${(await prisma.diagnosticQuestion.count())} perguntas`)
 }
 
 main()

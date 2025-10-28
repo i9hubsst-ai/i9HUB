@@ -19,10 +19,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Mail, MoreVertical, Pencil, Trash2, Send, Users, Shield, UserCog, User } from 'lucide-react'
+import { Mail, MoreVertical, Pencil, Trash2, Send, Users, Shield, UserCog, User, KeyRound } from 'lucide-react'
 import { EditUserRoleDialog } from './edit-user-role-dialog'
 import { EditUserProfileDialog } from './edit-user-profile-dialog'
-import { resendInvite, removeUserFromCompany } from '@/app/actions/users'
+import { resendInvite, removeUserFromCompany, resetUserPassword } from '@/app/actions/users'
 import { Role } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 
@@ -59,10 +59,12 @@ export function UsersList({ users }: UsersListProps) {
   const [removingUser, setRemovingUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   async function handleResendInvite(user: User) {
     setLoading(user.id)
     setError('')
+    setSuccessMessage('')
     
     const result = await resendInvite(user.id)
     
@@ -74,11 +76,28 @@ export function UsersList({ users }: UsersListProps) {
     router.refresh()
   }
 
+  async function handleResetPassword(user: User) {
+    setLoading(user.id)
+    setError('')
+    setSuccessMessage('')
+    
+    const result = await resetUserPassword(user.userId, user.companyId)
+    
+    if (result.error) {
+      setError(result.error)
+    } else if (result.message) {
+      setSuccessMessage(result.message)
+    }
+    
+    setLoading(null)
+  }
+
   async function handleRemoveUser() {
     if (!removingUser) return
     
     setLoading(removingUser.id)
     setError('')
+    setSuccessMessage('')
     
     const result = await removeUserFromCompany(removingUser.id)
     
@@ -164,6 +183,15 @@ export function UsersList({ users }: UsersListProps) {
                           <Pencil className="h-4 w-4 mr-2" />
                           Editar Papel
                         </DropdownMenuItem>
+                        {user.status === 'ACTIVE' && (
+                          <DropdownMenuItem 
+                            onClick={() => handleResetPassword(user)}
+                            disabled={loading === user.id}
+                          >
+                            <KeyRound className="h-4 w-4 mr-2" />
+                            {loading === user.id ? 'Enviando...' : 'Resetar Senha'}
+                          </DropdownMenuItem>
+                        )}
                         {user.status === 'INVITED' && (
                           <DropdownMenuItem 
                             onClick={() => handleResendInvite(user)}
@@ -193,6 +221,12 @@ export function UsersList({ users }: UsersListProps) {
       {error && (
         <div className="bg-destructive/10 text-destructive p-3 rounded-lg text-sm mt-4">
           {error}
+        </div>
+      )}
+
+      {successMessage && (
+        <div className="bg-green-100 text-green-700 p-3 rounded-lg text-sm mt-4">
+          {successMessage}
         </div>
       )}
 

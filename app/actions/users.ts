@@ -448,3 +448,62 @@ export async function makePlatformAdmin(userId: string) {
     return { error: 'Este usuário já é administrador da plataforma' }
   }
 }
+
+export async function resetUserPassword(userId: string, companyId?: string) {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    return { error: 'Não autorizado' }
+  }
+
+  // Verificar se o usuário atual tem permissão para resetar senhas
+  const isAdmin = await isPlatformAdmin(currentUser.id)
+  
+  if (!isAdmin && companyId) {
+    const role = await getUserRole(currentUser.id, companyId)
+    if (role !== 'COMPANY_ADMIN') {
+      return { error: 'Apenas administradores podem resetar senhas de usuários' }
+    }
+  } else if (!isAdmin) {
+    return { error: 'Apenas administradores podem resetar senhas de usuários' }
+  }
+
+  try {
+    const supabaseAdmin = createAdminClient()
+    
+    // Buscar o usuário no Supabase
+    const { data: userData, error: getUserError } = await supabaseAdmin.auth.admin.getUserById(userId)
+    
+    if (getUserError || !userData?.user) {
+      return { error: 'Usuário não encontrado' }
+    }
+
+    const user = userData.user
+
+    if (!user.email) {
+      return { error: 'Email do usuário não encontrado' }
+    }
+
+    // Enviar email de reset de senha
+    const { error: resetError } = await supabaseAdmin.auth.admin.generateLink({
+      type: 'recovery',
+      email: user.email,
+      options: {
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?type=recovery&next=/auth/reset-password`,
+      }
+    })
+
+    if (resetError) {
+      console.error('Erro ao gerar link de reset:', resetError)
+      return { error: 'Erro ao enviar email de recuperação' }
+    }
+
+    revalidatePath('/dashboard/users')
+    return { 
+      success: true, 
+      message: `Email de recuperação enviado para ${user.email}` 
+    }
+  } catch (error) {
+    console.error('Erro ao resetar senha:', error)
+    return { error: 'Erro interno do servidor' }
+  }
+}

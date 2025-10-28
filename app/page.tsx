@@ -1,9 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
+import RecoveryRedirect from "@/components/recovery-redirect";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-8">
+    <>
+      <Suspense fallback={null}>
+        <RecoveryRedirect />
+      </Suspense>
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-8">
       <div className="max-w-4xl w-full text-center space-y-8">
         <div className="flex justify-center">
           <Image
@@ -63,6 +69,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

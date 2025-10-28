@@ -193,15 +193,19 @@ export async function resetPassword(formData: FormData) {
   const supabase = await createClient()
   const email = formData.get('email') as string
 
+  console.log('🔐 RESET PASSWORD: Iniciando para email:', email)
+  console.log('🔐 RESET PASSWORD: Redirect URL será:', 'https://i9hubsst.vercel.app/auth/callback?type=recovery&next=/auth/reset-password')
+
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: 'https://i9hubsst.vercel.app/auth/callback?type=recovery&next=/auth/reset-password',
   })
 
   if (error) {
-    console.error('Erro no reset password:', error)
+    console.error('❌ Erro no reset password:', error)
     return { error: error.message || 'Erro desconhecido' }
   }
 
+  console.log('✅ Reset password enviado com sucesso')
   return { success: true }
 }
 

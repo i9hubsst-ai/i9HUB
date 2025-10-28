@@ -20,22 +20,31 @@ export default function ResetPassword() {
   useEffect(() => {
     const checkSession = async () => {
       const supabase = createClient();
+      
+      // Dar um pequeno delay para permitir que a sessão seja estabelecida após redirect
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       const { data: { session }, error } = await supabase.auth.getSession();
       
       console.log('🟡 RESET PAGE: Verificando sessão:', { 
         hasSession: !!session, 
         error: error?.message,
-        userEmail: session?.user?.email
+        userEmail: session?.user?.email,
+        sessionId: session?.user?.id
       });
       
       if (session && session.user) {
         console.log('🟢 RESET PAGE: Sessão válida encontrada');
         setIsValidSession(true);
       } else {
-        console.log('🔴 RESET PAGE: Nenhuma sessão válida, redirecionando');
+        console.log('🔴 RESET PAGE: Nenhuma sessão válida');
         setIsValidSession(false);
-        // Redirecionar para forgot-password se não há sessão
-        router.push('/auth/forgot-password?error=sessao-expirada');
+        
+        // Aguardar mais um pouco antes de redirecionar
+        setTimeout(() => {
+          console.log('🔴 RESET PAGE: Redirecionando para login após timeout');
+          router.push('/auth/login?error=sessao-expirada-reset');
+        }, 2000);
       }
     };
     

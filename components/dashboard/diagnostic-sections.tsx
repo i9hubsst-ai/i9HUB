@@ -251,6 +251,7 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
               const answerId = answerIds[question.id]
               const savedAnswer = assessment.answers.find(a => a.questionId === question.id)
               const hasAnswer = localAnswer && localAnswer.value !== null
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               const hasJustification = localAnswer?.justification && localAnswer.justification.trim().length > 0
               const error = errors[question.id]
               const isSaving = saving === question.id

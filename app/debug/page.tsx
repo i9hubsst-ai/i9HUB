@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { getBaseUrl, getCallbackUrl, getResetPasswordUrl } from '@/lib/utils/url'
 
 export default function DebugPage() {
   const configs = {
@@ -9,8 +10,14 @@ export default function DebugPage() {
     'VERCEL_URL': process.env.VERCEL_URL,
   }
 
+  const generatedUrls = {
+    'Base URL': getBaseUrl(),
+    'Callback URL': getCallbackUrl(),
+    'Reset Password URL': getResetPasswordUrl(),
+  }
+
   return (
-    <div className="p-8">
+    <div className="p-8 space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>🔍 Debug - Configurações de Ambiente</CardTitle>
@@ -26,12 +33,23 @@ export default function DebugPage() {
               </div>
             ))}
           </div>
-          
-          <div className="mt-6 p-4 bg-blue-50 rounded">
-            <h3 className="font-semibold mb-2">URL de Reset Esperada:</h3>
-            <code className="text-sm break-all">
-              {process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?type=recovery&next=/auth/reset-password
-            </code>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>🔗 URLs Geradas pela Aplicação</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {Object.entries(generatedUrls).map(([key, value]) => (
+              <div key={key} className="border-b pb-2">
+                <div className="font-semibold text-sm mb-1">{key}:</div>
+                <code className="text-xs bg-blue-50 px-2 py-1 rounded block break-all">
+                  {value}
+                </code>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>

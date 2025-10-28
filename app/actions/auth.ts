@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { prisma } from '@/lib/prisma'
+import { getBaseUrl, getCallbackUrl, getResetPasswordUrl } from '@/lib/utils/url'
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -90,7 +91,7 @@ export async function signup(formData: FormData) {
     password,
     options: {
       data: { name },
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
+      emailRedirectTo: getCallbackUrl(),
     }
   }
 
@@ -193,7 +194,7 @@ export async function resetPassword(formData: FormData) {
   const email = formData.get('email') as string
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?type=recovery&next=/auth/reset-password`,
+    redirectTo: getResetPasswordUrl(),
   })
 
   if (error) {

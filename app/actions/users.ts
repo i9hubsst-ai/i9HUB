@@ -6,6 +6,7 @@ import { getCurrentUser, isPlatformAdmin, getUserRole } from '@/lib/auth'
 import { Role, MembershipStatus } from '@prisma/client'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getResetPasswordUrl } from '@/lib/utils/url'
 
 export async function inviteUser(companyId: string, formData: FormData) {
   const user = await getCurrentUser()
@@ -483,12 +484,12 @@ export async function resetUserPassword(userId: string, companyId?: string) {
       return { error: 'Email do usuário não encontrado' }
     }
 
-    // Enviar email de reset de senha
+    // Enviar email de reset de senha      
     const { error: resetError } = await supabaseAdmin.auth.admin.generateLink({
       type: 'recovery',
       email: user.email,
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback?type=recovery&next=/auth/reset-password`,
+        redirectTo: getResetPasswordUrl(),
       }
     })
 

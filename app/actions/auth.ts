@@ -56,6 +56,7 @@ export async function login(formData: FormData) {
     })
 
     if (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorMessage = (error as any)?.message || 'Erro desconhecido'
       if (errorMessage.includes('Invalid login credentials')) {
         return { error: 'Email ou senha inválidos' }

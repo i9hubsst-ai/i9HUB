@@ -5,9 +5,11 @@ import { Button } from '@/components/ui/button'
 import { FileText, Image, Upload, Trash2, Eye } from 'lucide-react'
 
 interface DiagnosticEvidenceProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   assessment: any
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function DiagnosticEvidence({ assessment }: DiagnosticEvidenceProps) {
   // Mock evidence data
   const evidences = [

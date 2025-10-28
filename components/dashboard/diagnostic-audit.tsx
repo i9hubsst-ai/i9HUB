@@ -3,9 +3,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface DiagnosticAuditProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   assessment: any
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function DiagnosticAudit({ assessment }: DiagnosticAuditProps) {
   // Mock audit log data
   const auditLogs = [

@@ -1,13 +1,15 @@
 /**
- * API endpoint para busca semântica RAG
+ * API endpoint para busca semântica - RAG DESABILITADO
+ * Migrado para usar Gemini AI em vez de busca vetorial
  * 
- * POST /api/rag/search
- * Body: { query: string, options?: RAGSearchOptions }
+ * POST /api/rag_disabled/search
  */
 
 import { NextRequest, NextResponse } from 'next/server'
-import { searchKnowledge, searchMteStandards, findRelatedStandards } from '@/lib/services/rag-service'
 import { getCurrentUser } from '@/lib/auth'
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,7 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { query, options = {}, searchType = 'general' } = body
+    const { query } = body
 
     if (!query || typeof query !== 'string') {
       return NextResponse.json(
@@ -30,35 +32,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    let results
-
-    switch (searchType) {
-      case 'standards':
-        results = await searchMteStandards(query, options)
-        break
-      
-      case 'related':
-        results = await findRelatedStandards(query, options.limit)
-        break
-      
-      case 'general':
-      default:
-        results = await searchKnowledge(query, options)
-        break
-    }
-
+    // RAG desabilitado - retornar mensagem informativa
     return NextResponse.json({
       success: true,
+      message: 'Busca RAG foi migrada para Gemini AI. Use o chat AI para consultas.',
       query,
-      results,
-      count: results.length
+      results: [],
+      count: 0,
+      deprecated: true,
+      suggestion: 'Use o endpoint /api/ai/chat para consultas assistidas por IA.'
     })
 
   } catch (error) {
-    console.error('Erro na API de busca RAG:', error)
+    console.error('Erro na API de busca RAG (desabilitada):', error)
     return NextResponse.json(
-      { error: 'Erro ao realizar busca semântica' },
-      { status: 500 }
+      { error: 'Serviço RAG desabilitado. Use o chat AI.' },
+      { status: 410 }
     )
   }
 }

@@ -11,15 +11,6 @@ import { Loader2, Sparkles, Save } from 'lucide-react'
 
 type TemplateType = 'NR12' | 'NR35' | 'ISO45001' | 'ISO14001' | 'IMSST' | 'CUSTOM'
 
-interface AISuggestion {
-  title: string
-  description: string | null
-  questions: Array<{
-    text: string
-    type: 'BOOLEAN' | 'SCORE'
-  }>
-}
-
 interface GeneratedSection {
   title: string
   description: string | null

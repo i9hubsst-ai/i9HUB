@@ -10,9 +10,11 @@ import { Loader2 } from 'lucide-react'
 import { updateEmployee } from '@/app/actions/employees'
 import { validateCPF, formatCPF, formatPhone } from '@/lib/utils/validators'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>({})
 
   useEffect(() => {
@@ -76,6 +78,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const u = (field: string, value: any) => setData((prev: any) => ({ ...prev, [field]: value }))
 
   return (

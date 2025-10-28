@@ -82,7 +82,7 @@ export function EmployeesList({ employees }: EmployeesListProps) {
         <div className="text-center text-muted-foreground">
           <Briefcase className="h-12 w-12 mx-auto mb-4 opacity-50" />
           <p>Nenhum funcionário cadastrado ainda.</p>
-          <p className="text-sm mt-2">Clique em "Cadastrar Funcionário" para adicionar o primeiro.</p>
+          <p className="text-sm mt-2">Clique em &quot;Cadastrar Funcionário&quot; para adicionar o primeiro.</p>
         </div>
       </Card>
     )
@@ -193,7 +193,7 @@ export function EmployeesList({ employees }: EmployeesListProps) {
         <EditEmployeeDialog
           employee={editEmployee}
           open={!!editEmployee}
-          onOpenChange={(open) => !open && setEditEmployee(null)}
+          onOpenChange={(open: boolean) => !open && setEditEmployee(null)}
         />
       )}
     </>

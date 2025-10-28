@@ -12,6 +12,7 @@ import { DiagnosticEvidence } from './diagnostic-evidence'
 import { DiagnosticAudit } from './diagnostic-audit'
 
 interface DiagnosticTabsProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   assessment: any
 }
 

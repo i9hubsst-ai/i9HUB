@@ -9,9 +9,15 @@ export async function GET(request: Request) {
   const code = requestUrl.searchParams.get('code')
   const type = requestUrl.searchParams.get('type')
   const next = requestUrl.searchParams.get('next')
+  const token = requestUrl.searchParams.get('token')
+  const access_token = requestUrl.searchParams.get('access_token')
+  const refresh_token = requestUrl.searchParams.get('refresh_token')
   
   console.log('🔵 Parâmetros recebidos:', { 
-    code: code ? `${code.substring(0, 8)}...` : null, 
+    code: code ? `${code.substring(0, 8)}...` : null,
+    token: token ? `${token.substring(0, 8)}...` : null,
+    access_token: access_token ? `${access_token.substring(0, 8)}...` : null,
+    refresh_token: refresh_token ? `${refresh_token.substring(0, 8)}...` : null,
     type, 
     next,
     fullUrl: request.url
@@ -21,43 +27,80 @@ export async function GET(request: Request) {
   if (type === 'recovery') {
     console.log('🟡 RECOVERY: Processando recuperação de senha')
     
-    if (!code) {
-      console.log('🔴 RECOVERY: Código não fornecido')
+    // Verificar se temos tokens diretos (acesso via link do Supabase)
+    if (access_token && refresh_token) {
+      console.log('🟡 RECOVERY: Tokens diretos detectados, estabelecendo sessão')
+      
+      const supabase = await createClient()
+      
+      try {
+        // Estabelecer sessão com tokens diretos
+        const { data, error } = await supabase.auth.setSession({
+          access_token,
+          refresh_token
+        })
+        
+        console.log('🟡 RECOVERY: Resultado setSession:', { 
+          hasSession: !!data?.session, 
+          hasUser: !!data?.user,
+          error: error?.message
+        })
+        
+        if (!error && data.session) {
+          console.log('🟢 RECOVERY: Sessão estabelecida com tokens diretos')
+          const redirectUrl = next || '/auth/reset-password'
+          console.log('🟢 RECOVERY: Redirecionando para:', redirectUrl)
+          
+          return NextResponse.redirect(
+            new URL(redirectUrl, requestUrl.origin)
+          )
+        } else {
+          console.log('🔴 RECOVERY: Erro ao estabelecer sessão com tokens diretos:', error?.message)
+        }
+      } catch (error) {
+        console.error('🔴 RECOVERY: Exception ao estabelecer sessão:', error)
+      }
+    }
+    
+    if (!code && !access_token) {
+      console.log('🔴 RECOVERY: Nem código nem tokens fornecidos')
       return NextResponse.redirect(
         new URL('/auth/forgot-password?error=codigo-invalido', requestUrl.origin)
       )
     }
     
-    const supabase = await createClient()
-    
-    try {
-      console.log('🟡 RECOVERY: Tentando exchange code for session...')
-      // Processa o código de recuperação
-      const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+    if (code) {
+      const supabase = await createClient()
       
-      console.log('🟡 RECOVERY: Resultado exchange:', { 
-        hasSession: !!data?.session, 
-        hasUser: !!data?.user,
-        error: error?.message,
-        sessionExpiresAt: data?.session?.expires_at
-      })
-      
-      if (!error && data.session) {
-        console.log('🟢 RECOVERY: Sessão de recuperação criada com sucesso')
-        console.log('🟢 RECOVERY: User ID:', data.user?.id)
+      try {
+        console.log('🟡 RECOVERY: Tentando exchange code for session...')
+        // Processa o código de recuperação
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code)
         
-        // Redireciona para a página de reset
-        const redirectUrl = next || '/auth/reset-password'
-        console.log('🟢 RECOVERY: Redirecionando para:', redirectUrl)
+        console.log('🟡 RECOVERY: Resultado exchange:', { 
+          hasSession: !!data?.session, 
+          hasUser: !!data?.user,
+          error: error?.message,
+          sessionExpiresAt: data?.session?.expires_at
+        })
         
-        return NextResponse.redirect(
-          new URL(redirectUrl, requestUrl.origin)
-        )
-      } else {
-        console.log('🔴 RECOVERY: Erro no exchange:', error?.message)
+        if (!error && data.session) {
+          console.log('🟢 RECOVERY: Sessão de recuperação criada com sucesso')
+          console.log('🟢 RECOVERY: User ID:', data.user?.id)
+          
+          // Redireciona para a página de reset
+          const redirectUrl = next || '/auth/reset-password'
+          console.log('🟢 RECOVERY: Redirecionando para:', redirectUrl)
+          
+          return NextResponse.redirect(
+            new URL(redirectUrl, requestUrl.origin)
+          )
+        } else {
+          console.log('🔴 RECOVERY: Erro no exchange:', error?.message)
+        }
+      } catch (error) {
+        console.error('🔴 RECOVERY: Exception:', error)
       }
-    } catch (error) {
-      console.error('🔴 RECOVERY: Exception:', error)
     }
     
     // Se houver erro, redireciona para a página de erro

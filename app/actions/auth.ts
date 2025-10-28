@@ -194,10 +194,10 @@ export async function resetPassword(formData: FormData) {
   const email = formData.get('email') as string
 
   console.log('🔐 RESET PASSWORD: Iniciando para email:', email)
-  console.log('🔐 RESET PASSWORD: Redirect URL será:', 'https://i9hubsst.vercel.app/auth/callback?type=recovery&next=/auth/reset-password')
+  console.log('🔐 RESET PASSWORD: Redirect URL será:', 'https://i9hubsst.vercel.app/auth/login')
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://i9hubsst.vercel.app/auth/callback?type=recovery&next=/auth/reset-password',
+    redirectTo: 'https://i9hubsst.vercel.app/auth/login',
   })
 
   if (error) {

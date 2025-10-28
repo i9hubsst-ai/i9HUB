@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { updatePassword } from "@/app/actions/auth";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function ResetPassword() {
   const [error, setError] = useState<string | null>(null);
@@ -12,7 +14,34 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isValidSession, setIsValidSession] = useState<boolean | null>(null);
+  const router = useRouter();
   
+  useEffect(() => {
+    const checkSession = async () => {
+      const supabase = createClient();
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      console.log('🟡 RESET PAGE: Verificando sessão:', { 
+        hasSession: !!session, 
+        error: error?.message,
+        userEmail: session?.user?.email
+      });
+      
+      if (session && session.user) {
+        console.log('🟢 RESET PAGE: Sessão válida encontrada');
+        setIsValidSession(true);
+      } else {
+        console.log('🔴 RESET PAGE: Nenhuma sessão válida, redirecionando');
+        setIsValidSession(false);
+        // Redirecionar para forgot-password se não há sessão
+        router.push('/auth/forgot-password?error=sessao-expirada');
+      }
+    };
+    
+    checkSession();
+  }, [router]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -47,6 +76,37 @@ export default function ResetPassword() {
       setLoading(false);
     }
   };
+
+  // Mostra loading enquanto verifica a sessão
+  if (isValidSession === null) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Card className="w-full max-w-md">
+          <CardContent className="p-6">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+              <p className="mt-2 text-sm text-gray-600">Verificando sessão...</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Se não há sessão válida, não renderiza o formulário (redirecionamento já foi feito)
+  if (!isValidSession) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Card className="w-full max-w-md">
+          <CardContent className="p-6">
+            <div className="text-center">
+              <p className="text-sm text-gray-600">Redirecionando...</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">

@@ -10,41 +10,60 @@ export async function GET(request: Request) {
   const type = requestUrl.searchParams.get('type')
   const next = requestUrl.searchParams.get('next')
   
-  console.log('🔵 Parâmetros:', { code: !!code, type, next })
+  console.log('🔵 Parâmetros recebidos:', { 
+    code: code ? `${code.substring(0, 8)}...` : null, 
+    type, 
+    next,
+    fullUrl: request.url
+  })
 
   // Se for recuperação de senha
   if (type === 'recovery') {
-    console.log('🟡 Processando recuperação de senha')
+    console.log('🟡 RECOVERY: Processando recuperação de senha')
+    
+    if (!code) {
+      console.log('🔴 RECOVERY: Código não fornecido')
+      return NextResponse.redirect(
+        new URL('/auth/forgot-password?error=codigo-invalido', requestUrl.origin)
+      )
+    }
+    
     const supabase = await createClient()
     
     try {
-      console.log('🟡 Tentando exchange code for session...')
+      console.log('🟡 RECOVERY: Tentando exchange code for session...')
       // Processa o código de recuperação
-      const { data, error } = await supabase.auth.exchangeCodeForSession(code || '')
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code)
       
-      console.log('🟡 Resultado exchange:', { 
+      console.log('🟡 RECOVERY: Resultado exchange:', { 
         hasSession: !!data?.session, 
-        error: error?.message 
+        hasUser: !!data?.user,
+        error: error?.message,
+        sessionExpiresAt: data?.session?.expires_at
       })
       
       if (!error && data.session) {
-        console.log('🟢 Sessão de recuperação criada:', !!data.session)
+        console.log('🟢 RECOVERY: Sessão de recuperação criada com sucesso')
+        console.log('🟢 RECOVERY: User ID:', data.user?.id)
         
-        // Redireciona para a página de reset com o token na URL
-        const redirectUrl = `/auth/reset-password?token=${data.session.access_token}`
-        console.log('🟢 Redirecionando para:', redirectUrl)
+        // Redireciona para a página de reset
+        const redirectUrl = next || '/auth/reset-password'
+        console.log('🟢 RECOVERY: Redirecionando para:', redirectUrl)
+        
         return NextResponse.redirect(
           new URL(redirectUrl, requestUrl.origin)
         )
+      } else {
+        console.log('🔴 RECOVERY: Erro no exchange:', error?.message)
       }
     } catch (error) {
-      console.error('🔴 Error verifying OTP:', error)
+      console.error('🔴 RECOVERY: Exception:', error)
     }
     
     // Se houver erro, redireciona para a página de erro
-    console.log('🔴 Redirecionando para erro de token inválido')
+    console.log('🔴 RECOVERY: Falha, redirecionando para forgot-password')
     return NextResponse.redirect(
-      new URL('/auth/forgot-password?error=TokenInvalido', requestUrl.origin)
+      new URL('/auth/forgot-password?error=token-expirado', requestUrl.origin)
     )
   }
 

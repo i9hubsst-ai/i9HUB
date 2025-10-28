@@ -7,6 +7,7 @@ import { Role, MembershipStatus } from '@prisma/client'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getResetPasswordUrl } from '@/lib/utils/url'
+import { generatePasswordResetLink } from '@/lib/services/password-reset-service'
 
 export async function inviteUser(companyId: string, formData: FormData) {
   const user = await getCurrentUser()
@@ -484,33 +485,17 @@ export async function resetUserPassword(userId: string, companyId?: string) {
       return { error: 'Email do usuário não encontrado' }
     }
 
-    // Enviar email de reset de senha - URL hardcoded para produção
-    const hardcodedUrl = 'https://i9hubsst.vercel.app/auth/callback?type=recovery&next=/auth/reset-password';
-    console.log('🔗 URL sendo usada para reset:', hardcodedUrl);
-    console.log('🌍 NODE_ENV:', process.env.NODE_ENV);
-    console.log('🌍 VERCEL:', process.env.VERCEL);
-    console.log('🌍 NEXT_PUBLIC_SITE_URL:', process.env.NEXT_PUBLIC_SITE_URL);
+    // Usar serviço customizado para garantir URL correta
+    const resetResult = await generatePasswordResetLink(user.email)
     
-    const { data: linkData, error: resetError } = await supabaseAdmin.auth.admin.generateLink({
-      type: 'recovery',
-      email: user.email,
-      options: {
-        redirectTo: hardcodedUrl,
-      }
-    })
-
-    if (resetError) {
-      console.error('❌ Erro ao gerar link de reset:', resetError)
-      return { error: 'Erro ao enviar email de recuperação' }
+    if (!resetResult.success) {
+      return { error: resetResult.error || 'Erro ao gerar link de recuperação' }
     }
-
-    // Log do link gerado para debug
-    console.log('✅ Link de reset gerado:', linkData?.properties?.action_link)
 
     revalidatePath('/dashboard/users')
     return { 
       success: true, 
-      message: `Email de recuperação enviado para ${user.email}. Verifique o console para detalhes do link.` 
+      message: `Email de recuperação enviado para ${user.email}. Link gerado com sucesso.` 
     }
   } catch (error) {
     console.error('Erro ao resetar senha:', error)

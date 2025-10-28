@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
 import { validateResetToken, resetPasswordWithToken } from "@/lib/services/custom-password-reset";
 
-export default function CustomResetPassword() {
+function ResetPasswordForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -214,5 +214,29 @@ export default function CustomResetPassword() {
         </form>
       </Card>
     </div>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Carregando...</CardTitle>
+          <CardDescription>Verificando token de reset</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="animate-pulse h-4 bg-gray-200 rounded w-3/4"></div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+export default function CustomResetPassword() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <ResetPasswordForm />
+    </Suspense>
   );
 }

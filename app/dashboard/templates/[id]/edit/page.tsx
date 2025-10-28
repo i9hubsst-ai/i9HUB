@@ -47,7 +47,10 @@ export default async function EditTemplatePage({ params }: { params: Promise<{ i
         </p>
       </div>
 
-      <TemplateEditForm template={template} />
+      <TemplateEditForm template={{
+        ...template,
+        description: template.description || ''
+      }} />
     </div>
   )
 }

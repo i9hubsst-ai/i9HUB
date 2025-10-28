@@ -43,7 +43,6 @@ interface ReviewResult {
 }
 
 interface TemplateReviewSuggestionsProps {
-  templateId: string
   templateName: string
   review: ReviewResult
   onApplySuggestions: (acceptedSuggestions: Suggestion[]) => void
@@ -51,7 +50,6 @@ interface TemplateReviewSuggestionsProps {
 }
 
 export function TemplateReviewSuggestions({
-  templateId,
   templateName,
   review,
   onApplySuggestions,

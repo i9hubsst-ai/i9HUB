@@ -5,7 +5,7 @@ const genai = new GoogleGenAI({
 })
 
 export class GeminiService {
-  async generateTemplateSuggestions(prompt: string, context?: any): Promise<string> {
+  async generateTemplateSuggestions(prompt: string, context?: Record<string, unknown>): Promise<string> {
     const systemPrompt = `Você é um especialista em Segurança e Saúde do Trabalho. 
 Analise o contexto fornecido e gere sugestões para templates de auditoria/diagnóstico.
 Responda em formato JSON com array de sugestões.
@@ -21,7 +21,7 @@ Prompt: ${prompt}`
     return response.candidates?.[0]?.content?.parts?.[0]?.text || ''
   }
 
-  async generateActionPlanSuggestions(findings: any[], context?: any): Promise<string> {
+  async generateActionPlanSuggestions(findings: Record<string, unknown>[], context?: Record<string, unknown>): Promise<string> {
     const systemPrompt = `Você é um especialista em Segurança e Saúde do Trabalho.
 Analise os achados fornecidos e gere sugestões de plano de ação.
 Responda em formato JSON com array de ações recomendadas.

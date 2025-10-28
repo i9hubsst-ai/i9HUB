@@ -18,7 +18,7 @@ export interface EmbeddingInput {
   text: string
   sourceType: 'TEMPLATE' | 'ASSESSMENT' | 'ACTION_PLAN' | 'MTE_STANDARD' | 'ISO_STANDARD' | 'BEST_PRACTICE' | 'CHAT_APPROVED' | 'NR_DOCUMENT'
   sourceId: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 export interface EmbeddingResult {

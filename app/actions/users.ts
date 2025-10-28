@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getResetPasswordUrl } from '@/lib/utils/url'
 import { generatePasswordResetLink } from '@/lib/services/password-reset-service'
+import { generateResetToken, sendResetEmail } from '@/lib/services/custom-password-reset'
 
 export async function inviteUser(companyId: string, formData: FormData) {
   const user = await getCurrentUser()
@@ -485,17 +486,27 @@ export async function resetUserPassword(userId: string, companyId?: string) {
       return { error: 'Email do usuário não encontrado' }
     }
 
-    // Usar serviço customizado para garantir URL correta
-    const resetResult = await generatePasswordResetLink(user.email)
+    console.log('🔐 CUSTOM RESET: Iniciando reset para:', user.email)
+
+    // Usar nosso sistema customizado de reset
+    const tokenResult = await generateResetToken(user.email)
     
-    if (!resetResult.success) {
-      return { error: resetResult.error || 'Erro ao gerar link de recuperação' }
+    if (!tokenResult.success) {
+      return { error: tokenResult.error || 'Erro ao gerar token de recuperação' }
+    }
+
+    if (tokenResult.token) {
+      // Enviar email customizado (por enquanto apenas log)
+      await sendResetEmail(user.email, tokenResult.token)
+      
+      console.log('✅ CUSTOM RESET: Token gerado e email enviado')
+      console.log('🔗 CUSTOM RESET: URL:', `https://i9hubsst.vercel.app/auth/reset-password-custom?token=${tokenResult.token}`)
     }
 
     revalidatePath('/dashboard/users')
     return { 
       success: true, 
-      message: `Email de recuperação enviado para ${user.email}. Link gerado com sucesso.` 
+      message: `Link de recuperação gerado para ${user.email}. Verifique o console para detalhes.` 
     }
   } catch (error) {
     console.error('Erro ao resetar senha:', error)

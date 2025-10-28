@@ -603,3 +603,24 @@ model AIFeedback {
   @@index([createdAt])
   @@map("ai_feedbacks")
 }
+
+// ============================================
+// PASSWORD RESET TOKENS
+// ============================================
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String   // ID do usuário no Supabase
+  token     String   @unique // Token único para reset
+  email     String   // Email do usuário
+  expiresAt DateTime // Data de expiração
+  used      Boolean  @default(false) // Se foi usado
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([token])
+  @@index([email])
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
+}

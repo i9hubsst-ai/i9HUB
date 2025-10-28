@@ -177,7 +177,6 @@ export function TemplateActions({ templateId, status }: TemplateActionsProps) {
           
           {reviewResult && !isReviewing && (
             <TemplateReviewSuggestions
-              templateId={reviewResult.templateId}
               templateName={reviewResult.templateName}
               review={reviewResult.review}
               onApplySuggestions={handleApplySuggestions}

@@ -11,16 +11,7 @@ export function ChatbotDialog() {
   const [input, setInput] = useState('')
 
   const { messages, status, sendMessage } = useChat({
-    initialMessages: [
-      {
-        id: 'welcome',
-        role: 'assistant',
-        parts: [{ 
-          type: 'text',
-          text: 'Olá! Sou o assistente de Segurança do Trabalho. Como posso ajudar você hoje?'
-        }]
-      }
-    ]
+    api: '/api/ai/chat'
   })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,9 +69,9 @@ export function ChatbotDialog() {
                     : 'bg-primary text-primary-foreground'
                 }`}
               >
-                {message.parts.map((part, index) => (
+                {message.parts?.map((part, index) => (
                   part.type === 'text' && <span key={index}>{part.text}</span>
-                ))}
+                )) || <span>{message.content}</span>}
               </div>
             </div>
           ))}

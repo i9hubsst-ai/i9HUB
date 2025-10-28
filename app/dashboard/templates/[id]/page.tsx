@@ -116,7 +116,10 @@ export default async function TemplateDetailPage({ params }: { params: Promise<{
         </CardContent>
       </Card>
 
-      <TemplateSectionsView sections={template.sections} />
+      <TemplateSectionsView sections={template.sections.map(section => ({
+        ...section,
+        description: null // Assumindo que sections não têm description no schema atual
+      }))} />
     </div>
   )
 }

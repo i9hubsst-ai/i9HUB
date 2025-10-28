@@ -51,7 +51,6 @@ export function AIChat() {
     headers: {
       'Content-Type': 'application/json',
     },
-    initialMessages: loadMessagesFromStorage(),
     onError: (error) => {
       console.error('❌ [CHAT] Erro no useChat:', error)
     },
@@ -59,6 +58,14 @@ export function AIChat() {
       console.log('✅ [CHAT] Mensagem finalizada:', message)
     }
   })
+
+  // Carregar mensagens do localStorage após inicialização
+  useEffect(() => {
+    const savedMessages = loadMessagesFromStorage()
+    if (savedMessages.length > 0) {
+      setMessages(savedMessages)
+    }
+  }, [])
 
   // Salvar mensagens sempre que mudarem
   useEffect(() => {

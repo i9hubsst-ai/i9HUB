@@ -9,8 +9,7 @@ import {
   Eye, 
   Power, 
   Trash2, 
-  Check, 
-  X,
+  Check,
   Clock,
   Archive 
 } from 'lucide-react'

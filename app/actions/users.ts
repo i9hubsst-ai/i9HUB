@@ -484,24 +484,33 @@ export async function resetUserPassword(userId: string, companyId?: string) {
       return { error: 'Email do usuário não encontrado' }
     }
 
-    // Enviar email de reset de senha      
-    const { error: resetError } = await supabaseAdmin.auth.admin.generateLink({
+    // Enviar email de reset de senha - URL hardcoded para produção
+    const hardcodedUrl = 'https://i9hubsst.vercel.app/auth/callback?type=recovery&next=/auth/reset-password';
+    console.log('🔗 URL sendo usada para reset:', hardcodedUrl);
+    console.log('🌍 NODE_ENV:', process.env.NODE_ENV);
+    console.log('🌍 VERCEL:', process.env.VERCEL);
+    console.log('🌍 NEXT_PUBLIC_SITE_URL:', process.env.NEXT_PUBLIC_SITE_URL);
+    
+    const { data: linkData, error: resetError } = await supabaseAdmin.auth.admin.generateLink({
       type: 'recovery',
       email: user.email,
       options: {
-        redirectTo: getResetPasswordUrl(),
+        redirectTo: hardcodedUrl,
       }
     })
 
     if (resetError) {
-      console.error('Erro ao gerar link de reset:', resetError)
+      console.error('❌ Erro ao gerar link de reset:', resetError)
       return { error: 'Erro ao enviar email de recuperação' }
     }
+
+    // Log do link gerado para debug
+    console.log('✅ Link de reset gerado:', linkData?.properties?.action_link)
 
     revalidatePath('/dashboard/users')
     return { 
       success: true, 
-      message: `Email de recuperação enviado para ${user.email}` 
+      message: `Email de recuperação enviado para ${user.email}. Verifique o console para detalhes do link.` 
     }
   } catch (error) {
     console.error('Erro ao resetar senha:', error)

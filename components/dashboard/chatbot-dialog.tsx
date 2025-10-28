@@ -3,27 +3,22 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { useChat } from '@ai-sdk/react'
+import { useChat } from 'ai/react'
 import { BotIcon, SendIcon, XIcon } from 'lucide-react'
 
 export function ChatbotDialog() {
   const [isOpen, setIsOpen] = useState(false)
-  const [input, setInput] = useState('')
 
-  const { messages, status, sendMessage } = useChat({
-    api: '/api/ai/chat'
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    api: '/api/ai/chat',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value)
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (input.trim()) {
-      sendMessage({ text: input })
-      setInput('')
-    }
+    handleSubmit(e)
   }
 
   if (!isOpen) {
@@ -69,23 +64,21 @@ export function ChatbotDialog() {
                     : 'bg-primary text-primary-foreground'
                 }`}
               >
-                {message.parts?.map((part, index) => (
-                  part.type === 'text' && <span key={index}>{part.text}</span>
-                )) || <span>{message.content}</span>}
+                <span>{message.content}</span>
               </div>
             </div>
           ))}
         </div>
       </ScrollArea>
 
-      <form onSubmit={handleSubmit} className="flex gap-2">
+      <form onSubmit={handleFormSubmit} className="flex gap-2">
         <Input
           value={input}
           onChange={handleInputChange}
           placeholder="Digite sua mensagem..."
-          disabled={status !== 'ready'}
+          disabled={isLoading}
         />
-        <Button type="submit" disabled={status !== 'ready'}>
+        <Button type="submit" disabled={isLoading}>
           <SendIcon className="h-4 w-4" />
         </Button>
       </form>

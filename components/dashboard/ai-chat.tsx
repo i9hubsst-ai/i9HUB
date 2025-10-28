@@ -65,7 +65,7 @@ export function AIChat() {
     if (savedMessages.length > 0) {
       setMessages(savedMessages)
     }
-  }, [])
+  }, [setMessages])
 
   // Salvar mensagens sempre que mudarem
   useEffect(() => {

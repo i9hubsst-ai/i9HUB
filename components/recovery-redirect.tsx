@@ -24,7 +24,7 @@ export default function RecoveryRedirect() {
     }
     
     // Verificar se há parâmetros de recovery na URL
-    const token = searchParams.get('token')
+    const token = searchParams.get('token') // Token PKCE do Supabase
     const type = searchParams.get('type')
     const access_token = searchParams.get('access_token')
     const refresh_token = searchParams.get('refresh_token')
@@ -38,7 +38,7 @@ export default function RecoveryRedirect() {
       pathname: window.location.pathname
     })
     
-    // Se há tokens de recovery e não estamos já na página de login, redirecionar
+    // Se há tokens de recovery (PKCE ou diretos) e não estamos já na página de login, redirecionar
     if ((token && type === 'recovery') || (access_token && refresh_token)) {
       const currentPath = window.location.pathname
       

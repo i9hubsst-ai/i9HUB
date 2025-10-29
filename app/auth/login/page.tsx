@@ -31,17 +31,20 @@ function LoginContent() {
       // Verificar se há tokens de recovery na URL
       const access_token = searchParams.get('access_token')
       const refresh_token = searchParams.get('refresh_token')
+      const token = searchParams.get('token') // Token PKCE do Supabase
       const type = searchParams.get('type')
       
       console.log('🔍 LOGIN: Verificando tokens de recovery:', {
         access_token: access_token ? `${access_token.substring(0, 10)}...` : null,
         refresh_token: refresh_token ? `${refresh_token.substring(0, 10)}...` : null,
+        token: token ? `${token.substring(0, 10)}...` : null,
         type,
         fullUrl: window.location.href
       })
 
+      // Caso 1: Tokens diretos (access_token + refresh_token)
       if (access_token && refresh_token && type === 'recovery') {
-        console.log('🟡 LOGIN: Tokens de recovery detectados, estabelecendo sessão')
+        console.log('🟡 LOGIN: Tokens diretos detectados, estabelecendo sessão')
         
         const supabase = createClient()
         
@@ -75,8 +78,42 @@ function LoginContent() {
           setError('Erro ao processar token de recovery')
           setRecoveryLoading(false)
         }
+      }
+      // Caso 2: Token PKCE (mais comum)
+      else if (token && type === 'recovery') {
+        console.log('🟡 LOGIN: Token PKCE detectado, fazendo exchange')
+        
+        const supabase = createClient()
+        
+        try {
+          // Fazer exchange do token PKCE para sessão
+          const { data, error } = await supabase.auth.exchangeCodeForSession(token)
+          
+          if (!error && data.session && data.user) {
+            console.log('🟢 LOGIN: Sessão PKCE estabelecida:', data.user.email)
+            setIsRecoveryMode(true)
+            setUserEmail(data.user.email || '')
+            setRecoveryLoading(false)
+            
+            // Limpar URL dos tokens para UX melhor
+            const cleanUrl = new URL(window.location.href)
+            cleanUrl.searchParams.delete('token')
+            cleanUrl.searchParams.delete('type')
+            window.history.replaceState({}, '', cleanUrl.toString())
+            
+          } else {
+            console.log('🔴 LOGIN: Erro ao fazer exchange PKCE:', error?.message)
+            setError('Token de recovery inválido ou expirado')
+            setRecoveryLoading(false)
+          }
+        } catch (error) {
+          console.error('🔴 LOGIN: Exception ao processar PKCE:', error)
+          setError('Erro ao processar token de recovery')
+          setRecoveryLoading(false)
+        }
       } else {
         // Não há tokens de recovery, modo login normal
+        console.log('🔵 LOGIN: Nenhum token de recovery detectado, modo login normal')
         setRecoveryLoading(false)
       }
     }

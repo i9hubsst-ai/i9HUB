@@ -67,14 +67,25 @@ function LoginContent() {
     })
     
     try {
-      const result = await login(formData)
-      console.log('🔑 FRONTEND LOGIN: Resultado:', result)
-      if (result?.error) {
-        console.log('🔴 FRONTEND LOGIN: Erro:', result.error)
-        setError(result.error)
+      // Chama a função de login que pode fazer redirect
+      await login(formData)
+      
+      // Se chegou aqui, algo deu errado (deveria ter redirecionado)
+      console.log('� FRONTEND LOGIN: Não houve redirect - possível erro')
+      setError('Erro inesperado. Tente novamente.')
+      
+    } catch (err: any) {
+      console.log('🔍 FRONTEND LOGIN: Exception capturada:', err)
+      
+      // Se for erro de redirect do Next.js, é na verdade sucesso!
+      if (err?.message?.includes('NEXT_REDIRECT') || err?.digest?.includes('NEXT_REDIRECT')) {
+        console.log('� FRONTEND LOGIN: Redirect capturado - login bem-sucedido!')
+        // Não mostrar erro, deixar o redirect acontecer
+        return
       }
-    } catch (err) {
-      console.error('🔴 FRONTEND LOGIN: Exception:', err)
+      
+      // Se for erro real, mostrar
+      console.error('🔴 FRONTEND LOGIN: Erro real:', err)
       setError('Erro ao fazer login. Tente novamente.')
     } finally {
       setLoading(false)

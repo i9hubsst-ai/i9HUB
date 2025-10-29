@@ -55,13 +55,26 @@ function LoginContent() {
     setError('')
 
     const formData = new FormData(e.currentTarget)
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    
+    console.log('🔑 FRONTEND LOGIN: Dados do formulário:', {
+      email,
+      passwordLength: password?.length,
+      passwordPreview: password?.substring(0, 3) + '***',
+      hasEmail: !!email,
+      hasPassword: !!password
+    })
     
     try {
       const result = await login(formData)
+      console.log('🔑 FRONTEND LOGIN: Resultado:', result)
       if (result?.error) {
+        console.log('🔴 FRONTEND LOGIN: Erro:', result.error)
         setError(result.error)
       }
     } catch (err) {
+      console.error('🔴 FRONTEND LOGIN: Exception:', err)
       setError('Erro ao fazer login. Tente novamente.')
     } finally {
       setLoading(false)

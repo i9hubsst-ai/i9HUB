@@ -27,6 +27,10 @@ function LoginContent() {
   const router = useRouter()
 
   useEffect(() => {
+    console.log('🟣 LOGIN: useEffect executado, iniciando verificação de tokens')
+    console.log('🟣 LOGIN: searchParams disponível:', !!searchParams)
+    console.log('🟣 LOGIN: URL atual:', typeof window !== 'undefined' ? window.location.href : 'SSR')
+    
     const checkRecoveryTokens = async () => {
       // Verificar se há tokens de recovery na URL
       const access_token = searchParams.get('access_token')
@@ -118,6 +122,7 @@ function LoginContent() {
       }
     }
 
+    console.log('🟣 LOGIN: Chamando checkRecoveryTokens...')
     checkRecoveryTokens()
   }, [searchParams])
 

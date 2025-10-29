@@ -48,11 +48,11 @@ export async function GET(request: Request) {
         
         if (!error && data.session) {
           console.log('🟢 RECOVERY: Sessão estabelecida com tokens diretos')
-          const redirectUrl = next || '/auth/reset-password'
-          console.log('🟢 RECOVERY: Redirecionando para:', redirectUrl)
+          const redirectUrl = next || '/auth/login'
+          console.log('🟢 RECOVERY: Redirecionando para:', `${redirectUrl}?recovery=true&email=${encodeURIComponent(data.user?.email || '')}`)
           
           return NextResponse.redirect(
-            new URL(redirectUrl, requestUrl.origin)
+            new URL(`${redirectUrl}?recovery=true&email=${encodeURIComponent(data.user?.email || '')}`, requestUrl.origin)
           )
         } else {
           console.log('🔴 RECOVERY: Erro ao estabelecer sessão com tokens diretos:', error?.message)
@@ -88,12 +88,12 @@ export async function GET(request: Request) {
           console.log('🟢 RECOVERY: Sessão de recuperação criada com sucesso')
           console.log('🟢 RECOVERY: User ID:', data.user?.id)
           
-          // Redireciona para a página de reset
-          const redirectUrl = next || '/auth/reset-password'
-          console.log('🟢 RECOVERY: Redirecionando para:', redirectUrl)
+          // Redireciona para a página de login com indicador de recovery
+          const redirectUrl = next || '/auth/login'
+          console.log('🟢 RECOVERY: Redirecionando para:', `${redirectUrl}?recovery=true&email=${encodeURIComponent(data.user?.email || '')}`)
           
           return NextResponse.redirect(
-            new URL(redirectUrl, requestUrl.origin)
+            new URL(`${redirectUrl}?recovery=true&email=${encodeURIComponent(data.user?.email || '')}`, requestUrl.origin)
           )
         } else {
           console.log('🔴 RECOVERY: Erro no exchange:', error?.message)

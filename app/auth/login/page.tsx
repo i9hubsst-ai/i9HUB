@@ -27,103 +27,26 @@ function LoginContent() {
   const router = useRouter()
 
   useEffect(() => {
-    console.log('🟣 LOGIN: useEffect executado, iniciando verificação de tokens')
-    console.log('🟣 LOGIN: searchParams disponível:', !!searchParams)
-    console.log('🟣 LOGIN: URL atual:', typeof window !== 'undefined' ? window.location.href : 'SSR')
+    console.log('🟣 LOGIN: useEffect executado, verificando parâmetro recovery')
     
-    const checkRecoveryTokens = async () => {
-      // Verificar se há tokens de recovery na URL
-      const access_token = searchParams.get('access_token')
-      const refresh_token = searchParams.get('refresh_token')
-      const token = searchParams.get('token') // Token PKCE do Supabase
-      const type = searchParams.get('type')
+    // Verificar se é modo recovery (vem do callback)
+    const recovery = searchParams.get('recovery')
+    const email = searchParams.get('email')
+    
+    console.log('� LOGIN: Parâmetros:', { recovery, email })
+    
+    if (recovery === 'true') {
+      console.log('� LOGIN: Modo recovery ativado pelo callback')
+      setIsRecoveryMode(true)
+      setRecoveryLoading(false)
       
-      console.log('🔍 LOGIN: Verificando tokens de recovery:', {
-        access_token: access_token ? `${access_token.substring(0, 10)}...` : null,
-        refresh_token: refresh_token ? `${refresh_token.substring(0, 10)}...` : null,
-        token: token ? `${token.substring(0, 10)}...` : null,
-        type,
-        fullUrl: window.location.href
-      })
-
-      // Caso 1: Tokens diretos (access_token + refresh_token)
-      if (access_token && refresh_token && type === 'recovery') {
-        console.log('🟡 LOGIN: Tokens diretos detectados, estabelecendo sessão')
-        
-        const supabase = createClient()
-        
-        try {
-          // Estabelecer sessão com os tokens
-          const { data, error } = await supabase.auth.setSession({
-            access_token,
-            refresh_token
-          })
-          
-          if (!error && data.session && data.user) {
-            console.log('🟢 LOGIN: Sessão de recovery estabelecida:', data.user.email)
-            setIsRecoveryMode(true)
-            setUserEmail(data.user.email || '')
-            setRecoveryLoading(false)
-            
-            // Limpar URL dos tokens para UX melhor
-            const cleanUrl = new URL(window.location.href)
-            cleanUrl.searchParams.delete('access_token')
-            cleanUrl.searchParams.delete('refresh_token')
-            cleanUrl.searchParams.delete('type')
-            window.history.replaceState({}, '', cleanUrl.toString())
-            
-          } else {
-            console.log('🔴 LOGIN: Erro ao estabelecer sessão de recovery:', error?.message)
-            setError('Token de recovery inválido ou expirado')
-            setRecoveryLoading(false)
-          }
-        } catch (error) {
-          console.error('🔴 LOGIN: Exception ao processar recovery:', error)
-          setError('Erro ao processar token de recovery')
-          setRecoveryLoading(false)
-        }
+      if (email) {
+        setUserEmail(email)
       }
-      // Caso 2: Token PKCE (mais comum)
-      else if (token && type === 'recovery') {
-        console.log('🟡 LOGIN: Token PKCE detectado, fazendo exchange')
-        
-        const supabase = createClient()
-        
-        try {
-          // Fazer exchange do token PKCE para sessão
-          const { data, error } = await supabase.auth.exchangeCodeForSession(token)
-          
-          if (!error && data.session && data.user) {
-            console.log('🟢 LOGIN: Sessão PKCE estabelecida:', data.user.email)
-            setIsRecoveryMode(true)
-            setUserEmail(data.user.email || '')
-            setRecoveryLoading(false)
-            
-            // Limpar URL dos tokens para UX melhor
-            const cleanUrl = new URL(window.location.href)
-            cleanUrl.searchParams.delete('token')
-            cleanUrl.searchParams.delete('type')
-            window.history.replaceState({}, '', cleanUrl.toString())
-            
-          } else {
-            console.log('🔴 LOGIN: Erro ao fazer exchange PKCE:', error?.message)
-            setError('Token de recovery inválido ou expirado')
-            setRecoveryLoading(false)
-          }
-        } catch (error) {
-          console.error('🔴 LOGIN: Exception ao processar PKCE:', error)
-          setError('Erro ao processar token de recovery')
-          setRecoveryLoading(false)
-        }
-      } else {
-        // Não há tokens de recovery, modo login normal
-        console.log('🔵 LOGIN: Nenhum token de recovery detectado, modo login normal')
-        setRecoveryLoading(false)
-      }
+    } else {
+      console.log('🔵 LOGIN: Modo login normal')
+      setRecoveryLoading(false)
     }
-
-    console.log('🟣 LOGIN: Chamando checkRecoveryTokens...')
-    checkRecoveryTokens()
   }, [searchParams])
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {

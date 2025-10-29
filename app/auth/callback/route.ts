@@ -1,9 +1,24 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
+// Função para enviar logs para o monitor
+async function sendLogToMonitor(message: string) {
+  try {
+    await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://i9hubsst-i9hubssts-projects.vercel.app'}/api/log-monitor`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    })
+  } catch (error) {
+    // Silently fail - não queremos quebrar o fluxo por causa do log
+  }
+}
+
 export async function GET(request: Request) {
   console.log('🔵 AUTH CALLBACK: Iniciando processamento')
   console.log('🔵 Request URL:', request.url)
+  await sendLogToMonitor('🔵 AUTH CALLBACK: Iniciando processamento')
+  await sendLogToMonitor(`🔵 Request URL: ${request.url}`)
   
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
@@ -13,23 +28,27 @@ export async function GET(request: Request) {
   const access_token = requestUrl.searchParams.get('access_token')
   const refresh_token = requestUrl.searchParams.get('refresh_token')
   
-  console.log('🔵 Parâmetros recebidos:', { 
+  const logParams = { 
     code: code ? `${code.substring(0, 8)}...` : null,
     token: token ? `${token.substring(0, 8)}...` : null,
     access_token: access_token ? `${access_token.substring(0, 8)}...` : null,
     refresh_token: refresh_token ? `${refresh_token.substring(0, 8)}...` : null,
     type, 
-    next,
-    fullUrl: request.url
-  })
+    next
+  }
+  
+  console.log('🔵 Parâmetros recebidos:', logParams)
+  await sendLogToMonitor(`🔵 Parâmetros: ${JSON.stringify(logParams)}`)
 
   // Se for recuperação de senha
   if (type === 'recovery') {
     console.log('🟡 RECOVERY: Processando recuperação de senha')
+    await sendLogToMonitor('🟡 RECOVERY: Processando recuperação de senha')
     
     // Verificar se temos tokens diretos (acesso via link do Supabase)
     if (access_token && refresh_token) {
       console.log('🟡 RECOVERY: Tokens diretos detectados, estabelecendo sessão')
+      await sendLogToMonitor('🟡 RECOVERY: Tokens diretos detectados')
       
       const supabase = await createClient()
       
@@ -40,25 +59,35 @@ export async function GET(request: Request) {
           refresh_token
         })
         
-        console.log('🟡 RECOVERY: Resultado setSession:', { 
+        const result = { 
           hasSession: !!data?.session, 
           hasUser: !!data?.user,
           error: error?.message
-        })
+        }
+        
+        console.log('🟡 RECOVERY: Resultado setSession:', result)
+        await sendLogToMonitor(`🟡 RECOVERY: setSession result: ${JSON.stringify(result)}`)
         
         if (!error && data.session) {
           console.log('🟢 RECOVERY: Sessão estabelecida com tokens diretos')
+          await sendLogToMonitor('🟢 RECOVERY: Sessão estabelecida com tokens diretos')
+          
           const redirectUrl = next || '/auth/login'
-          console.log('🟢 RECOVERY: Redirecionando para:', `${redirectUrl}?recovery=true&email=${encodeURIComponent(data.user?.email || '')}`)
+          const finalUrl = `${redirectUrl}?recovery=true&email=${encodeURIComponent(data.user?.email || '')}`
+          
+          console.log('🟢 RECOVERY: Redirecionando para:', finalUrl)
+          await sendLogToMonitor(`🟢 RECOVERY: Redirecionando para: ${finalUrl}`)
           
           return NextResponse.redirect(
-            new URL(`${redirectUrl}?recovery=true&email=${encodeURIComponent(data.user?.email || '')}`, requestUrl.origin)
+            new URL(finalUrl, requestUrl.origin)
           )
         } else {
           console.log('🔴 RECOVERY: Erro ao estabelecer sessão com tokens diretos:', error?.message)
+          await sendLogToMonitor(`🔴 RECOVERY: Erro setSession: ${error?.message}`)
         }
       } catch (error) {
         console.error('🔴 RECOVERY: Exception ao estabelecer sessão:', error)
+        await sendLogToMonitor(`🔴 RECOVERY: Exception setSession: ${error}`)
       }
     }
     

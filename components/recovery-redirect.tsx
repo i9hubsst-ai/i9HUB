@@ -29,14 +29,46 @@ export default function RecoveryRedirect() {
     const access_token = searchParams.get('access_token')
     const refresh_token = searchParams.get('refresh_token')
     
+    // Também verificar parâmetros que o Supabase pode adicionar após o processamento
+    const error = searchParams.get('error')
+    const error_code = searchParams.get('error_code')
+    const error_description = searchParams.get('error_description')
+    
     console.log('🔍 RECOVERY REDIRECT: Verificando parâmetros:', {
       token: token ? `${token.substring(0, 10)}...` : null,
       type,
       access_token: access_token ? `${access_token.substring(0, 10)}...` : null,
       refresh_token: refresh_token ? `${refresh_token.substring(0, 10)}...` : null,
+      error,
+      error_code,
+      error_description,
       fullUrl: window.location.href,
-      pathname: window.location.pathname
+      pathname: window.location.pathname,
+      hash: window.location.hash
     })
+    
+    // Verificar se há tokens no hash (às vezes o Supabase coloca lá)
+    const hash = window.location.hash
+    if (hash && hash.includes('access_token')) {
+      console.log('🟡 RECOVERY REDIRECT: Tokens detectados no hash:', hash)
+      
+      // Converter hash em searchParams
+      const hashParams = new URLSearchParams(hash.substring(1))
+      const hashAccessToken = hashParams.get('access_token')
+      const hashRefreshToken = hashParams.get('refresh_token')
+      const hashType = hashParams.get('type')
+      
+      if (hashAccessToken && hashRefreshToken) {
+        const loginUrl = new URL('/auth/login', window.location.origin)
+        loginUrl.searchParams.set('access_token', hashAccessToken)
+        loginUrl.searchParams.set('refresh_token', hashRefreshToken)
+        if (hashType) loginUrl.searchParams.set('type', hashType)
+        
+        console.log('🔄 RECOVERY REDIRECT: Redirecionando com tokens do hash para:', loginUrl.toString())
+        window.location.href = loginUrl.toString()
+        return
+      }
+    }
     
     // Se há tokens de recovery (PKCE ou diretos) e não estamos já na página de login, redirecionar
     if ((token && type === 'recovery') || (access_token && refresh_token)) {

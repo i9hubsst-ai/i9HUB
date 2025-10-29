@@ -29,38 +29,59 @@ export async function getUserMemberships(userId: string) {
 }
 
 export async function isPlatformAdmin(userId: string): Promise<boolean> {
-  // Primeiro verifica se existe um registro por userId
-  const adminByUserId = await prisma.platformAdmin.findUnique({
-    where: { userId }
-  })
-  
-  if (adminByUserId) {
-    return true
-  }
-  
-  // Se não encontrou por userId, busca pelo email do usuário
-  const user = await getCurrentUser()
-  if (user?.email === 'i9.hubsst@gmail.com') {
-    // Se é o admin, verifica se já tem registro
-    try {
-      const existingAdmin = await prisma.platformAdmin.findUnique({
-        where: { userId }
-      })
-      
-      if (!existingAdmin) {
-        await prisma.platformAdmin.create({
-          data: { userId }
-        })
-      }
-      
+  try {
+    console.log('🔍 PLATFORM ADMIN: Verificando admin para userId:', userId)
+    
+    // Primeiro verifica se existe um registro por userId
+    const adminByUserId = await prisma.platformAdmin.findUnique({
+      where: { userId }
+    })
+    
+    if (adminByUserId) {
+      console.log('🟢 PLATFORM ADMIN: Admin encontrado por userId')
       return true
-    } catch (error) {
-      console.log('Admin já existe ou erro:', error)
-      return true // Considera como admin mesmo se houver erro
     }
+    
+    // Se não encontrou por userId, busca pelo email do usuário
+    const user = await getCurrentUser()
+    if (user?.email === 'i9.hubsst@gmail.com') {
+      console.log('🟡 PLATFORM ADMIN: Email admin detectado, criando/verificando registro...')
+      // Se é o admin, verifica se já tem registro
+      try {
+        const existingAdmin = await prisma.platformAdmin.findUnique({
+          where: { userId }
+        })
+        
+        if (!existingAdmin) {
+          await prisma.platformAdmin.create({
+            data: { userId }
+          })
+          console.log('🟢 PLATFORM ADMIN: Registro criado')
+        }
+        
+        return true
+      } catch (error) {
+        console.log('🟡 PLATFORM ADMIN: Admin já existe ou erro:', error)
+        return true // Considera como admin mesmo se houver erro
+      }
+    }
+    
+    console.log('🔴 PLATFORM ADMIN: Não é admin')
+    return false
+    
+  } catch (error) {
+    console.error('🔴 PLATFORM ADMIN: Erro de conexão:', error)
+    
+    // Se não conseguir conectar ao banco, verificar se é o email admin
+    const user = await getCurrentUser()
+    if (user?.email === 'i9.hubsst@gmail.com') {
+      console.log('🟡 PLATFORM ADMIN: Email admin - assumindo permissão temporária')
+      return true
+    }
+    
+    console.log('🔴 PLATFORM ADMIN: Erro de conexão e não é email admin')
+    return false
   }
-  
-  return false
 }
 
 export async function getUserRole(userId: string, companyId: string): Promise<string | null> {

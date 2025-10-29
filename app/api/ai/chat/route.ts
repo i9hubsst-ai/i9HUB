@@ -63,19 +63,16 @@ INSTRUÇÕES:
     const geminiStart = Date.now()
     console.log(`🤖 [${new Date().toISOString()}] [API] Chamando Gemini... START GEMINI: ${geminiStart}`)
     
+    // Usar a mesma sintaxe que funciona no gemini-service.ts
     const response = await genai.models.generateContent({
       model: 'gemini-1.5-flash',
-      config: {
-        systemInstruction: systemPrompt,
-        temperature: 0.7,
-        topK: 40,
-        topP: 0.95,
-        maxOutputTokens: 2048,
-      },
-      contents: prompt,
+      contents: [{ 
+        role: 'user', 
+        parts: [{ text: `${systemPrompt}\n\nUsuário: ${prompt}` }] 
+      }]
     })
     
-    const responseText = response.text
+    const responseText = response.candidates?.[0]?.content?.parts?.[0]?.text || 'Desculpe, não consegui processar sua pergunta.'
     
     const geminiEnd = Date.now()
     console.log(`✅ [${new Date().toISOString()}] [API] Resposta do Gemini recebida em ${geminiEnd - geminiStart}ms`)
@@ -98,7 +95,7 @@ INSTRUÇÕES:
     console.log(`📤 [${new Date().toISOString()}] [API] Enviando resposta para cliente...`)
     
     // O useChat do Vercel AI SDK espera uma resposta em texto simples
-    const result = new Response(responseText, {
+    const finalResponse = new Response(responseText, {
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
       },
@@ -108,7 +105,7 @@ INSTRUÇÕES:
     const totalTime = Date.now() - startTime
     console.log(`🏁 [${new Date().toISOString()}] [API] PROCESSO COMPLETO - Total: ${totalTime}ms | Parse: ${parseEnd - parseStart}ms | Extract: ${extractEnd - extractStart}ms | Gemini: ${geminiEnd - geminiStart}ms | Send: ${sendEnd - sendStart}ms`)
     
-    return result
+    return finalResponse
   } catch (error: any) {
     const errorTime = Date.now() - startTime
     console.error(`💥 [${new Date().toISOString()}] [API] ERRO após ${errorTime}ms:`, error)

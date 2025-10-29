@@ -56,8 +56,18 @@ export async function login(formData: FormData) {
     
     console.log('🔴 LOGIN: Sem sessão criada')
     return { error: 'Erro ao criar sessão' }
-  } catch (err) {
-    console.error('🔴 LOGIN: Exception during login:', err)
+    
+  } catch (err: any) {
+    console.log('🔍 LOGIN: Analisando exception:', err)
+    
+    // Se for um NEXT_REDIRECT, é na verdade um sucesso!
+    if (err?.digest?.includes('NEXT_REDIRECT')) {
+      console.log('� LOGIN: Redirect detectado - login bem-sucedido!')
+      // Não retornar erro - deixar o redirect acontecer
+      throw err // Re-throw para permitir o redirect
+    }
+    
+    console.error('�🔴 LOGIN: Exception real durante login:', err)
     return { error: 'Erro ao fazer login. Tente novamente.' }
   }
 

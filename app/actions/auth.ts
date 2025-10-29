@@ -193,11 +193,19 @@ export async function resetPassword(formData: FormData) {
   const supabase = await createClient()
   const email = formData.get('email') as string
 
+  // Usar o URL atual do site de forma dinâmica
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+                  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 
+                  'https://i9hubsst-i9hubssts-projects.vercel.app'
+  
+  const redirectUrl = `${baseUrl}/auth/callback?type=recovery&next=/auth/login`
+
   console.log('🔐 RESET PASSWORD: Iniciando para email:', email)
-  console.log('🔐 RESET PASSWORD: Redirect URL será:', 'https://i9hubsst.vercel.app/auth/callback?type=recovery&next=/auth/login')
+  console.log('🔐 RESET PASSWORD: Base URL:', baseUrl)
+  console.log('🔐 RESET PASSWORD: Redirect URL será:', redirectUrl)
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://i9hubsst.vercel.app/auth/callback?type=recovery&next=/auth/login',
+    redirectTo: redirectUrl,
   })
 
   if (error) {

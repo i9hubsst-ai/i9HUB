@@ -218,17 +218,50 @@ export async function resetPassword(formData: FormData) {
 }
 
 export async function updatePassword(formData: FormData) {
-  const supabase = await createClient()
-  const password = formData.get('password') as string
+  console.log('🔐 UPDATE PASSWORD: Iniciando atualização de senha')
+  
+  try {
+    const supabase = await createClient()
+    const password = formData.get('password') as string
 
-  const { error } = await supabase.auth.updateUser({
-    password: password
-  })
+    console.log('🔐 UPDATE PASSWORD: Password recebido:', password ? `${password.length} chars` : 'null')
 
-  if (error) {
-    return { error: error.message || 'Erro desconhecido' }
+    // Verificar se há sessão ativa
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+    
+    console.log('🔐 UPDATE PASSWORD: Sessão atual:', { 
+      hasSession: !!session, 
+      hasUser: !!session?.user,
+      userId: session?.user?.id,
+      sessionError: sessionError?.message
+    })
+
+    if (!session) {
+      console.log('🔴 UPDATE PASSWORD: Nenhuma sessão ativa')
+      return { error: 'Sessão expirada. Solicite um novo link de recuperação.' }
+    }
+
+    if (!password || password.length < 6) {
+      console.log('🔴 UPDATE PASSWORD: Senha inválida')
+      return { error: 'Senha deve ter pelo menos 6 caracteres' }
+    }
+
+    console.log('🟡 UPDATE PASSWORD: Tentando atualizar senha...')
+    const { error } = await supabase.auth.updateUser({
+      password: password
+    })
+
+    if (error) {
+      console.error('🔴 UPDATE PASSWORD: Erro na atualização:', error)
+      return { error: error.message || 'Erro ao atualizar senha' }
+    }
+
+    console.log('🟢 UPDATE PASSWORD: Senha atualizada com sucesso')
+    revalidatePath('/', 'layout')
+    redirect('/dashboard')
+    
+  } catch (error) {
+    console.error('🔴 UPDATE PASSWORD: Exception:', error)
+    return { error: 'Erro interno do servidor' }
   }
-
-  revalidatePath('/', 'layout')
-  redirect('/dashboard')
 }

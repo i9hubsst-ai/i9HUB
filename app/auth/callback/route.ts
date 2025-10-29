@@ -28,13 +28,29 @@ export async function GET(request: Request) {
   const access_token = requestUrl.searchParams.get('access_token')
   const refresh_token = requestUrl.searchParams.get('refresh_token')
   
+  // Verificar se há erro de token expirado
+  const error = requestUrl.searchParams.get('error')
+  const errorCode = requestUrl.searchParams.get('error_code')
+  const errorDescription = requestUrl.searchParams.get('error_description')
+  
+  if (error && errorCode === 'otp_expired') {
+    console.log('🔴 CALLBACK: Token de recovery expirado')
+    await sendLogToMonitor(`🔴 CALLBACK: Token expirado - ${errorDescription}`)
+    
+    return NextResponse.redirect(
+      new URL('/auth/forgot-password?error=token-expirado&message=O link de recuperação expirou. Solicite um novo link.', requestUrl.origin)
+    )
+  }
+  
   const logParams = { 
     code: code ? `${code.substring(0, 8)}...` : null,
     token: token ? `${token.substring(0, 8)}...` : null,
     access_token: access_token ? `${access_token.substring(0, 8)}...` : null,
     refresh_token: refresh_token ? `${refresh_token.substring(0, 8)}...` : null,
     type, 
-    next
+    next,
+    error,
+    errorCode
   }
   
   console.log('🔵 Parâmetros recebidos:', logParams)

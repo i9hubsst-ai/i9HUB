@@ -17,12 +17,13 @@ export async function login(formData: FormData) {
   }
 
   try {
-    console.log('Iniciando processo de login para:', email)
+    console.log('🔑 LOGIN: Iniciando processo de login para:', email)
+    console.log('🔑 LOGIN: Password length:', password.length)
     
     // Primeiro faz logout para garantir que não há sessão ativa
     await supabase.auth.signOut()
     
-    console.log('Logout realizado, tentando login...')
+    console.log('🔑 LOGIN: Logout realizado, tentando login...')
 
     // Tenta fazer login
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -30,9 +31,17 @@ export async function login(formData: FormData) {
       password
     })
     
-    console.log('Resultado do login:', error ? 'Erro' : 'Sucesso')
+    console.log('🔑 LOGIN: Resultado do login:', {
+      hasError: !!error,
+      errorMessage: error?.message,
+      errorStatus: error?.status,
+      hasSession: !!data?.session,
+      hasUser: !!data?.user,
+      userId: data?.user?.id
+    })
 
     if (error) {
+      console.log('🔴 LOGIN: Erro detalhado:', error)
       if (error.message?.includes('Invalid login credentials')) {
         return { error: 'Email ou senha inválidos' }
       }
@@ -40,13 +49,15 @@ export async function login(formData: FormData) {
     }
 
     if (data.session) {
+      console.log('🟢 LOGIN: Login bem-sucedido, redirecionando...')
       revalidatePath('/dashboard', 'layout')
       redirect('/dashboard')
     }
     
+    console.log('🔴 LOGIN: Sem sessão criada')
     return { error: 'Erro ao criar sessão' }
   } catch (err) {
-    console.error('Error during login:', err)
+    console.error('🔴 LOGIN: Exception during login:', err)
     return { error: 'Erro ao fazer login. Tente novamente.' }
   }
 
@@ -233,6 +244,7 @@ export async function updatePassword(formData: FormData) {
       hasSession: !!session, 
       hasUser: !!session?.user,
       userId: session?.user?.id,
+      email: session?.user?.email,
       sessionError: sessionError?.message
     })
 
@@ -247,8 +259,20 @@ export async function updatePassword(formData: FormData) {
     }
 
     console.log('🟡 UPDATE PASSWORD: Tentando atualizar senha...')
-    const { error } = await supabase.auth.updateUser({
+    
+    // Tentar atualizar a senha
+    const { data: updateData, error } = await supabase.auth.updateUser({
       password: password
+    })
+
+    console.log('🟡 UPDATE PASSWORD: Resultado detalhado:', {
+      hasData: !!updateData,
+      hasUser: !!updateData?.user,
+      userId: updateData?.user?.id,
+      email: updateData?.user?.email,
+      updatedAt: updateData?.user?.updated_at,
+      error: error?.message,
+      errorCode: error?.status
     })
 
     if (error) {
@@ -256,9 +280,20 @@ export async function updatePassword(formData: FormData) {
       return { error: error.message || 'Erro ao atualizar senha' }
     }
 
+    if (!updateData?.user) {
+      console.error('🔴 UPDATE PASSWORD: Nenhum usuário retornado')
+      return { error: 'Erro: nenhum usuário retornado na atualização' }
+    }
+
     console.log('🟢 UPDATE PASSWORD: Senha atualizada com sucesso')
+    console.log('🟢 UPDATE PASSWORD: Novo updated_at:', updateData.user.updated_at)
+    
+    // Fazer logout da sessão atual para forçar novo login
+    console.log('🟡 UPDATE PASSWORD: Fazendo logout da sessão atual...')
+    await supabase.auth.signOut()
+    
     revalidatePath('/', 'layout')
-    redirect('/dashboard')
+    redirect('/auth/login?message=senha-atualizada')
     
   } catch (error) {
     console.error('🔴 UPDATE PASSWORD: Exception:', error)

@@ -53,24 +53,36 @@ export function AIChat() {
     },
     onError: (error) => {
       console.error('❌ [CHAT] Erro no useChat:', error)
+      console.error('❌ [CHAT] Erro completo:', JSON.stringify(error, null, 2))
     },
     onFinish: (message) => {
       console.log('✅ [CHAT] Mensagem finalizada:', message)
+      console.log('✅ [CHAT] Total de mensagens após finish:', messages.length + 1)
+    },
+    onResponse: (response) => {
+      console.log('📨 [CHAT] Resposta recebida:', response.status, response.statusText)
+      console.log('📨 [CHAT] Headers da resposta:', Object.fromEntries(response.headers.entries()))
     }
   })
 
   // Carregar mensagens do localStorage após inicialização
   useEffect(() => {
+    console.log('🔄 [CHAT] Carregando mensagens do localStorage...')
     const savedMessages = loadMessagesFromStorage()
+    console.log('💾 [CHAT] Mensagens encontradas no localStorage:', savedMessages.length)
     if (savedMessages.length > 0) {
+      console.log('📋 [CHAT] Definindo mensagens carregadas:', savedMessages)
       setMessages(savedMessages)
     }
   }, [setMessages])
 
   // Salvar mensagens sempre que mudarem
   useEffect(() => {
+    console.log('🔄 [CHAT] Mensagens mudaram. Total atual:', messages.length)
+    console.log('📋 [CHAT] Mensagens atuais:', messages)
     if (messages.length > 0) {
       saveMessagesToStorage(messages)
+      console.log('💾 [CHAT] Mensagens salvas no localStorage')
     }
   }, [messages])
 
@@ -111,6 +123,20 @@ export function AIChat() {
       // Reverte o estado em caso de erro
       setFeedbacks(prev => ({ ...prev, [messageIndex]: null }))
     }
+  }
+
+  // Função customizada para capturar envio
+  const handleFormSubmit = (e: React.FormEvent) => {
+    console.log('📤 [CHAT] Usuário enviando mensagem:', input)
+    console.log('📤 [CHAT] Estado isLoading antes do envio:', isLoading)
+    console.log('📤 [CHAT] Total de mensagens antes do envio:', messages.length)
+    
+    if (!input.trim()) {
+      console.warn('⚠️ [CHAT] Tentativa de envio com input vazio')
+      return
+    }
+    
+    handleSubmit(e)
   }
 
   // Ajusta altura do textarea
@@ -237,7 +263,7 @@ export function AIChat() {
         ))}
       </div>
 
-      <form onSubmit={handleSubmit} className="p-4 flex gap-2">
+      <form onSubmit={handleFormSubmit} className="p-4 flex gap-2">
         <Textarea
           ref={textareaRef}
           value={input}
@@ -247,7 +273,8 @@ export function AIChat() {
           onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault()
-              handleSubmit(e as any)
+              console.log('⌨️ [CHAT] Enter pressionado, enviando via teclado')
+              handleFormSubmit(e as any)
             }
           }}
         />

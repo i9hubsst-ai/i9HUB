@@ -7,6 +7,24 @@ export async function POST(request: Request) {
   console.log(`⏱️ [${new Date().toISOString()}] [API] Requisição recebida - START TIME: ${startTime}`)
   
   try {
+    // Verificar se a API key do Gemini está configurada
+    const geminiApiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY
+    if (!geminiApiKey) {
+      console.error(`🔑 [${new Date().toISOString()}] [API] ERRO: GEMINI_API_KEY não configurado`)
+      console.error(`🔑 [${new Date().toISOString()}] [API] Variáveis disponíveis:`, Object.keys(process.env).filter(key => key.includes('GEMINI') || key.includes('GOOGLE')))
+      return new Response(
+        'Erro de configuração: API key do Gemini não encontrada',
+        { 
+          status: 500,
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+          }
+        }
+      )
+    }
+    
+    console.log(`🔑 [${new Date().toISOString()}] [API] API key encontrada: ${geminiApiKey.substring(0, 10)}...`)
+    
     const parseStart = Date.now()
     const { messages } = await request.json()
     const parseEnd = Date.now()
@@ -45,9 +63,11 @@ export async function POST(request: Request) {
     console.log(`🤖 [${new Date().toISOString()}] [API] Chamando Gemini com contexto RAG...`)
     const geminiStart = Date.now()
     
-    // Usar AI SDK v3 com streamText
+    // Usar AI SDK v3 com streamText e API key explícita
     const result = await streamText({
-      model: google('models/gemini-1.5-flash'),
+      model: google('models/gemini-1.5-flash', {
+        apiKey: geminiApiKey,
+      }),
       messages: [
         {
           role: 'user',

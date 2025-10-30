@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { validateCNPJ } from '../../../lib/utils/validateCNPJ';
 
 export async function POST(request: Request) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const body = await request.json();
 
   // Validate CNPJ format

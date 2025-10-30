@@ -1,30 +1,19 @@
 import { streamText } from 'ai'
-import { google } from '@ai-sdk/google'
+import { createGoogleGenerativeAI } from '@ai-sdk/google'
 import { buildRAGContext, enrichPromptWithRAG } from '@/lib/services/rag-service'
+
+// 🚀 LEMBRETE: ESTE CÓDIGO RODA NA VERCEL (PRODUÇÃO), NÃO LOCAL!
+// Para debug: Vercel Dashboard > Logs, não console local
+// Configure Google provider with API key
+const google = createGoogleGenerativeAI({
+  apiKey: process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY
+})
 
 export async function POST(request: Request) {
   const startTime = Date.now()
   console.log(`⏱️ [${new Date().toISOString()}] [API] Requisição recebida - START TIME: ${startTime}`)
   
   try {
-    // Verificar se a API key do Gemini está configurada
-    const geminiApiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY
-    if (!geminiApiKey) {
-      console.error(`🔑 [${new Date().toISOString()}] [API] ERRO: GEMINI_API_KEY não configurado`)
-      console.error(`🔑 [${new Date().toISOString()}] [API] Variáveis disponíveis:`, Object.keys(process.env).filter(key => key.includes('GEMINI') || key.includes('GOOGLE')))
-      return new Response(
-        'Erro de configuração: API key do Gemini não encontrada',
-        { 
-          status: 500,
-          headers: {
-            'Content-Type': 'text/plain; charset=utf-8',
-          }
-        }
-      )
-    }
-    
-    console.log(`🔑 [${new Date().toISOString()}] [API] API key encontrada: ${geminiApiKey.substring(0, 10)}...`)
-    
     const parseStart = Date.now()
     const { messages } = await request.json()
     const parseEnd = Date.now()
@@ -65,9 +54,7 @@ export async function POST(request: Request) {
     
     // Usar AI SDK v3 com streamText e API key explícita
     const result = await streamText({
-      model: google('models/gemini-1.5-flash', {
-        apiKey: geminiApiKey,
-      }),
+      model: google('models/gemini-1.5-flash'),
       messages: [
         {
           role: 'user',

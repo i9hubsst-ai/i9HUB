@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Bot, Send, User, ThumbsUp, ThumbsDown, Trash2 } from "lucide-react"
 import { useChat } from "ai/react"
-
 import type { Message } from 'ai'
 
 // Chave para localStorage
@@ -46,7 +45,7 @@ export function AIChat() {
     }
   }
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages } = useChat({
+  const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages, error } = useChat({
     api: "/api/ai/chat",
     headers: {
       'Content-Type': 'application/json',
@@ -64,6 +63,11 @@ export function AIChat() {
       console.log('📨 [CHAT] Headers da resposta:', Object.fromEntries(response.headers.entries()))
     }
   })
+
+  // Log do estado de erro
+  if (error) {
+    console.error('💥 [CHAT] Estado de erro detectado:', error)
+  }
 
   // Carregar mensagens do localStorage após inicialização
   useEffect(() => {
@@ -184,7 +188,27 @@ export function AIChat() {
         ref={containerRef}
         className="flex-1 overflow-y-auto p-4 space-y-4"
       >
-        {messages.length === 0 && (
+        {/* Mostrar erro se houver */}
+        {error && (
+          <div className="flex items-center justify-center h-full text-center">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+              <h3 className="text-lg font-medium mb-2 text-red-800">Erro no Chat</h3>
+              <p className="text-red-600 text-sm mb-2">
+                {error.message || 'Erro desconhecido na comunicação com a IA'}
+              </p>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => window.location.reload()}
+                className="text-red-600 border-red-300 hover:bg-red-100"
+              >
+                Recarregar Chat
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {messages.length === 0 && !error && (
           <div className="flex items-center justify-center h-full text-center">
             <div>
               <Bot className="h-12 w-12 text-muted-foreground mx-auto mb-4" />

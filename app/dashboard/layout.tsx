@@ -1,10 +1,7 @@
-import { Building2, LayoutDashboard, BarChart3, FileText, Users, Bot, UserCog, Layers } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
 import { getCurrentUser, getUserDisplayRole } from '@/lib/auth'
 import { UserNav } from '@/components/dashboard/user-nav'
 import { redirect } from 'next/navigation'
-import { AIChatButton } from '@/components/dashboard/ai-assistant-button'
+import { MobileSidebar, DesktopSidebar } from '@/components/dashboard/mobile-sidebar'
 
 export default async function DashboardLayout({
   children,
@@ -19,58 +16,23 @@ export default async function DashboardLayout({
 
   const userRole = await getUserDisplayRole(user.id)
 
-  const menuItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
-    { icon: BarChart3, label: 'Diagnósticos', href: '/dashboard/diagnostics' },
-    { icon: Layers, label: 'Templates', href: '/dashboard/templates' },
-    { icon: FileText, label: 'Planos de Ação', href: '/dashboard/actions' },
-    { icon: Building2, label: 'Empresas', href: '/dashboard/companies' },
-    { icon: Users, label: 'Usuários', href: '/dashboard/users' },
-    { icon: UserCog, label: 'Funcionários', href: '/dashboard/employees' },
-  ]
-
   return (
     <div className="min-h-screen bg-background flex">
-      {/* Sidebar */}
-      <aside className="w-64 bg-sidebar text-sidebar-foreground flex flex-col">
-        <div className="p-6 border-b border-sidebar-border">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <Image
-              src="/images/hubsst-logo.png"
-              alt="HUBSST"
-              width={40}
-              height={40}
-              className="brightness-0 invert"
-            />
-            <span className="font-bold text-xl">HUBSST</span>
-          </Link>
-        </div>
-
-        <nav className="flex-1 p-4 space-y-2">
-          {menuItems.map((item) => {
-            const Icon = item.icon
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-sidebar-accent transition-colors"
-              >
-                <Icon className="h-5 w-5" />
-                <span>{item.label}</span>
-              </Link>
-            )
-          })}
-        </nav>
-
-        <div className="p-4 border-t border-sidebar-border">
-          <AIChatButton />
-        </div>
-      </aside>
+      {/* Desktop Sidebar */}
+      <DesktopSidebar />
 
       {/* Main Content */}
       <main className="flex-1 flex flex-col">
         {/* Top Header */}
-        <header className="h-16 border-b bg-card flex items-center justify-end px-6">
+        <header className="h-16 border-b bg-card flex items-center justify-between px-4 md:px-6">
+          {/* Mobile menu button */}
+          <MobileSidebar />
+          
+          {/* Desktop logo/title - hidden on mobile */}
+          <div className="hidden md:block">
+            {/* Empty space for consistency */}
+          </div>
+          
           <UserNav user={{ 
             email: user.email!, 
             name: user.user_metadata?.name,
@@ -79,7 +41,7 @@ export default async function DashboardLayout({
         </header>
         
         {/* Page Content */}
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 overflow-auto p-4 md:p-6">
           {children}
         </div>
       </main>

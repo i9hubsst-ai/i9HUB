@@ -116,8 +116,15 @@ async function processPositiveFeedback(feedbackId: string, userQuery: string, ai
       }
     })
 
-    // TODO: Implementar integração com sistema de embeddings
-    // await embeddingService.addToKnowledgeBase(userQuery, aiResponse)
+    // Integrar com sistema de embeddings RAG
+    try {
+      const { addApprovedResponse } = await import('@/lib/services/rag-service')
+      // Usar IDs genéricos já que não temos contexto de usuário autenticado aqui
+      await addApprovedResponse(userQuery, aiResponse, 'anonymous', 'feedback')
+      console.log('✅ [RAG] Resposta aprovada adicionada à base de conhecimento')
+    } catch (ragError) {
+      console.error('⚠️ [RAG] Erro ao adicionar ao RAG (não crítico):', ragError)
+    }
     
     console.log('✅ [LEARNING] Aprendizado automático concluído')
     

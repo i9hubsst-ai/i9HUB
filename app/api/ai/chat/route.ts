@@ -49,12 +49,12 @@ export async function POST(request: Request) {
     // Enriquecer prompt com contexto RAG
     const enrichedPrompt = enrichPromptWithRAG(userPrompt, ragContext)
     
-    console.log(`🤖 [${new Date().toISOString()}] [API] Chamando Gemini com contexto RAG...`)
+    console.log(`🤖 [${new Date().toISOString()}] [API] Chamando Gemini com contexto RAG - MODELO CORRIGIDO!`)
     const geminiStart = Date.now()
     
-    // Usar AI SDK v3 com streamText e modelo correto do Gemini
+    // 🚨 TESTE: Usando nome completo do modelo conforme documentação
     const result = await streamText({
-      model: google('gemini-1.5-flash'),
+      model: google('models/gemini-1.5-flash-latest'), // ✅ Modelo atualizado
       messages: [
         {
           role: 'user',

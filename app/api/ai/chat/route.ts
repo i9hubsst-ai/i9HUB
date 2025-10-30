@@ -52,9 +52,9 @@ export async function POST(request: Request) {
     console.log(`🤖 [${new Date().toISOString()}] [API] Chamando Gemini com contexto RAG...`)
     const geminiStart = Date.now()
     
-    // Usar AI SDK v3 com streamText e API key explícita
+    // Usar AI SDK v3 com streamText e modelo correto do Gemini
     const result = await streamText({
-      model: google('models/gemini-1.5-flash'),
+      model: google('gemini-1.5-flash'),
       messages: [
         {
           role: 'user',

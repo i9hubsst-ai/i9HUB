@@ -1,6 +1,27 @@
 'use client'
 
-import { Building2, LayoutDashboard, BarChart3, FileText, Users, Bot, UserCog, Layers, Menu, X } from 'lucide-react'
+import { 
+  Building2, 
+  LayoutDashboard, 
+  BarChart3, 
+  FileText, 
+  Users, 
+  Bot, 
+  UserCog, 
+  Layers, 
+  Menu, 
+  X,
+  ShieldCheck,
+  ClipboardList,
+  HardHat,
+  AlertTriangle,
+  Building,
+  Search,
+  GraduationCap,
+  Target,
+  BarChart,
+  Settings
+} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -12,11 +33,20 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
   { icon: BarChart3, label: 'Diagnósticos', href: '/dashboard/diagnostics' },
-  { icon: Layers, label: 'Templates', href: '/dashboard/templates' },
+  { icon: ShieldCheck, label: 'ComplianceSST', href: '/dashboard/compliance' },
+  { icon: ClipboardList, label: 'PGRsys', href: '/dashboard/pgrsys' },
+  { icon: HardHat, label: 'EPIManager', href: '/dashboard/epimanager' },
+  { icon: AlertTriangle, label: 'RiscoEngage', href: '/dashboard/risco' },
+  { icon: Building, label: 'ObraEngage', href: '/dashboard/obra' },
   { icon: FileText, label: 'Planos de Ação', href: '/dashboard/actions' },
+  { icon: Search, label: 'InspecEngage', href: '/dashboard/inspec' },
+  { icon: BarChart, label: 'RelatEngage', href: '/dashboard/relatorios' },
+  { icon: GraduationCap, label: 'SSTLearnEngage', href: '/dashboard/learn' },
+  { icon: Layers, label: 'Templates', href: '/dashboard/templates' },
   { icon: Building2, label: 'Empresas', href: '/dashboard/companies' },
   { icon: Users, label: 'Usuários', href: '/dashboard/users' },
   { icon: UserCog, label: 'Funcionários', href: '/dashboard/employees' },
+  { icon: Settings, label: 'Configurações', href: '/dashboard/configuracoes' },
 ]
 
 function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {

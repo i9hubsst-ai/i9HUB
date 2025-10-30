@@ -52,9 +52,9 @@ export async function POST(request: Request) {
     console.log(`🤖 [${new Date().toISOString()}] [API] Chamando Gemini com contexto RAG - MODELO CORRIGIDO!`)
     const geminiStart = Date.now()
     
-    // 🚨 TESTE: Usando nome completo do modelo conforme documentação
+    // 🚨 TESTE FINAL: Usando apenas o nome base do modelo
     const result = await streamText({
-      model: google('models/gemini-1.5-flash-latest'), // ✅ Modelo atualizado
+      model: google('gemini-pro'), // ✅ Modelo base compatível
       messages: [
         {
           role: 'user',

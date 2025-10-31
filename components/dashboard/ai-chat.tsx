@@ -15,6 +15,8 @@ export function AIChat() {
   const containerRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [feedbacks, setFeedbacks] = useState<Record<number, 'positive' | 'negative' | null>>({})
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [showAdminTip, setShowAdminTip] = useState(true)
 
   // Carregar mensagens do localStorage na inicialização
   const loadMessagesFromStorage = (): Message[] => {
@@ -79,6 +81,20 @@ export function AIChat() {
       setMessages(savedMessages)
     }
   }, [setMessages])
+
+  // Verificar se usuário é admin
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const response = await fetch('/api/auth/check-admin')
+        const data = await response.json()
+        setIsAdmin(data.isAdmin)
+      } catch (error) {
+        console.error('Erro ao verificar status de admin:', error)
+      }
+    }
+    checkAdminStatus()
+  }, [])
 
   // Salvar mensagens sempre que mudarem
   useEffect(() => {
@@ -164,6 +180,11 @@ export function AIChat() {
         <div className="flex items-center gap-2">
           <Bot className="h-5 w-5" />
           <h3 className="font-medium">Assistente SST</h3>
+          {isAdmin && (
+            <span className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">
+              Admin
+            </span>
+          )}
           {messages.length > 0 && (
             <span className="text-sm text-muted-foreground">
               ({messages.length} mensagens)
@@ -183,6 +204,30 @@ export function AIChat() {
           </Button>
         )}
       </div>
+
+      {/* Dica para admins */}
+      {isAdmin && showAdminTip && (
+        <div className="mx-4 mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm">
+          <div className="flex justify-between items-start">
+            <div>
+              <strong className="text-blue-800">💡 Comandos de Admin:</strong>
+              <div className="text-blue-700 mt-1">
+                Use <code className="bg-white px-1 rounded">/aprender [instrução]</code> para treinar a IA em tempo real!
+                <br />
+                <code className="bg-white px-1 rounded">/ajuda</code> para ver todos os comandos.
+              </div>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => setShowAdminTip(false)}
+              className="text-blue-600 hover:text-blue-800 p-1 h-auto"
+            >
+              ✕
+            </Button>
+          </div>
+        </div>
+      )}
 
       <div 
         ref={containerRef}

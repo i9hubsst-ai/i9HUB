@@ -36,8 +36,13 @@ export async function searchRelevantContext(
   try {
     console.log(`🔍 [RAG] Buscando contexto para: "${query}"`)
     
+    // Timeout de 5 segundos para busca no banco
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Timeout na busca RAG')), 5000)
+    })
+    
     // Por enquanto, fazer busca textual simples até embeddings serem configurados
-    const results = await prisma.$queryRaw`
+    const dbPromise = prisma.$queryRaw`
       SELECT 
         content,
         metadata,
@@ -49,7 +54,9 @@ export async function searchRelevantContext(
       WHERE content ILIKE ${'%' + query + '%'}
       ORDER BY "createdAt" DESC
       LIMIT ${maxResults}
-    ` as any[]
+    `
+    
+    const results = await Promise.race([dbPromise, timeoutPromise]) as any[]
 
     console.log(`📚 [RAG] Encontrados ${results.length} resultados relevantes`)
 
@@ -65,8 +72,9 @@ export async function searchRelevantContext(
     }))
   } catch (error) {
     console.error('❌ [RAG] Erro na busca:', error)
-    // Retornar conhecimento básico de SST como fallback
-    return getBasicSSTKnowledge(query)
+    console.log('🔄 Usando fallback offline - RAG indisponível mas IA funcionará!')
+    // Retornar contexto vazio - a IA ainda funcionará com o prompt base
+    return []
   }
 }
 
@@ -161,19 +169,32 @@ Pergunta do usuário: ${userPrompt}`
 }
 
 /**
- * Busca o prompt personalizado do admin
+ * Busca o prompt personalizado do admin com fallback offline
  */
 async function getSystemPromptFromConfig(): Promise<string | null> {
   try {
-    const config = await prisma.aIConfiguration.findFirst({
+    // Timeout de 3 segundos para evitar travamento
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Timeout na conexão com banco')), 3000)
+    })
+    
+    const dbPromise = prisma.aIConfiguration.findFirst({
       where: { isActive: true },
       select: { systemPrompt: true }
     })
     
+    const config = await Promise.race([dbPromise, timeoutPromise]) as any
+    
     return config?.systemPrompt || null
   } catch (error) {
-    console.error('Erro ao buscar configuração do prompt:', error)
-    return null
+    console.error('❌ Erro ao buscar configuração do prompt:', error)
+    console.log('🔄 Usando fallback offline - MA.IA ainda funcionará!')
+    
+    // FALLBACK: Configuração padrão quando banco não está disponível
+    return `- O seu nome é MA.IA (Máquina de Análise de Inteligência Artificial)
+- Você é especialista em Segurança e Saúde do Trabalho
+- Responda sempre de forma técnica e precisa
+- Cite as normas regulamentadoras brasileiras quando relevante`
   }
 }
 

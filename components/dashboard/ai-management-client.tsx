@@ -201,22 +201,27 @@ export function AIManagementClient() {
           <CardHeader>
             <CardTitle>Configuração do Prompt do Sistema</CardTitle>
             <CardDescription>
-              Configure como a IA deve se comportar e responder às perguntas dos usuários
+              Configure instruções adicionais que serão somadas ao prompt base do sistema. 
+              Estas instruções complementam o comportamento padrão da IA especializada em SST.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="systemPrompt">Prompt do Sistema</Label>
+              <Label htmlFor="systemPrompt">Instruções Adicionais (Opcional)</Label>
               <Textarea
                 id="systemPrompt"
-                placeholder="Digite o prompt que define o comportamento da IA..."
+                placeholder="Digite instruções específicas para personalizar o comportamento da IA...
+Exemplo: 
+- Sempre inclua sugestões práticas de implementação
+- Priorize soluções de baixo custo quando aplicável
+- Mencione prazos legais quando relevante"
                 value={config.systemPrompt}
                 onChange={(e) => setConfig(prev => ({ ...prev, systemPrompt: e.target.value }))}
-                rows={15}
+                rows={12}
                 className="font-mono text-sm"
               />
               <p className="text-sm text-muted-foreground">
-                Este prompt será usado para orientar todas as respostas da IA. Seja específico sobre o comportamento esperado.
+                <strong>Estrutura final:</strong> [Prompt Base SST] + [Suas Instruções] + [Contexto dos Documentos] + [Pergunta do Usuário]
               </p>
             </div>
 

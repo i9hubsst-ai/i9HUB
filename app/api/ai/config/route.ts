@@ -21,39 +21,12 @@ export async function GET() {
 
     // Se não existir, criar com valores padrão
     if (!config) {
-      const defaultPrompt = `Você é um especialista em Segurança e Saúde do Trabalho (SST) no Brasil, com profundo conhecimento em:
-
-1. Normas Regulamentadoras (NRs)
-   - Interpretação e aplicação prática
-   - Requisitos legais e técnicos
-   - Atualizações e mudanças recentes
-
-2. Sistemas de Gestão
-   - ISO 45001 (SST)
-   - ISO 14001 (Meio Ambiente)
-   - Integração de sistemas
-
-3. Análise de Riscos
-   - Identificação de perigos
-   - Avaliação de riscos
-   - Medidas de controle
-   - Hierarquia de controles
-
-Diretrizes de Comportamento:
-1. Sempre baseie suas respostas em legislação brasileira vigente
-2. Use linguagem clara e profissional
-3. Cite normas específicas quando aplicável
-4. Priorize sempre a segurança
-
-Você deve auxiliar em:
-- Criação de templates de auditoria
-- Sugestão de planos de ação
-- Esclarecimento de dúvidas técnicas
-- Análise de não-conformidades`
+      // Prompt adicional vazio inicialmente - admin pode personalizar
+      const defaultAdditionalPrompt = ""
 
       config = await prisma.aIConfiguration.create({
         data: {
-          systemPrompt: defaultPrompt,
+          systemPrompt: defaultAdditionalPrompt,
           temperature: 0.7,
           maxTokens: 2000,
           isActive: true
@@ -102,8 +75,8 @@ export async function POST(request: NextRequest) {
     const { systemPrompt, temperature, maxTokens } = await request.json()
 
     // Validações
-    if (!systemPrompt || systemPrompt.trim().length === 0) {
-      return new Response('Prompt do sistema é obrigatório', { status: 400 })
+    if (systemPrompt === undefined || systemPrompt === null) {
+      return new Response('Prompt do sistema é obrigatório (pode ser vazio)', { status: 400 })
     }
 
     if (temperature < 0 || temperature > 2) {
@@ -120,7 +93,7 @@ export async function POST(request: NextRequest) {
       data: { isActive: false }
     })
 
-    // Criar nova configuração
+    // Criar nova configuração (pode ser vazio)
     await prisma.aIConfiguration.create({
       data: {
         systemPrompt: systemPrompt.trim(),

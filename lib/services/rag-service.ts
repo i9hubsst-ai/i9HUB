@@ -119,24 +119,33 @@ export async function buildRAGContext(query: string): Promise<RAGContext> {
  * Prepara prompt enriquecido com contexto RAG usando configuração do admin
  */
 export async function enrichPromptWithRAG(userPrompt: string, ragContext: RAGContext): Promise<string> {
-  // Buscar configuração personalizada do admin
-  let systemPrompt = await getSystemPromptFromConfig()
-  
-  // Se não houver configuração, usar prompt padrão
-  if (!systemPrompt) {
-    systemPrompt = `Você é um assistente especializado em Segurança e Saúde do Trabalho (SST),
+  // Prompt base do sistema (sempre presente)
+  const baseSystemPrompt = `Você é um assistente especializado em Segurança e Saúde do Trabalho (SST),
 com profundo conhecimento das normas regulamentadoras brasileiras (NRs),
 ISO 45001 e melhores práticas do setor.
 
-DIRETRIZES:
+DIRETRIZES BÁSICAS:
 - Base suas respostas no conhecimento específico das NRs brasileiras
 - Cite as normas relevantes (ex: "Conforme NR-12, item 12.38...")
 - Seja técnico e preciso
 - Use terminologia oficial das normas
 - Se não tiver certeza sobre algo específico, mencione que precisa consultar a norma completa`
+
+  // Buscar configuração personalizada do admin (adicional)
+  const customPrompt = await getSystemPromptFromConfig()
+  
+  // Montar prompt final: Base + Personalizado + Contexto
+  let fullSystemPrompt = baseSystemPrompt
+  
+  if (customPrompt && customPrompt.trim()) {
+    fullSystemPrompt += `
+
+INSTRUÇÕES ADICIONAIS DO ADMINISTRADOR:
+${customPrompt.trim()}`
   }
 
   const contextSection = ragContext.relevantContent ? `
+
 ## CONTEXTO RELEVANTE DAS NORMAS:
 ${ragContext.relevantContent}
 
@@ -144,9 +153,7 @@ IMPORTANTE: Use SEMPRE as informações do contexto acima para fundamentar sua r
 Cite as normas específicas mencionadas quando aplicável.
 ` : ''
 
-  const fullPrompt = `${systemPrompt}
-
-${contextSection}
+  const fullPrompt = `${fullSystemPrompt}${contextSection}
 
 Pergunta do usuário: ${userPrompt}`
 

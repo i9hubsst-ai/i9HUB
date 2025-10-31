@@ -116,31 +116,58 @@ export async function buildRAGContext(query: string): Promise<RAGContext> {
 }
 
 /**
- * Prepara prompt enriquecido com contexto RAG
+ * Prepara prompt enriquecido com contexto RAG usando configuração do admin
  */
-export function enrichPromptWithRAG(userPrompt: string, ragContext: RAGContext): string {
-  const systemPrompt = `Você é um assistente especializado em Segurança e Saúde do Trabalho (SST),
+export async function enrichPromptWithRAG(userPrompt: string, ragContext: RAGContext): Promise<string> {
+  // Buscar configuração personalizada do admin
+  let systemPrompt = await getSystemPromptFromConfig()
+  
+  // Se não houver configuração, usar prompt padrão
+  if (!systemPrompt) {
+    systemPrompt = `Você é um assistente especializado em Segurança e Saúde do Trabalho (SST),
 com profundo conhecimento das normas regulamentadoras brasileiras (NRs),
 ISO 45001 e melhores práticas do setor.
-
-${ragContext.relevantContent ? `
-## CONTEXTO RELEVANTE DAS NORMAS:
-${ragContext.relevantContent}
-
-IMPORTANTE: Use SEMPRE as informações do contexto acima para fundamentar sua resposta. 
-Cite as normas específicas mencionadas quando aplicável.
-` : ''}
 
 DIRETRIZES:
 - Base suas respostas no conhecimento específico das NRs brasileiras
 - Cite as normas relevantes (ex: "Conforme NR-12, item 12.38...")
 - Seja técnico e preciso
 - Use terminologia oficial das normas
-- Se não tiver certeza sobre algo específico, mencione que precisa consultar a norma completa
+- Se não tiver certeza sobre algo específico, mencione que precisa consultar a norma completa`
+  }
+
+  const contextSection = ragContext.relevantContent ? `
+## CONTEXTO RELEVANTE DAS NORMAS:
+${ragContext.relevantContent}
+
+IMPORTANTE: Use SEMPRE as informações do contexto acima para fundamentar sua resposta. 
+Cite as normas específicas mencionadas quando aplicável.
+` : ''
+
+  const fullPrompt = `${systemPrompt}
+
+${contextSection}
 
 Pergunta do usuário: ${userPrompt}`
 
-  return systemPrompt
+  return fullPrompt
+}
+
+/**
+ * Busca o prompt personalizado do admin
+ */
+async function getSystemPromptFromConfig(): Promise<string | null> {
+  try {
+    const config = await prisma.aIConfiguration.findFirst({
+      where: { isActive: true },
+      select: { systemPrompt: true }
+    })
+    
+    return config?.systemPrompt || null
+  } catch (error) {
+    console.error('Erro ao buscar configuração do prompt:', error)
+    return null
+  }
 }
 
 /**

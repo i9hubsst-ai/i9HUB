@@ -409,6 +409,36 @@ model AIFeedback {
   @@map("ai_feedbacks")
 }
 
+model AIConfiguration {
+  id           String   @id @default(uuid())
+  systemPrompt String
+  temperature  Float    @default(0.7)
+  maxTokens    Int      @default(2000)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  updatedBy    String?
+
+  @@map("ai_configurations")
+}
+
+model KnowledgeDocument {
+  id               String    @id @default(uuid())
+  filename         String
+  originalFilename String
+  filepath         String
+  size             Int
+  mimeType         String?
+  status           DocumentStatus @default(PROCESSING)
+  pages            Int?
+  extractedText    String?
+  uploadedAt       DateTime  @default(now())
+  processedAt      DateTime?
+  uploadedBy       String
+
+  @@map("knowledge_documents")
+}
+
 model PasswordResetToken {
   id        String   @id @default(cuid())
   userId    String
@@ -513,6 +543,7 @@ enum EmbeddingSourceType {
   MTE_STANDARD
   ISO_STANDARD
   BEST_PRACTICE
+  DOCUMENT
 }
 
 enum FeedbackType {
@@ -525,4 +556,10 @@ enum FeedbackStatus {
   PROCESSED
   REVIEWED
   IGNORED
+}
+
+enum DocumentStatus {
+  PROCESSING
+  READY
+  ERROR
 }

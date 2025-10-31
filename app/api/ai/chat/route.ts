@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     console.log(`📚 [${new Date().toISOString()}] [API] RAG completado em ${ragEnd - ragStart}ms - Confiança: ${ragContext.confidence.toFixed(2)}`)
     
     // Enriquecer prompt com contexto RAG
-    const enrichedPrompt = enrichPromptWithRAG(userPrompt, ragContext)
+    const enrichedPrompt = await enrichPromptWithRAG(userPrompt, ragContext)
     
     console.log(`🤖 [${new Date().toISOString()}] [API] Chamando Gemini com contexto RAG - MODELO CORRIGIDO!`)
     const geminiStart = Date.now()

@@ -24,7 +24,7 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { AIChatButton } from '@/components/dashboard/ai-assistant-button'
 import { Button } from '@/components/ui/button'
@@ -46,10 +46,25 @@ const menuItems = [
   { icon: Building2, label: 'Empresas', href: '/dashboard/companies' },
   { icon: Users, label: 'Usuários', href: '/dashboard/users' },
   { icon: UserCog, label: 'Funcionários', href: '/dashboard/employees' },
+  { icon: Bot, label: 'Gestão de IA', href: '/dashboard/ai-management', adminOnly: true },
   { icon: Settings, label: 'Configurações', href: '/dashboard/configuracoes' },
 ]
 
 function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    // Verificar se usuário é admin
+    fetch('/api/auth/check-admin')
+      .then(res => res.json())
+      .then(data => setIsAdmin(data.isAdmin))
+      .catch(() => setIsAdmin(false))
+  }, [])
+
+  const visibleMenuItems = menuItems.filter(item => 
+    !item.adminOnly || (item.adminOnly && isAdmin)
+  )
+
   return (
     <>
       {/* Logo */}
@@ -68,7 +83,7 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-2">
-        {menuItems.map((item) => {
+        {visibleMenuItems.map((item) => {
           const Icon = item.icon
           return (
             <Link

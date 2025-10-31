@@ -48,15 +48,20 @@ export function AIManagementClient() {
 
   const loadConfig = async () => {
     try {
+      setLoading(true)
       const response = await fetch('/api/ai/config')
       if (response.ok) {
         const data = await response.json()
         setConfig(data)
+        console.log('Configuração carregada:', data)
+      } else {
+        throw new Error(`Erro ${response.status}: ${response.statusText}`)
       }
     } catch (error) {
+      console.error('Erro ao carregar configuração:', error)
       toast({
         title: "Erro",
-        description: "Falha ao carregar configurações",
+        description: "Falha ao carregar configurações. Verifique sua conexão.",
         variant: "destructive"
       })
     } finally {
@@ -67,6 +72,7 @@ export function AIManagementClient() {
   const saveConfig = async () => {
     setSaving(true)
     try {
+      console.log('Salvando configuração:', config)
       const response = await fetch('/api/ai/config', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -82,13 +88,19 @@ export function AIManagementClient() {
           title: "Sucesso",
           description: "Configurações salvas com sucesso"
         })
+        // Recarregar automaticamente após salvar para confirmar persistência
+        setTimeout(() => {
+          loadConfig()
+        }, 500)
       } else {
-        throw new Error('Falha ao salvar')
+        const errorText = await response.text()
+        throw new Error(`Erro ${response.status}: ${errorText}`)
       }
     } catch (error) {
+      console.error('Erro ao salvar configuração:', error)
       toast({
         title: "Erro",
-        description: "Falha ao salvar configurações",
+        description: `Falha ao salvar configurações: ${error instanceof Error ? error.message : 'Erro desconhecido'}`,
         variant: "destructive"
       })
     } finally {
@@ -180,7 +192,17 @@ export function AIManagementClient() {
   }
 
   if (loading) {
-    return <div className="flex items-center justify-center p-8">Carregando...</div>
+    return (
+      <div className="flex items-center justify-center p-12">
+        <div className="text-center space-y-4">
+          <RefreshCw className="w-8 h-8 animate-spin mx-auto text-blue-500" />
+          <div>
+            <h3 className="text-lg font-medium">Carregando configurações da IA</h3>
+            <p className="text-sm text-muted-foreground">Aguarde enquanto carregamos suas configurações personalizadas...</p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (

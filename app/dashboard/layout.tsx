@@ -1,5 +1,6 @@
 import { getCurrentUser, getUserDisplayRole } from '@/lib/auth'
 import { UserNav } from '@/components/dashboard/user-nav'
+import { ChatbotDialog } from '@/components/dashboard/chatbot-dialog'
 import { redirect } from 'next/navigation'
 import { MobileSidebar, DesktopSidebar } from '@/components/dashboard/mobile-sidebar'
 
@@ -45,6 +46,9 @@ export default async function DashboardLayout({
           {children}
         </div>
       </main>
+      
+      {/* Chatbot flutuante */}
+      <ChatbotDialog />
     </div>
   )
 }

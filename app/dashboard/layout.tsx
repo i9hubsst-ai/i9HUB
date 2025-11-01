@@ -1,4 +1,4 @@
-import { getCurrentUser, getUserDisplayRole } from '@/lib/auth'
+import { getCurrentUser, getUserDisplayRole, isPlatformAdmin } from '@/lib/auth'
 import { UserNav } from '@/components/dashboard/user-nav'
 import { ChatbotDialog } from '@/components/dashboard/chatbot-dialog'
 import { redirect } from 'next/navigation'
@@ -16,6 +16,7 @@ export default async function DashboardLayout({
   }
 
   const userRole = await getUserDisplayRole(user.id)
+  const isAdmin = await isPlatformAdmin(user.id)
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -36,11 +37,14 @@ export default async function DashboardLayout({
           
           {/* Header buttons and user nav */}
           <div className="flex items-center gap-3">
-            <UserNav user={{ 
-              email: user.email!, 
-              name: user.user_metadata?.name,
-              role: userRole.label 
-            }} />
+            <UserNav 
+              user={{ 
+                email: user.email!, 
+                name: user.user_metadata?.name,
+                role: userRole.label 
+              }}
+              isAdmin={isAdmin}
+            />
           </div>
         </header>
         

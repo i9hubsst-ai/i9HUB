@@ -18,30 +18,43 @@ interface UserNavProps {
     name?: string
     role?: string
   }
+  isAdmin?: boolean
 }
 
-export function UserNav({ user }: UserNavProps) {
+export function UserNav({ user, isAdmin }: UserNavProps) {
   const initials = user.name
     ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
     : user.email?.substring(0, 2).toUpperCase() || 'U'
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-          <Avatar>
-            {user.email && (
-              <AvatarImage 
-                src={getGravatarUrl(user.email, 80)} 
-                alt={user.name || user.email} 
-              />
+    <div className="flex items-center gap-2">
+      {isAdmin && (
+        <div className="hidden md:flex items-center gap-1 px-2 py-1 rounded-md bg-blue-500/20 text-blue-400 text-xs font-medium">
+          <span>👑</span>
+          <span>Admin</span>
+        </div>
+      )}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+            {isAdmin && (
+              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-white text-xs">
+                👑
+              </span>
             )}
-            <AvatarFallback className="bg-accent text-accent-foreground">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
+            <Avatar>
+              {user.email && (
+                <AvatarImage 
+                  src={getGravatarUrl(user.email, 80)} 
+                  alt={user.name || user.email} 
+                />
+              )}
+              <AvatarFallback className="bg-accent text-accent-foreground">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+          </Button>
+        </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
@@ -67,5 +80,6 @@ export function UserNav({ user }: UserNavProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+    </div>
   )
 }

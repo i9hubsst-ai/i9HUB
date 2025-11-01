@@ -256,44 +256,34 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    console.log('🔍 [SIDEBAR] Verificando admin status...')
-    setIsLoading(true)
-    
     // Verificar se usuário é admin
     fetch('/api/auth/check-admin')
-      .then(res => {
-        console.log('📡 [SIDEBAR] Resposta check-admin:', res.status)
-        return res.json()
-      })
+      .then(res => res.json())
       .then(data => {
-        console.log('✅ [SIDEBAR] Admin status:', data.isAdmin)
         setIsAdmin(data.isAdmin)
         setIsLoading(false)
       })
-      .catch((error) => {
-        console.error('❌ [SIDEBAR] Erro ao verificar admin:', error)
+      .catch(() => {
         setIsAdmin(false)
         setIsLoading(false)
       })
   }, [])
 
-  const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
-    return items.filter(item => {
-      if (item.adminOnly && !isAdmin) {
-        console.log('🚫 [SIDEBAR] Item filtrado (não admin):', item.label)
-        return false
-      }
-      
-      if (item.children) {
-        item.children = filterMenuItems(item.children)
-      }
-      
-      return true
-    })
+  // Renderizar item apenas se não for adminOnly OU se for admin
+  const shouldShowItem = (item: MenuItem) => {
+    return !item.adminOnly || isAdmin
   }
 
-  const visibleMenuItems = filterMenuItems(menuStructure)
-  console.log('📋 [SIDEBAR] Items visíveis após filtro:', visibleMenuItems.length, 'isAdmin:', isAdmin)
+  // Filtrar recursivamente mantendo estrutura
+  const visibleMenuItems = menuStructure.map(item => {
+    if (item.children) {
+      return {
+        ...item,
+        children: item.children.filter(shouldShowItem)
+      }
+    }
+    return item
+  }).filter(shouldShowItem)
 
   return (
     <>
@@ -309,10 +299,6 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
           />
           <span className="font-bold text-xl">HUBSST</span>
         </Link>
-        {/* DEBUG: Status Admin */}
-        <div className="mt-2 text-xs px-2 py-1 rounded bg-yellow-500/20 text-yellow-300">
-          {isLoading ? '⏳ Verificando...' : isAdmin ? '✅ Admin' : '❌ Não Admin'}
-        </div>
       </div>
 
       {/* Navigation */}

@@ -6,7 +6,7 @@ const testPromptLogs = async () => {
   try {
     console.log('\n🚀 Fazendo pergunta para a IA para ver os logs...')
     
-    const response = await fetch('http://localhost:3000/api/ai/chat', {
+    const response = await fetch('https://i9hubsst.vercel.app/api/ai/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

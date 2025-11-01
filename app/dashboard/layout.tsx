@@ -1,7 +1,6 @@
 import { getCurrentUser, getUserDisplayRole } from '@/lib/auth'
 import { UserNav } from '@/components/dashboard/user-nav'
 import { ChatbotDialog } from '@/components/dashboard/chatbot-dialog'
-import { MAIAHeaderButton } from '@/components/dashboard/maia-header-button'
 import { redirect } from 'next/navigation'
 import { MobileSidebar, DesktopSidebar } from '@/components/dashboard/mobile-sidebar'
 
@@ -37,7 +36,6 @@ export default async function DashboardLayout({
           
           {/* Header buttons and user nav */}
           <div className="flex items-center gap-3">
-            <MAIAHeaderButton />
             <UserNav user={{ 
               email: user.email!, 
               name: user.user_metadata?.name,

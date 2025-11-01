@@ -37,7 +37,7 @@ Teste de documento para upload na base de conhecimento.`
     
     // Fazer requisição de upload
     const fetch = (await import('node-fetch')).default
-    const response = await fetch('http://localhost:3000/api/ai/documents', {
+    const response = await fetch('https://i9hubsst.vercel.app/api/ai/documents', {
       method: 'POST',
       body: formData,
       headers: {

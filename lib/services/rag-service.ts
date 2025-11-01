@@ -182,11 +182,7 @@ Pergunta do usuário: ${userPrompt}`
 
   console.log('🎯 [PROMPT DEBUG] === PROMPT FINAL CONSTRUÍDO ===')
   console.log('📏 [PROMPT DEBUG] Tamanho total do prompt:', fullPrompt.length)
-  console.log('📝 [PROMPT DEBUG] PROMPT COMPLETO ENVIADO PARA GEMINI:')
-  console.log('='.repeat(80))
-  console.log(fullPrompt)
-  console.log('='.repeat(80))
-  console.log('🔍 [PROMPT DEBUG] === FIM DA CONSTRUÇÃO DO PROMPT ===')
+  console.log(' [PROMPT DEBUG] === FIM DA CONSTRUÇÃO DO PROMPT ===')
 
   return fullPrompt
 }

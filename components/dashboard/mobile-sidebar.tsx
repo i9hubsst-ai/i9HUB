@@ -279,7 +279,10 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
 
   const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
     return items.filter(item => {
-      if (item.adminOnly && !isAdmin) return false
+      if (item.adminOnly && !isAdmin) {
+        console.log('🚫 [SIDEBAR] Item filtrado (não admin):', item.label)
+        return false
+      }
       
       if (item.children) {
         item.children = filterMenuItems(item.children)
@@ -290,6 +293,7 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
   }
 
   const visibleMenuItems = filterMenuItems(menuStructure)
+  console.log('📋 [SIDEBAR] Items visíveis após filtro:', visibleMenuItems.length, 'isAdmin:', isAdmin)
 
   return (
     <>

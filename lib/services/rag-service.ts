@@ -127,6 +127,8 @@ export async function buildRAGContext(query: string): Promise<RAGContext> {
  * Prepara prompt enriquecido com contexto RAG usando configuração do admin
  */
 export async function enrichPromptWithRAG(userPrompt: string, ragContext: RAGContext): Promise<string> {
+  console.log('🔍 [PROMPT DEBUG] === INICIO DA CONSTRUÇÃO DO PROMPT ===')
+  
   // Prompt base do sistema (sempre presente)
   const baseSystemPrompt = `Você é um assistente especializado em Segurança e Saúde do Trabalho (SST),
 com profundo conhecimento das normas regulamentadoras brasileiras (NRs),
@@ -139,17 +141,28 @@ DIRETRIZES BÁSICAS:
 - Use terminologia oficial das normas
 - Se não tiver certeza sobre algo específico, mencione que precisa consultar a norma completa`
 
+  console.log('📋 [PROMPT DEBUG] Prompt base SST definido')
+
   // Buscar configuração personalizada do admin (adicional)
+  console.log('🔍 [PROMPT DEBUG] Buscando configuração personalizada do admin...')
   const customPrompt = await getSystemPromptFromConfig()
+  
+  console.log('📊 [PROMPT DEBUG] Resultado da busca de configuração:')
+  console.log('📊 [PROMPT DEBUG] - Custom prompt existe:', !!customPrompt)
+  console.log('📊 [PROMPT DEBUG] - Custom prompt tamanho:', customPrompt?.length || 0)
+  console.log('📊 [PROMPT DEBUG] - Custom prompt conteúdo:', customPrompt || 'VAZIO')
   
   // Montar prompt final: Base + Personalizado + Contexto
   let fullSystemPrompt = baseSystemPrompt
   
   if (customPrompt && customPrompt.trim()) {
+    console.log('✅ [PROMPT DEBUG] APLICANDO configuração personalizada do admin!')
     fullSystemPrompt += `
 
 INSTRUÇÕES ADICIONAIS DO ADMINISTRADOR:
 ${customPrompt.trim()}`
+  } else {
+    console.log('⚠️ [PROMPT DEBUG] NENHUMA configuração personalizada encontrada - usando apenas prompt base')
   }
 
   const contextSection = ragContext.relevantContent ? `
@@ -161,9 +174,19 @@ IMPORTANTE: Use SEMPRE as informações do contexto acima para fundamentar sua r
 Cite as normas específicas mencionadas quando aplicável.
 ` : ''
 
+  console.log('📚 [PROMPT DEBUG] Contexto RAG:', ragContext.relevantContent ? 'ADICIONADO' : 'VAZIO')
+
   const fullPrompt = `${fullSystemPrompt}${contextSection}
 
 Pergunta do usuário: ${userPrompt}`
+
+  console.log('🎯 [PROMPT DEBUG] === PROMPT FINAL CONSTRUÍDO ===')
+  console.log('📏 [PROMPT DEBUG] Tamanho total do prompt:', fullPrompt.length)
+  console.log('📝 [PROMPT DEBUG] PROMPT COMPLETO ENVIADO PARA GEMINI:')
+  console.log('='.repeat(80))
+  console.log(fullPrompt)
+  console.log('='.repeat(80))
+  console.log('🔍 [PROMPT DEBUG] === FIM DA CONSTRUÇÃO DO PROMPT ===')
 
   return fullPrompt
 }
@@ -172,29 +195,64 @@ Pergunta do usuário: ${userPrompt}`
  * Busca o prompt personalizado do admin com fallback offline
  */
 async function getSystemPromptFromConfig(): Promise<string | null> {
+  console.log('🔍 [CONFIG DEBUG] === INICIO BUSCA CONFIGURAÇÃO ===')
+  
   try {
+    console.log('⏱️ [CONFIG DEBUG] Iniciando busca no banco com timeout de 3s...')
+    
     // Timeout de 3 segundos para evitar travamento
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Timeout na conexão com banco')), 3000)
+      setTimeout(() => {
+        console.log('⏰ [CONFIG DEBUG] TIMEOUT - Banco demorou mais de 3s')
+        reject(new Error('Timeout na conexão com banco'))
+      }, 3000)
     })
     
     const dbPromise = prisma.aIConfiguration.findFirst({
       where: { isActive: true },
-      select: { systemPrompt: true }
+      select: { systemPrompt: true, createdAt: true, updatedBy: true }
     })
     
+    console.log('📡 [CONFIG DEBUG] Fazendo consulta no banco...')
     const config = await Promise.race([dbPromise, timeoutPromise]) as any
     
-    return config?.systemPrompt || null
+    console.log('✅ [CONFIG DEBUG] Consulta no banco bem-sucedida!')
+    console.log('📊 [CONFIG DEBUG] Configuração encontrada:', !!config)
+    
+    if (config) {
+      console.log('📋 [CONFIG DEBUG] Detalhes da configuração:')
+      console.log('📋 [CONFIG DEBUG] - systemPrompt existe:', !!config.systemPrompt)
+      console.log('📋 [CONFIG DEBUG] - systemPrompt tamanho:', config.systemPrompt?.length || 0)
+      console.log('📋 [CONFIG DEBUG] - systemPrompt conteúdo:', config.systemPrompt || 'VAZIO')
+      console.log('📋 [CONFIG DEBUG] - createdAt:', config.createdAt)
+      console.log('📋 [CONFIG DEBUG] - updatedBy:', config.updatedBy)
+      
+      if (config.systemPrompt && config.systemPrompt.trim()) {
+        console.log('🎯 [CONFIG DEBUG] RETORNANDO configuração DO BANCO!')
+        return config.systemPrompt
+      } else {
+        console.log('⚠️ [CONFIG DEBUG] Configuração existe mas está VAZIA!')
+        return null
+      }
+    } else {
+      console.log('⚠️ [CONFIG DEBUG] Nenhuma configuração ativa encontrada no banco')
+      return null
+    }
+    
   } catch (error) {
-    console.error('❌ Erro ao buscar configuração do prompt:', error)
-    console.log('🔄 Usando fallback offline - MA.IA ainda funcionará!')
+    console.error('❌ [CONFIG DEBUG] Erro ao buscar configuração do prompt:', error)
+    console.log('🔄 [CONFIG DEBUG] Ativando FALLBACK offline...')
     
     // FALLBACK: Configuração padrão quando banco não está disponível
-    return `- O seu nome é MA.IA (Máquina de Análise de Inteligência Artificial)
+    const fallbackConfig = `- O seu nome é MA.IA (Máquina de Análise de Inteligência Artificial)
 - Você é especialista em Segurança e Saúde do Trabalho
 - Responda sempre de forma técnica e precisa
 - Cite as normas regulamentadoras brasileiras quando relevante`
+    
+    console.log('🔄 [CONFIG DEBUG] RETORNANDO configuração de FALLBACK!')
+    console.log('🔄 [CONFIG DEBUG] Fallback conteúdo:', fallbackConfig)
+    
+    return fallbackConfig
   }
 }
 

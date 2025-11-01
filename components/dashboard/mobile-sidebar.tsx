@@ -253,13 +253,28 @@ function MenuItemComponent({ item, onLinkClick, level = 0 }: { item: MenuItem, o
 
 function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
   const [isAdmin, setIsAdmin] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    console.log('🔍 [SIDEBAR] Verificando admin status...')
+    setIsLoading(true)
+    
     // Verificar se usuário é admin
     fetch('/api/auth/check-admin')
-      .then(res => res.json())
-      .then(data => setIsAdmin(data.isAdmin))
-      .catch(() => setIsAdmin(false))
+      .then(res => {
+        console.log('📡 [SIDEBAR] Resposta check-admin:', res.status)
+        return res.json()
+      })
+      .then(data => {
+        console.log('✅ [SIDEBAR] Admin status:', data.isAdmin)
+        setIsAdmin(data.isAdmin)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        console.error('❌ [SIDEBAR] Erro ao verificar admin:', error)
+        setIsAdmin(false)
+        setIsLoading(false)
+      })
   }, [])
 
   const filterMenuItems = (items: MenuItem[]): MenuItem[] => {
@@ -290,6 +305,10 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
           />
           <span className="font-bold text-xl">HUBSST</span>
         </Link>
+        {/* DEBUG: Status Admin */}
+        <div className="mt-2 text-xs px-2 py-1 rounded bg-yellow-500/20 text-yellow-300">
+          {isLoading ? '⏳ Verificando...' : isAdmin ? '✅ Admin' : '❌ Não Admin'}
+        </div>
       </div>
 
       {/* Navigation */}

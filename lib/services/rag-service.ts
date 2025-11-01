@@ -237,18 +237,11 @@ async function getSystemPromptFromConfig(): Promise<string | null> {
     
   } catch (error) {
     console.error('❌ [CONFIG DEBUG] Erro ao buscar configuração do prompt:', error)
-    console.log('🔄 [CONFIG DEBUG] Ativando FALLBACK offline...')
+    console.log('🔄 [CONFIG DEBUG] Banco não acessível - SEM fallback hardcoded')
+    console.log('⚠️ [CONFIG DEBUG] Retornando NULL para usar apenas prompt base SST')
     
-    // FALLBACK: Configuração padrão quando banco não está disponível
-    const fallbackConfig = `- O seu nome é MA.IA (Máquina de Análise de Inteligência Artificial)
-- Você é especialista em Segurança e Saúde do Trabalho
-- Responda sempre de forma técnica e precisa
-- Cite as normas regulamentadoras brasileiras quando relevante`
-    
-    console.log('🔄 [CONFIG DEBUG] RETORNANDO configuração de FALLBACK!')
-    console.log('🔄 [CONFIG DEBUG] Fallback conteúdo:', fallbackConfig)
-    
-    return fallbackConfig
+    // Retornar null para que use apenas o prompt base (sem instruções personalizadas)
+    return null
   }
 }
 

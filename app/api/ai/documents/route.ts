@@ -2,9 +2,7 @@ import { NextRequest } from 'next/server'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { generateEmbedding } from '@/lib/services/embedding-service'
-import { writeFile, mkdir } from 'fs/promises'
-import { join } from 'path'
-import { existsSync } from 'fs'
+import { createClient } from '@supabase/supabase-js'
 
 // Função para extrair texto de PDFs (usando pdf-parse)
 async function extractTextFromPDF(buffer: Buffer): Promise<string> {
@@ -73,13 +71,13 @@ export async function POST(request: NextRequest) {
       return new Response('Nenhum arquivo enviado', { status: 400 })
     }
 
+    // Inicializar Supabase Storage
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+
     const results = []
-    const uploadDir = join(process.cwd(), 'uploads', 'knowledge')
-    
-    // Criar diretório se não existir
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true })
-    }
 
     for (const file of files) {
       try {
@@ -105,18 +103,33 @@ export async function POST(request: NextRequest) {
           continue
         }
 
-        // Salvar arquivo fisicamente
-        const filename = `${Date.now()}_${file.name}`
-        const filepath = join(uploadDir, filename)
+        // Upload para Supabase Storage
+        const filename = `knowledge/${Date.now()}_${file.name}`
         const buffer = Buffer.from(await file.arrayBuffer())
-        await writeFile(filepath, buffer)
+        
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('documents')
+          .upload(filename, buffer, {
+            contentType: file.type,
+            upsert: false
+          })
+
+        if (uploadError) {
+          console.error('Erro no upload para Supabase:', uploadError)
+          results.push({
+            filename: file.name,
+            status: 'error',
+            error: 'Falha no upload para storage'
+          })
+          continue
+        }
 
         // Criar registro no banco
         const document = await prisma.knowledgeDocument.create({
           data: {
             filename: file.name,
             originalFilename: file.name,
-            filepath: filepath,
+            filepath: uploadData.path,
             size: file.size,
             mimeType: file.type,
             status: 'PROCESSING',
@@ -125,7 +138,7 @@ export async function POST(request: NextRequest) {
         })
 
         // Processar documento em background
-        processDocumentAsync(document.id, filepath, file)
+        processDocumentAsync(document.id, uploadData.path, file, supabase)
 
         results.push({
           filename: file.name,
@@ -158,7 +171,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Função assíncrona para processar documento
-async function processDocumentAsync(documentId: string, filepath: string, file: File) {
+async function processDocumentAsync(documentId: string, storagePath: string, file: File, supabase: any) {
   try {
     console.log(`📄 Processando documento: ${file.name}`)
     

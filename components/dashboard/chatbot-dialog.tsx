@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Badge } from '@/components/ui/badge'
 import { useChat } from 'ai/react'
@@ -12,6 +12,8 @@ import { BotIcon, SendIcon, XIcon, SparklesIcon } from 'lucide-react'
 export function ChatbotDialog() {
   const [isOpen, setIsOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const scrollAreaRef = useRef<HTMLDivElement>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   // Detectar se é mobile
   useEffect(() => {
@@ -31,6 +33,13 @@ export function ChatbotDialog() {
       'Content-Type': 'application/json',
     },
   })
+
+  // Auto-scroll quando novas mensagens chegam
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [messages])
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -77,7 +86,7 @@ export function ChatbotDialog() {
       </div>
 
       {/* Messages Area */}
-      <ScrollArea className="flex-1 p-4">
+      <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
         <div className="flex flex-col gap-4">
           {messages.length === 0 && (
             <div className="text-center py-8 text-gray-500">
@@ -111,27 +120,39 @@ export function ChatbotDialog() {
               </div>
             </div>
           ))}
+          {/* Elemento invisível para scroll automático */}
+          <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
 
       {/* Input Area */}
       <div className="p-4 border-t bg-gray-50 dark:bg-gray-800">
-        <form onSubmit={handleFormSubmit} className="flex gap-2">
-          <Input
+        <form onSubmit={handleFormSubmit} className="flex gap-2 items-end">
+          <Textarea
             value={input}
             onChange={handleInputChange}
             placeholder="Pergunte sobre SST, NRs, normas..."
             disabled={isLoading}
-            className="flex-1"
+            className="flex-1 min-h-[60px] max-h-[120px] resize-none"
+            rows={2}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault()
+                handleFormSubmit(e as any)
+              }
+            }}
           />
           <Button 
             type="submit" 
             disabled={isLoading || !input.trim()}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 h-[60px] w-12"
           >
             <SendIcon className="h-4 w-4" />
           </Button>
         </form>
+        <p className="text-xs text-muted-foreground mt-2">
+          Enter para enviar • Shift+Enter para nova linha
+        </p>
       </div>
     </Card>
   )

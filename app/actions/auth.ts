@@ -42,10 +42,26 @@ export async function login(formData: FormData) {
 
     if (error) {
       console.log('🔴 LOGIN: Erro detalhado:', error)
+      
+      // Tratamento específico por tipo de erro
       if (error.message?.includes('Invalid login credentials')) {
-        return { error: 'Email ou senha inválidos' }
+        return { error: 'Email ou senha incorretos. Verifique seus dados e tente novamente.' }
       }
-      return { error: error.message || 'Erro desconhecido' }
+      
+      if (error.message?.includes('Email not confirmed')) {
+        return { error: 'Email não confirmado. Verifique sua caixa de entrada.' }
+      }
+      
+      if (error.message?.includes('User not found')) {
+        return { error: 'Usuário não encontrado. Verifique o email digitado.' }
+      }
+      
+      if (error.status === 400) {
+        return { error: 'Email ou senha incorretos.' }
+      }
+      
+      // Erro genérico mais amigável
+      return { error: error.message || 'Não foi possível fazer login. Tente novamente.' }
     }
 
     if (data.session) {
@@ -62,32 +78,24 @@ export async function login(formData: FormData) {
     
     // Se for um NEXT_REDIRECT, é na verdade um sucesso!
     if (err?.digest?.includes('NEXT_REDIRECT')) {
-      console.log('� LOGIN: Redirect detectado - login bem-sucedido!')
+      console.log('✅ LOGIN: Redirect detectado - login bem-sucedido!')
       // Não retornar erro - deixar o redirect acontecer
       throw err // Re-throw para permitir o redirect
     }
     
-    console.error('�🔴 LOGIN: Exception real durante login:', err)
-    return { error: 'Erro ao fazer login. Tente novamente.' }
-  }
-
-    // Tenta fazer login
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    })
-
-    if (error) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const errorMessage = (error as any)?.message || 'Erro desconhecido'
-      if (errorMessage.includes('Invalid login credentials')) {
-        return { error: 'Email ou senha inválidos' }
-      }
-      return { error: errorMessage }
+    console.error('🔴 LOGIN: Exception real durante login:', err)
+    
+    // Tratar erros específicos da exception
+    if (err?.message?.includes('Invalid login credentials')) {
+      return { error: 'Email ou senha incorretos.' }
     }
-
-    revalidatePath('/dashboard', 'layout')
-    redirect('/dashboard')
+    
+    if (err?.message?.includes('fetch failed') || err?.message?.includes('network')) {
+      return { error: 'Erro de conexão. Verifique sua internet e tente novamente.' }
+    }
+    
+    return { error: 'Não foi possível fazer login no momento. Tente novamente em instantes.' }
+  }
 }
 
 export async function signup(formData: FormData) {

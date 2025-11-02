@@ -87,7 +87,13 @@ export async function POST(request: Request) {
     
     const totalTime = Date.now() - startTime
     console.log(`🏁 [${new Date().toISOString()}] [API] PROCESSO COMPLETO com RAG - Total: ${totalTime}ms | Parse: ${parseEnd - parseStart}ms | Extract: ${extractEnd - extractStart}ms | RAG: ${ragEnd - ragStart}ms | Gemini: ${geminiEnd - geminiStart}ms`)
-    console.log(`📊 [${new Date().toISOString()}] [API] Fontes RAG usadas:`, ragContext.sources)
+    
+    // Log de fontes mais detalhado
+    const sources = ragContext.sources.length > 0 ? ragContext.sources : []
+    const allSources = [...sources, 'CONHECIMENTO_GERAL_SST'] // IA sempre tem conhecimento base
+    console.log(`📊 [${new Date().toISOString()}] [API] Fontes disponíveis:`, allSources)
+    console.log(`📚 [${new Date().toISOString()}] [API] Documentos encontrados: ${sources.length > 0 ? sources.join(', ') : 'Nenhum'}`)
+    console.log(`🧠 [${new Date().toISOString()}] [API] Conhecimento geral SST: SEMPRE ATIVO`)
     
     return result.toAIStreamResponse()
   } catch (error: any) {

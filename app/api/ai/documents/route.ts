@@ -4,54 +4,83 @@ import { prisma } from '@/lib/prisma'
 import { generateEmbedding } from '@/lib/services/embedding-service'
 import { createClient } from '@supabase/supabase-js'
 
-// Função para extrair texto de PDFs (usando pdfjs-dist - compatível com serverless)
+// Função para extrair texto de PDFs (usando pdf2json - 100% compatível com Node.js serverless)
 async function extractTextFromPDF(buffer: Buffer): Promise<{ text: string; pages: number }> {
-  try {
-    console.log('📄 [PDF] Extraindo texto do PDF com pdfjs-dist...')
-    console.log('📄 [PDF] Buffer size:', buffer.length, 'bytes')
-    
-    // Importar pdfjs-dist (compatível com serverless)
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const pdfjsLib = require('pdfjs-dist')
-    console.log('📄 [PDF] pdfjs-dist carregado com sucesso')
-    
-    // Carregar o PDF
-    const loadingTask = pdfjsLib.getDocument({
-      data: new Uint8Array(buffer),
-      useSystemFonts: true,
-    })
-    
-    const pdfDocument = await loadingTask.promise
-    const numPages = pdfDocument.numPages
-    console.log(`📄 [PDF] PDF carregado: ${numPages} páginas`)
-    
-    // Extrair texto de todas as páginas
-    let fullText = ''
-    for (let pageNum = 1; pageNum <= numPages; pageNum++) {
-      const page = await pdfDocument.getPage(pageNum)
-      const textContent = await page.getTextContent()
-      const pageText = textContent.items.map((item: any) => item.str).join(' ')
-      fullText += pageText + '\n'
+  return new Promise((resolve, reject) => {
+    try {
+      console.log('📄 [PDF] Extraindo texto do PDF com pdf2json...')
+      console.log('📄 [PDF] Buffer size:', buffer.length, 'bytes')
       
-      if (pageNum % 10 === 0) {
-        console.log(`📄 [PDF] Processadas ${pageNum}/${numPages} páginas...`)
-      }
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const PDFParser = require('pdf2json')
+      const pdfParser = new PDFParser()
+      
+      console.log('📄 [PDF] pdf2json carregado com sucesso')
+      
+      // Handler de sucesso
+      pdfParser.on('pdfParser_dataReady', (pdfData: any) => {
+        try {
+          console.log('📄 [PDF] PDF parseado com sucesso')
+          
+          // Extrair texto de todas as páginas
+          let fullText = ''
+          const pages = pdfData.Pages || []
+          
+          console.log(`📄 [PDF] Total de páginas: ${pages.length}`)
+          
+          pages.forEach((page: any, pageIndex: number) => {
+            const texts = page.Texts || []
+            texts.forEach((text: any) => {
+              if (text.R && text.R.length > 0) {
+                text.R.forEach((r: any) => {
+                  if (r.T) {
+                    // Decodificar URI encoded text
+                    const decodedText = decodeURIComponent(r.T)
+                    fullText += decodedText + ' '
+                  }
+                })
+              }
+            })
+            fullText += '\n'
+            
+            if ((pageIndex + 1) % 10 === 0) {
+              console.log(`📄 [PDF] Processadas ${pageIndex + 1}/${pages.length} páginas...`)
+            }
+          })
+          
+          fullText = fullText.trim()
+          
+          console.log(`✅ [PDF] Extraído: ${fullText.length} caracteres de ${pages.length} páginas`)
+          console.log(`✅ [PDF] Preview: ${fullText.substring(0, 300)}...`)
+          
+          resolve({
+            text: fullText,
+            pages: pages.length
+          })
+        } catch (parseError) {
+          console.error('❌ [PDF] Erro ao processar dados do PDF:', parseError)
+          reject(new Error(`Erro ao processar dados do PDF: ${parseError instanceof Error ? parseError.message : 'Erro desconhecido'}`))
+        }
+      })
+      
+      // Handler de erro
+      pdfParser.on('pdfParser_dataError', (error: any) => {
+        console.error('❌ [PDF] Erro no parser:', error)
+        reject(new Error(`Erro no parser: ${error.parserError || 'Erro desconhecido'}`))
+      })
+      
+      // Parsear o buffer
+      console.log('📄 [PDF] Iniciando parse do buffer...')
+      pdfParser.parseBuffer(buffer)
+      
+    } catch (error) {
+      console.error('❌ [PDF] Erro detalhado ao extrair texto:', error)
+      console.error('❌ [PDF] Error name:', error instanceof Error ? error.name : 'unknown')
+      console.error('❌ [PDF] Error message:', error instanceof Error ? error.message : 'unknown')
+      console.error('❌ [PDF] Error stack:', error instanceof Error ? error.stack : 'unknown')
+      reject(new Error(`Falha ao processar PDF: ${error instanceof Error ? error.message : 'Erro desconhecido'}`))
     }
-    
-    console.log(`✅ [PDF] Extraído: ${fullText.length} caracteres de ${numPages} páginas`)
-    console.log(`✅ [PDF] Preview: ${fullText.substring(0, 300)}`)
-    
-    return {
-      text: fullText.trim(),
-      pages: numPages
-    }
-  } catch (error) {
-    console.error('❌ [PDF] Erro detalhado ao extrair texto:', error)
-    console.error('❌ [PDF] Error name:', error instanceof Error ? error.name : 'unknown')
-    console.error('❌ [PDF] Error message:', error instanceof Error ? error.message : 'unknown')
-    console.error('❌ [PDF] Error stack:', error instanceof Error ? error.stack : 'unknown')
-    throw new Error(`Falha ao processar PDF: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
-  }
+  })
 }
 
 // Função para extrair texto de documentos Word

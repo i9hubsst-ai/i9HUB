@@ -40,6 +40,7 @@ export function AIManagementClient() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [activeTab, setActiveTab] = useState('prompt')
   const { toast } = useToast()
 
   useEffect(() => {
@@ -112,6 +113,7 @@ export function AIManagementClient() {
     const files = event.target.files
     if (!files || files.length === 0) return
 
+    console.log('📤 [CLIENT] Iniciando upload de', files.length, 'arquivo(s)')
     setUploading(true)
     const formData = new FormData()
     
@@ -120,29 +122,41 @@ export function AIManagementClient() {
     })
 
     try {
+      console.log('📤 [CLIENT] Enviando request para /api/ai/documents')
       const response = await fetch('/api/ai/documents', {
         method: 'POST',
         body: formData
       })
 
+      console.log('📤 [CLIENT] Resposta recebida:', response.status, response.ok)
+
       if (response.ok) {
         const result = await response.json()
+        console.log('✅ [CLIENT] Upload bem-sucedido:', result)
         toast({
           title: "Sucesso",
           description: `${result.uploaded} documento(s) enviado(s) com sucesso`
         })
-        loadConfig() // Recarregar lista de documentos
+        // Recarregar lista de documentos após pequeno delay
+        setTimeout(() => {
+          loadConfig()
+        }, 1000)
       } else {
-        throw new Error('Falha no upload')
+        const errorText = await response.text()
+        console.error('❌ [CLIENT] Erro no upload:', response.status, errorText)
+        throw new Error(`Falha no upload: ${response.status}`)
       }
     } catch (error) {
+      console.error('❌ [CLIENT] Erro capturado:', error)
       toast({
         title: "Erro",
-        description: "Falha ao enviar documentos",
+        description: error instanceof Error ? error.message : "Falha ao enviar documentos",
         variant: "destructive"
       })
     } finally {
       setUploading(false)
+      // Limpar o input para permitir reupload do mesmo arquivo
+      event.target.value = ''
     }
   }
 
@@ -206,7 +220,7 @@ export function AIManagementClient() {
   }
 
   return (
-    <Tabs defaultValue="prompt" className="space-y-6">
+    <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
       <TabsList>
         <TabsTrigger value="prompt">
           <Settings className="w-4 h-4 mr-2" />

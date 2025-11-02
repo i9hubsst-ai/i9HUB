@@ -212,11 +212,15 @@ export async function POST(request: NextRequest) {
 
     const uploaded = results.filter(r => r.status === 'uploaded').length
 
-    return Response.json({
+    const response = {
       uploaded,
       total: files.length,
       results
-    })
+    }
+
+    console.log('✅ [UPLOAD] Retornando sucesso:', JSON.stringify(response))
+
+    return Response.json(response)
 
   } catch (error) {
     console.error('❌ [UPLOAD] Erro no upload de documentos:', error)

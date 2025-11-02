@@ -54,27 +54,50 @@ async function processDocument(file: File): Promise<{ text: string; pages?: numb
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('📤 [UPLOAD] Iniciando upload de documentos')
+    
     const user = await getCurrentUser()
     if (!user) {
+      console.log('❌ [UPLOAD] Usuário não autenticado')
       return new Response('Não autorizado', { status: 401 })
     }
 
     const isAdmin = await isPlatformAdmin(user.id)
     if (!isAdmin) {
+      console.log('❌ [UPLOAD] Usuário não é admin:', user.id)
       return new Response('Acesso negado', { status: 403 })
     }
+
+    console.log('✅ [UPLOAD] Admin verificado:', user.id)
 
     const formData = await request.formData()
     const files = formData.getAll('documents') as File[]
 
     if (!files || files.length === 0) {
+      console.log('❌ [UPLOAD] Nenhum arquivo enviado')
       return new Response('Nenhum arquivo enviado', { status: 400 })
     }
 
+    console.log(`📁 [UPLOAD] ${files.length} arquivo(s) recebido(s)`)
+
+    // Verificar variáveis de ambiente
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      console.error('❌ [UPLOAD] NEXT_PUBLIC_SUPABASE_URL não configurado')
+      return new Response('Configuração de storage inválida', { status: 500 })
+    }
+
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    if (!serviceKey) {
+      console.error('❌ [UPLOAD] Nenhuma chave Supabase disponível')
+      return new Response('Configuração de storage inválida', { status: 500 })
+    }
+
+    console.log('🔑 [UPLOAD] Usando chave:', serviceKey.substring(0, 20) + '...')
+
     // Inicializar Supabase Storage
     const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      serviceKey
     )
 
     const results = []
@@ -107,6 +130,8 @@ export async function POST(request: NextRequest) {
         const filename = `knowledge/${Date.now()}_${file.name}`
         const buffer = Buffer.from(await file.arrayBuffer())
         
+        console.log(`📤 [UPLOAD] Enviando para storage: ${filename}`)
+        
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('documents')
           .upload(filename, buffer, {
@@ -115,14 +140,16 @@ export async function POST(request: NextRequest) {
           })
 
         if (uploadError) {
-          console.error('Erro no upload para Supabase:', uploadError)
+          console.error('❌ [UPLOAD] Erro no upload para Supabase:', uploadError)
           results.push({
             filename: file.name,
             status: 'error',
-            error: 'Falha no upload para storage'
+            error: `Falha no upload: ${uploadError.message}`
           })
           continue
         }
+
+        console.log(`✅ [UPLOAD] Arquivo salvo no storage: ${uploadData.path}`)
 
         // Criar registro no banco
         const document = await prisma.knowledgeDocument.create({
@@ -165,8 +192,12 @@ export async function POST(request: NextRequest) {
     })
 
   } catch (error) {
-    console.error('Erro no upload de documentos:', error)
-    return new Response('Erro interno', { status: 500 })
+    console.error('❌ [UPLOAD] Erro no upload de documentos:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido'
+    return new Response(JSON.stringify({ error: errorMessage }), { 
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    })
   }
 }
 

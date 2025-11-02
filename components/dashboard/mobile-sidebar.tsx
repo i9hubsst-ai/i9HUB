@@ -74,6 +74,7 @@ const menuStructure: MenuItem[] = [
       { icon: FileText, label: 'Novo Diagnóstico', href: '/dashboard/diagnostics/new' },
       { icon: FileCheck, label: 'Histórico de Diagnósticos', href: '/dashboard/diagnostics' },
       { icon: BarChart, label: 'Relatórios de Diagnóstico', href: '/dashboard/diagnostics/reports' },
+      { icon: Layers, label: 'Templates', href: '/dashboard/templates' },
       { icon: Layers, label: 'Modelos de Diagnóstico', href: '/dashboard/diagnostics/templates' }
     ]
   },
@@ -198,13 +199,24 @@ const menuStructure: MenuItem[] = [
   }
 ]
 
-function MenuItemComponent({ item, onLinkClick, level = 0 }: { item: MenuItem, onLinkClick?: () => void, level?: number }) {
+function MenuItemComponent({ item, onLinkClick, level = 0, isCollapsed = false }: { item: MenuItem, onLinkClick?: () => void, level?: number, isCollapsed?: boolean }) {
   const [isOpen, setIsOpen] = useState(false)
   const Icon = item.icon
   const hasChildren = item.children && item.children.length > 0
-  const paddingLeft = level * 12 + 16 // Indentação baseada no nível
+  const paddingLeft = isCollapsed ? 8 : (level * 12 + 16) // Menos padding quando collapsed
 
   if (hasChildren) {
+    // Quando collapsed, mostrar apenas o ícone do primeiro nível
+    if (isCollapsed && level === 0) {
+      return (
+        <div className="flex justify-center">
+          <div className="p-3 rounded-lg hover:bg-sidebar-accent transition-colors">
+            <Icon className="h-5 w-5" />
+          </div>
+        </div>
+      )
+    }
+
     return (
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
@@ -213,11 +225,11 @@ function MenuItemComponent({ item, onLinkClick, level = 0 }: { item: MenuItem, o
             style={{ paddingLeft: `${paddingLeft}px` }}
           >
             <Icon className="h-5 w-5 flex-shrink-0" />
-            <span className="flex-1">{item.label}</span>
-            {isOpen ? 
+            {!isCollapsed && <span className="flex-1">{item.label}</span>}
+            {!isCollapsed && (isOpen ? 
               <ChevronDown className="h-4 w-4 flex-shrink-0" /> : 
               <ChevronRight className="h-4 w-4 flex-shrink-0" />
-            }
+            )}
           </button>
         </CollapsibleTrigger>
         <CollapsibleContent className="space-y-1">
@@ -227,6 +239,7 @@ function MenuItemComponent({ item, onLinkClick, level = 0 }: { item: MenuItem, o
               item={child} 
               onLinkClick={onLinkClick} 
               level={level + 1}
+              isCollapsed={isCollapsed}
             />
           ))}
         </CollapsibleContent>
@@ -235,6 +248,19 @@ function MenuItemComponent({ item, onLinkClick, level = 0 }: { item: MenuItem, o
   }
 
   if (item.href) {
+    if (isCollapsed && level === 0) {
+      return (
+        <Link
+          href={item.href}
+          onClick={onLinkClick}
+          className="flex justify-center p-3 rounded-lg hover:bg-sidebar-accent transition-colors"
+          title={item.label}
+        >
+          <Icon className="h-5 w-5" />
+        </Link>
+      )
+    }
+
     return (
       <Link
         href={item.href}
@@ -243,7 +269,7 @@ function MenuItemComponent({ item, onLinkClick, level = 0 }: { item: MenuItem, o
         style={{ paddingLeft: `${paddingLeft}px` }}
       >
         <Icon className="h-5 w-5 flex-shrink-0" />
-        <span>{item.label}</span>
+        {!isCollapsed && <span>{item.label}</span>}
       </Link>
     )
   }
@@ -251,7 +277,7 @@ function MenuItemComponent({ item, onLinkClick, level = 0 }: { item: MenuItem, o
   return null
 }
 
-function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
+function SidebarContent({ onLinkClick, isCollapsed = false }: { onLinkClick?: () => void, isCollapsed?: boolean }) {
   const [isAdmin, setIsAdmin] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -288,8 +314,8 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
   return (
     <>
       {/* Logo */}
-      <div className="p-6 border-b border-sidebar-border">
-        <Link href="/dashboard" className="flex items-center gap-3" onClick={onLinkClick}>
+      <div className={`p-6 border-b border-sidebar-border ${isCollapsed ? 'px-3' : ''}`}>
+        <Link href="/dashboard" className="flex items-center gap-3 justify-center" onClick={onLinkClick}>
           <Image
             src="/images/hubsst-logo.png"
             alt="HUBSST"
@@ -297,17 +323,18 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
             height={40}
             className="brightness-0 invert"
           />
-          <span className="font-bold text-xl">HUBSST</span>
+          {!isCollapsed && <span className="font-bold text-xl">HUBSST</span>}
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+      <nav className={`flex-1 space-y-1 overflow-y-auto ${isCollapsed ? 'p-2' : 'p-4'}`}>
         {visibleMenuItems.map((item, index) => (
           <MenuItemComponent 
             key={index} 
             item={item} 
             onLinkClick={onLinkClick}
+            isCollapsed={isCollapsed}
           />
         ))}
       </nav>
@@ -316,9 +343,17 @@ function SidebarContent({ onLinkClick }: { onLinkClick?: () => void }) {
 }
 
 export function DesktopSidebar() {
+  const [isExpanded, setIsExpanded] = useState(false)
+
   return (
-    <aside className="hidden md:flex w-64 bg-sidebar text-sidebar-foreground flex-col">
-      <SidebarContent />
+    <aside 
+      className={`hidden md:flex bg-sidebar text-sidebar-foreground flex-col transition-all duration-300 ${
+        isExpanded ? 'w-64' : 'w-16'
+      }`}
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+    >
+      <SidebarContent isCollapsed={!isExpanded} />
     </aside>
   )
 }

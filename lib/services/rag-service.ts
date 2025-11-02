@@ -217,11 +217,18 @@ ${customPrompt.trim()}`
 
   const contextSection = ragContext.relevantContent ? `
 
-## CONTEXTO RELEVANTE DAS NORMAS:
+## DOCUMENTOS DISPONÍVEIS PARA REFERÊNCIA:
 ${ragContext.relevantContent}
 
-IMPORTANTE: Use SEMPRE as informações do contexto acima para fundamentar sua resposta. 
-Cite as normas específicas mencionadas quando aplicável.
+INSTRUÇÕES DE USO DOS DOCUMENTOS:
+- Os documentos acima são REFERÊNCIAS ADICIONAIS, não a única fonte de informação
+- Use-os quando contiverem informações relevantes E ESPECÍFICAS para a pergunta
+- Você possui amplo conhecimento sobre SST, NRs, ISO 45001 e normas brasileiras - USE-O LIVREMENTE
+- Se a pergunta for sobre um tópico geral (ex: "o que é NR-12?", "como fazer um PGR?"), 
+  responda com seu conhecimento completo, mencionando os documentos apenas se complementarem
+- Se a pergunta for específica sobre um documento carregado, então priorize o conteúdo dele
+- SEMPRE forneça respostas completas, detalhadas e úteis, mesmo que os documentos não cubram tudo
+- Cite fontes quando usar informações específicas: "Conforme NR-X..." ou "Segundo o documento Y..."
 ` : ''
 
   console.log('📚 [PROMPT DEBUG] Contexto RAG:', ragContext.relevantContent ? 'ADICIONADO' : 'VAZIO')

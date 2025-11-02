@@ -86,18 +86,32 @@ export async function POST(request: NextRequest) {
       return new Response('Configuração de storage inválida', { status: 500 })
     }
 
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    if (!serviceKey) {
+    // DEBUG: Verificar quais chaves existem
+    console.log('🔍 [DEBUG] SUPABASE_SERVICE_ROLE_KEY existe?', !!process.env.SUPABASE_SERVICE_ROLE_KEY)
+    console.log('🔍 [DEBUG] NEXT_PUBLIC_SUPABASE_ANON_KEY existe?', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+    
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    
+    if (serviceKey) {
+      console.log('🔑 [UPLOAD] Usando SERVICE_ROLE_KEY:', serviceKey.substring(0, 30) + '...')
+    } else if (anonKey) {
+      console.log('⚠️ [UPLOAD] Usando ANON_KEY (não recomendado):', anonKey.substring(0, 30) + '...')
+    } else {
       console.error('❌ [UPLOAD] Nenhuma chave Supabase disponível')
       return new Response('Configuração de storage inválida', { status: 500 })
     }
 
-    console.log('🔑 [UPLOAD] Usando chave:', serviceKey.substring(0, 20) + '...')
+    const keyToUse = serviceKey || anonKey
+    if (!keyToUse) {
+      console.error('❌ [UPLOAD] Nenhuma chave Supabase disponível')
+      return new Response('Configuração de storage inválida', { status: 500 })
+    }
 
     // Inicializar Supabase Storage
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
-      serviceKey
+      keyToUse
     )
 
     const results = []
@@ -131,6 +145,8 @@ export async function POST(request: NextRequest) {
         const buffer = Buffer.from(await file.arrayBuffer())
         
         console.log(`📤 [UPLOAD] Enviando para storage: ${filename}`)
+        console.log(`📤 [UPLOAD] Tamanho do buffer: ${buffer.length} bytes`)
+        console.log(`📤 [UPLOAD] Content-Type: ${file.type}`)
         
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('documents')
@@ -141,6 +157,7 @@ export async function POST(request: NextRequest) {
 
         if (uploadError) {
           console.error('❌ [UPLOAD] Erro no upload para Supabase:', uploadError)
+          console.error('❌ [UPLOAD] Erro detalhado:', JSON.stringify(uploadError, null, 2))
           results.push({
             filename: file.name,
             status: 'error',

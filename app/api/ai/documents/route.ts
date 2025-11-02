@@ -4,29 +4,29 @@ import { prisma } from '@/lib/prisma'
 import { generateEmbedding } from '@/lib/services/embedding-service'
 import { createClient } from '@supabase/supabase-js'
 
-// Função para extrair texto de PDFs (usando pdf-parse)
+// Função para extrair texto de PDFs (usando pdf-parse) v2
 async function extractTextFromPDF(buffer: Buffer): Promise<{ text: string; pages: number }> {
   try {
-    console.log('📄 [PDF] Extraindo texto do PDF...')
-    console.log('📄 [PDF] Buffer size:', buffer.length, 'bytes')
+    console.log('📄 [PDF-V2] Extraindo texto do PDF...')
+    console.log('📄 [PDF-V2] Buffer size:', buffer.length, 'bytes')
     
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const pdfParse = require('pdf-parse')
-    console.log('📄 [PDF] pdf-parse carregado com sucesso')
+    console.log('📄 [PDF-V2] pdf-parse carregado com sucesso')
     
     const data = await pdfParse(buffer)
-    console.log(`✅ [PDF] Extraído: ${data.text.length} caracteres de ${data.numpages} páginas`)
-    console.log(`✅ [PDF] Preview: ${data.text.substring(0, 300)}`)
+    console.log(`✅ [PDF-V2] Extraído: ${data.text.length} caracteres de ${data.numpages} páginas`)
+    console.log(`✅ [PDF-V2] Preview: ${data.text.substring(0, 300)}`)
     
     return {
       text: data.text,
       pages: data.numpages
     }
   } catch (error) {
-    console.error('❌ [PDF] Erro detalhado ao extrair texto:', error)
-    console.error('❌ [PDF] Error name:', error instanceof Error ? error.name : 'unknown')
-    console.error('❌ [PDF] Error message:', error instanceof Error ? error.message : 'unknown')
-    console.error('❌ [PDF] Error stack:', error instanceof Error ? error.stack : 'unknown')
+    console.error('❌ [PDF-V2] Erro detalhado ao extrair texto:', error)
+    console.error('❌ [PDF-V2] Error name:', error instanceof Error ? error.name : 'unknown')
+    console.error('❌ [PDF-V2] Error message:', error instanceof Error ? error.message : 'unknown')
+    console.error('❌ [PDF-V2] Error stack:', error instanceof Error ? error.stack : 'unknown')
     throw new Error(`Falha ao processar PDF: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
   }
 }

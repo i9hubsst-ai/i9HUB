@@ -74,8 +74,7 @@ const menuStructure: MenuItem[] = [
       { icon: FileText, label: 'Novo Diagnóstico', href: '/dashboard/diagnostics/new' },
       { icon: FileCheck, label: 'Histórico de Diagnósticos', href: '/dashboard/diagnostics' },
       { icon: BarChart, label: 'Relatórios de Diagnóstico', href: '/dashboard/diagnostics/reports' },
-      { icon: Layers, label: 'Templates', href: '/dashboard/templates' },
-      { icon: Layers, label: 'Modelos de Diagnóstico', href: '/dashboard/diagnostics/templates' }
+      { icon: Layers, label: 'Templates', href: '/dashboard/templates' }
     ]
   },
   {

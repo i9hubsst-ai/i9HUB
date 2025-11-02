@@ -358,23 +358,24 @@ Exemplo:
                   Nenhum documento carregado ainda
                 </div>
               ) : (
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Arquivo</TableHead>
-                      <TableHead>Tamanho</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Data</TableHead>
-                      <TableHead>Ações</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {config.documents.map((doc) => (
-                      <TableRow key={doc.id}>
-                        <TableCell className="font-medium">{doc.filename}</TableCell>
-                        <TableCell>{formatFileSize(doc.size)}</TableCell>
-                        <TableCell>{getStatusBadge(doc.status)}</TableCell>
-                        <TableCell>{new Date(doc.uploadedAt).toLocaleDateString('pt-BR')}</TableCell>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="min-w-[200px] max-w-[300px]">Arquivo</TableHead>
+                        <TableHead className="whitespace-nowrap">Tamanho</TableHead>
+                        <TableHead className="whitespace-nowrap">Status</TableHead>
+                        <TableHead className="whitespace-nowrap">Data</TableHead>
+                        <TableHead className="whitespace-nowrap">Ações</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {config.documents.map((doc) => (
+                        <TableRow key={doc.id}>
+                          <TableCell className="font-medium max-w-[300px] break-words">{doc.filename}</TableCell>
+                          <TableCell className="whitespace-nowrap">{formatFileSize(doc.size)}</TableCell>
+                          <TableCell className="whitespace-nowrap">{getStatusBadge(doc.status)}</TableCell>
+                          <TableCell className="whitespace-nowrap">{new Date(doc.uploadedAt).toLocaleDateString('pt-BR')}</TableCell>
                         <TableCell>
                           <div className="flex gap-1">
                             <Button variant="ghost" size="sm">
@@ -411,6 +412,7 @@ Exemplo:
                     ))}
                   </TableBody>
                 </Table>
+                </div>
               )}
             </CardContent>
           </Card>

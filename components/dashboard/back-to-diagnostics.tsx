@@ -11,11 +11,11 @@ export function BackToDiagnostics() {
     <Button
       variant="ghost"
       size="sm"
-      onClick={() => router.push('/dashboard/diagnostics')}
+      onClick={() => router.push('/dashboard/diagnostics-module')}
       className="text-gray-600 hover:text-gray-900 hover:bg-gray-100"
     >
       <ArrowLeft className="mr-2 h-4 w-4" />
-      Voltar para Diagnósticos
+      Voltar para Módulo de Diagnósticos
     </Button>
   )
 }

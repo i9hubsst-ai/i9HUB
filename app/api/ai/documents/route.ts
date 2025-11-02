@@ -141,9 +141,19 @@ export async function POST(request: NextRequest) {
         }
 
         // Upload para Supabase Storage
-        const filename = `knowledge/${Date.now()}_${file.name}`
+        // Sanitizar nome do arquivo (remover caracteres especiais)
+        const sanitizedName = file.name
+          .normalize('NFD') // Decompor caracteres acentuados
+          .replace(/[\u0300-\u036f]/g, '') // Remover diacríticos
+          .replace(/[^a-zA-Z0-9._-]/g, '_') // Substituir caracteres especiais por _
+          .replace(/_+/g, '_') // Remover underscores duplicados
+          .replace(/^_|_$/g, '') // Remover underscores no início/fim
+        
+        const filename = `knowledge/${Date.now()}_${sanitizedName}`
         const buffer = Buffer.from(await file.arrayBuffer())
         
+        console.log(`📤 [UPLOAD] Nome original: ${file.name}`)
+        console.log(`📤 [UPLOAD] Nome sanitizado: ${sanitizedName}`)
         console.log(`📤 [UPLOAD] Enviando para storage: ${filename}`)
         console.log(`📤 [UPLOAD] Tamanho do buffer: ${buffer.length} bytes`)
         console.log(`📤 [UPLOAD] Content-Type: ${file.type}`)

@@ -12,14 +12,13 @@ async function extractTextFromPDF(buffer: Buffer): Promise<{ text: string; pages
     
     // Importar pdfjs-dist (compatível com serverless)
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.js')
+    const pdfjsLib = require('pdfjs-dist')
     console.log('📄 [PDF] pdfjs-dist carregado com sucesso')
     
     // Carregar o PDF
     const loadingTask = pdfjsLib.getDocument({
       data: new Uint8Array(buffer),
       useSystemFonts: true,
-      standardFontDataUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/standard_fonts/',
     })
     
     const pdfDocument = await loadingTask.promise

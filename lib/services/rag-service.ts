@@ -36,6 +36,15 @@ export async function searchRelevantContext(
   try {
     console.log(`🔍 [RAG] Buscando contexto para: "${query}"`)
     
+    // PRIMEIRO: Verificar quantos embeddings existem no total
+    const totalEmbeddings = await prisma.knowledgeEmbedding.count()
+    console.log(`📊 [RAG] Total de embeddings no banco: ${totalEmbeddings}`)
+    
+    if (totalEmbeddings === 0) {
+      console.log(`⚠️ [RAG] Nenhum embedding encontrado no banco!`)
+      return []
+    }
+    
     // Timeout de 5 segundos para busca no banco
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => reject(new Error('Timeout na busca RAG')), 5000)
@@ -69,11 +78,24 @@ export async function searchRelevantContext(
       take: maxResults
     })
     
-    const results = await Promise.race([dbPromise, timeoutPromise]) as any[]
+    let results = await Promise.race([dbPromise, timeoutPromise]) as any[]
 
-    console.log(`📚 [RAG] Encontrados ${results.length} resultados relevantes`)
+    console.log(`📚 [RAG] Encontrados ${results.length} resultados com busca por palavras-chave`)
+    
+    // Se não encontrou nada, buscar os mais recentes (fallback)
+    if (results.length === 0 && totalEmbeddings > 0) {
+      console.log(`🔄 [RAG] Nenhum resultado com palavras-chave, buscando documentos mais recentes...`)
+      results = await prisma.knowledgeEmbedding.findMany({
+        orderBy: {
+          createdAt: 'desc'
+        },
+        take: maxResults
+      })
+      console.log(`📚 [RAG] Fallback: retornando ${results.length} embeddings mais recentes`)
+    }
+    
     if (results.length > 0) {
-      console.log(`📄 [RAG] Primeiro resultado preview:`, results[0].content.substring(0, 150))
+      console.log(`📄 [RAG] Primeiro resultado preview:`, results[0].content.substring(0, 200))
     }
 
     return results.map(row => ({

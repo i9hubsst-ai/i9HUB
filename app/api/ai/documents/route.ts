@@ -5,13 +5,19 @@ import { generateEmbedding } from '@/lib/services/embedding-service'
 import { createClient } from '@supabase/supabase-js'
 
 // Função para extrair texto de PDFs (usando pdf-parse)
-async function extractTextFromPDF(buffer: Buffer): Promise<string> {
+async function extractTextFromPDF(buffer: Buffer): Promise<{ text: string; pages: number }> {
   try {
-    // Por enquanto, retornar placeholder
-    // TODO: Implementar extração real com pdf-parse
-    return "Texto extraído do PDF (placeholder - implementar pdf-parse)"
+    console.log('📄 [PDF] Extraindo texto do PDF...')
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const pdfParse = require('pdf-parse')
+    const data = await pdfParse(buffer)
+    console.log(`✅ [PDF] Extraído: ${data.text.length} caracteres de ${data.numpages} páginas`)
+    return {
+      text: data.text,
+      pages: data.numpages
+    }
   } catch (error) {
-    console.error('Erro ao extrair texto do PDF:', error)
+    console.error('❌ [PDF] Erro ao extrair texto:', error)
     throw new Error('Falha ao processar PDF')
   }
 }
@@ -35,8 +41,8 @@ async function processDocument(file: File): Promise<{ text: string; pages?: numb
 
   switch (extension) {
     case 'pdf':
-      const pdfText = await extractTextFromPDF(buffer)
-      return { text: pdfText, pages: 1 } // TODO: calcular páginas reais
+      const pdfResult = await extractTextFromPDF(buffer)
+      return { text: pdfResult.text, pages: pdfResult.pages }
     
     case 'doc':
     case 'docx':

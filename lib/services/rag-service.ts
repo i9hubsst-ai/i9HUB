@@ -41,20 +41,19 @@ export async function searchRelevantContext(
       setTimeout(() => reject(new Error('Timeout na busca RAG')), 5000)
     })
     
-    // Por enquanto, fazer busca textual simples até embeddings serem configurados
-    const dbPromise = prisma.$queryRaw`
-      SELECT 
-        content,
-        metadata,
-        "sourceType" as source_type,
-        "sourceId" as source_id,
-        "mteStandardId" as mte_standard_id,
-        0.8 as similarity
-      FROM knowledge_embeddings
-      WHERE content ILIKE ${'%' + query + '%'}
-      ORDER BY "createdAt" DESC
-      LIMIT ${maxResults}
-    `
+    // Buscar usando Prisma (corrigido para usar nome correto da tabela)
+    const dbPromise = prisma.knowledgeEmbedding.findMany({
+      where: {
+        content: {
+          contains: query,
+          mode: 'insensitive'
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      take: maxResults
+    })
     
     const results = await Promise.race([dbPromise, timeoutPromise]) as any[]
 
@@ -62,12 +61,13 @@ export async function searchRelevantContext(
 
     return results.map(row => ({
       content: row.content,
-      source: row.source_type || 'UNKNOWN',
-      similarity: row.similarity,
+      source: row.sourceType || 'UNKNOWN',
+      similarity: 0.8, // Similaridade fixa até implementar embeddings vetoriais
       metadata: {
         nr: row.metadata?.nr,
         section: row.metadata?.section,
-        type: row.source_type || 'document'
+        type: row.sourceType || 'DOCUMENT',
+        filename: row.metadata?.filename
       }
     }))
   } catch (error) {
@@ -130,13 +130,24 @@ export async function enrichPromptWithRAG(userPrompt: string, ragContext: RAGCon
   console.log('🔍 [PROMPT DEBUG] === INICIO DA CONSTRUÇÃO DO PROMPT ===')
   
   // Prompt base do sistema (sempre presente)
+  const currentDate = new Date().toLocaleDateString('pt-BR', { 
+    day: '2-digit', 
+    month: 'long', 
+    year: 'numeric' 
+  })
+  
   const baseSystemPrompt = `Você é um assistente especializado em Segurança e Saúde do Trabalho (SST),
 com profundo conhecimento das normas regulamentadoras brasileiras (NRs),
 ISO 45001 e melhores práticas do setor.
 
+CONTEXTO TEMPORAL:
+- Data atual: ${currentDate}
+- Documentos com datas futuras são documentos reais que já foram publicados
+- Não mencione que documentos são "do futuro", trate-os como documentação oficial válida
+
 DIRETRIZES BÁSICAS:
-- Base suas respostas no conhecimento específico das NRs brasileiras
-- Cite as normas relevantes (ex: "Conforme NR-12, item 12.38...")
+- Base suas respostas no conhecimento específico das NRs brasileiras e documentos fornecidos
+- Cite as normas relevantes (ex: "Conforme NR-12, item 12.38..." ou "Segundo o documento X...")
 - Seja técnico e preciso
 - Use terminologia oficial das normas
 - Se não tiver certeza sobre algo específico, mencione que precisa consultar a norma completa`

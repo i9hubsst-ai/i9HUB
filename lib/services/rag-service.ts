@@ -36,18 +36,31 @@ export async function searchRelevantContext(
   try {
     console.log(`🔍 [RAG] Buscando contexto para: "${query}"`)
     
-    // PRIMEIRO: Verificar quantos embeddings existem no total
-    const totalEmbeddings = await prisma.knowledgeEmbedding.count()
-    console.log(`📊 [RAG] Total de embeddings no banco: ${totalEmbeddings}`)
+    // PRIMEIRO: Verificar quantos embeddings existem no total com timeout curto
+    const countTimeout = new Promise<number>((_, reject) => {
+      setTimeout(() => reject(new Error('Timeout na contagem')), 2000)
+    })
     
-    if (totalEmbeddings === 0) {
-      console.log(`⚠️ [RAG] Nenhum embedding encontrado no banco!`)
+    let totalEmbeddings = 0
+    try {
+      totalEmbeddings = await Promise.race([
+        prisma.knowledgeEmbedding.count(),
+        countTimeout
+      ]) as number
+      console.log(`📊 [RAG] Total de embeddings no banco: ${totalEmbeddings}`)
+    } catch (error) {
+      console.log(`⚠️ [RAG] Timeout ou erro na contagem - assumindo banco vazio`)
       return []
     }
     
-    // Timeout de 5 segundos para busca no banco
+    if (totalEmbeddings === 0) {
+      console.log(`⚠️ [RAG] Nenhum embedding encontrado no banco - IA usará conhecimento livre`)
+      return []
+    }
+    
+    // Timeout de 3 segundos para busca no banco (reduzido de 5s)
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Timeout na busca RAG')), 5000)
+      setTimeout(() => reject(new Error('Timeout na busca RAG')), 3000)
     })
     
     // Extrair palavras-chave da query para busca mais ampla
@@ -125,6 +138,7 @@ export async function buildRAGContext(query: string): Promise<RAGContext> {
     const results = await searchRelevantContext(query, 3, 0.6)
     
     if (results.length === 0) {
+      console.log(`ℹ️ [RAG] Nenhum documento encontrado - IA responderá com conhecimento livre`)
       return {
         relevantContent: '',
         sources: [],
@@ -215,21 +229,50 @@ ${customPrompt.trim()}`
     console.log('⚠️ [PROMPT DEBUG] NENHUMA configuração personalizada encontrada - usando apenas prompt base')
   }
 
-  const contextSection = ragContext.relevantContent ? `
+  // Hierarquia de fontes de informação
+  let contextSection = ''
+  
+  if (ragContext.relevantContent && ragContext.relevantContent.trim()) {
+    contextSection += `
 
-## DOCUMENTOS DISPONÍVEIS PARA REFERÊNCIA:
+## 📚 DOCUMENTOS CARREGADOS (PRIMEIRA FONTE - PRIORIDADE ALTA):
 ${ragContext.relevantContent}
 
-INSTRUÇÕES DE USO DOS DOCUMENTOS:
-- Os documentos acima são REFERÊNCIAS ADICIONAIS, não a única fonte de informação
-- Use-os quando contiverem informações relevantes E ESPECÍFICAS para a pergunta
-- Você possui amplo conhecimento sobre SST, NRs, ISO 45001 e normas brasileiras - USE-O LIVREMENTE
-- Se a pergunta for sobre um tópico geral (ex: "o que é NR-12?", "como fazer um PGR?"), 
-  responda com seu conhecimento completo, mencionando os documentos apenas se complementarem
-- Se a pergunta for específica sobre um documento carregado, então priorize o conteúdo dele
-- SEMPRE forneça respostas completas, detalhadas e úteis, mesmo que os documentos não cubram tudo
-- Cite fontes quando usar informações específicas: "Conforme NR-X..." ou "Segundo o documento Y..."
-` : ''
+`
+  }
+
+  contextSection += `
+
+## 🎯 HIERARQUIA DE RESPOSTA:
+
+1. **DOCUMENTOS CARREGADOS** (se disponíveis acima):
+   - Use quando a pergunta for sobre conteúdo ESPECÍFICO dos documentos
+   - Cite: "Conforme o documento X..." ou "Segundo [nome do arquivo]..."
+
+2. **INSTRUÇÕES DO ADMINISTRADOR** (personalizações da empresa):
+   ${customPrompt && customPrompt.trim() ? `
+   - Siga as orientações personalizadas definidas pelo admin
+   - Adapte suas respostas ao contexto da empresa` : '- Nenhuma instrução personalizada definida'}
+
+3. **SEU CONHECIMENTO ESPECIALIZADO** (sempre disponível):
+   - Você é especialista em SST, NRs brasileiras (1 a 37), ISO 45001, legislação trabalhista
+   - Use seu conhecimento para responder perguntas gerais: "O que é NR-12?", "Como elaborar PGR?", etc
+   - Forneça respostas COMPLETAS e DETALHADAS, não se limite aos documentos
+   - Para perguntas gerais, responda com toda sua expertise
+
+4. **FONTES OFICIAIS** (mencione quando relevante):
+   - Você pode mencionar que informações podem ser consultadas em:
+     * Site oficial do MTE: https://www.gov.br/trabalho-e-emprego
+     * NRs atualizadas: https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/normas-regulamentadoras
+   - Sugira consultar portarias específicas quando relevante
+
+## ⚠️ IMPORTANTE:
+- NÃO diga "não tenho informações" se o documento não tiver a resposta
+- Use seu conhecimento geral sobre SST para complementar SEMPRE
+- Seja técnico, preciso e útil
+- Cite normas e artigos quando possível
+- Forneça respostas práticas e aplicáveis
+`
 
   console.log('📚 [PROMPT DEBUG] Contexto RAG:', ragContext.relevantContent ? 'ADICIONADO' : 'VAZIO')
 

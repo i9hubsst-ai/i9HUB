@@ -54,9 +54,11 @@ export function ChatbotDialog() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          question: userMessage?.content || '',
-          answer: message.content,
+          messageId: message.id,
+          userQuery: userMessage?.content || '',
+          aiResponse: message.content,
           feedback,
+          timestamp: new Date().toISOString(),
         })
       })
     } catch (error) {

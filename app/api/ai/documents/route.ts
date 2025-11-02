@@ -8,17 +8,26 @@ import { createClient } from '@supabase/supabase-js'
 async function extractTextFromPDF(buffer: Buffer): Promise<{ text: string; pages: number }> {
   try {
     console.log('📄 [PDF] Extraindo texto do PDF...')
+    console.log('📄 [PDF] Buffer size:', buffer.length, 'bytes')
+    
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const pdfParse = require('pdf-parse')
+    console.log('📄 [PDF] pdf-parse carregado com sucesso')
+    
     const data = await pdfParse(buffer)
     console.log(`✅ [PDF] Extraído: ${data.text.length} caracteres de ${data.numpages} páginas`)
+    console.log(`✅ [PDF] Preview: ${data.text.substring(0, 300)}`)
+    
     return {
       text: data.text,
       pages: data.numpages
     }
   } catch (error) {
-    console.error('❌ [PDF] Erro ao extrair texto:', error)
-    throw new Error('Falha ao processar PDF')
+    console.error('❌ [PDF] Erro detalhado ao extrair texto:', error)
+    console.error('❌ [PDF] Error name:', error instanceof Error ? error.name : 'unknown')
+    console.error('❌ [PDF] Error message:', error instanceof Error ? error.message : 'unknown')
+    console.error('❌ [PDF] Error stack:', error instanceof Error ? error.stack : 'unknown')
+    throw new Error(`Falha ao processar PDF: ${error instanceof Error ? error.message : 'Erro desconhecido'}`)
   }
 }
 
@@ -36,25 +45,39 @@ async function extractTextFromWord(buffer: Buffer): Promise<string> {
 
 // Função para processar arquivo e extrair texto
 async function processDocument(file: File): Promise<{ text: string; pages?: number }> {
-  const buffer = Buffer.from(await file.arrayBuffer())
-  const extension = file.name.toLowerCase().split('.').pop()
+  try {
+    console.log(`📄 [PROCESS] Processando arquivo: ${file.name}, tipo: ${file.type}, tamanho: ${file.size}`)
+    
+    const buffer = Buffer.from(await file.arrayBuffer())
+    console.log(`📄 [PROCESS] Buffer criado: ${buffer.length} bytes`)
+    
+    const extension = file.name.toLowerCase().split('.').pop()
+    console.log(`📄 [PROCESS] Extensão detectada: ${extension}`)
 
-  switch (extension) {
-    case 'pdf':
-      const pdfResult = await extractTextFromPDF(buffer)
-      return { text: pdfResult.text, pages: pdfResult.pages }
-    
-    case 'doc':
-    case 'docx':
-      const wordText = await extractTextFromWord(buffer)
-      return { text: wordText }
-    
-    case 'txt':
-      const txtText = buffer.toString('utf-8')
-      return { text: txtText }
-    
-    default:
-      throw new Error(`Tipo de arquivo não suportado: ${extension}`)
+    switch (extension) {
+      case 'pdf':
+        console.log('📄 [PROCESS] Iniciando extração PDF...')
+        const pdfResult = await extractTextFromPDF(buffer)
+        console.log('📄 [PROCESS] Extração PDF concluída com sucesso')
+        return { text: pdfResult.text, pages: pdfResult.pages }
+      
+      case 'doc':
+      case 'docx':
+        console.log('📄 [PROCESS] Iniciando extração Word...')
+        const wordText = await extractTextFromWord(buffer)
+        return { text: wordText }
+      
+      case 'txt':
+        console.log('📄 [PROCESS] Lendo arquivo texto...')
+        const txtText = buffer.toString('utf-8')
+        return { text: txtText }
+      
+      default:
+        throw new Error(`Tipo de arquivo não suportado: ${extension}`)
+    }
+  } catch (error) {
+    console.error('❌ [PROCESS] Erro em processDocument:', error)
+    throw error
   }
 }
 
@@ -241,12 +264,15 @@ export async function POST(request: NextRequest) {
 // Função assíncrona para processar documento
 async function processDocumentAsync(documentId: string, storagePath: string, file: File, supabase: any) {
   try {
-    console.log(`📄 [PROCESS] Processando documento: ${file.name}`)
+    console.log(`📄 [ASYNC] Iniciando processamento assíncrono: ${file.name}`)
+    console.log(`📄 [ASYNC] Document ID: ${documentId}`)
+    console.log(`📄 [ASYNC] Storage path: ${storagePath}`)
     
     // Extrair texto
+    console.log('📄 [ASYNC] Chamando processDocument...')
     const { text, pages } = await processDocument(file)
-    console.log(`📝 [PROCESS] Texto extraído: ${text.length} caracteres, ${pages || 0} páginas`)
-    console.log(`📝 [PROCESS] Preview do texto: ${text.substring(0, 200)}...`)
+    console.log(`📝 [ASYNC] Texto extraído: ${text.length} caracteres, ${pages || 0} páginas`)
+    console.log(`📝 [ASYNC] Preview do texto: ${text.substring(0, 200)}...`)
     
     // Dividir texto em chunks para embeddings
     const chunks = splitTextIntoChunks(text, 1000) // 1000 caracteres por chunk
@@ -296,19 +322,33 @@ async function processDocumentAsync(documentId: string, storagePath: string, fil
       }
     })
 
-    console.log(`✅ Documento processado com sucesso: ${file.name}`)
+    console.log(`✅ [ASYNC] Documento processado com sucesso: ${file.name}`)
 
   } catch (error) {
-    console.error(`❌ Erro ao processar documento ${file.name}:`, error)
+    console.error(`❌ [ASYNC] Erro ao processar documento ${file.name}`)
+    console.error('❌ [ASYNC] Error type:', typeof error)
+    console.error('❌ [ASYNC] Error instanceof Error:', error instanceof Error)
+    console.error('❌ [ASYNC] Error details:', error)
+    
+    if (error instanceof Error) {
+      console.error('❌ [ASYNC] Error name:', error.name)
+      console.error('❌ [ASYNC] Error message:', error.message)
+      console.error('❌ [ASYNC] Error stack:', error.stack)
+    }
     
     // Marcar como erro
-    await prisma.knowledgeDocument.update({
-      where: { id: documentId },
-      data: {
-        status: 'ERROR',
-        processedAt: new Date()
-      }
-    })
+    try {
+      await prisma.knowledgeDocument.update({
+        where: { id: documentId },
+        data: {
+          status: 'ERROR',
+          processedAt: new Date()
+        }
+      })
+      console.log('❌ [ASYNC] Documento marcado como ERROR no banco')
+    } catch (dbError) {
+      console.error('❌ [ASYNC] Erro ao atualizar status no banco:', dbError)
+    }
   }
 }
 

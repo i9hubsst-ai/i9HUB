@@ -241,13 +241,16 @@ export async function POST(request: NextRequest) {
 // Função assíncrona para processar documento
 async function processDocumentAsync(documentId: string, storagePath: string, file: File, supabase: any) {
   try {
-    console.log(`📄 Processando documento: ${file.name}`)
+    console.log(`📄 [PROCESS] Processando documento: ${file.name}`)
     
     // Extrair texto
     const { text, pages } = await processDocument(file)
+    console.log(`📝 [PROCESS] Texto extraído: ${text.length} caracteres, ${pages || 0} páginas`)
+    console.log(`📝 [PROCESS] Preview do texto: ${text.substring(0, 200)}...`)
     
     // Dividir texto em chunks para embeddings
     const chunks = splitTextIntoChunks(text, 1000) // 1000 caracteres por chunk
+    console.log(`✂️ [PROCESS] Documento dividido em ${chunks.length} chunks`)
     
     // Gerar embeddings para cada chunk (se OpenAI configurado)
     const embeddings = []
@@ -264,6 +267,7 @@ async function processDocumentAsync(documentId: string, storagePath: string, fil
     }
 
     // Salvar chunks na base de conhecimento
+    console.log(`💾 [PROCESS] Salvando ${chunks.length} chunks no banco...`)
     for (let i = 0; i < chunks.length; i++) {
       await prisma.knowledgeEmbedding.create({
         data: {
@@ -279,6 +283,7 @@ async function processDocumentAsync(documentId: string, storagePath: string, fil
         }
       })
     }
+    console.log(`✅ [PROCESS] ${chunks.length} embeddings salvos com sucesso`)
 
     // Atualizar status do documento
     await prisma.knowledgeDocument.update({

@@ -41,13 +41,27 @@ export async function searchRelevantContext(
       setTimeout(() => reject(new Error('Timeout na busca RAG')), 5000)
     })
     
+    // Extrair palavras-chave da query para busca mais ampla
+    const keywords = query.toLowerCase().split(' ').filter(w => w.length > 3)
+    console.log(`🔑 [RAG] Palavras-chave extraídas:`, keywords)
+    
     // Buscar usando Prisma (corrigido para usar nome correto da tabela)
     const dbPromise = prisma.knowledgeEmbedding.findMany({
       where: {
-        content: {
-          contains: query,
-          mode: 'insensitive'
-        }
+        OR: [
+          {
+            content: {
+              contains: query,
+              mode: 'insensitive' as any
+            }
+          },
+          ...keywords.map(keyword => ({
+            content: {
+              contains: keyword,
+              mode: 'insensitive' as any
+            }
+          }))
+        ]
       },
       orderBy: {
         createdAt: 'desc'
@@ -58,6 +72,9 @@ export async function searchRelevantContext(
     const results = await Promise.race([dbPromise, timeoutPromise]) as any[]
 
     console.log(`📚 [RAG] Encontrados ${results.length} resultados relevantes`)
+    if (results.length > 0) {
+      console.log(`📄 [RAG] Primeiro resultado preview:`, results[0].content.substring(0, 150))
+    }
 
     return results.map(row => ({
       content: row.content,

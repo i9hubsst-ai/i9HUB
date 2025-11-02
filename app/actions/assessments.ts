@@ -6,6 +6,87 @@ import { prisma } from '@/lib/prisma'
 import { getCurrentUser, getUserRole, isPlatformAdmin } from '@/lib/auth'
 import { AssessmentStatus } from '@prisma/client'
 
+export async function getDiagnosticsMetrics(companyId?: string) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  const isAdmin = await isPlatformAdmin(user.id)
+
+  try {
+    // Buscar empresa do usuário se não foi fornecida
+    let targetCompanyId = companyId
+    if (!targetCompanyId && !isAdmin) {
+      const membership = await prisma.membership.findFirst({
+        where: { userId: user.id }
+      })
+      if (!membership) {
+        return { error: 'Empresa não encontrada' }
+      }
+      targetCompanyId = membership.companyId
+    }
+
+    // Filtros base
+    const assessmentWhere = targetCompanyId ? { companyId: targetCompanyId } : {}
+    const findingWhere = targetCompanyId ? { assessment: { companyId: targetCompanyId } } : {}
+    const actionPlanWhere = targetCompanyId ? { companyId: targetCompanyId } : {}
+    const evidenceWhere = targetCompanyId ? { assessment: { companyId: targetCompanyId } } : {}
+
+    // Contar assessments por status
+    const [
+      totalAssessments,
+      draftAssessments,
+      inProgressAssessments,
+      completedAssessments,
+      totalTemplates,
+      totalFindings,
+      totalActionPlans,
+      pendingActionPlans,
+      totalEvidence
+    ] = await Promise.all([
+      prisma.assessment.count({ where: assessmentWhere }),
+      prisma.assessment.count({ where: { ...assessmentWhere, status: 'DRAFT' } }),
+      prisma.assessment.count({ where: { ...assessmentWhere, status: 'IN_PROGRESS' } }),
+      prisma.assessment.count({ where: { ...assessmentWhere, status: 'COMPLETED' } }),
+      prisma.diagnosticTemplate.count({ where: { status: 'PUBLISHED' } }),
+      prisma.finding.count({ where: findingWhere }),
+      prisma.actionPlan.count({ where: actionPlanWhere }),
+      prisma.actionPlan.count({ where: { ...actionPlanWhere, status: 'PENDING' } }),
+      prisma.evidence.count({ where: evidenceWhere })
+    ])
+
+    return {
+      success: true,
+      metrics: {
+        assessments: {
+          total: totalAssessments,
+          draft: draftAssessments,
+          inProgress: inProgressAssessments,
+          completed: completedAssessments
+        },
+        templates: {
+          total: totalTemplates
+        },
+        findings: {
+          total: totalFindings,
+          open: totalFindings // Por enquanto consideramos todos como abertos
+        },
+        actionPlans: {
+          total: totalActionPlans,
+          pending: pendingActionPlans
+        },
+        evidence: {
+          total: totalEvidence
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Erro ao buscar métricas de diagnósticos:', error)
+    return { error: 'Erro ao buscar métricas' }
+  }
+}
+
 export async function createAssessment(companyId: string, formData: FormData) {
   const user = await getCurrentUser()
   if (!user) {

@@ -70,11 +70,15 @@ const menuStructure: MenuItem[] = [
   {
     icon: BarChart3,
     label: 'Diagnósticos',
+    href: '/dashboard/diagnostics-module',
     children: [
+      { icon: Layers, label: 'Templates', href: '/dashboard/templates' },
       { icon: FileText, label: 'Novo Diagnóstico', href: '/dashboard/diagnostics/new' },
       { icon: FileCheck, label: 'Histórico de Diagnósticos', href: '/dashboard/diagnostics' },
-      { icon: BarChart, label: 'Relatórios de Diagnóstico', href: '/dashboard/diagnostics/reports' },
-      { icon: Layers, label: 'Templates', href: '/dashboard/templates' }
+      { icon: AlertTriangle, label: 'Achados', href: '/dashboard/findings' },
+      { icon: Target, label: 'Planos de Ação', href: '/dashboard/action-plans' },
+      { icon: FileCheck, label: 'Evidências', href: '/dashboard/evidence' },
+      { icon: BarChart, label: 'Relatórios', href: '/dashboard/diagnostics/reports' }
     ]
   },
   {

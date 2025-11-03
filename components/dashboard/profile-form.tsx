@@ -52,9 +52,25 @@ export function ProfileForm({ profile }: ProfileFormProps) {
           description: result.error,
         })
       } else if (result.avatarUrl) {
-        // Adicionar cache bust na URL para forçar reload da imagem
-        const newAvatarUrl = result.avatarUrl + '?t=' + Date.now()
+        // Signed URLs já tem token, não adicionar ?t= extra
+        const newAvatarUrl = result.avatarUrl.includes('?token=') 
+          ? result.avatarUrl 
+          : result.avatarUrl + '?t=' + Date.now()
+        
         console.log('🖼️ Nova URL do avatar:', newAvatarUrl)
+        
+        // Testar se a URL está acessível
+        fetch(newAvatarUrl, { method: 'HEAD' })
+          .then(res => {
+            console.log('🔍 Teste de acesso à URL:', res.status, res.statusText)
+            if (res.ok) {
+              console.log('✅ URL acessível!')
+            } else {
+              console.error('❌ URL não acessível:', res.status)
+            }
+          })
+          .catch(err => console.error('❌ Erro ao testar URL:', err))
+        
         setAvatarUrl(newAvatarUrl)
         toast({
           title: 'Sucesso',
@@ -64,7 +80,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
         setTimeout(() => {
           console.log('🔄 Fazendo refresh da página...')
           router.refresh()
-        }, 500)
+        }, 1000)
       }
     } catch (error) {
       toast({

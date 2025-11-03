@@ -438,7 +438,7 @@ model AIConfiguration {
 }
 
 model KnowledgeDocument {
-  id               String    @id @default(uuid())
+  id               String         @id @default(uuid())
   filename         String
   originalFilename String
   filepath         String
@@ -447,7 +447,7 @@ model KnowledgeDocument {
   status           DocumentStatus @default(PROCESSING)
   pages            Int?
   extractedText    String?
-  uploadedAt       DateTime  @default(now())
+  uploadedAt       DateTime       @default(now())
   processedAt      DateTime?
   uploadedBy       String
 

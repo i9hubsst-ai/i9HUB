@@ -57,7 +57,7 @@ export default async function DiagnosticsModulePage() {
     <div className="p-8 space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-primary">Módulo de Diagnósticos</h1>
+        <h1 className="text-3xl font-bold text-primary">Diagnósticos e Maturidade</h1>
         <p className="text-muted-foreground mt-2">
           Gestão completa de diagnósticos de SST - Templates, Avaliações, Achados, Planos de Ação e Evidências
         </p>
@@ -145,34 +145,13 @@ export default async function DiagnosticsModulePage() {
             </Link>
           </Card>
 
-          {/* Novo Diagnóstico */}
-          <Card className="hover:border-green-600 transition-colors cursor-pointer group border-green-200 bg-green-50/50">
-            <Link href="/dashboard/diagnostics/new">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-green-700 group-hover:text-green-800 transition-colors">
-                  <Plus className="h-5 w-5" />
-                  Novo Diagnóstico
-                </CardTitle>
-                <CardDescription>
-                  Inicie um novo diagnóstico de SST usando um template existente
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button className="w-full bg-green-600 hover:bg-green-700" size="sm">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Criar Diagnóstico
-                </Button>
-              </CardContent>
-            </Link>
-          </Card>
-
-          {/* Histórico de Diagnósticos */}
+          {/* Diagnósticos */}
           <Card className="hover:border-primary transition-colors cursor-pointer group">
             <Link href="/dashboard/diagnostics">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 group-hover:text-primary transition-colors">
                   <ClipboardList className="h-5 w-5" />
-                  Histórico de Diagnósticos
+                  Diagnósticos
                 </CardTitle>
                 <CardDescription>
                   Visualize e gerencie todos os diagnósticos realizados

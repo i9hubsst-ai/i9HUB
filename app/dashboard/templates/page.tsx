@@ -4,7 +4,7 @@ import { getCurrentUser } from '@/lib/auth'
 import { getAllTemplates } from '@/app/actions/templates'
 import { TemplateList } from '@/components/dashboard/template-list'
 import { Button } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
+import { Plus, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -32,6 +32,16 @@ export default async function TemplatesPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Botão de Retorno */}
+      <div className="mb-4">
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/dashboard/diagnostics-module">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Voltar para Diagnósticos e Maturidade
+          </Link>
+        </Button>
+      </div>
+
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Templates de Diagnóstico</h1>

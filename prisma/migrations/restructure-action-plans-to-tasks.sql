@@ -63,9 +63,9 @@ DECLARE
 BEGIN
   -- Para cada assessment que tem action plans
   FOR assessment_record IN 
-    SELECT DISTINCT "assessmentId", "companyId"
+    SELECT DISTINCT ON ("assessmentId") "assessmentId", "companyId", "createdAt"
     FROM "action_plans"
-    ORDER BY "createdAt"
+    ORDER BY "assessmentId", "createdAt"
   LOOP
     -- Gerar número do plano (PA00001, PA00002, ...)
     plan_number := 'PA' || LPAD(plan_counter::TEXT, 5, '0');

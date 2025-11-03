@@ -20,9 +20,10 @@ interface ProfileFormProps {
     avatar_url: string | null
     created_at?: string
   }
+  onSuccess?: () => void
 }
 
-export function ProfileForm({ profile }: ProfileFormProps) {
+export function ProfileForm({ profile, onSuccess }: ProfileFormProps) {
   const [isUploadingAvatar, setIsUploadingAvatar] = useState(false)
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false)
   const [avatarUrl, setAvatarUrl] = useState(profile.avatar_url)
@@ -113,6 +114,9 @@ export function ProfileForm({ profile }: ProfileFormProps) {
           description: 'Perfil atualizado com sucesso',
         })
         router.refresh()
+        if (onSuccess) {
+          setTimeout(() => onSuccess(), 500)
+        }
       }
     } catch (error) {
       toast({

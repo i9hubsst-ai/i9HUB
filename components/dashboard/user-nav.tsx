@@ -1,4 +1,4 @@
-import { LogOut, User } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { logout } from '@/app/actions/auth'
 import { getGravatarUrl } from '@/lib/utils'
-import Link from 'next/link'
+import { ProfileMenuButton } from './profile-menu-button'
 
 interface UserNavProps {
   user: {
@@ -70,12 +70,7 @@ export function UserNav({ user, isAdmin }: UserNavProps) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/dashboard/profile" className="cursor-pointer">
-            <User className="mr-2 h-4 w-4" />
-            <span>Meu Perfil</span>
-          </Link>
-        </DropdownMenuItem>
+        <ProfileMenuButton />
         <DropdownMenuItem asChild>
           <form action={logout}>
             <button type="submit" className="flex w-full items-center">

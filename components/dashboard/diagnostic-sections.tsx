@@ -5,9 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { saveAnswer } from '@/app/actions/assessments'
-import { Check, X, AlertTriangle, Loader2, FileText, ChevronDown, ChevronUp } from 'lucide-react'
+import { saveAnswer, submitAssessment } from '@/app/actions/assessments'
+import { Check, X, AlertTriangle, Loader2, FileText, ChevronDown, ChevronUp, Send } from 'lucide-react'
 import { EvidenceUpload } from './evidence-upload'
+import { useRouter } from 'next/navigation'
+import { useToast } from '@/hooks/use-toast'
 
 type QuestionType = 'BOOLEAN' | 'SCORE'
 
@@ -80,6 +82,10 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({})
   const [saving, setSaving] = useState<string | null>(null)
   const [errors, setErrors] = useState<Record<string, string | undefined>>({})
+  const [submitting, setSubmitting] = useState(false)
+  
+  const router = useRouter()
+  const { toast } = useToast()
 
   const toggleSection = (sectionId: string) => {
     setExpandedSections(prev => ({
@@ -183,6 +189,45 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
         ...prev,
         [questionId]: result.answer.id
       }))
+    }
+  }
+
+  const handleSubmitAssessment = async () => {
+    if (!assessment.template) return
+
+    // Verificar se todas as perguntas foram respondidas
+    const totalQuestions = assessment.template.sections.reduce(
+      (sum, section) => sum + section.questions.length,
+      0
+    )
+    const answeredQuestions = Object.keys(answerIds).length
+
+    if (answeredQuestions < totalQuestions) {
+      toast({
+        title: 'Diagnóstico incompleto',
+        description: `Por favor, responda todas as ${totalQuestions} perguntas antes de finalizar (${answeredQuestions}/${totalQuestions} respondidas)`,
+        variant: 'destructive'
+      })
+      return
+    }
+
+    setSubmitting(true)
+
+    const result = await submitAssessment(assessment.id)
+
+    if ('error' in result) {
+      toast({
+        title: 'Erro ao finalizar diagnóstico',
+        description: result.error,
+        variant: 'destructive'
+      })
+      setSubmitting(false)
+    } else {
+      toast({
+        title: 'Diagnóstico finalizado!',
+        description: 'Os achados foram gerados automaticamente com base nas suas respostas.',
+      })
+      router.refresh()
     }
   }
 
@@ -422,6 +467,39 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
           </Card>
         )
       })}
+
+      {!isReadOnly && assessment.template && (
+        <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10">
+          <CardContent className="py-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="space-y-1 text-center sm:text-left">
+                <h3 className="text-lg font-semibold text-primary">Pronto para finalizar?</h3>
+                <p className="text-sm text-muted-foreground">
+                  Ao finalizar, os achados serão gerados automaticamente com base nas suas respostas.
+                </p>
+              </div>
+              <Button 
+                onClick={handleSubmitAssessment}
+                disabled={submitting}
+                size="lg"
+                className="gap-2 min-w-[180px]"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Finalizando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4" />
+                    Finalizar Diagnóstico
+                  </>
+                )}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }

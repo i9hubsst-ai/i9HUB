@@ -39,16 +39,16 @@ export default async function DiagnosticsPage() {
   }
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-6 space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-primary">Diagnósticos</h1>
-          <p className="text-muted-foreground">
-            Avaliação de maturidade em Segurança e Saúde do Trabalho ({assessments.length} total)
+          <h1 className="text-2xl font-bold text-primary">Diagnósticos</h1>
+          <p className="text-sm text-muted-foreground">
+            Avaliação de maturidade em SST • {assessments.length} {assessments.length === 1 ? 'diagnóstico' : 'diagnósticos'}
           </p>
         </div>
         <Link href="/dashboard/diagnostics/new">
-          <Button className="gap-2">
+          <Button className="gap-2" size="sm">
             <Plus className="h-4 w-4" />
             Novo Diagnóstico
           </Button>
@@ -57,7 +57,6 @@ export default async function DiagnosticsPage() {
 
       {/* Assessments List */}
       <div>
-        <h2 className="text-xl font-semibold mb-4">Diagnósticos Realizados</h2>
         
         {assessments.length === 0 ? (
           <Card>
@@ -78,31 +77,31 @@ export default async function DiagnosticsPage() {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-3">
             {assessments.map((assessment) => {
               const status = statusConfig[assessment.status as keyof typeof statusConfig]
               const StatusIcon = status.icon
               const totalQuestions = 25
-              const progress = (assessment._count.answers / totalQuestions) * 100
+              const progress = Math.min(100, (assessment._count.answers / totalQuestions) * 100)
               
               return (
-                <Card key={assessment.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader className="pb-3">
+                <Card key={assessment.id} className="hover:shadow-md transition-shadow">
+                  <CardHeader className="pb-3 pt-4">
                     <div className="flex justify-between items-start gap-4">
                       <div className="flex-1 min-w-0">
-                        <CardTitle className="text-lg">{assessment.title}</CardTitle>
-                        <CardDescription className="mt-1">
+                        <CardTitle className="text-base">{assessment.title}</CardTitle>
+                        <CardDescription className="mt-0.5 text-xs">
                           {assessment.company.name} • {new Date(assessment.createdAt).toLocaleDateString('pt-BR')}
                         </CardDescription>
                         {assessment.description && (
-                          <p className="text-sm text-muted-foreground mt-1.5 line-clamp-2">
+                          <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
                             {assessment.description}
                           </p>
                         )}
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
-                        <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${status.bg} ${status.color}`}>
-                          <StatusIcon className="h-3.5 w-3.5" />
+                        <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full ${status.bg} ${status.color}`}>
+                          <StatusIcon className="h-3 w-3" />
                           <span className="text-xs font-medium">{status.label}</span>
                         </div>
                         <DropdownMenu>
@@ -127,49 +126,50 @@ export default async function DiagnosticsPage() {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {assessment.status !== 'COMPLETED' && (
-                        <div className="flex items-center gap-3">
-                          <div className="flex-1">
-                            <div className="w-full bg-secondary rounded-full h-1.5">
+                  <CardContent className="pt-0 pb-4">
+                    <div className="space-y-2.5">
+                      {assessment.status !== 'COMPLETED' && assessment.status !== 'SCORED' && (
+                        <div className="flex items-center gap-2">
+                          <div className="flex-1 min-w-0">
+                            <div className="w-full bg-secondary rounded-full h-1.5 overflow-hidden">
                               <div 
                                 className="bg-primary h-1.5 rounded-full transition-all"
                                 style={{ width: `${progress}%` }}
                               />
                             </div>
                           </div>
-                          <span className="text-xs text-muted-foreground whitespace-nowrap">
+                          <span className="text-xs text-muted-foreground whitespace-nowrap font-medium">
                             {assessment._count.answers}/{totalQuestions}
                           </span>
                         </div>
                       )}
 
                       <div className="flex items-center justify-between gap-4">
-                        {assessment.status === 'COMPLETED' && assessment.scores.length > 0 ? (
-                          <div className="flex items-center gap-6">
+                        {(assessment.status === 'COMPLETED' || assessment.status === 'SCORED') && assessment.scores.length > 0 ? (
+                          <div className="flex items-center gap-4">
                             <div>
-                              <div className="text-xl font-bold text-primary">
+                              <div className="text-lg font-bold text-primary">
                                 Nível {Math.round(assessment.scores.reduce((acc, s) => acc + s.level, 0) / assessment.scores.length)}
                               </div>
-                              <div className="text-xs text-muted-foreground">Maturidade</div>
+                              <div className="text-[10px] text-muted-foreground">Maturidade</div>
                             </div>
+                            <div className="h-8 w-px bg-border" />
                             <div>
-                              <div className="text-xl font-bold text-primary">
+                              <div className="text-lg font-bold text-primary">
                                 {Math.round(assessment.scores.reduce((acc, s) => acc + s.weightedScore, 0) / assessment.scores.length)}%
                               </div>
-                              <div className="text-xs text-muted-foreground">Pontuação</div>
+                              <div className="text-[10px] text-muted-foreground">Pontuação</div>
                             </div>
                           </div>
                         ) : (
-                          <div className="text-sm text-muted-foreground">
-                            {assessment.status === 'COMPLETED' ? 'Aguardando processamento...' : 'Em andamento'}
+                          <div className="text-xs text-muted-foreground">
+                            {assessment.status === 'COMPLETED' || assessment.status === 'SCORED' ? 'Processando...' : 'Em andamento'}
                           </div>
                         )}
                         
                         <Link href={`/dashboard/diagnostics/${assessment.id}`}>
-                          <Button size="sm">
-                            {assessment.status === 'COMPLETED' ? 'Ver Resultados' : 'Responder'}
+                          <Button size="sm" className="h-8">
+                            {assessment.status === 'COMPLETED' || assessment.status === 'SCORED' ? 'Ver Resultados' : 'Continuar'}
                           </Button>
                         </Link>
                       </div>

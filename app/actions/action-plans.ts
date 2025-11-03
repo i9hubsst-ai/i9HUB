@@ -137,7 +137,8 @@ export async function getActionPlans(assessmentId: string) {
 
     // Extrair executive summary da primeira action plan (se existir)
     let executiveSummary = ''
-    const formattedPlans = actionPlans.map(plan => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const formattedPlans = actionPlans.map((plan: any) => {
       const parts = plan.description.split('\n\n---\n\n')
       if (parts.length > 1 && !executiveSummary) {
         executiveSummary = parts[0]
@@ -158,5 +159,106 @@ export async function getActionPlans(assessmentId: string) {
   } catch (error) {
     console.error('Erro ao buscar planos de ação:', error)
     return { error: 'Erro ao buscar planos de ação' }
+  }
+}
+
+export async function updateActionPlan(
+  actionPlanId: string,
+  updates: {
+    who?: string
+    how?: string
+    howMuch?: string
+    status?: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED'
+  }
+) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    const actionPlan = await prisma.actionPlan.findUnique({
+      where: { id: actionPlanId },
+      include: {
+        assessment: {
+          select: { companyId: true }
+        }
+      }
+    })
+
+    if (!actionPlan) {
+      return { error: 'Plano de ação não encontrado' }
+    }
+
+    const isAdmin = await isPlatformAdmin(user.id)
+    const membership = await prisma.membership.findFirst({
+      where: {
+        userId: user.id,
+        companyId: actionPlan.assessment.companyId,
+        status: 'ACTIVE'
+      }
+    })
+
+    if (!isAdmin && !membership) {
+      return { error: 'Sem permissão para editar este plano de ação' }
+    }
+
+    const updated = await prisma.actionPlan.update({
+      where: { id: actionPlanId },
+      data: updates
+    })
+
+    revalidatePath(`/dashboard/diagnostics/${actionPlan.assessmentId}`)
+    
+    return { success: true, actionPlan: updated }
+  } catch (error) {
+    console.error('Erro ao atualizar plano de ação:', error)
+    return { error: 'Erro ao atualizar plano de ação' }
+  }
+}
+
+export async function deleteActionPlan(actionPlanId: string) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    const actionPlan = await prisma.actionPlan.findUnique({
+      where: { id: actionPlanId },
+      include: {
+        assessment: {
+          select: { companyId: true }
+        }
+      }
+    })
+
+    if (!actionPlan) {
+      return { error: 'Plano de ação não encontrado' }
+    }
+
+    const isAdmin = await isPlatformAdmin(user.id)
+    const membership = await prisma.membership.findFirst({
+      where: {
+        userId: user.id,
+        companyId: actionPlan.assessment.companyId,
+        status: 'ACTIVE'
+      }
+    })
+
+    if (!isAdmin && !membership) {
+      return { error: 'Sem permissão para excluir este plano de ação' }
+    }
+
+    await prisma.actionPlan.delete({
+      where: { id: actionPlanId }
+    })
+
+    revalidatePath(`/dashboard/diagnostics/${actionPlan.assessmentId}`)
+    
+    return { success: true }
+  } catch (error) {
+    console.error('Erro ao excluir plano de ação:', error)
+    return { error: 'Erro ao excluir plano de ação' }
   }
 }

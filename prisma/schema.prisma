@@ -294,15 +294,25 @@ model ActionPlan {
   id           String       @id @default(uuid())
   assessmentId String
   companyId    String
-  title        String
-  description  String
-  reference    String?
-  ownerUserId  String?
-  dueDate      DateTime?
+  title        String       // O QUÊ (What)
+  description  String       // COMO (How) - detalhamento
+  reference    String?      // Referência ao diagnóstico
+  ownerUserId  String?      
+  dueDate      DateTime?    // QUANDO (When)
   priority     Int          @default(2)
   status       ActionStatus @default(PENDING)
   createdBy    String
   aiGenerated  Boolean      @default(false)
+  
+  // Campos 5W2H
+  what         String?      // O quê (redundante com title, mas mantém compatibilidade)
+  why          String?      // Por quê (Why)
+  where        String?      // Onde (Where)
+  when         String?      // Quando (When) - texto descritivo
+  who          String?      // Quem (Who)
+  how          String?      // Como (How)
+  howMuch      String?      // Quanto (How Much)
+  
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   assessment   Assessment   @relation(fields: [assessmentId], references: [id], onDelete: Cascade)

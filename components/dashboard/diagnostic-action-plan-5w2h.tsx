@@ -30,6 +30,7 @@ interface DiagnosticActionPlan5W2HProps {
 
 interface ActionPlan5W2H {
   id: string
+  number: string
   prioridade: 'HIGH' | 'MEDIUM' | 'LOW'
   status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED'
   prazo: number
@@ -77,6 +78,7 @@ export function DiagnosticActionPlan5W2H({ assessment }: DiagnosticActionPlan5W2
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const plans: ActionPlan5W2H[] = result.actionPlans.map((plan: any, index: number) => ({
             id: plan.id,
+            number: plan.number || `PA-${String(index + 1).padStart(3, '0')}`,
             prioridade: plan.priority === 1 ? 'HIGH' : plan.priority === 2 ? 'MEDIUM' : 'LOW',
             status: plan.status as 'PENDING' | 'IN_PROGRESS' | 'COMPLETED',
             prazo: plan.dueDate 

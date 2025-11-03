@@ -292,6 +292,7 @@ model Evidence {
 
 model ActionPlan {
   id           String       @id @default(uuid())
+  number       String?      // Numeração do Plano (PA-001, PA-002, etc)
   assessmentId String
   companyId    String
   title        String       // O QUÊ (What)

@@ -26,6 +26,7 @@ import {
 
 interface ActionPlan5W2HProps {
   id: string
+  number: string
   prioridade: 'HIGH' | 'MEDIUM' | 'LOW'
   status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED'
   prazo: number // dias restantes
@@ -44,6 +45,7 @@ interface ActionPlan5W2HProps {
 
 export function ActionPlanCard({ 
   id,
+  number,
   prioridade,
   status,
   prazo,
@@ -98,6 +100,9 @@ export function ActionPlanCard({
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2">
+              <Badge variant="outline" className="text-xs font-mono font-bold bg-primary/5 text-primary border-primary/30">
+                {number}
+              </Badge>
               <Badge className={`${currentPriority.color} border text-xs font-semibold`}>
                 {currentPriority.icon} {currentPriority.label}
               </Badge>

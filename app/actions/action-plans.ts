@@ -56,16 +56,22 @@ export async function saveActionPlans(
       return { error: 'Sem permissão para salvar plano de ação deste diagnóstico' }
     }
 
-    // Deletar planos de ação existentes (se houver)
+    // Deletar planos de ação existentes gerados por IA (se houver)
     await prisma.actionPlan.deleteMany({
       where: { assessmentId, aiGenerated: true }
     })
 
+    // Contar planos existentes (manuais) para começar numeração correta
+    const existingPlansCount = await prisma.actionPlan.count({
+      where: { assessmentId }
+    })
+
     // Criar novos planos de ação
     const createdPlans = await Promise.all(
-      actionPlans.map((plan) =>
+      actionPlans.map((plan, index) =>
         prisma.actionPlan.create({
           data: {
+            number: `PA-${String(existingPlansCount + index + 1).padStart(3, '0')}`,
             assessmentId,
             companyId: assessment.companyId,
             title: plan.title,
@@ -128,7 +134,7 @@ export async function getActionPlans(assessmentId: string) {
     }
 
     const actionPlans = await prisma.actionPlan.findMany({
-      where: { assessmentId, aiGenerated: true },
+      where: { assessmentId },
       orderBy: [
         { priority: 'asc' }, // 1=HIGH vem primeiro
         { createdAt: 'asc' }

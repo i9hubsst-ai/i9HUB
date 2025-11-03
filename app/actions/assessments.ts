@@ -166,7 +166,8 @@ export async function getAssessments(companyId?: string) {
         }
       })
 
-      const companyIds = memberships.map(m => m.companyId)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const companyIds = memberships.map((m: any) => m.companyId)
 
       if (companyId && !companyIds.includes(companyId)) {
         return { error: 'Sem permissão para acessar diagnósticos desta empresa' }
@@ -443,8 +444,9 @@ export async function submitAssessment(assessmentId: string) {
     }
 
     // Calcular scores por seção usando o novo schema
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const totalQuestions = assessment.template.sections.reduce(
-      (sum, section) => sum + section.questions.length, 
+      (sum: number, section: any) => sum + section.questions.length, 
       0
     )
     
@@ -455,8 +457,10 @@ export async function submitAssessment(assessmentId: string) {
     const sectionScores: { sectionId: string; rawScore: number; weightedScore: number; level: number }[] = []
 
     for (const section of assessment.template.sections) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const sectionAnswers = assessment.answers.filter(
-        a => section.questions.some(q => q.id === a.questionId)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (a: any) => section.questions.some((q: any) => q.id === a.questionId)
       )
 
       if (sectionAnswers.length === 0) continue
@@ -466,7 +470,8 @@ export async function submitAssessment(assessmentId: string) {
       let totalWeight = 0
 
       for (const answer of sectionAnswers) {
-        const question = section.questions.find(q => q.id === answer.questionId)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const question = section.questions.find((q: any) => q.id === answer.questionId)
         if (!question) continue
 
         rawScore += answer.value * question.weight

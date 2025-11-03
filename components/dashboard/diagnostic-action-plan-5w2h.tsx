@@ -75,7 +75,8 @@ export function DiagnosticActionPlan5W2H({ assessment }: DiagnosticActionPlan5W2
         }
 
         if (result.actionPlans && result.actionPlans.length > 0) {
-          const plans: ActionPlan5W2H[] = result.actionPlans.map((plan, index) => ({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const plans: ActionPlan5W2H[] = result.actionPlans.map((plan: any, index: number) => ({
             id: plan.id,
             prioridade: plan.priority === 1 ? 'HIGH' : plan.priority === 2 ? 'MEDIUM' : 'LOW',
             status: plan.status as 'PENDING' | 'IN_PROGRESS' | 'COMPLETED',

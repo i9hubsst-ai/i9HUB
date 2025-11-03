@@ -164,7 +164,7 @@ export function TemplateBuilderForm() {
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="type">Tipo de Template</Label>
-              <TemplateTypeManager />
+              <TemplateTypeManager onUpdate={loadTemplateTypes} />
             </div>
             <Select
               value={type}

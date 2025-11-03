@@ -35,7 +35,11 @@ type TemplateType = {
   order: number
 }
 
-export function TemplateTypeManager() {
+type TemplateTypeManagerProps = {
+  onUpdate?: () => void
+}
+
+export function TemplateTypeManager({ onUpdate }: TemplateTypeManagerProps) {
   const [open, setOpen] = useState(false)
   const [types, setTypes] = useState<TemplateType[]>([])
   const [loading, setLoading] = useState(false)
@@ -86,6 +90,10 @@ export function TemplateTypeManager() {
       setFormData({ code: '', name: '', description: '', icon: '', order: 0 })
       setEditingType(null)
       loadTypes()
+      // Notificar componente pai para atualizar a lista
+      if (onUpdate) {
+        onUpdate()
+      }
     } else {
       toast({
         title: 'Erro',
@@ -120,6 +128,10 @@ export function TemplateTypeManager() {
         description: 'Tipo excluído com sucesso'
       })
       loadTypes()
+      // Notificar componente pai para atualizar a lista
+      if (onUpdate) {
+        onUpdate()
+      }
     } else {
       toast({
         title: 'Erro',
@@ -143,7 +155,7 @@ export function TemplateTypeManager() {
           <Settings className="h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-5xl max-h-[85vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle>Gerenciar Tipos de Template</DialogTitle>
           <DialogDescription>
@@ -151,9 +163,9 @@ export function TemplateTypeManager() {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6">
+        <div className="flex-1 overflow-y-auto space-y-6 pr-2">
           {/* Formulário */}
-          <form onSubmit={handleSubmit} className="space-y-4 border rounded-lg p-4 bg-muted/50">
+          <form onSubmit={handleSubmit} className="space-y-4 border rounded-lg p-4 bg-muted/50 flex-shrink-0">
             <h3 className="font-semibold">
               {editingType ? 'Editar Tipo' : 'Novo Tipo'}
             </h3>
@@ -234,7 +246,7 @@ export function TemplateTypeManager() {
           </form>
 
           {/* Lista de Tipos */}
-          <div>
+          <div className="flex-shrink-0">
             <h3 className="font-semibold mb-4">Tipos Cadastrados</h3>
             {loading && types.length === 0 ? (
               <div className="flex justify-center py-8">
@@ -245,47 +257,54 @@ export function TemplateTypeManager() {
                 Nenhum tipo cadastrado
               </p>
             ) : (
-              <div className="border rounded-lg">
-                <Table>
+              <div className="border rounded-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                  <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Código</TableHead>
-                      <TableHead>Nome</TableHead>
-                      <TableHead>Descrição</TableHead>
-                      <TableHead className="text-center">Ordem</TableHead>
-                      <TableHead className="text-center">Status</TableHead>
-                      <TableHead className="text-right">Ações</TableHead>
+                      <TableHead className="w-[100px]">Código</TableHead>
+                      <TableHead className="min-w-[200px]">Nome</TableHead>
+                      <TableHead className="min-w-[250px]">Descrição</TableHead>
+                      <TableHead className="text-center w-[80px]">Ordem</TableHead>
+                      <TableHead className="text-center w-[90px]">Status</TableHead>
+                      <TableHead className="text-right w-[120px]">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {types.map((type) => (
                       <TableRow key={type.id}>
-                        <TableCell className="font-mono text-sm">{type.code}</TableCell>
+                        <TableCell className="font-mono text-sm whitespace-nowrap">{type.code}</TableCell>
                         <TableCell className="font-medium">{type.name}</TableCell>
-                        <TableCell className="text-sm text-muted-foreground max-w-xs truncate">
-                          {type.description || '-'}
+                        <TableCell className="text-sm text-muted-foreground">
+                          <div className="max-w-[250px] truncate" title={type.description || undefined}>
+                            {type.description || '-'}
+                          </div>
                         </TableCell>
-                        <TableCell className="text-center">{type.order}</TableCell>
-                        <TableCell className="text-center">
-                          <span className={`text-xs px-2 py-1 rounded-full ${type.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
+                        <TableCell className="text-center whitespace-nowrap">{type.order}</TableCell>
+                        <TableCell className="text-center whitespace-nowrap">
+                          <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${type.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
                             {type.isActive ? 'Ativo' : 'Inativo'}
                           </span>
                         </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex justify-end gap-2">
+                        <TableCell className="text-right whitespace-nowrap">
+                          <div className="flex justify-end gap-1">
                             <Button
                               variant="ghost"
                               size="icon"
+                              className="h-8 w-8"
                               onClick={() => handleEdit(type)}
                               disabled={loading}
+                              title="Editar"
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
                             <Button
                               variant="ghost"
                               size="icon"
+                              className="h-8 w-8"
                               onClick={() => handleDelete(type.id)}
                               disabled={loading}
+                              title="Excluir"
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />
                             </Button>
@@ -294,7 +313,8 @@ export function TemplateTypeManager() {
                       </TableRow>
                     ))}
                   </TableBody>
-                </Table>
+                  </Table>
+                </div>
               </div>
             )}
           </div>

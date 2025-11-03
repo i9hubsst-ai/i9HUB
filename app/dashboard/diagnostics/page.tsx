@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus, BarChart3, CheckCircle2, Clock, AlertCircle, FileEdit, MoreVertical, Edit, Trash2 } from 'lucide-react'
+import { Plus, BarChart3, CheckCircle2, Clock, AlertCircle, FileEdit, MoreVertical, Edit } from 'lucide-react'
 import Link from 'next/link'
 import { getAssessments } from '@/app/actions/assessments'
 import {
@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { DeleteAssessmentButton } from '@/components/dashboard/delete-assessment-button'
 
 export default async function DiagnosticsPage() {
   const result = await getAssessments()
@@ -117,10 +118,10 @@ export default async function DiagnosticsPage() {
                                 Editar
                               </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="text-destructive cursor-pointer">
-                              <Trash2 className="mr-2 h-4 w-4" />
-                              Excluir
-                            </DropdownMenuItem>
+                            <DeleteAssessmentButton 
+                              assessmentId={assessment.id} 
+                              assessmentTitle={assessment.title}
+                            />
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>

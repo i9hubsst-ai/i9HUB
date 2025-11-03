@@ -558,14 +558,40 @@ export async function uploadAvatar(formData: FormData) {
       return { error: 'Erro ao fazer upload da imagem' }
     }
 
-    // Obter URL pública
+    // Obter URL pública do arquivo
+    // Nota: Se o bucket não for público, precisamos de signed URL
     const { data: urlData } = supabaseAdmin.storage
       .from('documents')
       .getPublicUrl(filePath)
 
-    const avatarUrl = urlData.publicUrl
+    let avatarUrl = urlData.publicUrl
 
-    console.log('📸 Upload concluído. URL:', avatarUrl)
+    // Verificar se o bucket é público, senão usar signed URL
+    // Signed URLs expiram, então vamos tentar public primeiro
+    console.log('📸 Upload concluído. URL pública:', avatarUrl)
+    
+    // Testar se URL pública funciona, senão criar signed URL
+    try {
+      const testResponse = await fetch(avatarUrl, { method: 'HEAD' })
+      if (!testResponse.ok) {
+        console.log('⚠️ URL pública não acessível, criando signed URL...')
+        // Criar URL assinada com 10 anos de validade
+        const { data: signedData, error: signedError } = await supabaseAdmin.storage
+          .from('documents')
+          .createSignedUrl(filePath, 315360000) // 10 anos em segundos
+        
+        if (signedError) {
+          console.error('Erro ao criar signed URL:', signedError)
+        } else if (signedData) {
+          avatarUrl = signedData.signedUrl
+          console.log('✅ Signed URL criada:', avatarUrl)
+        }
+      } else {
+        console.log('✅ URL pública acessível')
+      }
+    } catch (testError) {
+      console.error('Erro ao testar URL:', testError)
+    }
 
     // Atualizar user metadata no Supabase Auth (usar admin para garantir)
     const { data: updateData, error: updateError } = await supabaseAdmin.auth.admin.updateUserById(

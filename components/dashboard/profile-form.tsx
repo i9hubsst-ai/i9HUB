@@ -29,6 +29,9 @@ export function ProfileForm({ profile }: ProfileFormProps) {
   const { toast } = useToast()
   const router = useRouter()
 
+  console.log('👤 Profile Form - Avatar URL inicial:', profile.avatar_url)
+  console.log('👤 Profile Form - Avatar URL state:', avatarUrl)
+
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -40,15 +43,18 @@ export function ProfileForm({ profile }: ProfileFormProps) {
 
       const result = await uploadAvatar(formData)
 
+      console.log('🖼️ Resultado do upload:', result)
+
       if (result.error) {
         toast({
           variant: 'destructive',
           title: 'Erro',
           description: result.error,
         })
-      } else {
+      } else if (result.avatarUrl) {
         // Adicionar cache bust na URL para forçar reload da imagem
         const newAvatarUrl = result.avatarUrl + '?t=' + Date.now()
+        console.log('🖼️ Nova URL do avatar:', newAvatarUrl)
         setAvatarUrl(newAvatarUrl)
         toast({
           title: 'Sucesso',
@@ -56,6 +62,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
         })
         // Dar um tempo para o storage processar antes de refresh
         setTimeout(() => {
+          console.log('🔄 Fazendo refresh da página...')
           router.refresh()
         }, 500)
       }
@@ -120,8 +127,17 @@ export function ProfileForm({ profile }: ProfileFormProps) {
           <CardDescription>Atualize sua foto de perfil (máx. 2MB)</CardDescription>
         </CardHeader>
         <CardContent className="flex items-center gap-6">
-          <Avatar className="h-24 w-24">
-            <AvatarImage src={avatarUrl || undefined} alt={profile.name} />
+          <Avatar className="h-24 w-24" key={avatarUrl || 'no-avatar'}>
+            <AvatarImage 
+              src={avatarUrl || undefined} 
+              alt={profile.name}
+              onError={(e) => {
+                console.error('❌ Erro ao carregar imagem:', avatarUrl)
+              }}
+              onLoad={() => {
+                console.log('✅ Imagem carregada com sucesso:', avatarUrl)
+              }}
+            />
             <AvatarFallback className="text-2xl">{initials}</AvatarFallback>
           </Avatar>
           <div>

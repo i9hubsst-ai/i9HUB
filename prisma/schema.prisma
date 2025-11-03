@@ -291,39 +291,69 @@ model Evidence {
 }
 
 model ActionPlan {
-  id           String       @id @default(uuid())
-  number       String?      // Numeração do Plano (PA-001, PA-002, etc)
-  assessmentId String
-  companyId    String
-  title        String       // O QUÊ (What)
-  description  String       // COMO (How) - detalhamento
-  reference    String?      // Referência ao diagnóstico
-  ownerUserId  String?      
-  dueDate      DateTime?    // QUANDO (When)
-  priority     Int          @default(2)
-  status       ActionStatus @default(PENDING)
-  createdBy    String
-  aiGenerated  Boolean      @default(false)
+  id              String           @id @default(uuid())
+  number          String           @unique // Numeração única: PA00001, PA00002
+  assessmentId    String
+  companyId       String
+  title           String           // Título do plano
+  description     String           // Resumo executivo / descrição geral
+  objective       String?          // Objetivo geral do plano
+  createdBy       String
+  ownerUserId     String?          // Responsável geral pelo plano
+  startDate       DateTime?        // Data de início prevista
+  endDate         DateTime?        // Data de término prevista
+  status          ActionPlanStatus @default(DRAFT)
+  aiGenerated     Boolean          @default(false)
   
-  // Campos 5W2H
-  what         String?      // O quê (redundante com title, mas mantém compatibilidade)
-  why          String?      // Por quê (Why)
-  where        String?      // Onde (Where)
-  when         String?      // Quando (When) - texto descritivo
-  who          String?      // Quem (Who)
-  how          String?      // Como (How)
-  howMuch      String?      // Quanto (How Much)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
   
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-  assessment   Assessment   @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
-  company      Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  // Relações
+  assessment      Assessment       @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  company         Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  tasks           ActionPlanTask[] // Tarefas do plano (1-N)
 
   @@index([assessmentId])
   @@index([companyId])
   @@index([status])
-  @@index([priority])
   @@map("action_plans")
+}
+
+model ActionPlanTask {
+  id              String     @id @default(uuid())
+  number          String     // Numeração sequencial: 001, 002, 003
+  actionPlanId    String     // FK para ActionPlan
+  
+  // Campos 5W2H (metodologia de planejamento)
+  what            String     // O quê - descrição da tarefa
+  why             String?    // Por quê - justificativa
+  where           String?    // Onde - local de execução
+  when            String?    // Quando - prazo descritivo
+  who             String?    // Quem - responsável pela tarefa
+  how             String?    // Como - método de execução
+  howMuch         String?    // Quanto custa - estimativa de custo
+  
+  // Controle da tarefa
+  priority        Int        @default(2)  // 1=HIGH, 2=MEDIUM, 3=LOW
+  status          TaskStatus @default(PENDING)
+  dueDate         DateTime?  // Data de vencimento
+  completedAt     DateTime?  // Data de conclusão
+  
+  // Rastreamento
+  reference       String?    // Referência ao achado/finding
+  createdBy       String
+  assignedTo      String?    // Usuário atribuído
+  
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  
+  // Relação
+  actionPlan      ActionPlan @relation(fields: [actionPlanId], references: [id], onDelete: Cascade)
+  
+  @@index([actionPlanId])
+  @@index([status])
+  @@index([priority])
+  @@map("action_plan_tasks")
 }
 
 model Employee {
@@ -533,10 +563,17 @@ enum FindingSeverity {
   LOW
 }
 
-enum ActionStatus {
+enum ActionPlanStatus {
+  DRAFT
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum TaskStatus {
   PENDING
   IN_PROGRESS
-  DONE
+  COMPLETED
   CANCELLED
 }
 

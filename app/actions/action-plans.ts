@@ -4,9 +4,14 @@ import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 
-interface ActionPlanItem {
-  title: string
-  description: string
+interface ActionPlanTaskItem {
+  what: string        // O quê
+  why?: string        // Por quê
+  where?: string      // Onde
+  when?: string       // Quando
+  who?: string        // Quem
+  how: string         // Como
+  howMuch?: string    // Quanto
   priority: 'HIGH' | 'MEDIUM' | 'LOW'
   estimatedDays: number
   reference: string | null
@@ -21,7 +26,7 @@ const priorityMap: Record<'HIGH' | 'MEDIUM' | 'LOW', number> = {
 export async function saveActionPlans(
   assessmentId: string,
   executiveSummary: string,
-  actionPlans: ActionPlanItem[]
+  tasks: ActionPlanTaskItem[]
 ) {
   const user = await getCurrentUser()
   if (!user) {
@@ -32,7 +37,7 @@ export async function saveActionPlans(
     // Verificar se o usuário tem acesso ao assessment
     const assessment = await prisma.assessment.findUnique({
       where: { id: assessmentId },
-      select: { companyId: true, status: true }
+      select: { companyId: true, status: true, title: true }
     })
 
     if (!assessment) {
@@ -56,33 +61,59 @@ export async function saveActionPlans(
       return { error: 'Sem permissão para salvar plano de ação deste diagnóstico' }
     }
 
-    // Deletar planos de ação existentes gerados por IA (se houver)
-    await prisma.actionPlan.deleteMany({
+    // Deletar plano de ação existente gerado por IA (se houver)
+    const existingPlan = await prisma.actionPlan.findFirst({
       where: { assessmentId, aiGenerated: true }
     })
 
-    // Contar planos existentes (manuais) para começar numeração correta
-    const existingPlansCount = await prisma.actionPlan.count({
-      where: { assessmentId }
+    if (existingPlan) {
+      // Deletar plano e suas tarefas (cascade)
+      await prisma.actionPlan.delete({
+        where: { id: existingPlan.id }
+      })
+    }
+
+    // Contar planos existentes para gerar número correto
+    const totalPlans = await prisma.actionPlan.count()
+    const planNumber = `PA${String(totalPlans + 1).padStart(5, '0')}`
+
+    // Criar ActionPlan (1 plano para o assessment)
+    const actionPlan = await prisma.actionPlan.create({
+      data: {
+        number: planNumber,
+        assessmentId,
+        companyId: assessment.companyId,
+        title: `Plano de Ação - ${assessment.title}`,
+        description: executiveSummary,
+        objective: 'Implementar ações corretivas identificadas no diagnóstico',
+        createdBy: user.id,
+        ownerUserId: user.id,
+        startDate: new Date(),
+        status: 'IN_PROGRESS',
+        aiGenerated: true
+      }
     })
 
-    // Criar novos planos de ação
-    const createdPlans = await Promise.all(
-      actionPlans.map((plan, index) =>
-        prisma.actionPlan.create({
+    // Criar tarefas (ActionPlanTasks)
+    const createdTasks = await Promise.all(
+      tasks.map((task, index) =>
+        prisma.actionPlanTask.create({
           data: {
-            number: `PA-${String(existingPlansCount + index + 1).padStart(3, '0')}`,
-            assessmentId,
-            companyId: assessment.companyId,
-            title: plan.title,
-            description: `${executiveSummary}\n\n---\n\n${plan.description}`,
-            priority: priorityMap[plan.priority],
-            dueDate: new Date(Date.now() + plan.estimatedDays * 24 * 60 * 60 * 1000),
+            number: String(index + 1).padStart(3, '0'),
+            actionPlanId: actionPlan.id,
+            what: task.what,
+            why: task.why,
+            where: task.where,
+            when: task.when,
+            who: task.who,
+            how: task.how,
+            howMuch: task.howMuch,
+            priority: priorityMap[task.priority],
+            dueDate: new Date(Date.now() + task.estimatedDays * 24 * 60 * 60 * 1000),
             status: 'PENDING',
-            reference: plan.reference,
+            reference: task.reference,
             createdBy: user.id,
-            ownerUserId: user.id,
-            aiGenerated: true
+            assignedTo: user.id
           }
         })
       )
@@ -90,10 +121,16 @@ export async function saveActionPlans(
 
     revalidatePath(`/dashboard/diagnostics/${assessmentId}`)
     
-    return { success: true, count: createdPlans.length, executiveSummary }
+    return { 
+      success: true, 
+      planId: actionPlan.id,
+      planNumber: actionPlan.number,
+      taskCount: createdTasks.length, 
+      executiveSummary 
+    }
   } catch (error) {
-    console.error('Erro ao salvar planos de ação:', error)
-    return { error: 'Erro ao salvar planos de ação' }
+    console.error('Erro ao salvar plano de ação:', error)
+    return { error: 'Erro ao salvar plano de ação' }
   }
 }
 
@@ -133,48 +170,63 @@ export async function getActionPlans(assessmentId: string) {
       return { error: 'Sem permissão para acessar este diagnóstico' }
     }
 
-    const actionPlans = await prisma.actionPlan.findMany({
+    // Buscar plano de ação com suas tarefas
+    const actionPlan = await prisma.actionPlan.findFirst({
       where: { assessmentId },
-      orderBy: [
-        { priority: 'asc' }, // 1=HIGH vem primeiro
-        { createdAt: 'asc' }
-      ]
+      include: {
+        tasks: {
+          orderBy: [
+            { priority: 'asc' },
+            { number: 'asc' }
+          ]
+        }
+      }
     })
 
-    // Extrair executive summary da primeira action plan (se existir)
-    let executiveSummary = ''
+    if (!actionPlan) {
+      return { 
+        success: true, 
+        actionPlan: null,
+        tasks: [],
+        executiveSummary: '' 
+      }
+    }
+
+    // Formatar tarefas
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const formattedPlans = actionPlans.map((plan: any) => {
-      const parts = plan.description.split('\n\n---\n\n')
-      if (parts.length > 1 && !executiveSummary) {
-        executiveSummary = parts[0]
-      }
-      
-      return {
-        ...plan,
-        priority: reversePriorityMap[plan.priority] || 'MEDIUM',
-        description: parts.length > 1 ? parts[1] : plan.description
-      }
-    })
+    const formattedTasks = actionPlan.tasks.map((task: any) => ({
+      ...task,
+      priority: reversePriorityMap[task.priority] || 'MEDIUM'
+    }))
 
     return { 
       success: true, 
-      actionPlans: formattedPlans,
-      executiveSummary 
+      actionPlan: {
+        id: actionPlan.id,
+        number: actionPlan.number,
+        title: actionPlan.title,
+        description: actionPlan.description,
+        status: actionPlan.status,
+        startDate: actionPlan.startDate,
+        endDate: actionPlan.endDate,
+        aiGenerated: actionPlan.aiGenerated
+      },
+      tasks: formattedTasks,
+      executiveSummary: actionPlan.description 
     }
   } catch (error) {
-    console.error('Erro ao buscar planos de ação:', error)
-    return { error: 'Erro ao buscar planos de ação' }
+    console.error('Erro ao buscar plano de ação:', error)
+    return { error: 'Erro ao buscar plano de ação' }
   }
 }
 
-export async function updateActionPlan(
-  actionPlanId: string,
+export async function updateActionPlanTask(
+  taskId: string,
   updates: {
     who?: string
     how?: string
     howMuch?: string
-    status?: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED'
+    status?: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED'
   }
 ) {
   const user = await getCurrentUser()
@@ -183,30 +235,34 @@ export async function updateActionPlan(
   }
 
   try {
-    const actionPlan = await prisma.actionPlan.findUnique({
-      where: { id: actionPlanId },
+    const task = await prisma.actionPlanTask.findUnique({
+      where: { id: taskId },
       include: {
-        assessment: {
-          select: { companyId: true }
+        actionPlan: {
+          include: {
+            assessment: {
+              select: { companyId: true, id: true }
+            }
+          }
         }
       }
     })
 
-    if (!actionPlan) {
-      return { error: 'Plano de ação não encontrado' }
+    if (!task) {
+      return { error: 'Tarefa não encontrada' }
     }
 
     const isAdmin = await isPlatformAdmin(user.id)
     const membership = await prisma.membership.findFirst({
       where: {
         userId: user.id,
-        companyId: actionPlan.assessment.companyId,
+        companyId: task.actionPlan.assessment.companyId,
         status: 'ACTIVE'
       }
     })
 
     if (!isAdmin && !membership) {
-      return { error: 'Sem permissão para editar este plano de ação' }
+      return { error: 'Sem permissão para editar esta tarefa' }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -215,19 +271,74 @@ export async function updateActionPlan(
     if (updates.who !== undefined) updateData.who = updates.who
     if (updates.how !== undefined) updateData.how = updates.how
     if (updates.howMuch !== undefined) updateData.howMuch = updates.howMuch
-    if (updates.status !== undefined) updateData.status = updates.status
+    if (updates.status !== undefined) {
+      updateData.status = updates.status
+      if (updates.status === 'COMPLETED') {
+        updateData.completedAt = new Date()
+      }
+    }
 
-    const updated = await prisma.actionPlan.update({
-      where: { id: actionPlanId },
+    const updated = await prisma.actionPlanTask.update({
+      where: { id: taskId },
       data: updateData
     })
 
-    revalidatePath(`/dashboard/diagnostics/${actionPlan.assessmentId}`)
+    revalidatePath(`/dashboard/diagnostics/${task.actionPlan.assessment.id}`)
     
-    return { success: true, actionPlan: updated }
+    return { success: true, task: updated }
   } catch (error) {
-    console.error('Erro ao atualizar plano de ação:', error)
-    return { error: 'Erro ao atualizar plano de ação' }
+    console.error('Erro ao atualizar tarefa:', error)
+    return { error: 'Erro ao atualizar tarefa' }
+  }
+}
+
+export async function deleteActionPlanTask(taskId: string) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    const task = await prisma.actionPlanTask.findUnique({
+      where: { id: taskId },
+      include: {
+        actionPlan: {
+          include: {
+            assessment: {
+              select: { companyId: true, id: true }
+            }
+          }
+        }
+      }
+    })
+
+    if (!task) {
+      return { error: 'Tarefa não encontrada' }
+    }
+
+    const isAdmin = await isPlatformAdmin(user.id)
+    const membership = await prisma.membership.findFirst({
+      where: {
+        userId: user.id,
+        companyId: task.actionPlan.assessment.companyId,
+        status: 'ACTIVE'
+      }
+    })
+
+    if (!isAdmin && !membership) {
+      return { error: 'Sem permissão para excluir esta tarefa' }
+    }
+
+    await prisma.actionPlanTask.delete({
+      where: { id: taskId }
+    })
+
+    revalidatePath(`/dashboard/diagnostics/${task.actionPlan.assessment.id}`)
+    
+    return { success: true }
+  } catch (error) {
+    console.error('Erro ao excluir tarefa:', error)
+    return { error: 'Erro ao excluir tarefa' }
   }
 }
 
@@ -242,7 +353,7 @@ export async function deleteActionPlan(actionPlanId: string) {
       where: { id: actionPlanId },
       include: {
         assessment: {
-          select: { companyId: true }
+          select: { companyId: true, id: true }
         }
       }
     })
@@ -264,11 +375,12 @@ export async function deleteActionPlan(actionPlanId: string) {
       return { error: 'Sem permissão para excluir este plano de ação' }
     }
 
+    // Deletar plano (cascade deleta tarefas)
     await prisma.actionPlan.delete({
       where: { id: actionPlanId }
     })
 
-    revalidatePath(`/dashboard/diagnostics/${actionPlan.assessmentId}`)
+    revalidatePath(`/dashboard/diagnostics/${actionPlan.assessment.id}`)
     
     return { success: true }
   } catch (error) {

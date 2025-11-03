@@ -537,15 +537,16 @@ export async function uploadAvatar(formData: FormData) {
       return { error: 'Arquivo muito grande. Máximo 2MB' }
     }
 
-    const supabase = await createClient()
+    // Usar Admin Client para bypassar RLS
+    const supabaseAdmin = createAdminClient()
     
     // Gerar nome único para o arquivo
     const fileExt = file.name.split('.').pop()
     const fileName = `${user.id}-${Date.now()}.${fileExt}`
     const filePath = `avatars/${fileName}`
 
-    // Upload para Supabase Storage
-    const { data, error } = await supabase.storage
+    // Upload para Supabase Storage usando Admin Client
+    const { data, error } = await supabaseAdmin.storage
       .from('documents')
       .upload(filePath, file, {
         cacheControl: '3600',
@@ -558,18 +559,22 @@ export async function uploadAvatar(formData: FormData) {
     }
 
     // Obter URL pública
-    const { data: urlData } = supabase.storage
+    const { data: urlData } = supabaseAdmin.storage
       .from('documents')
       .getPublicUrl(filePath)
 
     const avatarUrl = urlData.publicUrl
 
-    // Atualizar user metadata no Supabase Auth
-    const { error: updateError } = await supabase.auth.updateUser({
-      data: {
-        avatar_url: avatarUrl
+    // Atualizar user metadata no Supabase Auth (usar admin para garantir)
+    const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+      user.id,
+      {
+        user_metadata: {
+          ...user.user_metadata,
+          avatar_url: avatarUrl
+        }
       }
-    })
+    )
 
     if (updateError) {
       console.error('Erro ao atualizar metadata:', updateError)

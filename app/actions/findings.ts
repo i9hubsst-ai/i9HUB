@@ -56,6 +56,9 @@ export async function generateFindings(assessmentId: string) {
       return { error: 'Sem permissão para gerar achados neste diagnóstico' }
     }
 
+    console.log('🔍 ACHADOS: Iniciando geração de achados para assessment:', assessmentId)
+    console.log('📊 ACHADOS: Total de respostas:', assessment.answers.length)
+
     // Limpar achados existentes deste assessment
     await prisma.finding.deleteMany({
       where: { assessmentId }
@@ -68,6 +71,8 @@ export async function generateFindings(assessmentId: string) {
       const isNonConformant = 
         (answer.question.type === 'BOOLEAN' && answer.value === 0) ||
         (answer.question.type === 'SCORE' && answer.value <= 3)
+
+      console.log(`📝 ACHADOS: Pergunta "${answer.question.text.substring(0, 50)}..." - Tipo: ${answer.question.type}, Valor: ${answer.value}, Não conforme: ${isNonConformant}`)
 
       if (isNonConformant) {
         // Determinar severidade baseada no valor
@@ -95,10 +100,13 @@ export async function generateFindings(assessmentId: string) {
           }
         })
 
+        console.log(`✅ ACHADOS: Criado achado para "${answer.question.text.substring(0, 50)}..." - Severidade: ${severity}`)
         findings.push(finding)
       }
     }
 
+    console.log(`🎯 ACHADOS: Total de achados gerados: ${findings.length} para assessment ${assessmentId}`)
+    
     revalidatePath(`/dashboard/diagnostics/${assessmentId}`)
     
     return { success: true, findingsCount: findings.length }

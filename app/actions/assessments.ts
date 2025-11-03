@@ -518,8 +518,10 @@ export async function submitAssessment(assessmentId: string) {
     })
 
     // Gerar achados automaticamente baseados nas respostas não conformes
+    console.log('🚀 SUBMIT: Chamando generateFindings para assessment:', assessmentId)
     const { generateFindings } = await import('./findings')
-    await generateFindings(assessmentId)
+    const findingsResult = await generateFindings(assessmentId)
+    console.log('✅ SUBMIT: Resultado da geração de achados:', findingsResult)
 
     revalidatePath('/dashboard/diagnostics')
     revalidatePath(`/dashboard/diagnostics/${assessmentId}`)

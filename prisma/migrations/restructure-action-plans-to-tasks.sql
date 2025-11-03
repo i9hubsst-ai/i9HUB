@@ -50,6 +50,12 @@ CREATE TABLE IF NOT EXISTS "action_plan_tasks" (
 CREATE TABLE IF NOT EXISTS "action_plans_backup" AS 
 SELECT * FROM "action_plans";
 
+-- PASSO 3.5: Adicionar coluna number à tabela action_plans (antes da migração)
+ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "number" TEXT;
+ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "objective" TEXT;
+ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "startDate" TIMESTAMP(3);
+ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "endDate" TIMESTAMP(3);
+
 -- PASSO 4: Migrar dados
 -- Para cada assessment, criar 1 ActionPlan e mover registros atuais para tasks
 DO $$

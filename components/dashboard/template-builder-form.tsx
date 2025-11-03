@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -8,8 +8,15 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Loader2, Sparkles, Save } from 'lucide-react'
+import { TemplateTypeManager } from './template-type-manager'
+import { getTemplateTypes } from '@/app/actions/template-types'
 
-type TemplateType = 'NR12' | 'NR35' | 'ISO45001' | 'ISO14001' | 'IMSST' | 'CUSTOM'
+type TemplateTypeData = {
+  id: string
+  code: string
+  name: string
+  description: string | null
+}
 
 interface GeneratedSection {
   title: string
@@ -29,8 +36,10 @@ export function TemplateBuilderForm() {
   const router = useRouter()
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [type, setType] = useState<TemplateType>('CUSTOM')
+  const [type, setType] = useState<string>('')
   const [context, setContext] = useState('')
+  const [templateTypes, setTemplateTypes] = useState<TemplateTypeData[]>([])
+  const [loadingTypes, setLoadingTypes] = useState(true)
   
   const [generating, setGenerating] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -40,6 +49,23 @@ export function TemplateBuilderForm() {
     type: string
     sections: GeneratedSection[]
   } | null>(null)
+
+  // Carregar tipos de template
+  useEffect(() => {
+    loadTemplateTypes()
+  }, [])
+
+  const loadTemplateTypes = async () => {
+    setLoadingTypes(true)
+    const result = await getTemplateTypes()
+    if (result.success && result.types) {
+      setTemplateTypes(result.types)
+      if (result.types.length > 0 && !type) {
+        setType(result.types[0].code)
+      }
+    }
+    setLoadingTypes(false)
+  }
 
   const handleGenerate = async () => {
     if (!name.trim() || !description.trim()) {
@@ -136,22 +162,29 @@ export function TemplateBuilderForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="type">Tipo de Template</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="type">Tipo de Template</Label>
+              <TemplateTypeManager />
+            </div>
             <Select
               value={type}
-              onValueChange={(value) => setType(value as TemplateType)}
-              disabled={generating || !!generatedTemplate}
+              onValueChange={setType}
+              disabled={generating || !!generatedTemplate || loadingTypes}
             >
               <SelectTrigger>
-                <SelectValue />
+                <SelectValue placeholder={loadingTypes ? "Carregando tipos..." : "Selecione um tipo"} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="NR12">NR-12 - Segurança em Máquinas</SelectItem>
-                <SelectItem value="NR35">NR-35 - Trabalho em Altura</SelectItem>
-                <SelectItem value="ISO45001">ISO 45001 - Gestão de SST</SelectItem>
-                <SelectItem value="ISO14001">ISO 14001 - Gestão Ambiental</SelectItem>
-                <SelectItem value="IMSST">IMSST - Maturidade SST</SelectItem>
-                <SelectItem value="CUSTOM">Personalizado</SelectItem>
+                {templateTypes.map((templateType) => (
+                  <SelectItem key={templateType.id} value={templateType.code}>
+                    {templateType.name}
+                  </SelectItem>
+                ))}
+                {templateTypes.length === 0 && !loadingTypes && (
+                  <SelectItem value="empty" disabled>
+                    Nenhum tipo cadastrado
+                  </SelectItem>
+                )}
               </SelectContent>
             </Select>
           </div>

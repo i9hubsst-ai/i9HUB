@@ -1,8 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus, BarChart3, CheckCircle2, Clock, AlertCircle, FileEdit } from 'lucide-react'
+import { Plus, BarChart3, CheckCircle2, Clock, AlertCircle, FileEdit, MoreVertical, Edit, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { getAssessments } from '@/app/actions/assessments'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export default async function DiagnosticsPage() {
   const result = await getAssessments()
@@ -35,7 +41,7 @@ export default async function DiagnosticsPage() {
     <div className="p-8 space-y-8">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-primary">Diagnósticos IMSST</h1>
+          <h1 className="text-3xl font-bold text-primary">Diagnósticos</h1>
           <p className="text-muted-foreground">
             Avaliação de maturidade em Segurança e Saúde do Trabalho ({assessments.length} total)
           </p>
@@ -47,61 +53,6 @@ export default async function DiagnosticsPage() {
           </Button>
         </Link>
       </div>
-
-      {/* IMSST Info Card */}
-      <Card className="border-accent">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-accent" />
-            O que é o IMSST?
-          </CardTitle>
-          <CardDescription>
-            Índice de Maturidade do Sistema de Segurança do Trabalho
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            O IMSST avalia o nível de maturidade da gestão de SST da sua empresa em 5 dimensões fundamentais:
-          </p>
-          <div className="grid gap-3 md:grid-cols-5">
-            <div className="bg-chart-1/10 p-3 rounded-lg">
-              <div className="font-semibold text-sm">Liderança</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                Comprometimento da alta direção
-              </div>
-            </div>
-            <div className="bg-chart-2/10 p-3 rounded-lg">
-              <div className="font-semibold text-sm">Processos</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                Documentação e padronização
-              </div>
-            </div>
-            <div className="bg-chart-3/10 p-3 rounded-lg">
-              <div className="font-semibold text-sm">Conformidade</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                Atendimento legal
-              </div>
-            </div>
-            <div className="bg-chart-4/10 p-3 rounded-lg">
-              <div className="font-semibold text-sm">Capacitação</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                Treinamentos e conscientização
-              </div>
-            </div>
-            <div className="bg-chart-5/10 p-3 rounded-lg">
-              <div className="font-semibold text-sm">Dados</div>
-              <div className="text-xs text-muted-foreground mt-1">
-                Indicadores e análises
-              </div>
-            </div>
-          </div>
-          <div className="bg-primary/5 p-3 rounded-lg">
-            <p className="text-sm">
-              <strong>Níveis de Maturidade:</strong> 1 (Inicial) → 2 (Gerenciado) → 3 (Definido) → 4 (Quantitativamente Gerenciado) → 5 (Em Otimização)
-            </p>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Assessments List */}
       <div>
@@ -135,69 +86,91 @@ export default async function DiagnosticsPage() {
               
               return (
                 <Card key={assessment.id} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1">
-                        <CardTitle>{assessment.title}</CardTitle>
+                  <CardHeader className="pb-3">
+                    <div className="flex justify-between items-start gap-4">
+                      <div className="flex-1 min-w-0">
+                        <CardTitle className="text-lg">{assessment.title}</CardTitle>
                         <CardDescription className="mt-1">
-                          {assessment.company.name} • Criado em {new Date(assessment.createdAt).toLocaleDateString('pt-BR')}
+                          {assessment.company.name} • {new Date(assessment.createdAt).toLocaleDateString('pt-BR')}
                         </CardDescription>
                         {assessment.description && (
-                          <p className="text-sm text-muted-foreground mt-2">
+                          <p className="text-sm text-muted-foreground mt-1.5 line-clamp-2">
                             {assessment.description}
                           </p>
                         )}
                       </div>
-                      <div className={`flex items-center gap-2 px-3 py-1 rounded-full ${status.bg} ${status.color}`}>
-                        <StatusIcon className="h-4 w-4" />
-                        <span className="text-sm font-medium">{status.label}</span>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${status.bg} ${status.color}`}>
+                          <StatusIcon className="h-3.5 w-3.5" />
+                          <span className="text-xs font-medium">{status.label}</span>
+                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem asChild>
+                              <Link href={`/dashboard/diagnostics/${assessment.id}`} className="cursor-pointer">
+                                <Edit className="mr-2 h-4 w-4" />
+                                Editar
+                              </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="text-destructive cursor-pointer">
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Excluir
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       {assessment.status !== 'COMPLETED' && (
-                        <div>
-                          <div className="flex justify-between text-sm mb-2">
-                            <span className="text-muted-foreground">Progresso</span>
-                            <span className="font-medium">
-                              {assessment._count.answers}/{totalQuestions} perguntas
-                            </span>
+                        <div className="flex items-center gap-3">
+                          <div className="flex-1">
+                            <div className="w-full bg-secondary rounded-full h-1.5">
+                              <div 
+                                className="bg-primary h-1.5 rounded-full transition-all"
+                                style={{ width: `${progress}%` }}
+                              />
+                            </div>
                           </div>
-                          <div className="w-full bg-secondary rounded-full h-2">
-                            <div 
-                              className="bg-primary h-2 rounded-full transition-all"
-                              style={{ width: `${progress}%` }}
-                            />
-                          </div>
+                          <span className="text-xs text-muted-foreground whitespace-nowrap">
+                            {assessment._count.answers}/{totalQuestions}
+                          </span>
                         </div>
                       )}
 
-                      <div className="flex items-center gap-4">
-                        {assessment.status === 'COMPLETED' && assessment.scores.length > 0 && (
-                          <>
-                            <div className="flex-1">
-                              <div className="text-2xl font-bold text-primary">
+                      <div className="flex items-center justify-between gap-4">
+                        {assessment.status === 'COMPLETED' && assessment.scores.length > 0 ? (
+                          <div className="flex items-center gap-6">
+                            <div>
+                              <div className="text-xl font-bold text-primary">
                                 Nível {Math.round(assessment.scores.reduce((acc, s) => acc + s.level, 0) / assessment.scores.length)}
                               </div>
-                              <div className="text-sm text-muted-foreground">Maturidade Média</div>
+                              <div className="text-xs text-muted-foreground">Maturidade</div>
                             </div>
-                            <div className="flex-1 text-center">
-                              <div className="text-2xl font-bold text-primary">
+                            <div>
+                              <div className="text-xl font-bold text-primary">
                                 {Math.round(assessment.scores.reduce((acc, s) => acc + s.weightedScore, 0) / assessment.scores.length)}%
                               </div>
-                              <div className="text-sm text-muted-foreground">Pontuação Geral</div>
+                              <div className="text-xs text-muted-foreground">Pontuação</div>
                             </div>
-                          </>
+                          </div>
+                        ) : (
+                          <div className="text-sm text-muted-foreground">
+                            {assessment.status === 'COMPLETED' ? 'Aguardando processamento...' : 'Em andamento'}
+                          </div>
                         )}
                         
-                        <div className="flex gap-2 ml-auto">
-                          <Link href={`/dashboard/diagnostics/${assessment.id}`}>
-                            <Button variant="outline" size="sm">
-                              {assessment.status === 'COMPLETED' ? 'Ver Resultados' : 'Continuar'}
-                            </Button>
-                          </Link>
-                        </div>
+                        <Link href={`/dashboard/diagnostics/${assessment.id}`}>
+                          <Button size="sm">
+                            {assessment.status === 'COMPLETED' ? 'Ver Resultados' : 'Responder'}
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   </CardContent>

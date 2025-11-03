@@ -42,10 +42,6 @@ interface ActionPlan5W2HProps {
   onDelete?: (id: string) => void
 }
 
-interface ActionPlanCardProps extends ActionPlan5W2HProps {
-  
-}
-
 export function ActionPlanCard({ 
   id,
   prioridade,
@@ -62,7 +58,7 @@ export function ActionPlanCard({
   origem,
   onUpdate,
   onDelete
-}: ActionPlanCardProps) {
+}: ActionPlan5W2HProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editedData, setEditedData] = useState({ who, how, howMuch })

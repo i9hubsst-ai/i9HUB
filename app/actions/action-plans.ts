@@ -63,7 +63,7 @@ export async function saveActionPlans(
 
     // Criar novos planos de ação
     const createdPlans = await Promise.all(
-      actionPlans.map((plan, index) =>
+      actionPlans.map((plan) =>
         prisma.actionPlan.create({
           data: {
             assessmentId,
@@ -203,9 +203,17 @@ export async function updateActionPlan(
       return { error: 'Sem permissão para editar este plano de ação' }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updateData: any = {}
+
+    if (updates.who !== undefined) updateData.who = updates.who
+    if (updates.how !== undefined) updateData.how = updates.how
+    if (updates.howMuch !== undefined) updateData.howMuch = updates.howMuch
+    if (updates.status !== undefined) updateData.status = updates.status
+
     const updated = await prisma.actionPlan.update({
       where: { id: actionPlanId },
-      data: updates
+      data: updateData
     })
 
     revalidatePath(`/dashboard/diagnostics/${actionPlan.assessmentId}`)

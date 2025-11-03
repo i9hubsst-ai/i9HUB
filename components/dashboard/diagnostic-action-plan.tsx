@@ -73,18 +73,18 @@ export function DiagnosticActionPlan({ assessment }: DiagnosticActionPlanProps) 
           return
         }
 
-        if (result.actionPlans && result.actionPlans.length > 0) {
-          // Reconstituir o report a partir dos planos salvos
+        if (result.tasks && result.tasks.length > 0) {
+          // Reconstituir o report a partir das tarefas salvas
           setReport({
             executiveSummary: result.executiveSummary || '',
-            actionPlan: result.actionPlans.map(plan => ({
-              title: plan.title,
-              description: plan.description,
-              priority: plan.priority as 'HIGH' | 'MEDIUM' | 'LOW',
-              estimatedDays: plan.dueDate 
-                ? Math.ceil((new Date(plan.dueDate).getTime() - Date.now()) / (24 * 60 * 60 * 1000))
+            actionPlan: result.tasks.map((task: any) => ({
+              title: task.what,
+              description: task.how || '',
+              priority: task.priority as 'HIGH' | 'MEDIUM' | 'LOW',
+              estimatedDays: task.dueDate 
+                ? Math.ceil((new Date(task.dueDate).getTime() - Date.now()) / (24 * 60 * 60 * 1000))
                 : 30,
-              reference: plan.reference
+              reference: task.reference
             })),
             metadata: {
               assessmentId: assessment.id,
@@ -141,17 +141,26 @@ export function DiagnosticActionPlan({ assessment }: DiagnosticActionPlanProps) 
     try {
       const { saveActionPlans } = await import('@/app/actions/action-plans')
       
+      // Converter ActionPlanItem[] para ActionPlanTaskItem[]
+      const tasks = report.actionPlan.map(item => ({
+        what: item.title,
+        how: item.description,
+        priority: item.priority,
+        estimatedDays: item.estimatedDays,
+        reference: item.reference
+      }))
+      
       const result = await saveActionPlans(
         assessment.id,
         report.executiveSummary,
-        report.actionPlan
+        tasks
       )
 
       if ('error' in result) {
         throw new Error(result.error)
       }
 
-      alert(`${result.count} ações salvas com sucesso no banco de dados!`)
+      alert(`${result.taskCount} tarefas salvas com sucesso no banco de dados!`)
     } catch (err) {
       console.error('Erro:', err)
       setError(err instanceof Error ? err.message : 'Erro ao salvar plano de ação')

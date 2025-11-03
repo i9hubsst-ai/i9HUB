@@ -31,9 +31,9 @@ async function checkActionPlans() {
   allPlans.forEach((plan, index) => {
     console.log(`--- Plano ${index + 1} ---`)
     console.log(`ID: ${plan.id}`)
+    console.log(`Número: ${plan.number}`)
     console.log(`Título: ${plan.title}`)
     console.log(`Assessment: ${plan.assessment.title} (${plan.assessment.status})`)
-    console.log(`Prioridade: ${plan.priority}`)
     console.log(`Status: ${plan.status}`)
     console.log(`IA?: ${plan.aiGenerated ? 'Sim' : 'Não'}`)
     console.log(`Criado em: ${plan.createdAt.toISOString()}`)

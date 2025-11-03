@@ -74,25 +74,25 @@ export function DiagnosticActionPlan5W2H({ assessment }: DiagnosticActionPlan5W2
           return
         }
 
-        if (result.actionPlans && result.actionPlans.length > 0) {
+        if (result.tasks && result.tasks.length > 0) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const plans: ActionPlan5W2H[] = result.actionPlans.map((plan: any, index: number) => ({
-            id: plan.id,
-            number: plan.number || `PA-${String(index + 1).padStart(3, '0')}`,
-            prioridade: plan.priority === 1 ? 'HIGH' : plan.priority === 2 ? 'MEDIUM' : 'LOW',
-            status: plan.status as 'PENDING' | 'IN_PROGRESS' | 'COMPLETED',
-            prazo: plan.dueDate 
-              ? Math.ceil((new Date(plan.dueDate).getTime() - Date.now()) / (24 * 60 * 60 * 1000))
+          const plans: ActionPlan5W2H[] = result.tasks.map((task: any, index: number) => ({
+            id: task.id,
+            number: task.number || `${String(index + 1).padStart(3, '0')}`,
+            prioridade: task.priority,
+            status: task.status as 'PENDING' | 'IN_PROGRESS' | 'COMPLETED',
+            prazo: task.dueDate 
+              ? Math.ceil((new Date(task.dueDate).getTime() - Date.now()) / (24 * 60 * 60 * 1000))
               : 30,
-            what: plan.what || plan.title,
-            why: plan.why || 'Necessidade identificada pelo diagnóstico IMSST',
-            where: plan.where || 'Toda a estrutura organizacional',
-            when: plan.when || (plan.dueDate ? new Date(plan.dueDate).toLocaleDateString('pt-BR') : 'A definir'),
-            who: plan.who || plan.ownerUserId || 'A definir',
-            how: plan.how || plan.description,
-            howMuch: plan.howMuch || 'R$ 0,00',
-            referencia: plan.reference || `Diagnóstico IMSST – Item ${index + 1}`,
-            origem: plan.aiGenerated ? 'MA.IA' : 'Manual'
+            what: task.what,
+            why: task.why || 'Necessidade identificada pelo diagnóstico IMSST',
+            where: task.where || 'Toda a estrutura organizacional',
+            when: task.when || (task.dueDate ? new Date(task.dueDate).toLocaleDateString('pt-BR') : 'A definir'),
+            who: task.who || 'A definir',
+            how: task.how || '',
+            howMuch: task.howMuch || 'R$ 0,00',
+            referencia: task.reference || `Diagnóstico IMSST – Item ${index + 1}`,
+            origem: result.actionPlan?.aiGenerated ? 'MA.IA' : 'Manual'
           }))
           
           setActionPlans(plans)
@@ -164,14 +164,15 @@ export function DiagnosticActionPlan5W2H({ assessment }: DiagnosticActionPlan5W2
 
     // TODO: Chamar API para salvar no banco
     try {
-      const { updateActionPlan } = await import('@/app/actions/action-plans')
-      await updateActionPlan(id, {
+      const { updateActionPlanTask } = await import('@/app/actions/action-plans')
+      await updateActionPlanTask(id, {
         who: updates.who,
         how: updates.how,
-        howMuch: updates.howMuch
+        howMuch: updates.howMuch,
+        status: updates.status
       })
     } catch (err) {
-      console.error('Erro ao atualizar plano:', err)
+      console.error('Erro ao atualizar tarefa:', err)
     }
   }
 

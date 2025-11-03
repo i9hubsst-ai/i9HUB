@@ -52,7 +52,7 @@ export async function getDiagnosticsMetrics(companyId?: string) {
       prisma.diagnosticTemplate.count({ where: { status: 'PUBLISHED' } }),
       prisma.finding.count({ where: findingWhere }),
       prisma.actionPlan.count({ where: actionPlanWhere }),
-      prisma.actionPlan.count({ where: { ...actionPlanWhere, status: 'PENDING' } }),
+      prisma.actionPlan.count({ where: { ...actionPlanWhere, status: 'DRAFT' } }),
       prisma.evidence.count({ where: evidenceWhere })
     ])
 

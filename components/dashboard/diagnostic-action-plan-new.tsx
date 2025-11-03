@@ -171,7 +171,7 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
     }
   }
 
-  const handleDeleteTask = async (id: string) {
+  const handleDeleteTask = async (id: string) => {
     if (!confirm('Tem certeza que deseja excluir esta tarefa?')) return
 
     setTasks(prev => prev.filter(task => task.id !== id))

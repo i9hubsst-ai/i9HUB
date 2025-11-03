@@ -513,3 +513,145 @@ export async function resetUserPassword(userId: string, companyId?: string) {
     return { error: 'Erro interno do servidor' }
   }
 }
+
+export async function uploadAvatar(formData: FormData) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    const file = formData.get('avatar') as File
+    if (!file) {
+      return { error: 'Nenhum arquivo selecionado' }
+    }
+
+    // Validar tipo de arquivo
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+    if (!allowedTypes.includes(file.type)) {
+      return { error: 'Formato de imagem não suportado. Use JPG, PNG, GIF ou WEBP' }
+    }
+
+    // Validar tamanho (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      return { error: 'Arquivo muito grande. Máximo 2MB' }
+    }
+
+    const supabase = await createClient()
+    
+    // Gerar nome único para o arquivo
+    const fileExt = file.name.split('.').pop()
+    const fileName = `${user.id}-${Date.now()}.${fileExt}`
+    const filePath = `avatars/${fileName}`
+
+    // Upload para Supabase Storage
+    const { data, error } = await supabase.storage
+      .from('documents')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      })
+
+    if (error) {
+      console.error('Erro ao fazer upload:', error)
+      return { error: 'Erro ao fazer upload da imagem' }
+    }
+
+    // Obter URL pública
+    const { data: urlData } = supabase.storage
+      .from('documents')
+      .getPublicUrl(filePath)
+
+    const avatarUrl = urlData.publicUrl
+
+    // Atualizar user metadata no Supabase Auth
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: {
+        avatar_url: avatarUrl
+      }
+    })
+
+    if (updateError) {
+      console.error('Erro ao atualizar metadata:', updateError)
+      return { error: 'Erro ao atualizar avatar' }
+    }
+
+    revalidatePath('/dashboard')
+    revalidatePath('/dashboard/profile')
+    
+    return { success: true, avatarUrl }
+  } catch (error) {
+    console.error('Erro ao fazer upload de avatar:', error)
+    return { error: 'Erro ao processar imagem' }
+  }
+}
+
+export async function updateCurrentUserProfile(formData: FormData) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    const name = formData.get('name') as string
+    const phone = formData.get('phone') as string
+
+    if (!name || name.trim().length === 0) {
+      return { error: 'Nome é obrigatório' }
+    }
+
+    const supabase = await createClient()
+
+    // Atualizar user metadata
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: {
+        name: name.trim(),
+        phone: phone?.trim() || null
+      }
+    })
+
+    if (updateError) {
+      console.error('Erro ao atualizar perfil:', updateError)
+      return { error: 'Erro ao atualizar perfil' }
+    }
+
+    revalidatePath('/dashboard')
+    revalidatePath('/dashboard/profile')
+    
+    return { success: true }
+  } catch (error) {
+    console.error('Erro ao atualizar perfil:', error)
+    return { error: 'Erro ao processar atualização' }
+  }
+}
+
+export async function getCurrentUserProfile() {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    const supabase = await createClient()
+    const { data: { user: fullUser }, error } = await supabase.auth.getUser()
+
+    if (error || !fullUser) {
+      return { error: 'Erro ao buscar perfil' }
+    }
+
+    return {
+      success: true,
+      profile: {
+        id: fullUser.id,
+        email: fullUser.email,
+        name: fullUser.user_metadata?.name || '',
+        phone: fullUser.user_metadata?.phone || '',
+        avatar_url: fullUser.user_metadata?.avatar_url || null,
+        created_at: fullUser.created_at
+      }
+    }
+  } catch (error) {
+    console.error('Erro ao buscar perfil:', error)
+    return { error: 'Erro ao buscar perfil' }
+  }
+}

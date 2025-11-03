@@ -68,6 +68,11 @@ const menuStructure: MenuItem[] = [
     href: '/dashboard/overview'
   },
   {
+    icon: UserCog,
+    label: 'Meu Perfil',
+    href: '/dashboard/profile'
+  },
+  {
     icon: BarChart3,
     label: 'Diagnósticos',
     href: '/dashboard/diagnostics-module'
@@ -197,36 +202,28 @@ function MenuItemComponent({ item, onLinkClick, level = 0, isCollapsed = false }
   const [isOpen, setIsOpen] = useState(false)
   const Icon = item.icon
   const hasChildren = item.children && item.children.length > 0
-  const paddingLeft = isCollapsed ? 8 : (level * 12 + 16) // Menos padding quando collapsed
+  const iconWidth = 16 // Largura fixa para alinhamento
+  const paddingLeft = level === 0 ? 12 : (level * 12 + 12)
 
   if (hasChildren) {
-    // Quando collapsed, mostrar apenas o ícone do primeiro nível
-    if (isCollapsed && level === 0) {
-      return (
-        <div className="flex justify-center">
-          <div className="p-3 rounded-lg hover:bg-sidebar-accent transition-colors">
-            <Icon className="h-5 w-5" />
-          </div>
-        </div>
-      )
-    }
-
     return (
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
           <button
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-sidebar-accent transition-colors text-left`}
-            style={{ paddingLeft: `${paddingLeft}px` }}
+            className={`w-full flex items-center gap-2 py-2 rounded-lg hover:bg-sidebar-accent transition-colors text-left text-sm`}
+            style={{ paddingLeft: `${paddingLeft}px`, paddingRight: '12px' }}
           >
-            <Icon className="h-5 w-5 flex-shrink-0" />
+            <div className="flex items-center justify-center" style={{ width: `${iconWidth}px` }}>
+              <Icon className="h-4 w-4 flex-shrink-0" />
+            </div>
             {!isCollapsed && <span className="flex-1">{item.label}</span>}
             {!isCollapsed && (isOpen ? 
-              <ChevronDown className="h-4 w-4 flex-shrink-0" /> : 
-              <ChevronRight className="h-4 w-4 flex-shrink-0" />
+              <ChevronDown className="h-3.5 w-3.5 flex-shrink-0" /> : 
+              <ChevronRight className="h-3.5 w-3.5 flex-shrink-0" />
             )}
           </button>
         </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-1">
+        <CollapsibleContent className="space-y-0.5">
           {item.children?.map((child, index) => (
             <MenuItemComponent 
               key={index} 
@@ -242,27 +239,17 @@ function MenuItemComponent({ item, onLinkClick, level = 0, isCollapsed = false }
   }
 
   if (item.href) {
-    if (isCollapsed && level === 0) {
-      return (
-        <Link
-          href={item.href}
-          onClick={onLinkClick}
-          className="flex justify-center p-3 rounded-lg hover:bg-sidebar-accent transition-colors"
-          title={item.label}
-        >
-          <Icon className="h-5 w-5" />
-        </Link>
-      )
-    }
-
     return (
       <Link
         href={item.href}
         onClick={onLinkClick}
-        className={`flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-sidebar-accent transition-colors`}
-        style={{ paddingLeft: `${paddingLeft}px` }}
+        className={`flex items-center gap-2 py-2 rounded-lg hover:bg-sidebar-accent transition-colors text-sm`}
+        style={{ paddingLeft: `${paddingLeft}px`, paddingRight: '12px' }}
+        title={isCollapsed ? item.label : undefined}
       >
-        <Icon className="h-5 w-5 flex-shrink-0" />
+        <div className="flex items-center justify-center" style={{ width: `${iconWidth}px` }}>
+          <Icon className="h-4 w-4 flex-shrink-0" />
+        </div>
         {!isCollapsed && <span>{item.label}</span>}
       </Link>
     )
@@ -308,21 +295,21 @@ function SidebarContent({ onLinkClick, isCollapsed = false }: { onLinkClick?: ()
   return (
     <>
       {/* Logo */}
-      <div className={`p-6 border-b border-sidebar-border ${isCollapsed ? 'px-3' : ''}`}>
-        <Link href="/dashboard" className="flex items-center gap-3 justify-center" onClick={onLinkClick}>
+      <div className={`py-4 border-b border-sidebar-border ${isCollapsed ? 'px-2' : 'px-4'}`}>
+        <Link href="/dashboard" className="flex items-center gap-2 justify-center" onClick={onLinkClick}>
           <Image
             src="/images/hubsst-logo.png"
             alt="HUBSST"
-            width={40}
-            height={40}
+            width={32}
+            height={32}
             className="brightness-0 invert"
           />
-          {!isCollapsed && <span className="font-bold text-xl">HUBSST</span>}
+          {!isCollapsed && <span className="font-bold text-lg">HUBSST</span>}
         </Link>
       </div>
 
       {/* Navigation */}
-      <nav className={`flex-1 space-y-1 overflow-y-auto ${isCollapsed ? 'p-2' : 'p-4'}`}>
+      <nav className={`flex-1 space-y-0.5 overflow-y-auto ${isCollapsed ? 'p-2' : 'p-3'}`}>
         {visibleMenuItems.map((item, index) => (
           <MenuItemComponent 
             key={index} 
@@ -341,7 +328,7 @@ export function DesktopSidebar() {
 
   return (
     <aside 
-      className={`hidden md:flex bg-sidebar text-sidebar-foreground flex-col transition-all duration-300 ${
+      className={`hidden md:flex fixed left-0 top-0 h-screen bg-sidebar text-sidebar-foreground flex-col transition-all duration-300 z-50 border-r border-sidebar-border shadow-lg ${
         isExpanded ? 'w-64' : 'w-16'
       }`}
       onMouseEnter={() => setIsExpanded(true)}

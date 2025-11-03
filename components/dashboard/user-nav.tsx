@@ -1,4 +1,4 @@
-import { LogOut } from 'lucide-react'
+import { LogOut, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -11,12 +11,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { logout } from '@/app/actions/auth'
 import { getGravatarUrl } from '@/lib/utils'
+import Link from 'next/link'
 
 interface UserNavProps {
   user: {
     email?: string
     name?: string
     role?: string
+    avatar_url?: string | null
   }
   isAdmin?: boolean
 }
@@ -43,12 +45,10 @@ export function UserNav({ user, isAdmin }: UserNavProps) {
               </span>
             )}
             <Avatar>
-              {user.email && (
-                <AvatarImage 
-                  src={getGravatarUrl(user.email, 80)} 
-                  alt={user.name || user.email} 
-                />
-              )}
+              <AvatarImage 
+                src={user.avatar_url || (user.email ? getGravatarUrl(user.email, 80) : undefined)} 
+                alt={user.name || user.email} 
+              />
               <AvatarFallback className="bg-accent text-accent-foreground">
                 {initials}
               </AvatarFallback>
@@ -70,6 +70,12 @@ export function UserNav({ user, isAdmin }: UserNavProps) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/dashboard/profile" className="cursor-pointer">
+            <User className="mr-2 h-4 w-4" />
+            <span>Meu Perfil</span>
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <form action={logout}>
             <button type="submit" className="flex w-full items-center">

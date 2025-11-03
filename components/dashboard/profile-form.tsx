@@ -47,12 +47,17 @@ export function ProfileForm({ profile }: ProfileFormProps) {
           description: result.error,
         })
       } else {
-        setAvatarUrl(result.avatarUrl!)
+        // Adicionar cache bust na URL para forçar reload da imagem
+        const newAvatarUrl = result.avatarUrl + '?t=' + Date.now()
+        setAvatarUrl(newAvatarUrl)
         toast({
           title: 'Sucesso',
           description: 'Foto atualizada com sucesso',
         })
-        router.refresh()
+        // Dar um tempo para o storage processar antes de refresh
+        setTimeout(() => {
+          router.refresh()
+        }, 500)
       }
     } catch (error) {
       toast({

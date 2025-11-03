@@ -565,8 +565,10 @@ export async function uploadAvatar(formData: FormData) {
 
     const avatarUrl = urlData.publicUrl
 
+    console.log('📸 Upload concluído. URL:', avatarUrl)
+
     // Atualizar user metadata no Supabase Auth (usar admin para garantir)
-    const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+    const { data: updateData, error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
       user.id,
       {
         user_metadata: {
@@ -580,6 +582,8 @@ export async function uploadAvatar(formData: FormData) {
       console.error('Erro ao atualizar metadata:', updateError)
       return { error: 'Erro ao atualizar avatar' }
     }
+
+    console.log('✅ Metadata atualizado. Avatar URL salvo:', updateData.user.user_metadata?.avatar_url)
 
     revalidatePath('/dashboard')
     revalidatePath('/dashboard/profile')
@@ -637,12 +641,16 @@ export async function getCurrentUserProfile() {
   }
 
   try {
-    const supabase = await createClient()
-    const { data: { user: fullUser }, error } = await supabase.auth.getUser()
+    // Usar Admin Client para garantir que pegue dados mais recentes
+    const supabaseAdmin = createAdminClient()
+    const { data: { user: fullUser }, error } = await supabaseAdmin.auth.admin.getUserById(user.id)
 
     if (error || !fullUser) {
+      console.error('Erro ao buscar perfil:', error)
       return { error: 'Erro ao buscar perfil' }
     }
+
+    console.log('📸 Avatar URL do user:', fullUser.user_metadata?.avatar_url)
 
     return {
       success: true,

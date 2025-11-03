@@ -35,6 +35,7 @@ export default async function DiagnosticsPage() {
     DRAFT: { icon: FileEdit, color: 'text-gray-600', bg: 'bg-gray-100', label: 'Rascunho' },
     IN_PROGRESS: { icon: Clock, color: 'text-blue-600', bg: 'bg-blue-100', label: 'Em Andamento' },
     SUBMITTED: { icon: AlertCircle, color: 'text-yellow-600', bg: 'bg-yellow-100', label: 'Submetido' },
+    SCORED: { icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-100', label: 'Finalizado' },
     COMPLETED: { icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-100', label: 'Concluído' },
   }
 
@@ -79,7 +80,7 @@ export default async function DiagnosticsPage() {
         ) : (
           <div className="grid gap-3">
             {assessments.map((assessment) => {
-              const status = statusConfig[assessment.status as keyof typeof statusConfig]
+              const status = statusConfig[assessment.status as keyof typeof statusConfig] || statusConfig.DRAFT
               const StatusIcon = status.icon
               const totalQuestions = 25
               const progress = Math.min(100, (assessment._count.answers / totalQuestions) * 100)

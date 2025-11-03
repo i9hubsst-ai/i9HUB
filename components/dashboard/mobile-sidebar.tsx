@@ -165,19 +165,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: Database,
     label: 'Cadastros',
-    children: [
-      { icon: Building2, label: 'Empresas', href: '/dashboard/companies' },
-      { icon: Users, label: 'Usuários', href: '/dashboard/users' },
-      { icon: Users, label: 'Clientes', href: '/dashboard/clients' },
-      { icon: UserCog, label: 'Funcionários', href: '/dashboard/employees' },
-      { icon: MapPin, label: 'Áreas e Setores', href: '/dashboard/areas' },
-      { icon: Wrench, label: 'Cargos e Funções', href: '/dashboard/positions' },
-      { icon: Building2, label: 'Fornecedores', href: '/dashboard/suppliers' },
-      { icon: Wrench, label: 'Equipamentos e Máquinas', href: '/dashboard/equipment' },
-      { icon: AlertTriangle, label: 'Agentes de Risco', href: '/dashboard/risk-agents' },
-      { icon: HardHat, label: 'EPIs (Catálogo Base)', href: '/dashboard/epi-catalog' },
-      { icon: FileText, label: 'Tabelas de Normas e NRs', href: '/dashboard/standards' }
-    ]
+    href: '/dashboard/cadastros'
   },
   {
     icon: Settings,

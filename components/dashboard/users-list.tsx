@@ -19,7 +19,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Mail, MoreVertical, Pencil, Trash2, Send, Users, Shield, UserCog, User, KeyRound } from 'lucide-react'
+import { Mail, MoreVertical, Pencil, Trash2, Send, Users, Shield, UserCog, User, KeyRound, AlertCircle } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 import { EditUserRoleDialog } from './edit-user-role-dialog'
 import { EditUserProfileDialog } from './edit-user-profile-dialog'
 import { resendInvite, removeUserFromCompany, resetUserPassword } from '@/app/actions/users'
@@ -29,15 +30,17 @@ import { useRouter } from 'next/navigation'
 interface User {
   id: string
   userId: string
-  companyId: string
+  companyId: string | null
   role: Role
   status: string
   email?: string
   name?: string
+  hasMembership?: boolean
+  membershipCount?: number
   company: {
     id: string
     name: string
-  }
+  } | null
 }
 
 interface UsersListProps {
@@ -81,7 +84,7 @@ export function UsersList({ users }: UsersListProps) {
     setError('')
     setSuccessMessage('')
     
-    const result = await resetUserPassword(user.userId, user.companyId)
+    const result = await resetUserPassword(user.userId, user.companyId || undefined)
     
     if (result.error) {
       setError(result.error)
@@ -144,8 +147,14 @@ export function UsersList({ users }: UsersListProps) {
                         <RoleIcon className="h-5 w-5" />
                       </div>
                       <div className="flex-1">
-                        <div className="font-semibold">
+                        <div className="font-semibold flex items-center gap-2">
                           {user.name || user.email || 'Usuário sem nome'}
+                          {!user.hasMembership && (
+                            <Badge variant="outline" className="text-xs bg-amber-50 text-amber-700 border-amber-200">
+                              <AlertCircle className="h-3 w-3 mr-1" />
+                              Sem vínculo
+                            </Badge>
+                          )}
                         </div>
                         <div className="text-sm text-muted-foreground flex items-center gap-2">
                           <Mail className="h-3 w-3" />
@@ -153,7 +162,11 @@ export function UsersList({ users }: UsersListProps) {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-sm font-medium">{user.company.name}</div>
+                        <div className="text-sm font-medium">
+                          {user.company?.name || (
+                            <span className="text-amber-600">Sem empresa vinculada</span>
+                          )}
+                        </div>
                         <div className="text-xs text-muted-foreground">
                           {roleConfig.label}
                         </div>
@@ -261,7 +274,10 @@ export function UsersList({ users }: UsersListProps) {
           <AlertDialogHeader>
             <AlertDialogTitle>Remover Usuário</AlertDialogTitle>
             <AlertDialogDescription>
-              Tem certeza que deseja remover <strong>{removingUser?.name || removingUser?.email}</strong> da empresa <strong>{removingUser?.company.name}</strong>?
+              Tem certeza que deseja remover <strong>{removingUser?.name || removingUser?.email}</strong> 
+              {removingUser?.company?.name && (
+                <> da empresa <strong>{removingUser.company.name}</strong></>
+              )}?
               <br /><br />
               Esta ação não pode ser desfeita.
             </AlertDialogDescription>

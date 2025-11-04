@@ -353,19 +353,78 @@ export async function getAllUsers() {
   const isAdmin = await isPlatformAdmin(user.id)
 
   try {
-    let memberships
+    // Buscar TODOS os usuários do Supabase Auth
+    const supabaseAdmin = createAdminClient()
+    const { data: authData } = await supabaseAdmin.auth.admin.listUsers()
+    
+    if (!authData?.users) {
+      return { success: true, users: [] }
+    }
 
-    if (isAdmin) {
-      memberships = await prisma.membership.findMany({
-        include: {
-          company: true
-        },
-        orderBy: {
-          createdAt: 'desc'
+    // Buscar todas as memberships
+    const allMemberships = await prisma.membership.findMany({
+      include: {
+        company: true
+      }
+    })
+
+    // Buscar platform admins
+    const platformAdmins = await prisma.platformAdmin.findMany({
+      select: {
+        userId: true
+      }
+    })
+    const platformAdminIds = new Set(platformAdmins.map(pa => pa.userId))
+
+    // Mapear cada usuário do Supabase
+    const usersWithDetails = authData.users.map(authUser => {
+      // Buscar memberships deste usuário
+      const userMemberships = allMemberships.filter(m => m.userId === authUser.id)
+      
+      // Se tem membership, usar dados dela
+      if (userMemberships.length > 0) {
+        const primaryMembership = userMemberships[0] // Usar primeira membership
+        
+        const effectiveRole = platformAdminIds.has(authUser.id) 
+          ? 'PLATFORM_ADMIN' as Role
+          : primaryMembership.role
+
+        return {
+          ...primaryMembership,
+          role: effectiveRole,
+          email: authUser.email,
+          name: authUser.user_metadata?.name || authUser.user_metadata?.full_name || authUser.email?.split('@')[0],
+          hasMembership: true,
+          membershipCount: userMemberships.length
         }
-      })
-    } else {
-      const userMemberships = await prisma.membership.findMany({
+      }
+      
+      // Se NÃO tem membership, criar objeto simulado
+      const effectiveRole = platformAdminIds.has(authUser.id) 
+        ? 'PLATFORM_ADMIN' as Role
+        : 'VIEWER' as Role // Role padrão para usuários sem membership
+
+      return {
+        id: `temp-${authUser.id}`, // ID temporário
+        userId: authUser.id,
+        companyId: null,
+        company: null,
+        employeeId: null,
+        role: effectiveRole,
+        status: authUser.email_confirmed_at ? 'ACTIVE' as MembershipStatus : 'INVITED' as MembershipStatus,
+        createdAt: new Date(authUser.created_at),
+        updatedAt: new Date(authUser.updated_at || authUser.created_at),
+        email: authUser.email,
+        name: authUser.user_metadata?.name || authUser.user_metadata?.full_name || authUser.email?.split('@')[0],
+        hasMembership: false,
+        membershipCount: 0
+      }
+    })
+
+    // Filtrar por permissão se não for admin
+    let filteredUsers = usersWithDetails
+    if (!isAdmin) {
+      const userCompanies = await prisma.membership.findMany({
         where: {
           userId: user.id,
           status: 'ACTIVE'
@@ -374,52 +433,14 @@ export async function getAllUsers() {
           companyId: true
         }
       })
-
-      const companyIds = userMemberships.map(m => m.companyId)
-
-      memberships = await prisma.membership.findMany({
-        where: {
-          companyId: {
-            in: companyIds
-          }
-        },
-        include: {
-          company: true
-        },
-        orderBy: {
-          createdAt: 'desc'
-        }
-      })
+      const companyIds = new Set(userCompanies.map(m => m.companyId))
+      
+      filteredUsers = usersWithDetails.filter(u => 
+        !u.companyId || companyIds.has(u.companyId)
+      )
     }
 
-    const supabaseAdmin = createAdminClient()
-    const { data: authUsers } = await supabaseAdmin.auth.admin.listUsers()
-
-    // Get all platform admins to override their role display
-    const platformAdmins = await prisma.platformAdmin.findMany({
-      select: {
-        userId: true
-      }
-    })
-    const platformAdminIds = new Set(platformAdmins.map(pa => pa.userId))
-
-    const usersWithDetails = memberships.map(membership => {
-      const authUser = authUsers?.users.find(u => u.id === membership.userId)
-      
-      // If user is a platform admin, override their role for display
-      const effectiveRole = platformAdminIds.has(membership.userId) 
-        ? 'PLATFORM_ADMIN' as Role
-        : membership.role
-
-      return {
-        ...membership,
-        role: effectiveRole,
-        email: authUser?.email,
-        name: authUser?.user_metadata?.name,
-      }
-    })
-
-    return { success: true, users: usersWithDetails }
+    return { success: true, users: filteredUsers }
   } catch (error) {
     console.error('Erro ao buscar usuários:', error)
     return { error: 'Erro ao buscar usuários' }

@@ -129,11 +129,11 @@ BEGIN
         old_plan."howMuch",
         old_plan."priority",
         CASE old_plan."status"
-          WHEN 'PENDING' THEN 'PENDING'::TaskStatus
-          WHEN 'IN_PROGRESS' THEN 'IN_PROGRESS'::TaskStatus
-          WHEN 'DONE' THEN 'COMPLETED'::TaskStatus
-          WHEN 'CANCELLED' THEN 'CANCELLED'::TaskStatus
-          ELSE 'PENDING'::TaskStatus
+          WHEN 'PENDING' THEN 'PENDING'::"TaskStatus"
+          WHEN 'IN_PROGRESS' THEN 'IN_PROGRESS'::"TaskStatus"
+          WHEN 'DONE' THEN 'COMPLETED'::"TaskStatus"
+          WHEN 'CANCELLED' THEN 'CANCELLED'::"TaskStatus"
+          ELSE 'PENDING'::"TaskStatus"
         END,
         old_plan."dueDate",
         CASE WHEN old_plan."status" = 'DONE' THEN old_plan."updatedAt" ELSE NULL END,
@@ -202,16 +202,21 @@ ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "startDate" TIMESTAMP(3);
 ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "endDate" TIMESTAMP(3);
 
 -- PASSO 7: Alterar tipo do campo status
+-- Primeiro, remover o DEFAULT antigo
+ALTER TABLE "action_plans" ALTER COLUMN "status" DROP DEFAULT;
+
+-- Alterar o tipo da coluna
 ALTER TABLE "action_plans" ALTER COLUMN "status" TYPE "ActionPlanStatus" USING 
   CASE "status"::TEXT
-    WHEN 'PENDING' THEN 'DRAFT'::ActionPlanStatus
-    WHEN 'IN_PROGRESS' THEN 'IN_PROGRESS'::ActionPlanStatus
-    WHEN 'DONE' THEN 'COMPLETED'::ActionPlanStatus
-    WHEN 'CANCELLED' THEN 'CANCELLED'::ActionPlanStatus
-    ELSE 'DRAFT'::ActionPlanStatus
+    WHEN 'PENDING' THEN 'DRAFT'::"ActionPlanStatus"
+    WHEN 'IN_PROGRESS' THEN 'IN_PROGRESS'::"ActionPlanStatus"
+    WHEN 'DONE' THEN 'COMPLETED'::"ActionPlanStatus"
+    WHEN 'CANCELLED' THEN 'CANCELLED'::"ActionPlanStatus"
+    ELSE 'DRAFT'::"ActionPlanStatus"
   END;
 
-ALTER TABLE "action_plans" ALTER COLUMN "status" SET DEFAULT 'DRAFT'::ActionPlanStatus;
+-- Adicionar novo DEFAULT
+ALTER TABLE "action_plans" ALTER COLUMN "status" SET DEFAULT 'DRAFT'::"ActionPlanStatus";
 
 -- PASSO 8: Adicionar constraints e índices
 CREATE INDEX IF NOT EXISTS "action_plan_tasks_actionPlanId_idx" ON "action_plan_tasks"("actionPlanId");

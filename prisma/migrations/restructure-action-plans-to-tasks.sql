@@ -50,14 +50,11 @@ CREATE TABLE IF NOT EXISTS "action_plan_tasks" (
 CREATE TABLE IF NOT EXISTS "action_plans_backup" AS 
 SELECT * FROM "action_plans";
 
--- PASSO 3.5: Adicionar coluna number à tabela action_plans (antes da migração)
-ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "number" TEXT;
-ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "objective" TEXT;
-ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "startDate" TIMESTAMP(3);
-ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "endDate" TIMESTAMP(3);
+-- PASSO 3.5: Limpar tabela action_plans (vamos recriar tudo do backup)
+DELETE FROM "action_plans";
 
--- PASSO 4: Migrar dados
--- Para cada assessment, criar 1 ActionPlan e mover registros atuais para tasks
+-- PASSO 4: Migrar dados do backup
+-- Para cada assessment, criar 1 ActionPlan e mover registros do backup para tasks
 DO $$
 DECLARE
   assessment_record RECORD;
@@ -67,46 +64,42 @@ DECLARE
   old_plan RECORD;
   task_counter INTEGER;
 BEGIN
-  -- Para cada assessment que tem action plans
+  -- Para cada assessment que tem action plans no backup
   FOR assessment_record IN 
     SELECT DISTINCT ON ("assessmentId") "assessmentId", "companyId", "createdAt"
-    FROM "action_plans"
+    FROM "action_plans_backup"
     ORDER BY "assessmentId", "createdAt"
   LOOP
     -- Gerar número do plano (PA00001, PA00002, ...)
     plan_number := 'PA' || LPAD(plan_counter::TEXT, 5, '0');
     new_plan_id := gen_random_uuid()::TEXT;
     
-    -- Buscar primeiro action plan para pegar dados do assessment
+    -- Buscar primeiro action plan do backup para pegar dados
     SELECT * INTO old_plan
-    FROM "action_plans"
+    FROM "action_plans_backup"
     WHERE "assessmentId" = assessment_record."assessmentId"
     ORDER BY "createdAt"
     LIMIT 1;
     
-    -- Criar o ActionPlan consolidado
+    -- Criar o ActionPlan consolidado na tabela limpa
     INSERT INTO "action_plans" (
-      "id", "number", "assessmentId", "companyId",
-      "title", "description", "objective",
-      "createdBy", "ownerUserId", "startDate", "endDate",
-      "status", "aiGenerated", "createdAt", "updatedAt"
+      "id", "assessmentId", "companyId",
+      "description", "executiveSummary",
+      "createdBy", "ownerUserId", "aiGenerated",
+      "createdAt", "updatedAt", "status"
     )
     VALUES (
       new_plan_id,
-      plan_number,
       assessment_record."assessmentId",
       assessment_record."companyId",
-      'Plano de Ação - ' || (SELECT "title" FROM "assessments" WHERE "id" = assessment_record."assessmentId"),
       'Plano de ação gerado a partir do diagnóstico',
-      'Implementar ações corretivas identificadas no diagnóstico',
+      old_plan."executiveSummary",
       old_plan."createdBy",
       old_plan."ownerUserId",
-      CURRENT_TIMESTAMP,
-      old_plan."dueDate",
-      'IN_PROGRESS',
       old_plan."aiGenerated",
       old_plan."createdAt",
-      CURRENT_TIMESTAMP
+      CURRENT_TIMESTAMP,
+      old_plan."status"
     );
     
     -- Converter cada ActionPlan antigo em ActionPlanTask
@@ -154,8 +147,36 @@ BEGIN
       task_counter := task_counter + 1;
     END LOOP;
     
-    -- Deletar action plans antigos deste assessment
-    DELETE FROM "action_plans" WHERE "assessmentId" = assessment_record."assessmentId" AND "id" != new_plan_id;
+    plan_counter := plan_counter + 1;
+  END LOOP;
+END $$;
+
+-- PASSO 4.5: Adicionar colunas novas à tabela action_plans (após recriar dados)
+ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "number" TEXT;
+ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "title" TEXT;
+ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "objective" TEXT;
+ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "startDate" TIMESTAMP(3);
+ALTER TABLE "action_plans" ADD COLUMN IF NOT EXISTS "endDate" TIMESTAMP(3);
+
+-- PASSO 4.6: Atualizar os valores de number e title nos planos criados
+DO $$
+DECLARE
+  plan_record RECORD;
+  plan_counter INTEGER := 1;
+BEGIN
+  FOR plan_record IN 
+    SELECT "id", "assessmentId" FROM "action_plans" ORDER BY "createdAt"
+  LOOP
+    UPDATE "action_plans"
+    SET 
+      "number" = 'PA' || LPAD(plan_counter::TEXT, 5, '0'),
+      "title" = 'Plano de Ação - ' || COALESCE(
+        (SELECT "title" FROM "assessments" WHERE "id" = plan_record."assessmentId"),
+        'Sem título'
+      ),
+      "objective" = 'Implementar ações corretivas identificadas no diagnóstico',
+      "startDate" = CURRENT_TIMESTAMP
+    WHERE "id" = plan_record."id";
     
     plan_counter := plan_counter + 1;
   END LOOP;

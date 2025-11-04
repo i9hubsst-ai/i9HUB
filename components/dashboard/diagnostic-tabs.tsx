@@ -7,7 +7,7 @@ import { Calendar, User, Tag, Clock } from 'lucide-react'
 import { DiagnosticResume } from './diagnostic-resume'
 import { DiagnosticSections } from './diagnostic-sections'
 import { DiagnosticFindings } from './diagnostic-findings'
-import { DiagnosticActionPlan5W2H } from './diagnostic-action-plan-5w2h'
+import { DiagnosticActionPlanNew } from './diagnostic-action-plan-new'
 import { DiagnosticEvidence } from './diagnostic-evidence'
 import { DiagnosticAudit } from './diagnostic-audit'
 
@@ -111,7 +111,7 @@ export function DiagnosticTabs({ assessment }: DiagnosticTabsProps) {
         {activeTab === 'resumo' && <DiagnosticResume assessment={assessment} />}
         {activeTab === 'sections' && <DiagnosticSections assessment={assessment} />}
         {activeTab === 'achados' && <DiagnosticFindings assessment={assessment} />}
-        {activeTab === 'plano' && <DiagnosticActionPlan5W2H assessment={assessment} />}
+        {activeTab === 'plano' && <DiagnosticActionPlanNew assessmentId={assessment.id} />}
         {activeTab === 'evidencias' && <DiagnosticEvidence assessment={assessment} />}
         {activeTab === 'auditoria' && <DiagnosticAudit assessment={assessment} />}
       </div>

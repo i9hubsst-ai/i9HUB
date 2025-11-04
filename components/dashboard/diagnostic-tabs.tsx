@@ -111,7 +111,7 @@ export function DiagnosticTabs({ assessment }: DiagnosticTabsProps) {
         {activeTab === 'resumo' && <DiagnosticResume assessment={assessment} />}
         {activeTab === 'sections' && <DiagnosticSections assessment={assessment} />}
         {activeTab === 'achados' && <DiagnosticFindings assessment={assessment} />}
-        {activeTab === 'plano' && <DiagnosticActionPlanNew assessmentId={assessment.id} />}
+        {activeTab === 'plano' && <DiagnosticActionPlanNew assessment={assessment} />}
         {activeTab === 'evidencias' && <DiagnosticEvidence assessment={assessment} />}
         {activeTab === 'auditoria' && <DiagnosticAudit assessment={assessment} />}
       </div>

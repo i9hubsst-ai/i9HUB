@@ -388,3 +388,88 @@ export async function deleteActionPlan(actionPlanId: string) {
     return { error: 'Erro ao excluir plano de ação' }
   }
 }
+
+export async function createActionPlanTask(
+  actionPlanId: string,
+  taskData: {
+    what: string
+    why?: string
+    where?: string
+    when?: string
+    who?: string
+    how?: string
+    howMuch?: string
+    priority: number
+    dueDate?: Date
+    reference?: string
+  }
+) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    const actionPlan = await prisma.actionPlan.findUnique({
+      where: { id: actionPlanId },
+      include: {
+        assessment: {
+          select: { companyId: true, id: true }
+        },
+        tasks: {
+          select: { number: true },
+          orderBy: { number: 'desc' }
+        }
+      }
+    })
+
+    if (!actionPlan) {
+      return { error: 'Plano de ação não encontrado' }
+    }
+
+    const isAdmin = await isPlatformAdmin(user.id)
+    const membership = await prisma.membership.findFirst({
+      where: {
+        userId: user.id,
+        companyId: actionPlan.assessment.companyId,
+        status: 'ACTIVE'
+      }
+    })
+
+    if (!isAdmin && !membership) {
+      return { error: 'Sem permissão para criar tarefa neste plano de ação' }
+    }
+
+    // Gerar próximo número de tarefa
+    const lastTaskNumber = actionPlan.tasks[0]?.number || '000'
+    const nextNumber = String(parseInt(lastTaskNumber) + 1).padStart(3, '0')
+
+    // Criar tarefa
+    const task = await prisma.actionPlanTask.create({
+      data: {
+        number: nextNumber,
+        actionPlanId,
+        what: taskData.what,
+        why: taskData.why,
+        where: taskData.where,
+        when: taskData.when,
+        who: taskData.who,
+        how: taskData.how,
+        howMuch: taskData.howMuch,
+        priority: taskData.priority,
+        status: 'PENDING',
+        dueDate: taskData.dueDate,
+        reference: taskData.reference,
+        createdBy: user.id,
+        updatedAt: new Date()
+      }
+    })
+
+    revalidatePath(`/dashboard/diagnostics/${actionPlan.assessment.id}`)
+    
+    return { success: true, task }
+  } catch (error) {
+    console.error('Erro ao criar tarefa:', error)
+    return { error: 'Erro ao criar tarefa' }
+  }
+}

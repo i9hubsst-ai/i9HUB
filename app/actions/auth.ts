@@ -119,7 +119,10 @@ export async function signup(formData: FormData) {
     email,
     password,
     options: {
-      data: { name },
+      data: { 
+        name,
+        full_name: name // Supabase padrão usa full_name
+      },
       emailRedirectTo: getCallbackUrl(),
     }
   }

@@ -263,7 +263,7 @@ export async function getAssessmentById(assessmentId: string) {
         createdByUser = {
           id: data.user.id,
           email: data.user.email || 'Desconhecido',
-          name: data.user.user_metadata?.full_name || data.user.user_metadata?.name || data.user.email?.split('@')[0] || 'Usuário'
+          name: data.user.user_metadata?.name || data.user.user_metadata?.full_name || data.user.email?.split('@')[0] || 'Usuário'
         }
       }
     } catch (error) {

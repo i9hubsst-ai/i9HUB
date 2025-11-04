@@ -110,7 +110,8 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
     )
   }
 
-  const isReadOnly = assessment.status !== 'IN_PROGRESS' && assessment.status !== 'DRAFT'
+  // Permite edição em qualquer status (usuário pode corrigir respostas)
+  const isReadOnly = false
 
   const handleAnswer = async (questionId: string, value: number, requiresJustification: boolean, requiresEvidence: boolean) => {
     const currentAnswer = answers[questionId] || { value: null, justification: '' }
@@ -233,12 +234,12 @@ export function DiagnosticSections({ assessment }: DiagnosticSectionsProps) {
 
   return (
     <div className="space-y-6">
-      {isReadOnly && (
-        <div className="rounded-md bg-blue-50 p-4 border border-blue-200">
+      {assessment.status === 'COMPLETED' && (
+        <div className="rounded-md bg-amber-50 p-4 border border-amber-200">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-blue-600" />
-            <p className="text-sm font-medium text-blue-800">
-              Diagnóstico finalizado - Somente leitura
+            <AlertTriangle className="h-4 w-4 text-amber-600" />
+            <p className="text-sm font-medium text-amber-800">
+              Diagnóstico finalizado - As alterações nas respostas irão atualizar automaticamente os achados e plano de ação
             </p>
           </div>
         </div>

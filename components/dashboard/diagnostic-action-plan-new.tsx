@@ -23,6 +23,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import { Plus } from 'lucide-react'
 
 interface DiagnosticActionPlanProps {
   assessment: {
@@ -70,6 +83,22 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
   const [priorityFilter, setPriorityFilter] = useState<string>('all')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [responsibleFilter, setResponsibleFilter] = useState<string>('all')
+  
+  // Nova tarefa
+  const [showNewTaskDialog, setShowNewTaskDialog] = useState(false)
+  const [creatingTask, setCreatingTask] = useState(false)
+  const [newTask, setNewTask] = useState({
+    what: '',
+    why: '',
+    where: '',
+    when: '',
+    who: '',
+    how: '',
+    howMuch: '',
+    priority: 2, // MEDIUM
+    dueDate: '',
+    reference: ''
+  })
 
   const canGenerateReport = 
     assessment.status === 'SCORED' && 
@@ -181,6 +210,64 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
       await deleteActionPlanTask(id)
     } catch (err) {
       console.error('Erro ao excluir tarefa:', err)
+    }
+  }
+
+  const handleCreateTask = async () => {
+    if (!newTask.what.trim()) {
+      alert('Por favor, preencha o campo "O quê" (obrigatório)')
+      return
+    }
+
+    if (!actionPlan) {
+      alert('Nenhum plano de ação encontrado')
+      return
+    }
+
+    setCreatingTask(true)
+
+    try {
+      const { createActionPlanTask } = await import('@/app/actions/action-plans')
+      const result = await createActionPlanTask(actionPlan.id, {
+        what: newTask.what,
+        why: newTask.why || undefined,
+        where: newTask.where || undefined,
+        when: newTask.when || undefined,
+        who: newTask.who || undefined,
+        how: newTask.how || undefined,
+        howMuch: newTask.howMuch || undefined,
+        priority: newTask.priority,
+        dueDate: newTask.dueDate ? new Date(newTask.dueDate) : undefined,
+        reference: newTask.reference || undefined
+      })
+
+      if ('error' in result) {
+        alert(result.error)
+        return
+      }
+
+      // Limpar formulário e fechar dialog
+      setNewTask({
+        what: '',
+        why: '',
+        where: '',
+        when: '',
+        who: '',
+        how: '',
+        howMuch: '',
+        priority: 2,
+        dueDate: '',
+        reference: ''
+      })
+      setShowNewTaskDialog(false)
+
+      // Recarregar tarefas
+      window.location.reload()
+    } catch (err) {
+      console.error('Erro ao criar tarefa:', err)
+      alert('Erro ao criar tarefa')
+    } finally {
+      setCreatingTask(false)
     }
   }
 
@@ -320,6 +407,182 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
                 </>
               )}
             </Button>
+
+            <Dialog open={showNewTaskDialog} onOpenChange={setShowNewTaskDialog}>
+              <DialogTrigger asChild>
+                <Button
+                  variant="default"
+                  disabled={!actionPlan}
+                  className="gap-2"
+                >
+                  <Plus className="h-4 w-4" />
+                  Nova Tarefa
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Criar Nova Tarefa</DialogTitle>
+                  <DialogDescription>
+                    Preencha os campos abaixo para adicionar uma nova tarefa ao plano de ação (5W2H)
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="space-y-4">
+                  {/* O quê - Obrigatório */}
+                  <div>
+                    <Label htmlFor="what">O quê? (Obrigatório) *</Label>
+                    <Textarea
+                      id="what"
+                      value={newTask.what}
+                      onChange={(e) => setNewTask({ ...newTask, what: e.target.value })}
+                      placeholder="Descreva a atividade a ser realizada"
+                      className="mt-1"
+                      rows={3}
+                    />
+                  </div>
+
+                  {/* Por quê */}
+                  <div>
+                    <Label htmlFor="why">Por quê?</Label>
+                    <Textarea
+                      id="why"
+                      value={newTask.why}
+                      onChange={(e) => setNewTask({ ...newTask, why: e.target.value })}
+                      placeholder="Justificativa para a atividade"
+                      className="mt-1"
+                      rows={2}
+                    />
+                  </div>
+
+                  {/* Onde */}
+                  <div>
+                    <Label htmlFor="where">Onde?</Label>
+                    <Input
+                      id="where"
+                      value={newTask.where}
+                      onChange={(e) => setNewTask({ ...newTask, where: e.target.value })}
+                      placeholder="Local de execução"
+                      className="mt-1"
+                    />
+                  </div>
+
+                  {/* Quando */}
+                  <div>
+                    <Label htmlFor="when">Quando?</Label>
+                    <Input
+                      id="when"
+                      value={newTask.when}
+                      onChange={(e) => setNewTask({ ...newTask, when: e.target.value })}
+                      placeholder="Prazo ou período"
+                      className="mt-1"
+                    />
+                  </div>
+
+                  {/* Quem */}
+                  <div>
+                    <Label htmlFor="who">Quem?</Label>
+                    <Input
+                      id="who"
+                      value={newTask.who}
+                      onChange={(e) => setNewTask({ ...newTask, who: e.target.value })}
+                      placeholder="Responsável"
+                      className="mt-1"
+                    />
+                  </div>
+
+                  {/* Como */}
+                  <div>
+                    <Label htmlFor="how">Como?</Label>
+                    <Textarea
+                      id="how"
+                      value={newTask.how}
+                      onChange={(e) => setNewTask({ ...newTask, how: e.target.value })}
+                      placeholder="Método de execução"
+                      className="mt-1"
+                      rows={2}
+                    />
+                  </div>
+
+                  {/* Quanto */}
+                  <div>
+                    <Label htmlFor="howMuch">Quanto?</Label>
+                    <Input
+                      id="howMuch"
+                      value={newTask.howMuch}
+                      onChange={(e) => setNewTask({ ...newTask, howMuch: e.target.value })}
+                      placeholder="Custo estimado"
+                      className="mt-1"
+                    />
+                  </div>
+
+                  {/* Prioridade */}
+                  <div>
+                    <Label htmlFor="priority">Prioridade</Label>
+                    <Select
+                      value={String(newTask.priority)}
+                      onValueChange={(value) => setNewTask({ ...newTask, priority: Number(value) })}
+                    >
+                      <SelectTrigger className="mt-1">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">Alta</SelectItem>
+                        <SelectItem value="2">Média</SelectItem>
+                        <SelectItem value="3">Baixa</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Data de vencimento */}
+                  <div>
+                    <Label htmlFor="dueDate">Data de Vencimento</Label>
+                    <Input
+                      id="dueDate"
+                      type="date"
+                      value={newTask.dueDate}
+                      onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })}
+                      className="mt-1"
+                    />
+                  </div>
+
+                  {/* Referência */}
+                  <div>
+                    <Label htmlFor="reference">Referência</Label>
+                    <Input
+                      id="reference"
+                      value={newTask.reference}
+                      onChange={(e) => setNewTask({ ...newTask, reference: e.target.value })}
+                      placeholder="Ex: NR-12, ISO 45001, etc."
+                      className="mt-1"
+                    />
+                  </div>
+                </div>
+
+                <DialogFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowNewTaskDialog(false)}
+                    disabled={creatingTask}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    onClick={handleCreateTask}
+                    disabled={creatingTask || !newTask.what.trim()}
+                  >
+                    {creatingTask ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Criando...
+                      </>
+                    ) : (
+                      'Criar Tarefa'
+                    )}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
             <Button
               variant="outline"
               onClick={handleExportPDF}

@@ -84,7 +84,7 @@ BEGIN
     -- Criar o ActionPlan consolidado na tabela limpa
     INSERT INTO "action_plans" (
       "id", "assessmentId", "companyId",
-      "description", "executiveSummary",
+      "title", "description",
       "createdBy", "ownerUserId", "aiGenerated",
       "createdAt", "updatedAt", "status"
     )
@@ -92,8 +92,8 @@ BEGIN
       new_plan_id,
       assessment_record."assessmentId",
       assessment_record."companyId",
+      COALESCE(old_plan."title", 'Plano de Ação'),
       'Plano de ação gerado a partir do diagnóstico',
-      old_plan."executiveSummary",
       old_plan."createdBy",
       old_plan."ownerUserId",
       old_plan."aiGenerated",

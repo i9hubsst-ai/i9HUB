@@ -153,6 +153,32 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
   }, [priorityFilter, statusFilter, responsibleFilter, tasks])
 
   const handleGenerateWithAI = async () => {
+    // Se já existe plano com tarefas, mostrar opção de otimização
+    if (actionPlan && tasks.length > 0) {
+      const confirmOptimize = confirm(
+        `Já existe um plano de ação com ${tasks.length} tarefa(s).\n\n` +
+        `A IA irá analisar as tarefas existentes e sugerir:\n` +
+        `• Melhorias nas tarefas atuais\n` +
+        `• Novas tarefas recomendadas\n` +
+        `• Tarefas que podem ser removidas\n\n` +
+        `Você poderá revisar as sugestões antes de aplicar.\n\n` +
+        `Deseja continuar?`
+      )
+
+      if (!confirmOptimize) return
+
+      // TODO: Implementar endpoint de otimização
+      alert(
+        'Funcionalidade de otimização em desenvolvimento.\n\n' +
+        'Por enquanto, você pode:\n' +
+        '• Adicionar tarefas manualmente com "Nova Tarefa"\n' +
+        '• Editar tarefas existentes clicando em "Editar"\n' +
+        '• Excluir tarefas desnecessárias'
+      )
+      return
+    }
+
+    // Se não existe plano, criar novo
     setGenerating(true)
     setError(null)
 
@@ -403,7 +429,7 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
               ) : (
                 <>
                   <Sparkles className="h-4 w-4" />
-                  Gerar com IA
+                  {actionPlan && tasks.length > 0 ? 'Otimizar com IA' : 'Gerar com IA'}
                 </>
               )}
             </Button>

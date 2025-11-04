@@ -253,6 +253,85 @@ export async function removeUserFromCompany(membershipId: string) {
   }
 }
 
+export async function createUserMembership(data: {
+  userId: string
+  companyId: string | null
+  role: Role
+}) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  const isAdmin = await isPlatformAdmin(user.id)
+  
+  // Se tem companyId, verificar permissão na empresa
+  if (data.companyId) {
+    const role = await getUserRole(user.id, data.companyId)
+    if (!isAdmin && role !== 'COMPANY_ADMIN') {
+      return { error: 'Sem permissão para vincular usuários a esta empresa' }
+    }
+  } else {
+    // Roles sem empresa (ENGINEER, VIEWER) só podem ser criados por Platform Admin
+    if (!isAdmin) {
+      return { error: 'Apenas administradores da plataforma podem criar vínculos sem empresa' }
+    }
+  }
+
+  try {
+    // Verificar se já existe membership
+    if (data.companyId) {
+      const existing = await prisma.membership.findUnique({
+        where: {
+          userId_companyId: {
+            userId: data.userId,
+            companyId: data.companyId
+          }
+        }
+      })
+
+      if (existing) {
+        return { error: 'Usuário já está vinculado a esta empresa' }
+      }
+    }
+
+    // Para roles sem empresa, usar uma empresa "dummy" ou criar sem companyId
+    // Como o schema requer companyId, vamos criar com a primeira empresa disponível para ENGINEER/VIEWER
+    let targetCompanyId = data.companyId
+    
+    if (!targetCompanyId && (data.role === 'ENGINEER' || data.role === 'VIEWER')) {
+      // Buscar primeira empresa ou criar membership "global"
+      const firstCompany = await prisma.company.findFirst()
+      if (!firstCompany) {
+        return { error: 'Nenhuma empresa encontrada no sistema' }
+      }
+      targetCompanyId = firstCompany.id
+    }
+
+    if (!targetCompanyId) {
+      return { error: 'É necessário selecionar uma empresa para este papel' }
+    }
+
+    // Criar membership
+    const membership = await prisma.membership.create({
+      data: {
+        userId: data.userId,
+        companyId: targetCompanyId,
+        role: data.role,
+        status: 'ACTIVE'
+      }
+    })
+
+    revalidatePath('/dashboard/users')
+    revalidatePath(`/dashboard/companies/${targetCompanyId}`)
+    
+    return { success: true, membership }
+  } catch (error) {
+    console.error('Erro ao criar vínculo:', error)
+    return { error: 'Erro ao criar vínculo de usuário' }
+  }
+}
+
 export async function updateUserProfile(userId: string, data: { name?: string; email?: string }) {
   const currentUser = await getCurrentUser()
   if (!currentUser) {

@@ -2,6 +2,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { BarChart3, Building2, Users, FileText, TrendingUp } from 'lucide-react'
 import { getDashboardStats } from '@/app/actions/dashboard'
 import Link from 'next/link'
+import { AssessmentStatusChart } from '@/components/dashboard/charts/assessment-status-chart'
+import { AssessmentTrendChart } from '@/components/dashboard/charts/assessment-trend-chart'
+import { FindingsCategoryChart } from '@/components/dashboard/charts/findings-category-chart'
 
 export default async function DashboardPage() {
   const result = await getDashboardStats()
@@ -21,7 +24,7 @@ export default async function DashboardPage() {
     )
   }
 
-  const { stats, recentAssessments } = result
+  const { stats, recentAssessments, charts } = result
 
   return (
     <div className="space-y-6 md:space-y-8">
@@ -92,6 +95,16 @@ export default async function DashboardPage() {
             </p>
           </CardContent>
         </Card>
+      </div>
+
+      {/* Gráficos */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <AssessmentTrendChart data={charts?.assessmentTrend || []} />
+        <AssessmentStatusChart data={charts?.assessmentStatus || { inProgress: 0, completed: 0, pending: 0 }} />
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-1">
+        <FindingsCategoryChart data={charts?.findingsByCategory || []} />
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/server'
 import { processPdfForEmbedding, extractPdfMetadata } from '@/lib/services/pdf-service'
 
 const VALID_CATEGORIES = [
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
     const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`
     const filePath = `knowledge/${fileName}`
 
-    const supabase = await createClient()
+    const supabase = createAdminClient()
     const { error: uploadError } = await supabase.storage
       .from('documents')
       .upload(filePath, buffer, { contentType: 'application/pdf', upsert: false })

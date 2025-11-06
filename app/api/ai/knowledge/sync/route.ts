@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/server'
 import { processPdfForEmbedding, extractPdfMetadata } from '@/lib/services/pdf-service'
 
 /**
@@ -57,11 +57,11 @@ export async function POST(request: Request) {
     const buffer = await pdfResponse.arrayBuffer()
     console.log(`✅ [Sync] PDF baixado: ${(buffer.byteLength / 1024).toFixed(2)} KB`)
 
-    // Salvar no Supabase Storage
+    // Salvar no Supabase Storage (usando SERVICE_ROLE para ignorar RLS)
     const fileName = `${Date.now()}_${title.replace(/[^a-zA-Z0-9.-]/g, '_')}.pdf`
     const filePath = `knowledge/${fileName}`
 
-    const supabase = await createClient()
+    const supabase = createAdminClient()
     const { error: uploadError } = await supabase.storage
       .from('documents')
       .upload(filePath, buffer, {

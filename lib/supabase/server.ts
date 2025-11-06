@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 
 export async function createClient() {
@@ -24,4 +25,25 @@ export async function createClient() {
       },
     }
   )
+}
+
+/**
+ * Cliente Supabase com SERVICE_ROLE_KEY
+ * Usado para operações administrativas que ignoram RLS
+ * Use com cuidado - sempre valide permissões antes!
+ */
+export function createAdminClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error('SUPABASE_SERVICE_ROLE_KEY não configurado')
+  }
+
+  return createSupabaseClient(supabaseUrl, serviceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  })
 }

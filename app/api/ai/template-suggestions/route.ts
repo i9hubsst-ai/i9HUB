@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { geminiService } from '@/lib/services/gemini-service'
+import { aiService } from '@/lib/services/ai-service'
 
 export async function POST(request: Request) {
   try {
@@ -12,7 +12,8 @@ export async function POST(request: Request) {
       )
     }
 
-    const suggestions = await geminiService.generateTemplateSuggestions(prompt, context)
+    console.log('🎯 [Template Suggestions] Gerando com RAG e gemini-2.5-flash')
+    const suggestions = await aiService.generateTemplateSuggestions(prompt, context)
 
     return NextResponse.json({ suggestions })
   } catch (error) {

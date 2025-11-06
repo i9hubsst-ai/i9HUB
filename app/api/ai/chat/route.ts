@@ -1,15 +1,9 @@
-import { streamText } from 'ai'
-import { createGoogleGenerativeAI } from '@ai-sdk/google'
-import { buildRAGContext, enrichPromptWithRAG } from '@/lib/services/rag-service'
+import { aiService } from '@/lib/services/ai-service'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
 // 🚀 LEMBRETE: ESTE CÓDIGO RODA NA VERCEL (PRODUÇÃO), NÃO LOCAL!
 // Para debug: Vercel Dashboard > Logs, não console local
-// Configure Google provider with API key
-const google = createGoogleGenerativeAI({
-  apiKey: process.env.GEMINI_API_KEY || process.env.GOOGLE_GENERATIVE_AI_API_KEY
-})
 
 export async function POST(request: Request) {
   const startTime = Date.now()
@@ -56,44 +50,17 @@ export async function POST(request: Request) {
       })
     }
 
-    // Buscar contexto RAG
-    const ragStart = Date.now()
-    console.log(`🧠 [${new Date().toISOString()}] [API] Iniciando busca RAG...`)
-    const ragContext = await buildRAGContext(userPrompt)
-    const ragEnd = Date.now()
-    console.log(`📚 [${new Date().toISOString()}] [API] RAG completado em ${ragEnd - ragStart}ms - Confiança: ${ragContext.confidence.toFixed(2)}`)
+    // Usar serviço unificado de IA com RAG
+    console.log(`🤖 [${new Date().toISOString()}] [API] Usando aiService unificado com RAG`)
+    const aiStart = Date.now()
     
-    // Enriquecer prompt com contexto RAG
-    const enrichedPrompt = await enrichPromptWithRAG(userPrompt, ragContext)
+    const result = await aiService.chat(userPrompt)
     
-    console.log(`🤖 [${new Date().toISOString()}] [API] Chamando Gemini com contexto RAG - MODELO CORRIGIDO!`)
-    const geminiStart = Date.now()
-    
-    // ✅ MODELO FUNCIONANDO: gemini-2.5-flash (testado e validado)
-    const result = await streamText({
-      model: google('gemini-2.5-flash'), // ✅ Modelo compatível com API v1beta
-      messages: [
-        {
-          role: 'user',
-          content: enrichedPrompt
-        }
-      ],
-      temperature: 0.7,
-      maxTokens: 2000,
-    })
-
-    const geminiEnd = Date.now()
-    console.log(`✅ [${new Date().toISOString()}] [API] Gemini respondeu em ${geminiEnd - geminiStart}ms`)
+    const aiEnd = Date.now()
+    console.log(`✅ [${new Date().toISOString()}] [API] AI Service respondeu em ${aiEnd - aiStart}ms`)
     
     const totalTime = Date.now() - startTime
-    console.log(`🏁 [${new Date().toISOString()}] [API] PROCESSO COMPLETO com RAG - Total: ${totalTime}ms | Parse: ${parseEnd - parseStart}ms | Extract: ${extractEnd - extractStart}ms | RAG: ${ragEnd - ragStart}ms | Gemini: ${geminiEnd - geminiStart}ms`)
-    
-    // Log de fontes mais detalhado
-    const sources = ragContext.sources.length > 0 ? ragContext.sources : []
-    const allSources = [...sources, 'CONHECIMENTO_GERAL_SST'] // IA sempre tem conhecimento base
-    console.log(`📊 [${new Date().toISOString()}] [API] Fontes disponíveis:`, allSources)
-    console.log(`📚 [${new Date().toISOString()}] [API] Documentos encontrados: ${sources.length > 0 ? sources.join(', ') : 'Nenhum'}`)
-    console.log(`🧠 [${new Date().toISOString()}] [API] Conhecimento geral SST: SEMPRE ATIVO`)
+    console.log(`🏁 [${new Date().toISOString()}] [API] PROCESSO COMPLETO - Total: ${totalTime}ms`)
     
     return result.toAIStreamResponse()
   } catch (error: any) {

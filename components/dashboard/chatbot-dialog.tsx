@@ -76,7 +76,7 @@ export function ChatbotDialog() {
     return (
       <Button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 z-50 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 z-50 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800"
         size="icon"
       >
         <SparklesIcon className="h-6 w-6 text-white" />
@@ -91,7 +91,7 @@ export function ChatbotDialog() {
         : 'bottom-6 right-6 w-[420px] h-[650px]' // Desktop: tamanho fixo
     } p-0 flex flex-col overflow-hidden bg-white dark:bg-gray-900 border-2`}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+      <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-green-600 to-emerald-700 text-white">
         <div className="flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
             <SparklesIcon className="h-5 w-5" />
@@ -134,7 +134,7 @@ export function ChatbotDialog() {
                 className={`rounded-2xl p-3 max-w-[85%] ${
                   message.role === 'assistant'
                     ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
-                    : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                    : 'bg-gradient-to-r from-green-600 to-emerald-700 text-white'
                 }`}
               >
                 {message.role === 'assistant' && (
@@ -209,7 +209,7 @@ export function ChatbotDialog() {
           <Button 
             type="submit" 
             disabled={isLoading || !input.trim()}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 h-[60px] w-12"
+            className="bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 h-[60px] w-12"
           >
             <SendIcon className="h-4 w-4" />
           </Button>

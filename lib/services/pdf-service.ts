@@ -1,19 +1,71 @@
 /**
  * Serviço de processamento de PDFs
  * Extrai texto e gera embeddings para base de conhecimento
- * 
- * NOTA: Extração de PDF desabilitada temporariamente devido a incompatibilidades serverless
- * Use endpoints externos ou aguarde implementação de worker separado
+ * Usa pdf2json - 100% compatível com serverless
  */
 
 import { generateEmbedding } from './embedding-service'
 
 /**
- * Extrai texto de um buffer de PDF
- * TEMPORÁRIO: Retorna mensagem de erro até implementar worker externo
+ * Extrai texto de um buffer de PDF usando pdf2json (mesmo método do /api/ai/documents)
  */
 export async function extractPdfText(buffer: ArrayBuffer): Promise<string> {
-  throw new Error('Extração de PDF temporariamente desabilitada. Por favor, cole o texto manualmente ou aguarde próxima atualização.')
+  return new Promise((resolve, reject) => {
+    try {
+      console.log('📄 [PDF Service] Extraindo texto do PDF com pdf2json...')
+      
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const PDFParser = require('pdf2json')
+      const pdfParser = new PDFParser()
+      
+      // Handler de sucesso
+      pdfParser.on('pdfParser_dataReady', (pdfData: any) => {
+        try {
+          let fullText = ''
+          const pages = pdfData.Pages || []
+          
+          console.log(`📄 [PDF Service] Total de páginas: ${pages.length}`)
+          
+          pages.forEach((page: any) => {
+            const texts = page.Texts || []
+            texts.forEach((text: any) => {
+              if (text.R && text.R.length > 0) {
+                text.R.forEach((r: any) => {
+                  if (r.T) {
+                    const decodedText = decodeURIComponent(r.T)
+                    fullText += decodedText + ' '
+                  }
+                })
+              }
+            })
+            fullText += '\n'
+          })
+          
+          fullText = fullText.trim()
+          
+          console.log(`✅ [PDF Service] Extraído: ${fullText.length} caracteres de ${pages.length} páginas`)
+          
+          resolve(fullText)
+        } catch (parseError) {
+          reject(new Error(`Erro ao processar PDF: ${parseError instanceof Error ? parseError.message : 'Erro desconhecido'}`))
+        }
+      })
+      
+      // Handler de erro
+      pdfParser.on('pdfParser_dataError', (error: any) => {
+        console.error('❌ [PDF Service] Erro no parser:', error)
+        reject(new Error(`Erro no parser: ${error.parserError || 'Erro desconhecido'}`))
+      })
+      
+      // Converter ArrayBuffer para Buffer
+      const nodeBuffer = Buffer.from(buffer)
+      pdfParser.parseBuffer(nodeBuffer)
+      
+    } catch (error) {
+      console.error('❌ [PDF Service] Erro ao extrair texto:', error)
+      reject(new Error('Falha ao extrair texto do PDF'))
+    }
+  })
 }
 
 /**
@@ -83,13 +135,38 @@ export async function processPdfForEmbedding(buffer: ArrayBuffer) {
 }
 
 /**
- * Extrai metadados do PDF
- * TEMPORÁRIO: Retorna dados mínimos até implementar worker externo
+ * Extrai metadados de um PDF usando pdf2json
  */
-export async function extractPdfMetadata(buffer: ArrayBuffer) {
-  return {
-    pages: 1,
-    info: {},
-    metadata: {},
-  }
+export async function extractPdfMetadata(buffer: ArrayBuffer): Promise<{ pages: number; title?: string }> {
+  return new Promise((resolve, reject) => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const PDFParser = require('pdf2json')
+      const pdfParser = new PDFParser()
+      
+      pdfParser.on('pdfParser_dataReady', (pdfData: any) => {
+        try {
+          const pages = pdfData.Pages ? pdfData.Pages.length : 0
+          const title = pdfData.Meta?.Title || undefined
+          
+          console.log(`✅ [PDF Service] Metadados extraídos: ${pages} páginas${title ? `, título: ${title}` : ''}`)
+          resolve({ pages, title })
+        } catch (error) {
+          reject(new Error('Erro ao processar metadados'))
+        }
+      })
+      
+      pdfParser.on('pdfParser_dataError', (error: any) => {
+        console.error('❌ [PDF Service] Erro ao extrair metadados:', error)
+        reject(new Error(`Erro no parser: ${error.parserError || 'Erro desconhecido'}`))
+      })
+      
+      const nodeBuffer = Buffer.from(buffer)
+      pdfParser.parseBuffer(nodeBuffer)
+      
+    } catch (error) {
+      console.error('❌ [PDF Service] Erro ao extrair metadados:', error)
+      reject(new Error('Falha ao extrair metadados do PDF'))
+    }
+  })
 }

@@ -4,5 +4,7 @@
       "path": "/api/ai/knowledge/auto-update",
       "schedule": "0 3 * * 0"
     }
-  ]
+  ],
+  "buildCommand": "prisma generate && next build",
+  "installCommand": "npm install"
 }

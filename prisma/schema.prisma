@@ -603,10 +603,16 @@ enum EmbeddingSourceType {
   TEMPLATE
   ASSESSMENT
   ACTION_PLAN
-  MTE_STANDARD
-  ISO_STANDARD
+  MTE_STANDARD       // Normas MTE (NRs)
+  ISO_STANDARD       // Normas ISO
   BEST_PRACTICE
   DOCUMENT
+  NORMA              // Normas gerais
+  PROCEDIMENTO       // Procedimentos operacionais
+  LEI                // Legislação
+  BENCHMARKING       // Modelos para benchmarking
+  REGULAMENTO        // Regulamentos técnicos
+  MANUAL             // Manuais técnicos
 }
 
 enum FeedbackType {

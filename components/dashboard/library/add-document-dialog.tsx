@@ -88,37 +88,14 @@ export function AddDocumentDialog({ isAdmin }: AddDocumentDialogProps) {
 
     try {
       if (mode === 'LOCAL_PDF') {
-        // Upload manual
-        if (!file) {
-          toast({
-            title: 'Erro',
-            description: 'Selecione um arquivo PDF',
-            variant: 'destructive'
-          })
-          setIsSubmitting(false)
-          return
-        }
-
-        const formData = new FormData()
-        formData.append('file', file)
-        formData.append('category', category)
-        formData.append('title', title)
-        if (description) formData.append('description', description)
-
-        const response = await fetch('/api/ai/knowledge/upload-manual', {
-          method: 'POST',
-          body: formData
-        })
-
-        if (!response.ok) {
-          const error = await response.text()
-          throw new Error(error)
-        }
-
+        // Upload manual - TEMPORARIAMENTE DESABILITADO
         toast({
-          title: 'Sucesso',
-          description: 'Documento enviado e processado com sucesso'
+          title: 'Funcionalidade Temporariamente Desabilitada',
+          description: 'Upload de PDF está sendo atualizado. Por favor, use o modo Auto-Sync com URL direta do PDF.',
+          variant: 'destructive'
         })
+        setIsSubmitting(false)
+        return
 
       } else if (mode === 'AUTO_SYNC') {
         // Auto-sync

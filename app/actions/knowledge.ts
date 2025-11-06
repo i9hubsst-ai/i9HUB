@@ -35,19 +35,18 @@ export async function getDocumentCategoryCounts() {
       return { error: 'Não autorizado' }
     }
 
-    const counts = await prisma.knowledgeSource.groupBy({
-      by: ['category'],
+    // Buscar todos os documentos e contar manualmente
+    const documents = await prisma.knowledgeSource.findMany({
       where: {
         isActive: true
-        // TODO: Filtrar por companyId quando schema for ajustado
       },
-      _count: {
-        id: true
+      select: {
+        category: true
       }
     })
 
-    const categoryMap = counts.reduce((acc, item) => {
-      acc[item.category] = item._count.id
+    const categoryMap = documents.reduce((acc, doc) => {
+      acc[doc.category] = (acc[doc.category] || 0) + 1
       return acc
     }, {} as Record<string, number>)
 

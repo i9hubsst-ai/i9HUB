@@ -1,30 +1,19 @@
 /**
  * Serviço de processamento de PDFs
  * Extrai texto e gera embeddings para base de conhecimento
+ * 
+ * NOTA: Extração de PDF desabilitada temporariamente devido a incompatibilidades serverless
+ * Use endpoints externos ou aguarde implementação de worker separado
  */
 
 import { generateEmbedding } from './embedding-service'
 
-// pdf-parse precisa ser importado com require
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const pdfParse = require('pdf-parse')
-
 /**
  * Extrai texto de um buffer de PDF
+ * TEMPORÁRIO: Retorna mensagem de erro até implementar worker externo
  */
 export async function extractPdfText(buffer: ArrayBuffer): Promise<string> {
-  try {
-    console.log('📄 [PDF Service] Extraindo texto do PDF...')
-    
-    const data = await pdfParse(Buffer.from(buffer))
-    
-    console.log(`✅ [PDF Service] Texto extraído: ${data.numpages} páginas, ${data.text.length} caracteres`)
-    
-    return data.text
-  } catch (error) {
-    console.error('❌ [PDF Service] Erro ao extrair texto:', error)
-    throw new Error('Falha ao extrair texto do PDF')
-  }
+  throw new Error('Extração de PDF temporariamente desabilitada. Por favor, cole o texto manualmente ou aguarde próxima atualização.')
 }
 
 /**
@@ -95,19 +84,12 @@ export async function processPdfForEmbedding(buffer: ArrayBuffer) {
 
 /**
  * Extrai metadados do PDF
+ * TEMPORÁRIO: Retorna dados mínimos até implementar worker externo
  */
 export async function extractPdfMetadata(buffer: ArrayBuffer) {
-  try {
-    const data = await pdfParse(Buffer.from(buffer))
-    
-    return {
-      pages: data.numpages,
-      info: data.info,
-      metadata: data.metadata,
-      version: data.version,
-    }
-  } catch (error) {
-    console.error('❌ [PDF Service] Erro ao extrair metadata:', error)
-    return null
+  return {
+    pages: 1,
+    info: {},
+    metadata: {},
   }
 }

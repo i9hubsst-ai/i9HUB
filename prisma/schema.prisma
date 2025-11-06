@@ -59,8 +59,8 @@ model KnowledgeSource {
   embedding      Unsupported("vector")?
   isActive       Boolean                @default(true)
   createdBy      String
-  companyId      String
-  company        Company                @relation(fields: [companyId], references: [id])
+  companyId      String?                // Opcional: null = documento global da plataforma
+  company        Company?               @relation(fields: [companyId], references: [id])
 
   @@index([category])
   @@index([companyId])

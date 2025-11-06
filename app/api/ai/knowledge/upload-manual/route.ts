@@ -72,7 +72,7 @@ export async function POST(request: Request) {
         content: fullText,
         fileKey: filePath,
         createdBy: user.id,
-        companyId: 'GLOBAL',
+        companyId: null, // null = documento global da plataforma
         isActive: true,
       }
     })

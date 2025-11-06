@@ -133,7 +133,7 @@ export async function POST(request: Request) {
           lastSyncAt: new Date(),
           syncFrequency,
           createdBy: user.id,
-          companyId: 'GLOBAL',
+          companyId: null, // null = documento global da plataforma
           isActive: true,
         }
       })

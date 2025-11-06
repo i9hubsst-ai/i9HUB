@@ -50,11 +50,11 @@ export async function POST(request: Request) {
 
     const buffer = await file.arrayBuffer()
     const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`
-    const filePath = `knowledge-base/uploads/${category}/${fileName}`
+    const filePath = `knowledge/${fileName}`
 
     const supabase = await createClient()
     const { error: uploadError } = await supabase.storage
-      .from('pdfs')
+      .from('documents')
       .upload(filePath, buffer, { contentType: 'application/pdf', upsert: false })
 
     if (uploadError) throw new Error('Erro no storage: ' + uploadError.message)

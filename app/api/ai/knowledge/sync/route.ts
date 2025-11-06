@@ -59,11 +59,11 @@ export async function POST(request: Request) {
 
     // Salvar no Supabase Storage
     const fileName = `${Date.now()}_${title.replace(/[^a-zA-Z0-9.-]/g, '_')}.pdf`
-    const filePath = `knowledge-base/auto-sync/${category}/${fileName}`
+    const filePath = `knowledge/${fileName}`
 
     const supabase = await createClient()
     const { error: uploadError } = await supabase.storage
-      .from('pdfs')
+      .from('documents')
       .upload(filePath, buffer, {
         contentType: 'application/pdf',
         upsert: false

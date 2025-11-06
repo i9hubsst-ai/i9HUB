@@ -43,24 +43,28 @@ model AIPromptConfig {
 }
 
 model KnowledgeSource {
-  id          String                 @id @default(cuid())
-  createdAt   DateTime               @default(now())
-  updatedAt   DateTime               @updatedAt
-  type        String
-  title       String
-  description String?
-  content     String
-  category    String
-  url         String?
-  fileKey     String?
-  embedding   Unsupported("vector")?
-  isActive    Boolean                @default(true)
-  createdBy   String
-  companyId   String
-  company     Company                @relation(fields: [companyId], references: [id])
+  id             String                 @id @default(cuid())
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  type           String
+  title          String
+  description    String?
+  content        String
+  category       String
+  mode           DocumentMode           @default(LOCAL_PDF) // Modo de gerenciamento
+  sourceUrl      String?                // URL original (para AUTO_SYNC e EXTERNAL_LINK)
+  fileKey        String?                // Chave no storage (para LOCAL_PDF e AUTO_SYNC)
+  lastSyncAt     DateTime?              // Última sincronização (AUTO_SYNC)
+  syncFrequency  String?                @default("WEEKLY") // DAILY, WEEKLY, MONTHLY
+  embedding      Unsupported("vector")?
+  isActive       Boolean                @default(true)
+  createdBy      String
+  companyId      String
+  company        Company                @relation(fields: [companyId], references: [id])
 
   @@index([category])
   @@index([companyId])
+  @@index([mode])
 }
 
 model Company {
@@ -613,6 +617,12 @@ enum EmbeddingSourceType {
   BENCHMARKING       // Modelos para benchmarking
   REGULAMENTO        // Regulamentos técnicos
   MANUAL             // Manuais técnicos
+}
+
+enum DocumentMode {
+  LOCAL_PDF      // Upload manual de PDF
+  EXTERNAL_LINK  // Apenas link externo (sem IA)
+  AUTO_SYNC      // Sincronização automática de URL
 }
 
 enum FeedbackType {

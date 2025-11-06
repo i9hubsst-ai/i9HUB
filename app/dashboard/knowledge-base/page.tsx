@@ -1,20 +1,30 @@
-import KnowledgeBaseUpload from '@/components/dashboard/knowledge-base-upload'
+import { KnowledgeBaseClient } from './knowledge-base-client'
+import { getKnowledgeDocuments, getDocumentCategoryCounts } from '@/app/actions/knowledge'
+import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
-export default function KnowledgeBasePage() {
+export default async function KnowledgeBasePage() {
+  const user = await getCurrentUser()
+  
+  if (!user) {
+    redirect('/auth/login')
+  }
+
+  const isAdmin = await isPlatformAdmin(user.id)
+
+  const [documentsResult, countsResult] = await Promise.all([
+    getKnowledgeDocuments(),
+    getDocumentCategoryCounts()
+  ])
+
+  const documents = documentsResult.success ? documentsResult.documents : []
+  const counts = countsResult.success ? countsResult.counts : {}
+
   return (
-    <div className="container py-6">
-      <h1 className="text-2xl font-bold mb-6">
-        Base de Conhecimento
-      </h1>
-      
-      <div className="grid gap-6">
-        <div>
-          <h2 className="text-lg font-semibold mb-4">
-            Upload de Documentos
-          </h2>
-          <KnowledgeBaseUpload />
-        </div>
-      </div>
-    </div>
+    <KnowledgeBaseClient 
+      documents={documents || []} 
+      categoryCounts={counts || {}}
+      isAdmin={isAdmin}
+    />
   )
 }

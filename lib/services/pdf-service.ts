@@ -3,8 +3,11 @@
  * Extrai texto e gera embeddings para base de conhecimento
  */
 
-import * as pdfParse from 'pdf-parse'
 import { generateEmbedding } from './embedding-service'
+
+// pdf-parse precisa ser importado com require
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const pdfParse = require('pdf-parse')
 
 /**
  * Extrai texto de um buffer de PDF

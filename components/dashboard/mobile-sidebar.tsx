@@ -38,7 +38,8 @@ import {
   Database,
   Bell,
   Activity,
-  Palette
+  Palette,
+  BookOpen
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -166,6 +167,11 @@ const menuStructure: MenuItem[] = [
     icon: Database,
     label: 'Cadastros',
     href: '/dashboard/cadastros'
+  },
+  {
+    icon: BookOpen,
+    label: 'Biblioteca de Conhecimento',
+    href: '/dashboard/knowledge-base'
   },
   {
     icon: Settings,

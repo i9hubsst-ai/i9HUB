@@ -170,6 +170,7 @@ export function KnowledgeBaseClient({
         onRefresh={handleRefresh}
         onDelete={handleDelete}
         onSync={handleSync}
+        isAdmin={isAdmin}
       />
     </div>
   )

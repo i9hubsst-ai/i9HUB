@@ -29,7 +29,8 @@ import {
   RefreshCw,
   Upload,
   Link as LinkIcon,
-  Zap
+  Zap,
+  Eye
 } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
@@ -55,6 +56,7 @@ interface DocumentListProps {
   onRefresh: () => void
   onDelete: (id: string) => void
   onSync: (id: string) => void
+  isAdmin?: boolean
 }
 
 const modeLabels = {
@@ -80,9 +82,28 @@ export function DocumentList({
   selectedCategory, 
   onRefresh, 
   onDelete, 
-  onSync 
+  onSync,
+  isAdmin = false
 }: DocumentListProps) {
   const [searchQuery, setSearchQuery] = useState('')
+
+  const handleViewDocument = async (doc: Document) => {
+    try {
+      const response = await fetch(`/api/ai/knowledge/view/${doc.id}`)
+      const data = await response.json()
+
+      if (!response.ok) {
+        alert(data.error || 'Erro ao abrir documento')
+        return
+      }
+
+      // Abrir documento em nova aba
+      window.open(data.url, '_blank')
+    } catch (error) {
+      console.error('Erro ao visualizar documento:', error)
+      alert('Erro ao abrir documento')
+    }
+  }
 
   const filteredDocuments = documents.filter(doc => {
     const matchesCategory = !selectedCategory || doc.category === selectedCategory
@@ -210,6 +231,12 @@ export function DocumentList({
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
+                            {/* Visualizar - Todos podem ver */}
+                            <DropdownMenuItem onClick={() => handleViewDocument(doc)}>
+                              <Eye className="h-4 w-4 mr-2" />
+                              Visualizar
+                            </DropdownMenuItem>
+                            
                             {doc.sourceUrl && (
                               <DropdownMenuItem asChild>
                                 <a 
@@ -223,25 +250,33 @@ export function DocumentList({
                                 </a>
                               </DropdownMenuItem>
                             )}
-                            {doc.storagePath && (
-                              <DropdownMenuItem>
-                                <Download className="h-4 w-4 mr-2" />
-                                Baixar PDF
-                              </DropdownMenuItem>
+                            
+                            {/* Ações de Admin apenas */}
+                            {isAdmin && (
+                              <>
+                                {doc.storagePath && (
+                                  <DropdownMenuItem>
+                                    <Download className="h-4 w-4 mr-2" />
+                                    Baixar PDF
+                                  </DropdownMenuItem>
+                                )}
+                                
+                                {doc.mode === 'AUTO_SYNC' && (
+                                  <DropdownMenuItem onClick={() => onSync(doc.id)}>
+                                    <RefreshCw className="h-4 w-4 mr-2" />
+                                    Sincronizar Agora
+                                  </DropdownMenuItem>
+                                )}
+                                
+                                <DropdownMenuItem 
+                                  onClick={() => onDelete(doc.id)}
+                                  className="text-red-600"
+                                >
+                                  <Trash2 className="h-4 w-4 mr-2" />
+                                  Excluir
+                                </DropdownMenuItem>
+                              </>
                             )}
-                            {doc.mode === 'AUTO_SYNC' && (
-                              <DropdownMenuItem onClick={() => onSync(doc.id)}>
-                                <RefreshCw className="h-4 w-4 mr-2" />
-                                Sincronizar Agora
-                              </DropdownMenuItem>
-                            )}
-                            <DropdownMenuItem 
-                              onClick={() => onDelete(doc.id)}
-                              className="text-red-600"
-                            >
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              Excluir
-                            </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TableCell>

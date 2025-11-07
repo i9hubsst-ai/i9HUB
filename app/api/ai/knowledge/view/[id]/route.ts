@@ -9,7 +9,7 @@ import { prisma } from '@/lib/prisma'
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await getCurrentUser()
@@ -20,7 +20,7 @@ export async function GET(
       )
     }
 
-    const documentId = params.id
+    const { id: documentId } = await context.params
 
     // Buscar documento
     const document = await prisma.knowledgeSource.findUnique({

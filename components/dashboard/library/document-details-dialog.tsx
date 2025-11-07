@@ -218,16 +218,24 @@ export function DocumentDetailsDialog({
         throw new Error('Erro ao salvar')
       }
 
+      const result = await response.json()
+
       toast({
-        title: 'Documento atualizado',
+        title: '✓ Documento atualizado',
         description: 'As alterações foram salvas com sucesso!',
       })
       
+      // Sair do modo de edição
       setIsEditing(false)
+      
+      // Atualizar documento local
+      if (result.document) {
+        setEditedDoc(result.document)
+      }
+      
+      // Notificar componente pai para atualizar lista
       onEdit?.(editedDoc)
       
-      // Recarregar a página para atualizar a lista
-      window.location.reload()
     } catch (error) {
       toast({
         title: 'Erro ao salvar',

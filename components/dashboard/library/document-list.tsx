@@ -172,10 +172,9 @@ export function DocumentList({
           onView={handleViewDocument}
           onDelete={onDelete}
           onSync={onSync}
-          onEdit={(doc) => {
-            // TODO: Implementar edição - por enquanto apenas log
-            console.log('Editar documento:', doc)
-            alert('Funcionalidade de edição será implementada em breve')
+          onEdit={() => {
+            // Refresh após editar
+            onRefresh()
           }}
           isAdmin={isAdmin}
         />

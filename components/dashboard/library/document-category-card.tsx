@@ -54,11 +54,11 @@ export function DocumentCategoryCard({ category, count, onClick }: DocumentCateg
 
   return (
     <Card 
-      className="cursor-pointer hover:shadow-md transition-all hover:scale-105 border"
+      className="cursor-pointer hover:shadow-md transition-all hover:scale-105 border h-16"
       onClick={onClick}
     >
-      <CardContent className="p-3">
-        <div className="flex items-center gap-2">
+      <CardContent className="p-2 h-full">
+        <div className="flex items-center gap-2 h-full">
           <div className={`p-1 rounded ${colorClass} flex-shrink-0`}>
             <Icon className="h-3 w-3" />
           </div>

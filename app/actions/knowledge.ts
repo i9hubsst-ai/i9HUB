@@ -17,7 +17,7 @@ export async function getKnowledgeDocuments() {
         // TODO: Filtrar por companyId quando schema for ajustado
       },
       orderBy: {
-        createdAt: 'desc'
+        title: 'asc'
       }
     })
 

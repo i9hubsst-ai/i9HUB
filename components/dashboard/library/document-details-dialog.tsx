@@ -11,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
+import { useToast } from '@/hooks/use-toast'
 import {
   Eye,
   ExternalLink,
@@ -22,6 +23,8 @@ import {
   Zap,
   Upload,
   Link as LinkIcon,
+  Edit,
+  Loader2,
 } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
@@ -48,6 +51,7 @@ interface DocumentDetailsDialogProps {
   onView: (doc: Document) => void
   onDelete: (id: string) => void
   onSync: (id: string) => void
+  onEdit?: (doc: Document) => void
   isAdmin?: boolean
 }
 
@@ -76,8 +80,13 @@ export function DocumentDetailsDialog({
   onView,
   onDelete,
   onSync,
+  onEdit,
   isAdmin = false
 }: DocumentDetailsDialogProps) {
+  const [isSyncing, setIsSyncing] = useState(false)
+  const [isDownloading, setIsDownloading] = useState(false)
+  const { toast } = useToast()
+  
   if (!document) return null
 
   const ModeIcon = modeIcons[document.mode]
@@ -91,6 +100,72 @@ export function DocumentDetailsDialog({
     if (confirm('Tem certeza que deseja excluir este documento?')) {
       onDelete(document.id)
       onOpenChange(false)
+    }
+  }
+
+  const handleSync = async () => {
+    setIsSyncing(true)
+    try {
+      await onSync(document.id)
+      toast({
+        title: 'Sincronização concluída',
+        description: 'Arquivo sincronizado com sucesso!',
+      })
+    } catch (error) {
+      toast({
+        title: 'Erro na sincronização',
+        description: 'Não foi possível sincronizar o documento.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsSyncing(false)
+    }
+  }
+
+  const handleDownload = async () => {
+    if (!document.fileKey) return
+    
+    setIsDownloading(true)
+    try {
+      const response = await fetch(`/api/ai/knowledge/view/${document.id}`)
+      const data = await response.json()
+      
+      if (data.url) {
+        // Criar link temporário para download
+        const link = window.document.createElement('a')
+        link.href = data.url
+        link.download = document.title + '.pdf'
+        window.document.body.appendChild(link)
+        link.click()
+        window.document.body.removeChild(link)
+        
+        toast({
+          title: 'Download iniciado',
+          description: 'O arquivo está sendo baixado.',
+        })
+      }
+    } catch (error) {
+      toast({
+        title: 'Erro no download',
+        description: 'Não foi possível baixar o documento.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsDownloading(false)
+    }
+  }
+
+  const handleViewPDF = () => {
+    // Visualizar apenas se for PDF armazenado
+    if (document.fileKey) {
+      onView(document)
+    }
+  }
+
+  const handleOpenSource = () => {
+    // Abrir fonte externa
+    if (document.sourceUrl) {
+      window.open(document.sourceUrl, '_blank')
     }
   }
 
@@ -182,27 +257,49 @@ export function DocumentDetailsDialog({
 
           {/* Ações */}
           <div className="flex flex-wrap gap-2">
-            {/* Visualizar - Todos podem */}
-            <Button onClick={() => onView(document)} className="flex-1 sm:flex-none">
-              <Eye className="h-4 w-4 mr-2" />
-              Visualizar
-            </Button>
+            {/* Visualizar PDF - Apenas se tiver arquivo armazenado */}
+            {document.fileKey && (
+              <Button onClick={handleViewPDF} className="flex-1 sm:flex-none">
+                <Eye className="h-4 w-4 mr-2" />
+                Visualizar PDF
+              </Button>
+            )}
 
+            {/* Abrir Fonte - Se tiver URL */}
             {document.sourceUrl && (
-              <Button variant="outline" asChild className="flex-1 sm:flex-none">
-                <a href={document.sourceUrl} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Abrir Fonte
-                </a>
+              <Button variant="outline" onClick={handleOpenSource} className="flex-1 sm:flex-none">
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Abrir Fonte
               </Button>
             )}
 
             {/* Ações de Admin apenas */}
             {isAdmin && (
               <>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    onEdit?.(document)
+                    onOpenChange(false)
+                  }}
+                  className="flex-1 sm:flex-none"
+                >
+                  <Edit className="h-4 w-4 mr-2" />
+                  Editar
+                </Button>
+
                 {document.fileKey && (
-                  <Button variant="outline" className="flex-1 sm:flex-none">
-                    <Download className="h-4 w-4 mr-2" />
+                  <Button 
+                    variant="outline" 
+                    onClick={handleDownload}
+                    disabled={isDownloading}
+                    className="flex-1 sm:flex-none"
+                  >
+                    {isDownloading ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Download className="h-4 w-4 mr-2" />
+                    )}
                     Baixar
                   </Button>
                 )}
@@ -210,13 +307,15 @@ export function DocumentDetailsDialog({
                 {document.mode === 'AUTO_SYNC' && (
                   <Button
                     variant="outline"
-                    onClick={() => {
-                      onSync(document.id)
-                      onOpenChange(false)
-                    }}
+                    onClick={handleSync}
+                    disabled={isSyncing}
                     className="flex-1 sm:flex-none"
                   >
-                    <RefreshCw className="h-4 w-4 mr-2" />
+                    {isSyncing ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <RefreshCw className="h-4 w-4 mr-2" />
+                    )}
                     Sincronizar
                   </Button>
                 )}

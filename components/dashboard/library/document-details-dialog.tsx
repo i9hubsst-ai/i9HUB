@@ -96,7 +96,7 @@ export function DocumentDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[1200px] w-[90vw] max-h-[600px] overflow-y-auto">
+      <DialogContent className="max-w-[1200px] !w-[90vw] max-h-[600px] !h-auto overflow-y-auto" style={{ width: '1200px', maxWidth: '90vw' }}>
         <DialogHeader>
           <div className="flex items-start gap-3">
             <div className={`p-2 rounded-lg ${modeBadgeColors[document.mode]}`}>

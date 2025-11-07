@@ -173,13 +173,10 @@ export function DocumentList({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Título</TableHead>
-                  <TableHead>Modo</TableHead>
-                  <TableHead>Categoria</TableHead>
-                  <TableHead>Tamanho</TableHead>
-                  <TableHead>Última Sincronização</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="w-[50px]"></TableHead>
+                  <TableHead className="w-[60%]">Título</TableHead>
+                  <TableHead className="w-[20%]">Categoria</TableHead>
+                  <TableHead className="w-[15%]">Modo</TableHead>
+                  <TableHead className="w-[5%]"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -189,38 +186,27 @@ export function DocumentList({
                   return (
                     <TableRow key={doc.id}>
                       <TableCell>
-                        <div>
-                          <div className="font-medium">{doc.title}</div>
-                          {doc.description && (
-                            <div className="text-sm text-muted-foreground line-clamp-1">
-                              {doc.description}
-                            </div>
-                          )}
+                        <div className="flex items-start gap-2">
+                          <ModeIcon className="h-4 w-4 mt-1 text-muted-foreground flex-shrink-0" />
+                          <div className="min-w-0">
+                            <div className="font-medium truncate">{doc.title}</div>
+                            {doc.description && (
+                              <div className="text-sm text-muted-foreground line-clamp-1">
+                                {doc.description}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge 
-                          variant="secondary" 
-                          className={modeBadgeColors[doc.mode]}
-                        >
-                          <ModeIcon className="h-3 w-3 mr-1" />
-                          {modeLabels[doc.mode]}
-                        </Badge>
                       </TableCell>
                       <TableCell>
                         <span className="text-sm">{doc.category}</span>
                       </TableCell>
                       <TableCell>
-                        <span className="text-sm">{formatFileSize(doc.fileSize)}</span>
-                      </TableCell>
-                      <TableCell>
-                        <span className="text-sm text-muted-foreground">
-                          {formatLastSync(doc.lastSyncAt)}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={doc.isActive ? 'default' : 'secondary'}>
-                          {doc.isActive ? 'Ativo' : 'Inativo'}
+                        <Badge 
+                          variant="secondary" 
+                          className={`${modeBadgeColors[doc.mode]} text-xs`}
+                        >
+                          {modeLabels[doc.mode]}
                         </Badge>
                       </TableCell>
                       <TableCell>

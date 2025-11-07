@@ -13,7 +13,10 @@ import {
   AlertCircle,
   ClipboardList,
   Calendar,
-  User
+  User,
+  X,
+  Check,
+  ChevronsUpDown
 } from 'lucide-react'
 import { ActionPlanCard } from './action-plan-task-card'
 import {
@@ -36,6 +39,20 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Plus } from 'lucide-react'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { cn } from "@/lib/utils"
+import { getCompanyMembers } from '@/app/actions/companies'
 
 interface DiagnosticActionPlanProps {
   assessment: {
@@ -84,9 +101,20 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [responsibleFilter, setResponsibleFilter] = useState<string>('all')
   
+  // Membros da empresa
+  const [members, setMembers] = useState<Array<{
+    userId: string
+    name: string
+    email: string
+    role: string
+    position?: string
+  }>>([])
+  const [loadingMembers, setLoadingMembers] = useState(false)
+  
   // Nova tarefa
   const [showNewTaskDialog, setShowNewTaskDialog] = useState(false)
   const [creatingTask, setCreatingTask] = useState(false)
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([])
   const [newTask, setNewTask] = useState({
     what: '',
     why: '',
@@ -103,6 +131,41 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
   const canGenerateReport = 
     assessment.status === 'SCORED' && 
     assessment.findings.length > 0
+
+  // Carregar membros da empresa
+  useEffect(() => {
+    async function loadMembers() {
+      if (!assessment?.id) return
+      
+      setLoadingMembers(true)
+      try {
+        // Get companyId from assessment
+        const { getAssessmentById } = await import('@/app/actions/assessments')
+        const assessmentResult = await getAssessmentById(assessment.id)
+        
+        if ('error' in assessmentResult) {
+          console.error('Erro ao carregar detalhes da avaliação:', assessmentResult.error)
+          return
+        }
+
+        const companyId = assessmentResult.assessment.companyId
+        const result = await getCompanyMembers(companyId)
+        
+        if ('error' in result) {
+          console.error('Erro ao carregar membros:', result.error)
+          return
+        }
+
+        setMembers(result.members || [])
+      } catch (err) {
+        console.error('Erro ao carregar membros:', err)
+      } finally {
+        setLoadingMembers(false)
+      }
+    }
+
+    loadMembers()
+  }, [assessment?.id])
 
   // Carregar plano e tarefas
   useEffect(() => {
@@ -253,13 +316,21 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
     setCreatingTask(true)
 
     try {
+      // Combinar usuários selecionados em uma string separada por vírgula
+      const whoValue = selectedUsers.length > 0 
+        ? selectedUsers.map(userId => {
+            const member = members.find(m => m.userId === userId)
+            return member?.name || userId
+          }).join(', ')
+        : undefined
+
       const { createActionPlanTask } = await import('@/app/actions/action-plans')
       const result = await createActionPlanTask(actionPlan.id, {
         what: newTask.what,
         why: newTask.why || undefined,
         where: newTask.where || undefined,
         when: newTask.when || undefined,
-        who: newTask.who || undefined,
+        who: whoValue,
         how: newTask.how || undefined,
         howMuch: newTask.howMuch || undefined,
         priority: newTask.priority,
@@ -285,6 +356,7 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
         dueDate: '',
         reference: ''
       })
+      setSelectedUsers([])
       setShowNewTaskDialog(false)
 
       // Recarregar tarefas
@@ -506,14 +578,94 @@ export function DiagnosticActionPlanNew({ assessment }: DiagnosticActionPlanProp
 
                   {/* Quem */}
                   <div>
-                    <Label htmlFor="who">Quem?</Label>
-                    <Input
-                      id="who"
-                      value={newTask.who}
-                      onChange={(e) => setNewTask({ ...newTask, who: e.target.value })}
-                      placeholder="Responsável"
-                      className="mt-1"
-                    />
+                    <Label htmlFor="who">Quem? (Responsáveis)</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "w-full justify-between mt-1",
+                            selectedUsers.length === 0 && "text-muted-foreground"
+                          )}
+                        >
+                          {selectedUsers.length === 0 ? (
+                            "Selecionar responsáveis..."
+                          ) : (
+                            <div className="flex gap-1 flex-wrap">
+                              {selectedUsers.map(userId => {
+                                const member = members.find(m => m.userId === userId)
+                                return (
+                                  <Badge key={userId} variant="secondary" className="text-xs">
+                                    {member?.name || userId}
+                                  </Badge>
+                                )
+                              })}
+                            </div>
+                          )}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full p-0">
+                        <Command>
+                          <CommandInput placeholder="Buscar usuário..." />
+                          <CommandEmpty>Nenhum usuário encontrado.</CommandEmpty>
+                          <CommandGroup className="max-h-64 overflow-auto">
+                            {loadingMembers ? (
+                              <div className="flex items-center justify-center py-6">
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              </div>
+                            ) : (
+                              members.map((member) => (
+                                <CommandItem
+                                  key={member.userId}
+                                  onSelect={() => {
+                                    setSelectedUsers(prev =>
+                                      prev.includes(member.userId)
+                                        ? prev.filter(id => id !== member.userId)
+                                        : [...prev, member.userId]
+                                    )
+                                  }}
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      selectedUsers.includes(member.userId) ? "opacity-100" : "opacity-0"
+                                    )}
+                                  />
+                                  <div className="flex flex-col">
+                                    <span className="font-medium">{member.name}</span>
+                                    <span className="text-xs text-muted-foreground">
+                                      {member.email}
+                                      {member.position && ` · ${member.position}`}
+                                    </span>
+                                  </div>
+                                </CommandItem>
+                              ))
+                            )}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {selectedUsers.length > 0 && (
+                      <div className="flex gap-1 flex-wrap mt-2">
+                        {selectedUsers.map(userId => {
+                          const member = members.find(m => m.userId === userId)
+                          return (
+                            <Badge key={userId} variant="secondary" className="text-xs">
+                              {member?.name || userId}
+                              <button
+                                type="button"
+                                onClick={() => setSelectedUsers(prev => prev.filter(id => id !== userId))}
+                                className="ml-1 hover:bg-secondary-foreground/20 rounded-full"
+                              >
+                                <X className="h-3 w-3" />
+                              </button>
+                            </Badge>
+                          )
+                        })}
+                      </div>
+                    )}
                   </div>
 
                   {/* Como */}

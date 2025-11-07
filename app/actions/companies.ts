@@ -158,6 +158,67 @@ export async function getCompanies() {
   }
 }
 
+export async function getCompanyMembers(companyId: string) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  const isAdmin = await isPlatformAdmin(user.id)
+  const role = await getUserRole(user.id, companyId)
+
+  if (!isAdmin && !role) {
+    return { error: 'Sem permissão para acessar esta empresa' }
+  }
+
+  try {
+    const memberships = await prisma.membership.findMany({
+      where: {
+        companyId,
+        status: 'ACTIVE'
+      },
+      select: {
+        userId: true,
+        role: true,
+        employee: {
+          select: {
+            id: true,
+            fullName: true,
+            email: true,
+            position: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'asc'
+      }
+    })
+
+    // Fetch user data from Supabase
+    const { createClient } = await import('@/lib/supabase/server')
+    const supabase = await createClient()
+    
+    const members = await Promise.all(
+      memberships.map(async (membership) => {
+        const { data: userData } = await supabase.auth.admin.getUserById(membership.userId)
+        
+        return {
+          userId: membership.userId,
+          name: membership.employee?.fullName || userData?.user?.user_metadata?.full_name || userData?.user?.email || 'Usuário',
+          email: membership.employee?.email || userData?.user?.email || '',
+          role: membership.role,
+          position: membership.employee?.position
+        }
+      })
+    )
+
+    return { success: true, members }
+  } catch (error) {
+    console.error('Erro ao buscar membros:', error)
+    return { error: 'Erro ao buscar membros da empresa' }
+  }
+}
+
 export async function getCompanyById(companyId: string) {
   const user = await getCurrentUser()
   if (!user) {

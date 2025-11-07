@@ -4,36 +4,16 @@ import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
-  TableHeader, 
-  TableRow 
-} from '@/components/ui/table'
-import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import { 
   Search, 
   Filter, 
-  MoreVertical, 
-  Download, 
-  ExternalLink, 
-  Trash2, 
   RefreshCw,
   Upload,
   Link as LinkIcon,
   Zap,
-  Eye
+  Info,
 } from 'lucide-react'
-import { formatDistanceToNow } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { DocumentDetailsDialog } from './document-details-dialog'
 
 interface Document {
   id: string
@@ -42,12 +22,12 @@ interface Document {
   category: string
   mode: 'LOCAL_PDF' | 'EXTERNAL_LINK' | 'AUTO_SYNC'
   sourceUrl: string | null
-  storagePath: string | null
+  fileKey: string | null
   lastSyncAt: Date | null
   syncFrequency: string | null
   isActive: boolean
-  fileSize: number | null
   createdAt: Date
+  updatedAt: Date
 }
 
 interface DocumentListProps {
@@ -57,12 +37,6 @@ interface DocumentListProps {
   onDelete: (id: string) => void
   onSync: (id: string) => void
   isAdmin?: boolean
-}
-
-const modeLabels = {
-  LOCAL_PDF: 'Upload Manual',
-  EXTERNAL_LINK: 'Link Externo',
-  AUTO_SYNC: 'Auto-Sync'
 }
 
 const modeIcons = {
@@ -86,6 +60,8 @@ export function DocumentList({
   isAdmin = false
 }: DocumentListProps) {
   const [searchQuery, setSearchQuery] = useState('')
+  const [selectedDocument, setSelectedDocument] = useState<Document | null>(null)
+  const [detailsOpen, setDetailsOpen] = useState(false)
 
   const handleViewDocument = async (doc: Document) => {
     try {
@@ -97,12 +73,16 @@ export function DocumentList({
         return
       }
 
-      // Abrir documento em nova aba
       window.open(data.url, '_blank')
     } catch (error) {
       console.error('Erro ao visualizar documento:', error)
       alert('Erro ao abrir documento')
     }
+  }
+
+  const handleShowDetails = (doc: Document) => {
+    setSelectedDocument(doc)
+    setDetailsOpen(true)
   }
 
   const filteredDocuments = documents.filter(doc => {
@@ -113,21 +93,6 @@ export function DocumentList({
     
     return matchesCategory && matchesSearch
   })
-
-  const formatFileSize = (bytes: number | null) => {
-    if (!bytes) return '-'
-    if (bytes < 1024) return `${bytes} B`
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-  }
-
-  const formatLastSync = (date: Date | null) => {
-    if (!date) return 'Nunca'
-    return formatDistanceToNow(new Date(date), { 
-      addSuffix: true, 
-      locale: ptBR 
-    })
-  }
 
   return (
     <Card>
@@ -163,116 +128,57 @@ export function DocumentList({
           </Button>
         </div>
 
-        {/* Documents Table */}
+        {/* Documents List */}
         {filteredDocuments.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
             <p>Nenhum documento encontrado</p>
           </div>
         ) : (
-          <div className="border rounded-lg">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[60%]">Título</TableHead>
-                  <TableHead className="w-[20%]">Categoria</TableHead>
-                  <TableHead className="w-[15%]">Modo</TableHead>
-                  <TableHead className="w-[5%]"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredDocuments.map((doc) => {
-                  const ModeIcon = modeIcons[doc.mode]
+          <div className="space-y-2">
+            {filteredDocuments.map((doc) => {
+              const ModeIcon = modeIcons[doc.mode]
+              
+              return (
+                <div
+                  key={doc.id}
+                  className="flex items-center gap-3 p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
+                >
+                  <div className={`p-2 rounded-lg ${modeBadgeColors[doc.mode]}`}>
+                    <ModeIcon className="h-5 w-5" />
+                  </div>
                   
-                  return (
-                    <TableRow key={doc.id}>
-                      <TableCell>
-                        <div className="flex items-start gap-2">
-                          <ModeIcon className="h-4 w-4 mt-1 text-muted-foreground flex-shrink-0" />
-                          <div className="min-w-0">
-                            <div className="font-medium truncate">{doc.title}</div>
-                            {doc.description && (
-                              <div className="text-sm text-muted-foreground line-clamp-1">
-                                {doc.description}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <span className="text-sm">{doc.category}</span>
-                      </TableCell>
-                      <TableCell>
-                        <Badge 
-                          variant="secondary" 
-                          className={`${modeBadgeColors[doc.mode]} text-xs`}
-                        >
-                          {modeLabels[doc.mode]}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="sm">
-                              <MoreVertical className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            {/* Visualizar - Todos podem ver */}
-                            <DropdownMenuItem onClick={() => handleViewDocument(doc)}>
-                              <Eye className="h-4 w-4 mr-2" />
-                              Visualizar
-                            </DropdownMenuItem>
-                            
-                            {doc.sourceUrl && (
-                              <DropdownMenuItem asChild>
-                                <a 
-                                  href={doc.sourceUrl} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="cursor-pointer"
-                                >
-                                  <ExternalLink className="h-4 w-4 mr-2" />
-                                  Abrir Fonte
-                                </a>
-                              </DropdownMenuItem>
-                            )}
-                            
-                            {/* Ações de Admin apenas */}
-                            {isAdmin && (
-                              <>
-                                {doc.storagePath && (
-                                  <DropdownMenuItem>
-                                    <Download className="h-4 w-4 mr-2" />
-                                    Baixar PDF
-                                  </DropdownMenuItem>
-                                )}
-                                
-                                {doc.mode === 'AUTO_SYNC' && (
-                                  <DropdownMenuItem onClick={() => onSync(doc.id)}>
-                                    <RefreshCw className="h-4 w-4 mr-2" />
-                                    Sincronizar Agora
-                                  </DropdownMenuItem>
-                                )}
-                                
-                                <DropdownMenuItem 
-                                  onClick={() => onDelete(doc.id)}
-                                  className="text-red-600"
-                                >
-                                  <Trash2 className="h-4 w-4 mr-2" />
-                                  Excluir
-                                </DropdownMenuItem>
-                              </>
-                            )}
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-medium truncate">{doc.title}</h4>
+                    {doc.description && (
+                      <p className="text-sm text-muted-foreground truncate">
+                        {doc.description}
+                      </p>
+                    )}
+                  </div>
+
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleShowDetails(doc)}
+                    className="shrink-0"
+                  >
+                    <Info className="h-4 w-4" />
+                  </Button>
+                </div>
+              )
+            })}
           </div>
         )}
+
+        <DocumentDetailsDialog
+          document={selectedDocument}
+          open={detailsOpen}
+          onOpenChange={setDetailsOpen}
+          onView={handleViewDocument}
+          onDelete={onDelete}
+          onSync={onSync}
+          isAdmin={isAdmin}
+        />
       </CardContent>
     </Card>
   )

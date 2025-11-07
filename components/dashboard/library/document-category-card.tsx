@@ -54,22 +54,22 @@ export function DocumentCategoryCard({ category, count, onClick }: DocumentCateg
 
   return (
     <Card 
-      className="cursor-pointer hover:shadow-lg transition-all hover:scale-105 border-2"
+      className="cursor-pointer hover:shadow-md transition-all hover:scale-105 border"
       onClick={onClick}
     >
-      <CardHeader className="pb-2">
-        <div className="flex items-start justify-between">
-          <div className={`p-2 rounded-lg ${colorClass}`}>
-            <Icon className="h-5 w-5" />
+      <CardHeader className="pb-1 pt-3 px-3">
+        <div className="flex items-center justify-between gap-2">
+          <div className={`p-1.5 rounded ${colorClass}`}>
+            <Icon className="h-4 w-4" />
           </div>
-          <Badge variant="secondary" className="text-sm font-semibold">
+          <Badge variant="secondary" className="text-xs font-semibold px-2 py-0">
             {count}
           </Badge>
         </div>
       </CardHeader>
-      <CardContent>
-        <CardTitle className="text-base mb-1">{label}</CardTitle>
-        <p className="text-xs text-muted-foreground">{description}</p>
+      <CardContent className="px-3 pb-3">
+        <CardTitle className="text-sm mb-0.5 leading-tight">{label}</CardTitle>
+        <p className="text-xs text-muted-foreground leading-tight">{description}</p>
       </CardContent>
     </Card>
   )

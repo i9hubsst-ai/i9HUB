@@ -222,3 +222,74 @@ export async function getEvidencesByAnswer(answerId: string) {
     return { error: 'Erro ao buscar evidências' }
   }
 }
+
+export async function getEvidencesByAssessment(assessmentId: string) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    // Verificar autorização multi-tenant
+    const assessment = await prisma.assessment.findUnique({
+      where: { id: assessmentId },
+      select: { companyId: true }
+    })
+
+    if (!assessment) {
+      return { error: 'Diagnóstico não encontrado' }
+    }
+
+    // Verificar se é Platform Admin
+    const isAdmin = await prisma.platformAdmin.findUnique({
+      where: { userId: user.id }
+    })
+
+    // Se não for admin, verificar membership ATIVO
+    if (!isAdmin) {
+      const membership = await prisma.membership.findFirst({
+        where: {
+          userId: user.id,
+          companyId: assessment.companyId,
+          status: 'ACTIVE'
+        }
+      })
+
+      if (!membership) {
+        return { error: 'Sem permissão para visualizar evidências deste diagnóstico' }
+      }
+    }
+
+    const evidences = await prisma.evidence.findMany({
+      where: { assessmentId },
+      include: {
+        answer: {
+          include: {
+            question: {
+              select: {
+                text: true,
+                section: {
+                  select: {
+                    title: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      orderBy: { uploadedAt: 'desc' }
+    })
+
+    // Enriquecer evidências (nome do usuário não disponível no schema atual)
+    const enrichedEvidences = evidences.map(evidence => ({
+      ...evidence,
+      uploadedByUser: 'Usuário' // TODO: Buscar do Supabase Auth quando necessário
+    }))
+
+    return { success: true, evidences: enrichedEvidences }
+  } catch (error) {
+    console.error('Erro ao buscar evidências:', error)
+    return { error: 'Erro ao buscar evidências' }
+  }
+}

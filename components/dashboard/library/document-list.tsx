@@ -141,19 +141,14 @@ export function DocumentList({
               return (
                 <div
                   key={doc.id}
-                  className="flex items-center gap-3 p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
+                  className="flex items-center gap-3 p-3 rounded-lg border bg-card hover:bg-accent/50 transition-colors"
                 >
                   <div className={`p-2 rounded-lg ${modeBadgeColors[doc.mode]}`}>
-                    <ModeIcon className="h-5 w-5" />
+                    <ModeIcon className="h-4 w-4" />
                   </div>
                   
                   <div className="flex-1 min-w-0">
                     <h4 className="font-medium truncate">{doc.title}</h4>
-                    {doc.description && (
-                      <p className="text-sm text-muted-foreground truncate">
-                        {doc.description}
-                      </p>
-                    )}
                   </div>
 
                   <Button

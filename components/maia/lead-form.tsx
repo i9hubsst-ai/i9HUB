@@ -146,10 +146,16 @@ export default function LeadForm() {
 
       // Criar sessão local para o lead (não requer login)
       if (data.leadId) {
-        createLeadSession(data.leadId, formData.email, formData.name)
+        createLeadSession(data.leadId, data.email || formData.email, data.name || formData.name)
       }
 
-      // Redirecionar para página de obrigado
+      // Se já estava cadastrado, redireciona direto para o chat
+      if (data.alreadyRegistered) {
+        window.location.href = '/maia/chat'
+        return
+      }
+
+      // Se é novo cadastro, vai para página de obrigado
       window.location.href = `/maia/obrigado?email=${encodeURIComponent(formData.email)}&tipo=${formData.tipoAcesso}`
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao enviar formulário')

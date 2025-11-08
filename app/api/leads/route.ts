@@ -54,10 +54,15 @@ export async function POST(request: Request) {
     })
 
     if (existingLead) {
-      return NextResponse.json(
-        { error: 'Este email já está cadastrado no pré-lançamento' },
-        { status: 409 }
-      )
+      // Ao invés de erro, retorna o lead existente para criar sessão
+      return NextResponse.json({
+        success: true,
+        leadId: existingLead.id,
+        email: existingLead.email,
+        name: existingLead.name,
+        alreadyRegistered: true,
+        message: 'Bem-vindo de volta! Você já está cadastrado.'
+      })
     }
 
     // Segmentação automática baseada no cargo

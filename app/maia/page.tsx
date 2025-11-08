@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import LeadForm from '@/components/maia/lead-form'
+import { LeadLoginForm } from '@/components/maia/lead-login-form'
 import { 
   MessageSquare,
   Shield, 
@@ -379,6 +380,24 @@ export default function MaiaLandingPage() {
             </p>
           </div>
 
+          {/* Formulário de acesso rápido para leads já cadastrados */}
+          <div className="mb-8">
+            <LeadLoginForm />
+          </div>
+
+          {/* Separador */}
+          <div className="relative mb-8">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-green-300"></div>
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-gradient-to-b from-green-50 to-emerald-50 px-4 text-sm text-muted-foreground font-medium">
+                ou faça seu primeiro cadastro
+              </span>
+            </div>
+          </div>
+
+          {/* Formulário completo para novos leads */}
           <LeadForm />
         </div>
       </section>

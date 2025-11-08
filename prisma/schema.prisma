@@ -707,3 +707,26 @@ model Lead {
   @@index([createdAt])
   @@map("leads")
 }
+
+// Histórico de conversas do chat MA.IA para leads (pré-lançamento)
+model ChatMessage {
+  id        String   @id @default(cuid())
+  
+  // Vinculação com Lead (não requer autenticação)
+  leadId    String
+  
+  // Conteúdo da mensagem
+  role      String   // "user" ou "assistant"
+  content   String   @db.Text
+  
+  // Metadata
+  tokens    Int?     // Tokens gastos (se aplicável)
+  model     String?  // Modelo de IA usado
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  
+  @@index([leadId])
+  @@index([createdAt])
+  @@map("chat_messages")
+}

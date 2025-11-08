@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Loader2 } from 'lucide-react'
+import { createLeadSession } from '@/lib/services/lead-session'
 
 const CARGOS = [
   { value: 'engenheiro_seguranca', label: 'Engenheiro de Segurança' },
@@ -141,6 +142,11 @@ export default function LeadForm() {
 
       if (!response.ok) {
         throw new Error(data.error || 'Erro ao cadastrar lead')
+      }
+
+      // Criar sessão local para o lead (não requer login)
+      if (data.leadId) {
+        createLeadSession(data.leadId, formData.email, formData.name)
       }
 
       // Redirecionar para página de obrigado

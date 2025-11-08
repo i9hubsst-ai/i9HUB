@@ -32,7 +32,7 @@ export default function MaiaLandingPage() {
     <div className="min-h-screen bg-white">
       {/* Header Fixo */}
       <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-        <div className="container flex h-20 items-center justify-between px-4">
+        <div className="container flex h-20 items-center justify-between px-4 max-w-7xl mx-auto">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center space-x-3">
               <div className="text-3xl font-black text-green-700">
@@ -67,8 +67,8 @@ export default function MaiaLandingPage() {
         <div className="absolute inset-0 bg-grid-gray-900/[0.04] bg-[size:20px_20px]" />
         <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10 blur-3xl" />
         
-        <div className="container relative px-4 py-24 md:py-32">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="container relative px-4 py-24 md:py-32 max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             {/* Coluna Esquerda - Texto */}
             <div className="space-y-8 text-center lg:text-left">
               <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-sm px-4 py-2">
@@ -125,7 +125,7 @@ export default function MaiaLandingPage() {
             </div>
 
             {/* Coluna Direita - Mockup do Chat GRANDE */}
-            <div className="relative">
+            <div className="relative mx-auto max-w-2xl lg:max-w-none">
               <div className="absolute -inset-4 bg-gradient-to-r from-green-600/30 to-emerald-600/30 blur-3xl rounded-full" />
               <Card className="relative border-4 border-green-100 shadow-2xl shadow-green-500/20 overflow-hidden">
                 <CardHeader className="border-b-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white pb-6">
@@ -200,7 +200,7 @@ export default function MaiaLandingPage() {
       {/* Sobre o HUBSST */}
       <section id="sobre" className="py-24 bg-white">
         <div className="container px-4 max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             {/* Texto Institucional */}
             <div className="space-y-6">
               <Badge className="bg-green-100 text-green-700 border-green-300">
@@ -363,7 +363,7 @@ export default function MaiaLandingPage() {
 
       {/* Seção de Cadastro */}
       <section id="cadastro" className="py-24 bg-gradient-to-b from-green-50 to-emerald-50">
-        <div className="container px-4 max-w-4xl mx-auto">
+        <div className="container px-4 max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <Badge className="mb-6 bg-gradient-to-r from-green-600 to-emerald-600 text-white text-base px-6 py-2">
               🚀 Pré-Lançamento HUBSST / MA.IA

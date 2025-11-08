@@ -1,30 +1,98 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { Send, Bot, User, Sparkles, ArrowLeft, Info } from 'lucide-react'
+import { getLeadSession, type LeadSession } from '@/lib/services/lead-session'
 
 export default function MaiaChatPage() {
-  const [messages, setMessages] = useState<Array<{role: 'user' | 'assistant', content: string}>>([
-    {
-      role: 'assistant',
-      content: 'Olá! Eu sou o MA.IA, seu assistente de Inteligência Artificial especializado em Segurança e Saúde do Trabalho. Como posso ajudá-lo hoje?'
-    }
-  ])
+  const router = useRouter()
+  const [session, setSession] = useState<LeadSession | null>(null)
+  const [messages, setMessages] = useState<Array<{role: 'user' | 'assistant', content: string}>>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingHistory, setIsLoadingHistory] = useState(true)
+
+  // Verificar sessão ao carregar
+  useEffect(() => {
+    const currentSession = getLeadSession()
+    
+    if (!currentSession) {
+      // Redirecionar para landing se não tiver sessão
+      router.push('/maia#cadastro')
+      return
+    }
+
+    setSession(currentSession)
+    loadChatHistory(currentSession.leadId)
+  }, [router])
+
+  // Carregar histórico de mensagens
+  const loadChatHistory = async (leadId: string) => {
+    try {
+      const response = await fetch(`/api/maia/chat?leadId=${leadId}`)
+      const data = await response.json()
+
+      if (data.messages && data.messages.length > 0) {
+        setMessages(data.messages.map((msg: any) => ({
+          role: msg.role,
+          content: msg.content
+        })))
+      } else {
+        // Mensagem de boas-vindas inicial
+        setMessages([{
+          role: 'assistant',
+          content: `Olá ${currentSession?.name?.split(' ')[0] || ''}! Eu sou o MA.IA, seu assistente de Inteligência Artificial especializado em Segurança e Saúde do Trabalho. Como posso ajudá-lo hoje?`
+        }])
+      }
+    } catch (error) {
+      console.error('Erro ao carregar histórico:', error)
+      setMessages([{
+        role: 'assistant',
+        content: 'Olá! Eu sou o MA.IA. Como posso ajudá-lo hoje?'
+      }])
+    } finally {
+      setIsLoadingHistory(false)
+    }
+  }
+
+  // Salvar mensagem no banco
+  const saveMessage = async (role: 'user' | 'assistant', content: string) => {
+    if (!session) return
+
+    try {
+      await fetch('/api/maia/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          leadId: session.leadId,
+          role,
+          content
+        })
+      })
+    } catch (error) {
+      console.error('Erro ao salvar mensagem:', error)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!input.trim() || isLoading) return
+    if (!input.trim() || isLoading || !session) return
 
     const userMessage = input.trim()
     setInput('')
+    
+    // Adicionar mensagem do usuário
     setMessages(prev => [...prev, { role: 'user', content: userMessage }])
+    
+    // Salvar mensagem do usuário
+    await saveMessage('user', userMessage)
+    
     setIsLoading(true)
 
     try {
@@ -32,25 +100,47 @@ export default function MaiaChatPage() {
       // Por enquanto, resposta simulada
       await new Promise(resolve => setTimeout(resolve, 1500))
       
+      const assistantMessage = `Esta é uma versão de demonstração do MA.IA. A integração com a IA completa será ativada em breve. Por enquanto, você pode explorar a interface.\n\nSua pergunta foi: "${userMessage}"`
+      
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: `Esta é uma versão de demonstração do MA.IA. A integração com a IA completa será ativada em breve. Por enquanto, você pode explorar a interface.\n\nSua pergunta foi: "${userMessage}"`
+        content: assistantMessage
       }])
+      
+      // Salvar resposta do assistente
+      await saveMessage('assistant', assistantMessage)
     } catch (error) {
+      const errorMessage = 'Desculpe, ocorreu um erro. Tente novamente em alguns instantes.'
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Desculpe, ocorreu um erro. Tente novamente em alguns instantes.'
+        content: errorMessage
       }])
+      await saveMessage('assistant', errorMessage)
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (isLoadingHistory) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Carregando seu histórico...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!session) {
+    return null // Vai redirecionar
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-white">
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container px-4 py-4 flex items-center justify-between">
+        <div className="container px-4 py-4 flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm" asChild>
               <Link href="/maia">
@@ -80,7 +170,7 @@ export default function MaiaChatPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container px-4 py-8 max-w-5xl">
+      <main className="container px-4 py-8 max-w-6xl mx-auto">
         {/* Aviso de Versão de Teste */}
         <Card className="mb-6 p-4 bg-green-50 border-green-200">
           <div className="flex items-start gap-3">
@@ -94,30 +184,30 @@ export default function MaiaChatPage() {
         </Card>
 
         {/* Chat Messages */}
-        <Card className="mb-6 p-6 min-h-[500px] max-h-[600px] overflow-y-auto">
-          <div className="space-y-6">
+        <Card className="mb-6 p-8 min-h-[550px] max-h-[650px] overflow-y-auto bg-white shadow-lg">
+          <div className="space-y-6 max-w-5xl mx-auto">
             {messages.map((message, index) => (
               <div 
                 key={index}
                 className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {message.role === 'assistant' && (
-                  <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Bot className="w-5 h-5 text-white" />
+                  <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Bot className="w-6 h-6 text-white" />
                   </div>
                 )}
                 
-                <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                <div className={`max-w-[75%] rounded-2xl px-5 py-4 ${
                   message.role === 'user' 
                     ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white' 
                     : 'bg-gray-100 text-gray-900'
                 }`}>
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                  <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
                 </div>
 
                 {message.role === 'user' && (
-                  <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                    <User className="w-5 h-5 text-gray-600" />
+                  <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                    <User className="w-6 h-6 text-gray-600" />
                   </div>
                 )}
               </div>
@@ -125,10 +215,10 @@ export default function MaiaChatPage() {
 
             {isLoading && (
               <div className="flex gap-3 justify-start">
-                <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Bot className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-6 h-6 text-white" />
                 </div>
-                <div className="bg-gray-100 rounded-2xl px-4 py-3">
+                <div className="bg-gray-100 rounded-2xl px-5 py-4">
                   <div className="flex gap-2">
                     <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
                     <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
@@ -141,12 +231,12 @@ export default function MaiaChatPage() {
         </Card>
 
         {/* Input Form */}
-        <form onSubmit={handleSubmit} className="flex gap-3">
+        <form onSubmit={handleSubmit} className="flex gap-3 max-w-5xl mx-auto">
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Digite sua pergunta sobre SST..."
-            className="flex-1 min-h-[60px] max-h-[120px] resize-none"
+            className="flex-1 min-h-[60px] max-h-[120px] resize-none text-base"
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault()
@@ -157,13 +247,13 @@ export default function MaiaChatPage() {
           <Button 
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="h-[60px] px-6 bg-gradient-to-r from-green-600 to-emerald-600"
+            className="h-[60px] px-8 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
           >
             <Send className="w-5 h-5" />
           </Button>
         </form>
 
-        <p className="text-xs text-center text-gray-500 mt-4">
+        <p className="text-xs text-center text-gray-500 mt-4 max-w-5xl mx-auto">
           Pressione Enter para enviar ou Shift+Enter para nova linha
         </p>
       </main>

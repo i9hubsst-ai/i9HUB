@@ -29,13 +29,13 @@ export default function MaiaChatPage() {
     }
 
     setSession(currentSession)
-    loadChatHistory(currentSession.leadId)
+    loadChatHistory(currentSession)
   }, [router])
 
   // Carregar histórico de mensagens
-  const loadChatHistory = async (leadId: string) => {
+  const loadChatHistory = async (sessionData: LeadSession) => {
     try {
-      const response = await fetch(`/api/maia/chat?leadId=${leadId}`)
+      const response = await fetch(`/api/maia/chat?leadId=${sessionData.leadId}`)
       const data = await response.json()
 
       if (data.messages && data.messages.length > 0) {
@@ -47,7 +47,7 @@ export default function MaiaChatPage() {
         // Mensagem de boas-vindas inicial
         setMessages([{
           role: 'assistant',
-          content: `Olá ${currentSession?.name?.split(' ')[0] || ''}! Eu sou o MA.IA, seu assistente de Inteligência Artificial especializado em Segurança e Saúde do Trabalho. Como posso ajudá-lo hoje?`
+          content: `Olá ${sessionData.name?.split(' ')[0] || ''}! Eu sou o MA.IA, seu assistente de Inteligência Artificial especializado em Segurança e Saúde do Trabalho. Como posso ajudá-lo hoje?`
         }])
       }
     } catch (error) {

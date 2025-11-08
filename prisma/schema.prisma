@@ -642,3 +642,48 @@ enum DocumentStatus {
   READY
   ERROR
 }
+
+// Modelo para captura de leads da landing page MA.IA
+model Lead {
+  id            String    @id @default(cuid())
+  
+  // Dados pessoais
+  name          String
+  email         String    @unique
+  phone         String?
+  
+  // Dados profissionais
+  role          String    // Cargo/Função
+  company       String    // Nome da empresa
+  
+  // Interesses
+  wantsFree     Boolean   @default(false)
+  wantsPro      Boolean   @default(false)
+  
+  // Metadata para tracking
+  source        String?   @default("landing-maia") // Origem do lead
+  utm_source    String?   // UTM tracking
+  utm_campaign  String?
+  utm_medium    String?
+  
+  // Segmentação automática
+  segment       String?   // "tecnico" | "engenheiro" | "gestor"
+  
+  // Lifecycle
+  status        String    @default("new") // new, contacted, qualified, converted, lost
+  notes         String?   // Notas do follow-up
+  
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  convertedAt   DateTime? // Quando virou cliente
+  lastContactAt DateTime? // Último contato comercial
+  
+  // Relação com usuário (quando converter)
+  userId        String?   @unique
+  
+  @@index([email])
+  @@index([status])
+  @@index([segment])
+  @@index([createdAt])
+  @@map("leads")
+}

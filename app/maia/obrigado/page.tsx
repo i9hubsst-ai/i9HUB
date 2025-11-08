@@ -51,15 +51,15 @@ function ObrigadoContent() {
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span>Confirme seu e-mail clicando no link que enviamos</span>
+                  <span>Verifique seu e-mail com as instruções de acesso ao MA.IA</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span>Acesse o MA.IA gratuitamente e comece a usar agora</span>
+                  <span>Clique no botão abaixo para começar a conversar com o MA.IA agora mesmo</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span>Nossa equipe entrará em contato em até 24 horas úteis</span>
+                  <span>Nossa equipe entrará em contato para apresentar o HUBSST completo (em breve)</span>
                 </li>
               </ul>
             </div>
@@ -68,28 +68,28 @@ function ObrigadoContent() {
       </Card>
 
       {/* CTAs */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col gap-4">
         <Button 
           size="lg"
-          className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-xl shadow-blue-500/30 h-14 text-lg"
+          className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-xl shadow-green-500/30 h-16 text-xl animate-pulse"
           asChild
         >
-          <Link href="/auth/login">
-            <MessageSquare className="w-5 h-5 mr-2" />
-            Acessar o MA.IA Agora
-            <ArrowRight className="w-5 h-5 ml-2" />
+          <Link href="/maia/chat">
+            <MessageSquare className="w-6 h-6 mr-2" />
+            🚀 Começar a Usar o MA.IA Agora
+            <ArrowRight className="w-6 h-6 ml-2" />
           </Link>
         </Button>
 
         <Button 
           size="lg"
           variant="outline"
-          className="flex-1 border-2 h-14 text-lg"
+          className="w-full border-2 h-12 text-base"
           asChild
         >
           <Link href="/maia">
             <Home className="w-5 h-5 mr-2" />
-            Voltar para Homepage
+            Voltar para a Landing Page
           </Link>
         </Button>
       </div>
@@ -97,7 +97,9 @@ function ObrigadoContent() {
       {/* Informação Adicional */}
       <div className="mt-12 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200">
         <p className="text-sm text-center text-muted-foreground">
-          💡 <strong>Dica:</strong> Enquanto aguarda, explore nossos recursos e entenda como o MA.IA pode revolucionar a gestão de SST na sua empresa.
+          💡 <strong>Sobre o HUBSST:</strong> A plataforma completa de gestão de SST será lançada em breve. 
+          O MA.IA que você está testando agora será integrado a ela, oferecendo gestão de PGR, treinamentos, 
+          documentos e muito mais. Fique atento aos nossos contatos!
         </p>
       </div>
 

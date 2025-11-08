@@ -643,22 +643,39 @@ enum DocumentStatus {
   ERROR
 }
 
-// Modelo para captura de leads da landing page MA.IA
+// Modelo para captura de leads da landing page MA.IA - Pré-Lançamento
 model Lead {
   id            String    @id @default(cuid())
   
-  // Dados pessoais
+  // 1. Informações Básicas
   name          String
   email         String    @unique
   phone         String?
+  company       String
   
-  // Dados profissionais
-  role          String    // Cargo/Função
-  company       String    // Nome da empresa
+  // Cargo/Função (enum)
+  cargo         String    @default("outro") // engenheiro_seguranca, tecnico_seguranca, gestor_sst_rh, consultor_autonomo, empresario_diretor, outro
+  cargoOutro    String?   // Quando cargo = "outro"
   
-  // Interesses
-  wantsFree     Boolean   @default(false)
-  wantsPro      Boolean   @default(false)
+  // 2. Segmento de Atuação
+  setor         String    @default("outro") // industria, construcao_civil, servicos, transporte_logistica, energia, saude, outro
+  setorOutro    String?   // Quando setor = "outro"
+  
+  // 3. Desafios Atuais em SST (até 3 opções - JSON array)
+  desafios      String    @default("[]") // JSON array: ["cumprimento_nrs", "gestao_pgr", "controle_epis", "treinamentos", "gestao_riscos", "auditorias", "integracao_sistemas", "outro"]
+  desafiosOutro String?   // Descrição do desafio "outro"
+  
+  // 4. Interesse na Plataforma
+  tipoUso       String    @default("uso_proprio") // uso_proprio, atender_clientes, implantar_empresa, revender, apenas_conhecer
+  
+  // 5. Tipo de Acesso Desejado
+  tipoAcesso    String    @default("gratuito") // gratuito, profissional, corporativo
+  
+  // 6. Expectativa
+  expectativa   String?   // Campo aberto: "O que você mais gostaria que o MA.IA fizesse?"
+  
+  // 7. Autorização e Consentimento
+  consentimento Boolean   @default(false) // Autoriza contato e receber novidades
   
   // Metadata para tracking
   source        String?   @default("landing-maia") // Origem do lead
@@ -666,12 +683,12 @@ model Lead {
   utm_campaign  String?
   utm_medium    String?
   
-  // Segmentação automática
+  // Segmentação automática (mantido para compatibilidade)
   segment       String?   // "tecnico" | "engenheiro" | "gestor"
   
   // Lifecycle
   status        String    @default("new") // new, contacted, qualified, converted, lost
-  notes         String?   // Notas do follow-up
+  notes         String?   // Notas do follow-up comercial
   
   // Timestamps
   createdAt     DateTime  @default(now())
@@ -684,6 +701,9 @@ model Lead {
   @@index([email])
   @@index([status])
   @@index([segment])
+  @@index([cargo])
+  @@index([setor])
+  @@index([tipoAcesso])
   @@index([createdAt])
   @@map("leads")
 }

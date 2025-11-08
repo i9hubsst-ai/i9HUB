@@ -49,13 +49,13 @@ export default function MaiaLandingPage() {
             <a href="#sobre" className="text-muted-foreground hover:text-blue-600 transition-colors">Sobre</a>
             <a href="#recursos" className="text-muted-foreground hover:text-blue-600 transition-colors">Recursos</a>
             <a href="#planos" className="text-muted-foreground hover:text-blue-600 transition-colors">Planos</a>
-            <a href="#cadastro" className="text-muted-foreground hover:text-blue-600 transition-colors">Contato</a>
+            <a href="#contato" className="text-muted-foreground hover:text-blue-600 transition-colors">Contato</a>
           </nav>
 
-          <Button asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/50">
-            <Link href="/auth/login">
+          <Button asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/50 animate-pulse">
+            <Link href="/dashboard">
               <MessageSquare className="w-4 h-4 mr-2" />
-              Acessar o Chat
+              Usar MA.IA Grátis
             </Link>
           </Button>
         </div>
@@ -85,40 +85,41 @@ export default function MaiaLandingPage() {
               </h1>
               
               <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
-                Um chat de <strong className="text-foreground">Inteligência Artificial</strong> desenvolvido para{' '}
-                <strong className="text-foreground">engenheiros e técnicos em SST</strong>.
+                Um chat de <strong className="text-foreground">Inteligência Artificial</strong> especializado em{' '}
+                <strong className="text-foreground">Segurança e Saúde do Trabalho</strong>.
                 <br /><br />
-                Tire dúvidas, consulte normas, crie análises e receba respostas com base em{' '}
-                <strong className="text-blue-600">regulamentações reais</strong>.
+                Tire dúvidas sobre NRs, crie análises de risco, gere relatórios e receba respostas com base em{' '}
+                <strong className="text-blue-600">regulamentações reais</strong>. <strong className="text-green-600">Disponível AGORA!</strong>
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" asChild className="text-lg h-14 px-8 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-xl shadow-green-500/50">
+                <Button size="lg" asChild className="text-lg h-14 px-8 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-xl shadow-green-500/50 animate-pulse">
                   <Link href="#cadastro">
                     <Zap className="w-5 h-5 mr-2" />
-                    Experimente Grátis Agora
+                    Testar MA.IA Grátis Agora
                   </Link>
                 </Button>
+                
                 <Button size="lg" variant="outline" asChild className="text-lg h-14 px-8 border-2 hover:bg-blue-50">
-                  <Link href="#sobre">
-                    Acesso Antecipado ao HUBSST
+                  <Link href="#planos">
+                    Ver Planos Pro
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Link>
                 </Button>
               </div>
 
-              <div className="flex flex-wrap items-center gap-6 justify-center lg:justify-start pt-4">
+              <div className="flex flex-col sm:flex-row gap-6 text-sm text-muted-foreground justify-center lg:justify-start">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="text-sm font-medium text-muted-foreground">Grátis para começar</span>
+                  <span><strong className="text-foreground">Acesso imediato</strong> após cadastro</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="text-sm font-medium text-muted-foreground">Sem cartão de crédito</span>
+                  <span><strong className="text-foreground">100% gratuito</strong> para testar</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="text-sm font-medium text-muted-foreground">Cancele quando quiser</span>
+                  <span><strong className="text-foreground">Pré-lançamento</strong> - Vagas limitadas</span>
                 </div>
               </div>
             </div>
@@ -481,16 +482,19 @@ export default function MaiaLandingPage() {
 
       {/* Seção de Cadastro */}
       <section id="cadastro" className="py-24 bg-gradient-to-b from-blue-50 to-purple-50">
-        <div className="container px-4 max-w-3xl">
+        <div className="container px-4 max-w-4xl">
           <div className="text-center mb-12">
-            <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-              🚀 Pré-Lançamento
+            <Badge className="mb-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-base px-6 py-2">
+              🚀 Pré-Lançamento HUBSST / MA.IA
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Participe do Pré-Lançamento
+            <h2 className="text-4xl md:text-5xl font-black mb-6">
+              Participe do pré-lançamento e teste gratuitamente o MA.IA
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Tenha acesso antecipado ao HUBSST e comece a usar o MA.IA gratuitamente
+            <p className="text-xl md:text-2xl text-gray-700 font-semibold mb-4">
+              o Módulo Avançado de Inteligência Artificial do HUBSST.
+            </p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Preencha os dados abaixo e tenha acesso antecipado ao <strong>chat de IA especializado em Segurança do Trabalho</strong>.
             </p>
           </div>
 

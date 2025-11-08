@@ -177,7 +177,7 @@ export default function LeadForm() {
               </div>
 
               <div>
-                <Label htmlFor="email">E-mail corporativo *</Label>
+                <Label htmlFor="email">E-mail *</Label>
                 <Input
                   id="email"
                   type="email"

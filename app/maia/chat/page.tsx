@@ -47,7 +47,7 @@ export default function MaiaChatPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-white">
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container px-4 py-4 flex items-center justify-between">
@@ -60,11 +60,11 @@ export default function MaiaChatPage() {
             </Button>
             
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center">
                 <Bot className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h1 className="text-xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                   MA.IA
                 </h1>
                 <p className="text-xs text-gray-600">Módulo Avançado de IA</p>
@@ -82,10 +82,10 @@ export default function MaiaChatPage() {
       {/* Main Content */}
       <main className="container px-4 py-8 max-w-5xl">
         {/* Aviso de Versão de Teste */}
-        <Card className="mb-6 p-4 bg-blue-50 border-blue-200">
+        <Card className="mb-6 p-4 bg-green-50 border-green-200">
           <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-            <div className="text-sm text-blue-900">
+            <Info className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+            <div className="text-sm text-green-900">
               <strong>Versão de Pré-Lançamento:</strong> Você está testando a interface do MA.IA. 
               A integração completa com a base de conhecimento de SST será ativada em breve. 
               Por enquanto, explore a interface e familiarize-se com o chat!
@@ -102,14 +102,14 @@ export default function MaiaChatPage() {
                 className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {message.role === 'assistant' && (
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
                     <Bot className="w-5 h-5 text-white" />
                   </div>
                 )}
                 
                 <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                   message.role === 'user' 
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
+                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white' 
                     : 'bg-gray-100 text-gray-900'
                 }`}>
                   <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
@@ -125,7 +125,7 @@ export default function MaiaChatPage() {
 
             {isLoading && (
               <div className="flex gap-3 justify-start">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
                   <Bot className="w-5 h-5 text-white" />
                 </div>
                 <div className="bg-gray-100 rounded-2xl px-4 py-3">
@@ -157,7 +157,7 @@ export default function MaiaChatPage() {
           <Button 
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="h-[60px] px-6 bg-gradient-to-r from-blue-600 to-purple-600"
+            className="h-[60px] px-6 bg-gradient-to-r from-green-600 to-emerald-600"
           >
             <Send className="w-5 h-5" />
           </Button>

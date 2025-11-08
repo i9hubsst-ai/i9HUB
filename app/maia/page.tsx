@@ -35,25 +35,25 @@ export default function MaiaLandingPage() {
         <div className="container flex h-20 items-center justify-between px-4">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center space-x-3">
-              <div className="text-3xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <div className="text-3xl font-black text-green-700">
                 HUBSST
               </div>
             </Link>
-            <Badge variant="outline" className="hidden md:flex bg-gradient-to-r from-blue-50 to-purple-50 border-blue-300 text-blue-700 px-3 py-1">
+            <Badge variant="outline" className="hidden md:flex bg-green-50 border-green-300 text-green-700 px-3 py-1">
               <Brain className="w-4 h-4 mr-2" />
               <span className="font-semibold">MA.IA – Módulo Avançado de Inteligência Artificial</span>
             </Badge>
           </div>
           
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
-            <a href="#sobre" className="text-muted-foreground hover:text-blue-600 transition-colors">Sobre</a>
-            <a href="#recursos" className="text-muted-foreground hover:text-blue-600 transition-colors">Recursos</a>
-            <a href="#planos" className="text-muted-foreground hover:text-blue-600 transition-colors">Planos</a>
-            <a href="#contato" className="text-muted-foreground hover:text-blue-600 transition-colors">Contato</a>
+            <a href="#sobre" className="text-muted-foreground hover:text-green-600 transition-colors">Sobre</a>
+            <a href="#recursos" className="text-muted-foreground hover:text-green-600 transition-colors">Recursos</a>
+            <a href="#cadastro" className="text-muted-foreground hover:text-green-600 transition-colors">Cadastro</a>
+            <a href="#contato" className="text-muted-foreground hover:text-green-600 transition-colors">Contato</a>
           </nav>
 
-          <Button asChild className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/50 animate-pulse">
-            <Link href="/dashboard">
+          <Button asChild className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg shadow-green-500/50">
+            <Link href="#cadastro">
               <MessageSquare className="w-4 h-4 mr-2" />
               Usar MA.IA Grátis
             </Link>
@@ -62,23 +62,23 @@ export default function MaiaLandingPage() {
       </header>
 
       {/* Hero Section - Primeira Dobra */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50 via-white to-purple-50">
+      <section className="relative overflow-hidden bg-gradient-to-b from-green-50 via-white to-emerald-50">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-grid-gray-900/[0.04] bg-[size:20px_20px]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10 blur-3xl" />
         
         <div className="container relative px-4 py-24 md:py-32">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Coluna Esquerda - Texto */}
             <div className="space-y-8 text-center lg:text-left">
-              <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm px-4 py-2">
+              <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-sm px-4 py-2">
                 <Sparkles className="w-4 h-4 mr-2" />
                 Módulo Avançado de Inteligência Artificial
               </Badge>
               
               <h1 className="text-5xl md:text-7xl font-black leading-tight tracking-tight">
                 Conheça o{' '}
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent animate-gradient">
+                <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 bg-clip-text text-transparent animate-gradient">
                   MA.IA
                 </span>
                 {' '}— o cérebro inteligente da Segurança do Trabalho.
@@ -89,20 +89,20 @@ export default function MaiaLandingPage() {
                 <strong className="text-foreground">Segurança e Saúde do Trabalho</strong>.
                 <br /><br />
                 Tire dúvidas sobre NRs, crie análises de risco, gere relatórios e receba respostas com base em{' '}
-                <strong className="text-blue-600">regulamentações reais</strong>. <strong className="text-green-600">Disponível AGORA!</strong>
+                <strong className="text-green-600">regulamentações reais</strong>. <strong className="text-green-600">Disponível AGORA!</strong>
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" asChild className="text-lg h-14 px-8 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-xl shadow-green-500/50 animate-pulse">
+                <Button size="lg" asChild className="text-lg h-14 px-8 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-xl shadow-green-500/50">
                   <Link href="#cadastro">
                     <Zap className="w-5 h-5 mr-2" />
                     Testar MA.IA Grátis Agora
                   </Link>
                 </Button>
                 
-                <Button size="lg" variant="outline" asChild className="text-lg h-14 px-8 border-2 hover:bg-blue-50">
-                  <Link href="#planos">
-                    Ver Planos Pro
+                <Button size="lg" variant="outline" asChild className="text-lg h-14 px-8 border-2 hover:bg-green-50">
+                  <Link href="#sobre">
+                    Saiba Mais
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Link>
                 </Button>
@@ -126,16 +126,16 @@ export default function MaiaLandingPage() {
 
             {/* Coluna Direita - Mockup do Chat GRANDE */}
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-purple-600/30 blur-3xl rounded-full" />
-              <Card className="relative border-4 border-blue-100 shadow-2xl shadow-blue-500/20 overflow-hidden">
-                <CardHeader className="border-b-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white pb-6">
+              <div className="absolute -inset-4 bg-gradient-to-r from-green-600/30 to-emerald-600/30 blur-3xl rounded-full" />
+              <Card className="relative border-4 border-green-100 shadow-2xl shadow-green-500/20 overflow-hidden">
+                <CardHeader className="border-b-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white pb-6">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur flex items-center justify-center ring-4 ring-white/30">
                       <Brain className="w-8 h-8 text-white" />
                     </div>
                     <div>
                       <CardTitle className="text-2xl font-bold text-white">MA.IA</CardTitle>
-                      <p className="text-blue-100 text-sm mt-1">Inteligência que pensa como o engenheiro</p>
+                      <p className="text-green-100 text-sm mt-1">Inteligência que pensa como o engenheiro</p>
                     </div>
                     <div className="ml-auto">
                       <div className="flex gap-1">
@@ -148,7 +148,7 @@ export default function MaiaLandingPage() {
                 <CardContent className="p-6 space-y-6 bg-gray-50 min-h-[400px]">
                   {/* Mensagem do Usuário */}
                   <div className="flex justify-end animate-fade-in">
-                    <div className="bg-blue-600 text-white rounded-2xl rounded-tr-sm px-5 py-4 max-w-[85%] shadow-lg">
+                    <div className="bg-green-600 text-white rounded-2xl rounded-tr-sm px-5 py-4 max-w-[85%] shadow-lg">
                       <p className="font-medium">Quais são os requisitos da NR-12 para proteção de máquinas e equipamentos?</p>
                     </div>
                   </div>
@@ -161,15 +161,15 @@ export default function MaiaLandingPage() {
                       </p>
                       <ul className="space-y-2 text-gray-700 ml-4">
                         <li className="flex items-start gap-2">
-                          <ShieldCheck className="w-4 h-4 text-blue-600 mt-1 flex-shrink-0" />
+                          <ShieldCheck className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
                           <span>Proteções fixas e móveis adequadas</span>
                         </li>
                         <li className="flex items-start gap-2">
-                          <ShieldCheck className="w-4 h-4 text-blue-600 mt-1 flex-shrink-0" />
+                          <ShieldCheck className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
                           <span>Dispositivos de segurança certificados</span>
                         </li>
                         <li className="flex items-start gap-2">
-                          <ShieldCheck className="w-4 h-4 text-blue-600 mt-1 flex-shrink-0" />
+                          <ShieldCheck className="w-4 h-4 text-green-600 mt-1 flex-shrink-0" />
                           <span>Sistema de parada de emergência acessível</span>
                         </li>
                       </ul>
@@ -199,11 +199,11 @@ export default function MaiaLandingPage() {
 
       {/* Sobre o HUBSST */}
       <section id="sobre" className="py-24 bg-white">
-        <div className="container px-4">
+        <div className="container px-4 max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Texto Institucional */}
             <div className="space-y-6">
-              <Badge className="bg-blue-100 text-blue-700 border-blue-300">
+              <Badge className="bg-green-100 text-green-700 border-green-300">
                 Plataforma Completa
               </Badge>
               <h2 className="text-4xl md:text-5xl font-bold leading-tight">
@@ -220,9 +220,9 @@ export default function MaiaLandingPage() {
 
             {/* Lista de Benefícios com Ícones */}
             <div className="grid sm:grid-cols-2 gap-6">
-              <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-blue-50 transition-colors">
-                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-blue-600" />
+              <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-green-50 transition-colors">
+                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-green-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Compliance Automatizado</h3>
@@ -230,9 +230,9 @@ export default function MaiaLandingPage() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-purple-50 transition-colors">
-                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
-                  <Target className="w-6 h-6 text-purple-600" />
+              <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-emerald-50 transition-colors">
+                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center">
+                  <Target className="w-6 h-6 text-emerald-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Planos de Ação Inteligentes</h3>
@@ -285,10 +285,10 @@ export default function MaiaLandingPage() {
       </section>
 
       {/* Conheça o Chat MA.IA */}
-      <section id="recursos" className="py-24 bg-gradient-to-b from-blue-50 to-purple-50">
-        <div className="container px-4">
+      <section id="recursos" className="py-24 bg-gradient-to-b from-green-50 to-emerald-50">
+        <div className="container px-4 max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+            <Badge className="mb-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white">
               O primeiro assistente inteligente especializado em Segurança do Trabalho
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -305,40 +305,40 @@ export default function MaiaLandingPage() {
                 icon: BookOpen,
                 title: 'Consulta instantânea às NRs e NBRs',
                 desc: 'Acesso direto às normas regulamentadoras atualizadas com interpretação contextual',
-                color: 'blue'
+                color: 'green'
               },
               {
                 icon: ShieldCheck,
                 title: 'Sugestão de medidas corretivas',
                 desc: 'Recomendações técnicas baseadas em boas práticas e experiência acumulada',
-                color: 'green'
+                color: 'emerald'
               },
               {
                 icon: ListChecks,
                 title: 'Criação de planos 5W2H',
                 desc: 'Planos de ação estruturados automaticamente com What, Why, Who, Where, When, How, How Much',
-                color: 'purple'
+                color: 'green'
               },
               {
                 icon: FileText,
                 title: 'Geração de relatórios automáticos',
                 desc: 'Documentação profissional em minutos, pronta para apresentação e arquivo',
-                color: 'orange'
+                color: 'green'
               },
               {
                 icon: Brain,
                 title: 'Aprendizado contínuo',
                 desc: 'Evolução constante com base em casos reais e feedback dos profissionais',
-                color: 'pink'
+                color: 'emerald'
               },
               {
                 icon: Zap,
                 title: 'Respostas instantâneas',
                 desc: 'Economia de horas de pesquisa e análise com respostas precisas em segundos',
-                color: 'yellow'
+                color: 'green'
               },
             ].map((feature, i) => (
-              <Card key={i} className="border-2 hover:border-blue-400 hover:shadow-xl transition-all duration-300 group">
+              <Card key={i} className="border-2 hover:border-green-400 hover:shadow-xl transition-all duration-300 group">
                 <CardHeader>
                   <div className={`w-16 h-16 rounded-2xl bg-${feature.color}-100 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                     <feature.icon className={`w-8 h-8 text-${feature.color}-600`} />
@@ -352,139 +352,20 @@ export default function MaiaLandingPage() {
             ))}
           </div>
 
-          {/* Versões Disponíveis */}
+          {/* Versão Gratuita Disponível */}
           <div className="mt-16 text-center">
-            <Badge variant="outline" className="bg-white border-2 border-blue-300 text-blue-700 px-4 py-2 text-base">
-              📣 Versões disponíveis: Gratuita • Profissional • Corporativa
+            <Badge variant="outline" className="bg-white border-2 border-green-300 text-green-700 px-4 py-2 text-base">
+              🎉 Versão Gratuita Disponível - Comece a usar agora!
             </Badge>
           </div>
         </div>
       </section>
 
-      {/* Seção de Planos */}
-      <section id="planos" className="py-24 bg-white">
-        <div className="container px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Escolha seu Plano
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Versões adaptadas para diferentes necessidades profissionais
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Plano FREE */}
-            <Card className="border-2 hover:border-blue-300 transition-all">
-              <CardHeader className="pb-8">
-                <div className="text-center space-y-4">
-                  <h3 className="text-2xl font-bold">MA.IA Free</h3>
-                  <div>
-                    <span className="text-5xl font-black">Grátis</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Para começar</p>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <ul className="space-y-4">
-                  {[
-                    '50 consultas por mês',
-                    'Acesso às NRs básicas',
-                    'Respostas limitadas',
-                    'Histórico de 7 dias'
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="#cadastro">Começar Grátis</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Plano PRO - Destaque */}
-            <Card className="border-4 border-blue-600 relative shadow-2xl scale-105">
-              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1">
-                ⭐ Mais Popular
-              </Badge>
-              <CardHeader className="pb-8 bg-gradient-to-br from-blue-50 to-purple-50">
-                <div className="text-center space-y-4">
-                  <h3 className="text-2xl font-bold">MA.IA Pro</h3>
-                  <div>
-                    <span className="text-5xl font-black">R$ 29,90</span>
-                    <span className="text-muted-foreground">/mês</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Para profissionais</p>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <ul className="space-y-4">
-                  {[
-                    'Tudo do Free +',
-                    '1000 consultas por mês',
-                    'Todas NRs + NBRs completas',
-                    'Relatórios personalizados',
-                    'Planos 5W2H automáticos',
-                    'Histórico ilimitado',
-                    'Suporte prioritário'
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm font-medium">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600" asChild>
-                  <Link href="/pricing">Assinar Agora</Link>
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Plano CORPORATIVO */}
-            <Card className="border-2 hover:border-purple-300 transition-all">
-              <CardHeader className="pb-8">
-                <div className="text-center space-y-4">
-                  <h3 className="text-2xl font-bold">MA.IA Corporativo</h3>
-                  <div>
-                    <span className="text-3xl font-black">Sob consulta</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Para empresas</p>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <ul className="space-y-4">
-                  {[
-                    'Tudo do Pro +',
-                    'Consultas ilimitadas',
-                    'Multiusuário (10+ pessoas)',
-                    'API completa HUBSST',
-                    'Dashboard personalizado',
-                    'Onboarding dedicado',
-                    'Suporte 24/7'
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="#cadastro">Falar com Especialista</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* Seção de Cadastro */}
-      <section id="cadastro" className="py-24 bg-gradient-to-b from-blue-50 to-purple-50">
-        <div className="container px-4 max-w-4xl">
+      <section id="cadastro" className="py-24 bg-gradient-to-b from-green-50 to-emerald-50">
+        <div className="container px-4 max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <Badge className="mb-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-base px-6 py-2">
+            <Badge className="mb-6 bg-gradient-to-r from-green-600 to-emerald-600 text-white text-base px-6 py-2">
               🚀 Pré-Lançamento HUBSST / MA.IA
             </Badge>
             <h2 className="text-4xl md:text-5xl font-black mb-6">
@@ -504,11 +385,11 @@ export default function MaiaLandingPage() {
 
       {/* Footer Profissional */}
       <footer className="bg-gray-900 text-white">
-        <div className="container px-4 py-16">
+        <div className="container px-4 py-16 max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             {/* Coluna 1 - Logo e Descrição */}
             <div className="md:col-span-2 space-y-6">
-              <div className="text-3xl font-black bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <div className="text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
                 HUBSST
               </div>
               <p className="text-gray-400 leading-relaxed max-w-md">
@@ -517,10 +398,10 @@ export default function MaiaLandingPage() {
                 Plataforma SaaS completa para gestão de SST integrada à Inteligência Artificial MA.IA.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
                   <Linkedin className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-full flex items-center justify-center transition-colors">
+                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
                   <Instagram className="w-5 h-5" />
                 </a>
                 <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors">
@@ -535,7 +416,6 @@ export default function MaiaLandingPage() {
               <ul className="space-y-3 text-gray-400">
                 <li><a href="#sobre" className="hover:text-white transition-colors">Sobre o HUBSST</a></li>
                 <li><a href="#recursos" className="hover:text-white transition-colors">Recursos MA.IA</a></li>
-                <li><a href="#planos" className="hover:text-white transition-colors">Planos</a></li>
                 <li><a href="#cadastro" className="hover:text-white transition-colors">Cadastro</a></li>
               </ul>
             </div>

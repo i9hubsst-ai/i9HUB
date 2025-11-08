@@ -24,7 +24,7 @@ function ObrigadoContent() {
           ✅ Cadastro Realizado
         </Badge>
         
-        <h1 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-5xl font-black mb-4 bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
           Cadastro Realizado com Sucesso!
         </h1>
         
@@ -40,10 +40,10 @@ function ObrigadoContent() {
       </div>
 
       {/* Card Informativo */}
-      <Card className="mb-8 border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-purple-50">
+      <Card className="mb-8 border-2 border-green-200 bg-gradient-to-br from-green-50 to-emerald-50">
         <CardContent className="pt-6">
           <div className="flex items-start gap-4 mb-4">
-            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
               <Mail className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -95,7 +95,7 @@ function ObrigadoContent() {
       </div>
 
       {/* Informação Adicional */}
-      <div className="mt-12 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200">
+      <div className="mt-12 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-200">
         <p className="text-sm text-center text-muted-foreground">
           💡 <strong>Sobre o HUBSST:</strong> A plataforma completa de gestão de SST será lançada em breve. 
           O MA.IA que você está testando agora será integrado a ela, oferecendo gestão de PGR, treinamentos, 
@@ -107,7 +107,7 @@ function ObrigadoContent() {
       <div className="mt-8 text-center">
         <p className="text-sm text-muted-foreground">
           Dúvidas ou precisa de ajuda?{' '}
-          <a href="mailto:contato@hubsst.com.br" className="text-blue-600 hover:underline font-semibold">
+          <a href="mailto:contato@hubsst.com.br" className="text-green-600 hover:underline font-semibold">
             Entre em contato
           </a>
         </p>
@@ -118,11 +118,11 @@ function ObrigadoContent() {
 
 export default function ObrigadoPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-white">
       {/* Header Simples */}
       <header className="border-b bg-white/80 backdrop-blur-md py-4">
         <div className="container px-4">
-          <Link href="/maia" className="text-2xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <Link href="/maia" className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
             HUBSST
           </Link>
         </div>
@@ -133,7 +133,7 @@ export default function ObrigadoPage() {
         <div className="max-w-2xl mx-auto">
           <Suspense fallback={
             <div className="text-center py-24">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
             </div>
           }>
             <ObrigadoContent />

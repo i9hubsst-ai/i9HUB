@@ -56,17 +56,37 @@ export default function Home() {
           </ul>
         </div>
         
-        <div className="flex gap-4 justify-center">
-          <Link href="/auth/login">
-            <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-6 rounded-lg transition-colors">
-              Fazer Login
-            </button>
-          </Link>
-          <Link href="/auth/register">
-            <button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-3 px-6 rounded-lg transition-colors">
-              Criar Conta
-            </button>
-          </Link>
+        <div className="flex flex-col gap-6 items-center">
+          {/* Banner MA.IA */}
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-6 max-w-2xl w-full">
+            <div className="flex items-center justify-between gap-4">
+              <div className="text-left">
+                <h3 className="text-xl font-bold mb-1">🤖 Conheça a MA.IA</h3>
+                <p className="text-sm text-blue-100">
+                  Assistente de IA de Segurança do Trabalho • Experimente grátis
+                </p>
+              </div>
+              <Link href="/maia">
+                <button className="bg-white text-purple-600 hover:bg-gray-100 font-semibold py-3 px-6 rounded-lg transition-colors whitespace-nowrap">
+                  Testar Agora
+                </button>
+              </Link>
+            </div>
+          </div>
+
+          {/* Botões originais */}
+          <div className="flex gap-4 justify-center">
+            <Link href="/auth/login">
+              <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-6 rounded-lg transition-colors">
+                Fazer Login
+              </button>
+            </Link>
+            <Link href="/auth/register">
+              <button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold py-3 px-6 rounded-lg transition-colors">
+                Criar Conta
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
       </div>

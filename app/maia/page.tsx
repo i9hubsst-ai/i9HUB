@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import LeadForm from '@/components/maia/lead-form'
 import { 
   MessageSquare,
   Shield, 
@@ -359,17 +360,217 @@ export default function MaiaLandingPage() {
         </div>
       </section>
 
-      {/* Continua na próxima parte... */}
-      <section id="cadastro" className="py-24 bg-white">
-        <div className="container px-4 text-center">
-          <p className="text-muted-foreground">Seção de cadastro será implementada em seguida...</p>
+      {/* Seção de Planos */}
+      <section id="planos" className="py-24 bg-white">
+        <div className="container px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Escolha seu Plano
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Versões adaptadas para diferentes necessidades profissionais
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Plano FREE */}
+            <Card className="border-2 hover:border-blue-300 transition-all">
+              <CardHeader className="pb-8">
+                <div className="text-center space-y-4">
+                  <h3 className="text-2xl font-bold">MA.IA Free</h3>
+                  <div>
+                    <span className="text-5xl font-black">Grátis</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Para começar</p>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <ul className="space-y-4">
+                  {[
+                    '50 consultas por mês',
+                    'Acesso às NRs básicas',
+                    'Respostas limitadas',
+                    'Histórico de 7 dias'
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button variant="outline" className="w-full" asChild>
+                  <Link href="#cadastro">Começar Grátis</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Plano PRO - Destaque */}
+            <Card className="border-4 border-blue-600 relative shadow-2xl scale-105">
+              <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1">
+                ⭐ Mais Popular
+              </Badge>
+              <CardHeader className="pb-8 bg-gradient-to-br from-blue-50 to-purple-50">
+                <div className="text-center space-y-4">
+                  <h3 className="text-2xl font-bold">MA.IA Pro</h3>
+                  <div>
+                    <span className="text-5xl font-black">R$ 29,90</span>
+                    <span className="text-muted-foreground">/mês</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Para profissionais</p>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <ul className="space-y-4">
+                  {[
+                    'Tudo do Free +',
+                    '1000 consultas por mês',
+                    'Todas NRs + NBRs completas',
+                    'Relatórios personalizados',
+                    'Planos 5W2H automáticos',
+                    'Histórico ilimitado',
+                    'Suporte prioritário'
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm font-medium">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600" asChild>
+                  <Link href="/pricing">Assinar Agora</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Plano CORPORATIVO */}
+            <Card className="border-2 hover:border-purple-300 transition-all">
+              <CardHeader className="pb-8">
+                <div className="text-center space-y-4">
+                  <h3 className="text-2xl font-bold">MA.IA Corporativo</h3>
+                  <div>
+                    <span className="text-3xl font-black">Sob consulta</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Para empresas</p>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <ul className="space-y-4">
+                  {[
+                    'Tudo do Pro +',
+                    'Consultas ilimitadas',
+                    'Multiusuário (10+ pessoas)',
+                    'API completa HUBSST',
+                    'Dashboard personalizado',
+                    'Onboarding dedicado',
+                    'Suporte 24/7'
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button variant="outline" className="w-full" asChild>
+                  <Link href="#cadastro">Falar com Especialista</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
-      {/* Footer Temporário */}
-      <footer className="py-12 bg-gray-900 text-white">
-        <div className="container px-4 text-center">
-          <p className="text-gray-400">© 2025 HUBSST - Todos os direitos reservados</p>
+      {/* Seção de Cadastro */}
+      <section id="cadastro" className="py-24 bg-gradient-to-b from-blue-50 to-purple-50">
+        <div className="container px-4 max-w-3xl">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+              🚀 Pré-Lançamento
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Participe do Pré-Lançamento
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Tenha acesso antecipado ao HUBSST e comece a usar o MA.IA gratuitamente
+            </p>
+          </div>
+
+          <LeadForm />
+        </div>
+      </section>
+
+      {/* Footer Profissional */}
+      <footer className="bg-gray-900 text-white">
+        <div className="container px-4 py-16">
+          <div className="grid md:grid-cols-4 gap-12 mb-12">
+            {/* Coluna 1 - Logo e Descrição */}
+            <div className="md:col-span-2 space-y-6">
+              <div className="text-3xl font-black bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                HUBSST
+              </div>
+              <p className="text-gray-400 leading-relaxed max-w-md">
+                Conectando Inteligência, Segurança e Tecnologia.
+                <br /><br />
+                Plataforma SaaS completa para gestão de SST integrada à Inteligência Artificial MA.IA.
+              </p>
+              <div className="flex gap-4">
+                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors">
+                  <Linkedin className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-full flex items-center justify-center transition-colors">
+                  <Instagram className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors">
+                  <Globe className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+
+            {/* Coluna 2 - Links Rápidos */}
+            <div>
+              <h4 className="font-bold mb-4">Links Rápidos</h4>
+              <ul className="space-y-3 text-gray-400">
+                <li><a href="#sobre" className="hover:text-white transition-colors">Sobre o HUBSST</a></li>
+                <li><a href="#recursos" className="hover:text-white transition-colors">Recursos MA.IA</a></li>
+                <li><a href="#planos" className="hover:text-white transition-colors">Planos</a></li>
+                <li><a href="#cadastro" className="hover:text-white transition-colors">Cadastro</a></li>
+              </ul>
+            </div>
+
+            {/* Coluna 3 - Legal */}
+            <div>
+              <h4 className="font-bold mb-4">Legal</h4>
+              <ul className="space-y-3 text-gray-400">
+                <li><a href="#" className="hover:text-white transition-colors">Termos de Uso</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Política de Privacidade</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">LGPD</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Política de Cookies</a></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Linha de Separação */}
+          <div className="border-t border-gray-800 pt-8">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2 text-sm text-gray-400">
+                <p className="font-semibold text-white">© 2025 MAIA Equipamentos e Serviços Industriais LTDA</p>
+                <p>CNPJ: [Inserir CNPJ]</p>
+                <p className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <span>[Inserir Endereço Completo]</span>
+                </p>
+              </div>
+              <div className="space-y-2 text-sm text-gray-400 md:text-right">
+                <p className="flex items-center justify-start md:justify-end gap-2">
+                  <Phone className="w-4 h-4" />
+                  <span>[Inserir Telefone]</span>
+                </p>
+                <p className="flex items-center justify-start md:justify-end gap-2">
+                  <Mail className="w-4 h-4" />
+                  <span>contato@hubsst.com.br</span>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

@@ -27,6 +27,19 @@ export default function MaiaChatPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  // Função para processar conteúdo markdown
+  const processMarkdownContent = (content: string) => {
+    // Substituir \n\n por quebras de parágrafo reais
+    // Substituir \n* por quebra + lista
+    return content
+      .replace(/\\n\\n/g, '\n\n')  // Duplo \n vira quebra de parágrafo
+      .replace(/\\n\*/g, '\n*')     // \n* vira lista
+      .replace(/\\n-/g, '\n-')      // \n- vira lista
+      .replace(/\\n(\d+)\.?/g, '\n$1.') // \n1. vira lista numerada
+      .replace(/\\n/g, '\n')        // Simples \n vira quebra
+      .replace(/\*\*(.+?)\*\*/g, '**$1**') // Garantir negrito
+  }
+
   // Verificar sessão ao carregar
   useEffect(() => {
     const currentSession = getLeadSession()
@@ -301,8 +314,17 @@ export default function MaiaChatPage() {
                           prose-strong:text-gray-900 prose-strong:font-semibold
                           prose-code:bg-green-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-green-800
                           prose-pre:bg-gray-50 prose-pre:border prose-pre:border-gray-200">
-                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                            {message.content}
+                          <ReactMarkdown 
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              p: ({node, ...props}) => <p className="mb-3" {...props} />,
+                              ul: ({node, ...props}) => <ul className="mb-3 space-y-1" {...props} />,
+                              ol: ({node, ...props}) => <ol className="mb-3 space-y-1" {...props} />,
+                              li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                              br: () => <br className="my-2" />,
+                            }}
+                          >
+                            {processMarkdownContent(message.content)}
                           </ReactMarkdown>
                         </div>
                       )}

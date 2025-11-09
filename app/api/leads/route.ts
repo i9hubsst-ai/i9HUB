@@ -5,8 +5,8 @@ export async function POST(request: Request) {
   try {
     const data = await request.json()
     
-    // Validação de campos obrigatórios expandidos
-    const requiredFields = ['name', 'email', 'company', 'cargo', 'setor', 'tipoUso', 'tipoAcesso']
+    // Validação de campos obrigatórios (tipoAcesso removido - usa default "gratuito")
+    const requiredFields = ['name', 'email', 'company', 'cargo', 'setor', 'tipoUso']
     const missingFields = requiredFields.filter(field => !data[field])
     
     if (missingFields.length > 0) {
@@ -98,8 +98,8 @@ export async function POST(request: Request) {
         // 4. Interesse
         tipoUso: data.tipoUso,
         
-        // 5. Tipo de Acesso
-        tipoAcesso: data.tipoAcesso,
+        // 5. Tipo de Acesso (usa default "gratuito" se não fornecido)
+        tipoAcesso: data.tipoAcesso || 'gratuito',
         
         // 6. Expectativa
         expectativa: data.expectativa || null,

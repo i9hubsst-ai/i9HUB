@@ -69,23 +69,27 @@ export default function MaiaLandingPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10 blur-3xl" />
         
         <div className="container relative px-4 py-24 md:py-32 max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
-            {/* Coluna Esquerda - Texto */}
+          {/* Badge e Título Superior - Largura Total */}
+          <div className="text-center space-y-6 mb-16 max-w-6xl mx-auto">
+            <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-sm px-4 py-2">
+              <Sparkles className="w-4 h-4 mr-2" />
+              Módulo Avançado de Inteligência Artificial
+            </Badge>
+            
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
+              Conheça o{' '}
+              <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 bg-clip-text text-transparent animate-gradient">
+                MA.IA
+              </span>
+              {' '}— o cérebro inteligente da Segurança do Trabalho.
+            </h1>
+          </div>
+
+          {/* Grid com Texto e Mockup */}
+          <div className="grid lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
+            {/* Coluna Esquerda - Descrição e CTAs */}
             <div className="space-y-8 text-center lg:text-left">
-              <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-sm px-4 py-2">
-                <Sparkles className="w-4 h-4 mr-2" />
-                Módulo Avançado de Inteligência Artificial
-              </Badge>
-              
-              <h1 className="text-5xl md:text-7xl font-black leading-tight tracking-tight">
-                Conheça o{' '}
-                <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 bg-clip-text text-transparent animate-gradient">
-                  MA.IA
-                </span>
-                {' '}— o cérebro inteligente da Segurança do Trabalho.
-              </h1>
-              
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                 Um chat de <strong className="text-foreground">Inteligência Artificial</strong> especializado em{' '}
                 <strong className="text-foreground">Segurança e Saúde do Trabalho</strong>.
                 <br /><br />

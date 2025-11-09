@@ -48,12 +48,6 @@ const TIPOS_USO = [
   { value: 'apenas_conhecer', label: 'Apenas para conhecer o sistema' },
 ]
 
-const TIPOS_ACESSO = [
-  { value: 'gratuito', label: 'Versão Gratuita', desc: 'Chat básico, consultas limitadas' },
-  { value: 'profissional', label: 'Versão Profissional', desc: 'Relatórios, planos de ação e análises completas' },
-  { value: 'corporativo', label: 'Versão Corporativa', desc: 'Multiusuário e integração com módulos HUBSST' },
-]
-
 export default function LeadForm() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
@@ -78,13 +72,10 @@ export default function LeadForm() {
     // 4. Interesse
     tipoUso: '',
     
-    // 5. Tipo de Acesso
-    tipoAcesso: '',
-    
-    // 6. Expectativa
+    // 5. Expectativa
     expectativa: '',
     
-    // 7. Consentimento
+    // 6. Consentimento
     consentimento: false,
   })
 
@@ -113,7 +104,7 @@ export default function LeadForm() {
 
     try {
       // Validações
-      if (!formData.name || !formData.email || !formData.company || !formData.cargo || !formData.setor || !formData.tipoUso || !formData.tipoAcesso) {
+      if (!formData.name || !formData.email || !formData.company || !formData.cargo || !formData.setor || !formData.tipoUso) {
         setError('Por favor, preencha todos os campos obrigatórios')
         setIsLoading(false)
         return
@@ -156,7 +147,7 @@ export default function LeadForm() {
       }
 
       // Se é novo cadastro, vai para página de obrigado
-      window.location.href = `/maia/obrigado?email=${encodeURIComponent(formData.email)}&tipo=${formData.tipoAcesso}`
+      window.location.href = `/maia/obrigado?email=${encodeURIComponent(formData.email)}`
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao enviar formulário')
       setIsLoading(false)
@@ -349,38 +340,10 @@ export default function LeadForm() {
             </div>
           </div>
 
-          {/* 5. Tipo de Acesso Desejado */}
-          <div className="space-y-4">
-            <div className="border-l-4 border-indigo-600 pl-4">
-              <h3 className="text-xl font-bold text-gray-900">5. Tipo de Acesso Desejado</h3>
-              <p className="text-sm text-gray-600 mt-1">Selecione o tipo de acesso que deseja testar:</p>
-            </div>
-
-            <div className="space-y-3">
-              {TIPOS_ACESSO.map((tipo) => (
-                <label key={tipo.value} className="flex items-start gap-3 cursor-pointer p-4 border-2 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-all">
-                  <input
-                    type="radio"
-                    name="tipoAcesso"
-                    value={tipo.value}
-                    checked={formData.tipoAcesso === tipo.value}
-                    onChange={(e) => setFormData({ ...formData, tipoAcesso: e.target.value })}
-                    className="w-4 h-4 text-indigo-600 mt-1"
-                    required
-                  />
-                  <div className="flex-1">
-                    <span className="font-semibold text-sm block">{tipo.label}</span>
-                    <span className="text-xs text-gray-600">{tipo.desc}</span>
-                  </div>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* 6. Expectativa */}
+          {/* 5. Expectativa */}
           <div className="space-y-4">
             <div className="border-l-4 border-pink-600 pl-4">
-              <h3 className="text-xl font-bold text-gray-900">6. Expectativa</h3>
+              <h3 className="text-xl font-bold text-gray-900">5. Expectativa</h3>
               <p className="text-sm text-gray-600 mt-1">O que você mais gostaria que o MA.IA fizesse por você ou pela sua empresa?</p>
             </div>
 
@@ -393,10 +356,10 @@ export default function LeadForm() {
             />
           </div>
 
-          {/* 7. Autorização e Consentimento */}
+          {/* 6. Autorização e Consentimento */}
           <div className="space-y-4">
             <div className="border-l-4 border-gray-600 pl-4">
-              <h3 className="text-xl font-bold text-gray-900">7. Autorização e Acesso</h3>
+              <h3 className="text-xl font-bold text-gray-900">6. Autorização e Acesso</h3>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-lg space-y-3">

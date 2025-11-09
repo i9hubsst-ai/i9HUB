@@ -121,7 +121,7 @@ export default function ObrigadoPage() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-white">
       {/* Header Simples */}
       <header className="border-b bg-white/80 backdrop-blur-md py-4">
-        <div className="container px-4">
+        <div className="container px-4 max-w-7xl mx-auto">
           <Link href="/maia" className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
             HUBSST
           </Link>
@@ -129,8 +129,8 @@ export default function ObrigadoPage() {
       </header>
 
       {/* Conteúdo Principal */}
-      <main className="container px-4 py-24">
-        <div className="max-w-2xl mx-auto">
+      <main className="container px-4 py-16 md:py-24 max-w-7xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <Suspense fallback={
             <div className="text-center py-24">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
@@ -142,8 +142,8 @@ export default function ObrigadoPage() {
       </main>
 
       {/* Footer Minimalista */}
-      <footer className="border-t bg-white/80 backdrop-blur-md py-8 mt-24">
-        <div className="container px-4">
+      <footer className="border-t bg-white/80 backdrop-blur-md py-8 mt-16 md:mt-24">
+        <div className="container px-4 max-w-7xl mx-auto">
           <div className="text-center space-y-2">
             <p className="text-sm text-gray-600">
               © 2025 HUBSST - Todos os direitos reservados

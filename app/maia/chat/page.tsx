@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -9,14 +9,22 @@ import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { Send, Bot, User, Sparkles, ArrowLeft, Info } from 'lucide-react'
 import { getLeadSession, type LeadSession } from '@/lib/services/lead-session'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 export default function MaiaChatPage() {
   const router = useRouter()
+  const messagesEndRef = useRef<HTMLDivElement>(null)
   const [session, setSession] = useState<LeadSession | null>(null)
   const [messages, setMessages] = useState<Array<{role: 'user' | 'assistant', content: string}>>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingHistory, setIsLoadingHistory] = useState(true)
+
+  // Auto-scroll para última mensagem
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
 
   // Verificar sessão ao carregar
   useEffect(() => {
@@ -229,49 +237,62 @@ export default function MaiaChatPage() {
           </Card>
 
           {/* Chat Messages */}
-          <Card className="mb-6 flex-1 p-6 overflow-y-auto bg-white shadow-xl border-2 border-gray-200">
-            <div className="space-y-6">
-              {messages.map((message, index) => (
-                <div 
-                  key={index}
-                  className={`flex gap-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
-                >
-                  {message.role === 'assistant' && (
+          <Card className="mb-6 h-[600px] overflow-hidden bg-white shadow-xl border-2 border-gray-200 flex flex-col">
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="space-y-6">
+                {messages.map((message, index) => (
+                  <div 
+                    key={index}
+                    className={`flex gap-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                  >
+                    {message.role === 'assistant' && (
+                      <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                        <Bot className="w-6 h-6 text-white" />
+                      </div>
+                    )}
+                    
+                    <div className={`max-w-[80%] rounded-2xl px-6 py-4 shadow-md ${
+                      message.role === 'user' 
+                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-tr-none' 
+                        : 'bg-gray-100 text-gray-900 border border-gray-200 rounded-tl-none'
+                    }`}>
+                      {message.role === 'user' ? (
+                        <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                      ) : (
+                        <div className="prose prose-sm max-w-none prose-headings:mt-3 prose-headings:mb-2 prose-p:my-2 prose-ul:my-2 prose-li:my-1 prose-strong:text-gray-900">
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {message.content}
+                          </ReactMarkdown>
+                        </div>
+                      )}
+                    </div>
+
+                    {message.role === 'user' && (
+                      <div className="w-10 h-10 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                        <User className="w-6 h-6 text-white" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+
+                {isLoading && (
+                  <div className="flex gap-4 justify-start animate-fade-in">
                     <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
                       <Bot className="w-6 h-6 text-white" />
                     </div>
-                  )}
-                  
-                  <div className={`max-w-[80%] rounded-2xl px-6 py-4 shadow-md ${
-                    message.role === 'user' 
-                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-tr-none' 
-                      : 'bg-gray-100 text-gray-900 border border-gray-200 rounded-tl-none'
-                  }`}>
-                    <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
-                  </div>
-
-                  {message.role === 'user' && (
-                    <div className="w-10 h-10 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
-                      <User className="w-6 h-6 text-white" />
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              {isLoading && (
-                <div className="flex gap-4 justify-start animate-fade-in">
-                  <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
-                    <Bot className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="bg-gray-100 border border-gray-200 rounded-2xl rounded-tl-none px-6 py-4 shadow-md">
-                    <div className="flex gap-2">
-                      <span className="w-2.5 h-2.5 bg-green-600 rounded-full animate-bounce"></span>
-                      <span className="w-2.5 h-2.5 bg-green-600 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
-                      <span className="w-2.5 h-2.5 bg-green-600 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></span>
+                    <div className="bg-gray-100 border border-gray-200 rounded-2xl rounded-tl-none px-6 py-4 shadow-md">
+                      <div className="flex gap-2">
+                        <span className="w-2.5 h-2.5 bg-green-600 rounded-full animate-bounce"></span>
+                        <span className="w-2.5 h-2.5 bg-green-600 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
+                        <span className="w-2.5 h-2.5 bg-green-600 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+                
+                {/* Referência para auto-scroll */}
+                <div ref={messagesEndRef} />
+              </div>
             </div>
           </Card>
 

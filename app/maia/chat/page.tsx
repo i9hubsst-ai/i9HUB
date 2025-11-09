@@ -137,7 +137,7 @@ export default function MaiaChatPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-white flex flex-col">
       {/* Header */}
       <header className="border-b bg-white/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container px-4 py-4 flex items-center justify-between max-w-7xl mx-auto">
@@ -150,8 +150,8 @@ export default function MaiaChatPage() {
             </Button>
             
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center">
-                <Bot className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
+                <Bot className="w-7 h-7 text-white" />
               </div>
               <div>
                 <h1 className="text-xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
@@ -170,92 +170,94 @@ export default function MaiaChatPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container px-4 py-8 max-w-6xl mx-auto">
-        {/* Aviso de Versão de Teste */}
-        <Card className="mb-6 p-4 bg-green-50 border-green-200">
-          <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-            <div className="text-sm text-green-900">
-              <strong>Versão de Pré-Lançamento:</strong> Você está testando a interface do MA.IA. 
-              A integração completa com a base de conhecimento de SST será ativada em breve. 
-              Por enquanto, explore a interface e familiarize-se com o chat!
+      <main className="flex-1 container px-4 py-6 max-w-7xl mx-auto flex flex-col">
+        <div className="max-w-5xl w-full mx-auto flex flex-col flex-1">
+          {/* Aviso de Versão de Teste */}
+          <Card className="mb-6 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200">
+            <div className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+              <div className="text-sm text-green-900">
+                <strong>Versão de Pré-Lançamento:</strong> Você está testando a interface do MA.IA. 
+                A integração completa com a base de conhecimento de SST será ativada em breve. 
+                Por enquanto, explore a interface e familiarize-se com o chat!
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
 
-        {/* Chat Messages */}
-        <Card className="mb-6 p-8 min-h-[550px] max-h-[650px] overflow-y-auto bg-white shadow-lg">
-          <div className="space-y-6 max-w-5xl mx-auto">
-            {messages.map((message, index) => (
-              <div 
-                key={index}
-                className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                {message.role === 'assistant' && (
-                  <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
+          {/* Chat Messages */}
+          <Card className="mb-6 flex-1 p-6 overflow-y-auto bg-white shadow-xl border-2 border-gray-200">
+            <div className="space-y-6">
+              {messages.map((message, index) => (
+                <div 
+                  key={index}
+                  className={`flex gap-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                >
+                  {message.role === 'assistant' && (
+                    <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                      <Bot className="w-6 h-6 text-white" />
+                    </div>
+                  )}
+                  
+                  <div className={`max-w-[80%] rounded-2xl px-6 py-4 shadow-md ${
+                    message.role === 'user' 
+                      ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-tr-none' 
+                      : 'bg-gray-100 text-gray-900 border border-gray-200 rounded-tl-none'
+                  }`}>
+                    <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                  </div>
+
+                  {message.role === 'user' && (
+                    <div className="w-10 h-10 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                      <User className="w-6 h-6 text-white" />
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {isLoading && (
+                <div className="flex gap-4 justify-start animate-fade-in">
+                  <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
                     <Bot className="w-6 h-6 text-white" />
                   </div>
-                )}
-                
-                <div className={`max-w-[75%] rounded-2xl px-5 py-4 ${
-                  message.role === 'user' 
-                    ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white' 
-                    : 'bg-gray-100 text-gray-900'
-                }`}>
-                  <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
-                </div>
-
-                {message.role === 'user' && (
-                  <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-                    <User className="w-6 h-6 text-gray-600" />
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {isLoading && (
-              <div className="flex gap-3 justify-start">
-                <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Bot className="w-6 h-6 text-white" />
-                </div>
-                <div className="bg-gray-100 rounded-2xl px-5 py-4">
-                  <div className="flex gap-2">
-                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
-                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
-                    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></span>
+                  <div className="bg-gray-100 border border-gray-200 rounded-2xl rounded-tl-none px-6 py-4 shadow-md">
+                    <div className="flex gap-2">
+                      <span className="w-2.5 h-2.5 bg-green-600 rounded-full animate-bounce"></span>
+                      <span className="w-2.5 h-2.5 bg-green-600 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></span>
+                      <span className="w-2.5 h-2.5 bg-green-600 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          </div>
-        </Card>
+              )}
+            </div>
+          </Card>
 
-        {/* Input Form */}
-        <form onSubmit={handleSubmit} className="flex gap-3 max-w-5xl mx-auto">
-          <Textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Digite sua pergunta sobre SST..."
-            className="flex-1 min-h-[60px] max-h-[120px] resize-none text-base"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault()
-                handleSubmit(e)
-              }
-            }}
-          />
-          <Button 
-            type="submit"
-            disabled={!input.trim() || isLoading}
-            className="h-[60px] px-8 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
-          >
-            <Send className="w-5 h-5" />
-          </Button>
-        </form>
+          {/* Input Form */}
+          <form onSubmit={handleSubmit} className="flex gap-3">
+            <Textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Digite sua pergunta sobre SST..."
+              className="flex-1 min-h-[70px] max-h-[140px] resize-none text-base border-2 border-green-200 focus:border-green-400"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault()
+                  handleSubmit(e)
+                }
+              }}
+            />
+            <Button 
+              type="submit"
+              disabled={!input.trim() || isLoading}
+              className="h-[70px] px-8 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg"
+            >
+              <Send className="w-5 h-5" />
+            </Button>
+          </form>
 
-        <p className="text-xs text-center text-gray-500 mt-4 max-w-5xl mx-auto">
-          Pressione Enter para enviar ou Shift+Enter para nova linha
-        </p>
+          <p className="text-xs text-center text-gray-500 mt-3">
+            Pressione Enter para enviar ou Shift+Enter para nova linha
+          </p>
+        </div>
       </main>
     </div>
   )

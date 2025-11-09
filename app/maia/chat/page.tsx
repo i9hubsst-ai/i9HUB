@@ -96,20 +96,64 @@ export default function MaiaChatPage() {
     setIsLoading(true)
 
     try {
-      // TODO: Integrar com API do chat MA.IA real
-      // Por enquanto, resposta simulada
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      // Integração com a IA real do HUBSST (Gemini + RAG)
+      const response = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            { role: 'user', content: userMessage }
+          ]
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro ao comunicar com a IA')
+      }
+
+      // Ler stream de resposta
+      const reader = response.body?.getReader()
+      const decoder = new TextDecoder()
+      let assistantMessage = ''
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          
+          const chunk = decoder.decode(value)
+          const lines = chunk.split('\n')
+          
+          for (const line of lines) {
+            if (line.startsWith('0:')) {
+              // Vercel AI SDK format: 0:"texto"
+              const text = line.substring(3, line.length - 1)
+              assistantMessage += text
+              
+              // Atualizar mensagem em tempo real
+              setMessages(prev => {
+                const newMessages = [...prev]
+                const lastMsg = newMessages[newMessages.length - 1]
+                
+                if (lastMsg?.role === 'assistant') {
+                  lastMsg.content = assistantMessage
+                } else {
+                  newMessages.push({ role: 'assistant', content: assistantMessage })
+                }
+                
+                return newMessages
+              })
+            }
+          }
+        }
+      }
       
-      const assistantMessage = `Esta é uma versão de demonstração do MA.IA. A integração com a IA completa será ativada em breve. Por enquanto, você pode explorar a interface.\n\nSua pergunta foi: "${userMessage}"`
-      
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: assistantMessage
-      }])
-      
-      // Salvar resposta do assistente
-      await saveMessage('assistant', assistantMessage)
+      // Salvar resposta completa do assistente
+      if (assistantMessage) {
+        await saveMessage('assistant', assistantMessage)
+      }
     } catch (error) {
+      console.error('Erro ao processar mensagem:', error)
       const errorMessage = 'Desculpe, ocorreu um erro. Tente novamente em alguns instantes.'
       setMessages(prev => [...prev, {
         role: 'assistant',
@@ -177,9 +221,9 @@ export default function MaiaChatPage() {
             <div className="flex items-start gap-3">
               <Info className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-green-900">
-                <strong>Versão de Pré-Lançamento:</strong> Você está testando a interface do MA.IA. 
-                A integração completa com a base de conhecimento de SST será ativada em breve. 
-                Por enquanto, explore a interface e familiarize-se com o chat!
+                <strong>Versão de Pré-Lançamento:</strong> Você está testando o MA.IA com inteligência artificial real! 
+                A IA está aprendendo e melhorando suas respostas com cada interação. 
+                Suas perguntas ajudam a treinar e aperfeiçoar o sistema para toda a comunidade de SST.
               </div>
             </div>
           </Card>

@@ -41,7 +41,7 @@ async function getLeads() {
       createdAt: true,
       _count: {
         select: {
-          ChatMessage: true
+          messages: true
         }
       }
     }
@@ -262,7 +262,7 @@ export default async function LeadsManagementPage() {
                   </TableCell>
                   <TableCell className="text-center">
                     <Badge variant="secondary">
-                      {lead._count.ChatMessage}
+                      {lead._count.messages}
                     </Badge>
                   </TableCell>
                   <TableCell>

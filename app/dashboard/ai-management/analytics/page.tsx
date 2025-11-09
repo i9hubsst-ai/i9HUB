@@ -61,7 +61,7 @@ async function getAnalytics() {
     // Leads ativos (com mensagens)
     prisma.lead.count({
       where: {
-        ChatMessage: {
+        messages: {
           some: {}
         }
       }
@@ -72,7 +72,7 @@ async function getAnalytics() {
       SELECT 
         DATE(created_at) as date,
         COUNT(*) as count
-      FROM "ChatMessage"
+      FROM "chat_messages"
       WHERE created_at >= ${last30Days}
       GROUP BY DATE(created_at)
       ORDER BY date DESC

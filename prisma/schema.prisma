@@ -698,6 +698,9 @@ model Lead {
   // Relação com usuário (quando converter)
   userId        String?   @unique
   
+  // Relação com mensagens do chat
+  messages      ChatMessage[]
+  
   @@index([email])
   @@index([status])
   @@index([segment])
@@ -714,6 +717,7 @@ model ChatMessage {
   
   // Vinculação com Lead (não requer autenticação)
   leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
   
   // Conteúdo da mensagem
   role      String   // "user" ou "assistant"

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import { Send, Bot, User, Sparkles, ArrowLeft, Info } from 'lucide-react'
+import { Send, Bot, User, Sparkles, ArrowLeft, Info, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { getLeadSession, type LeadSession } from '@/lib/services/lead-session'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -20,6 +20,7 @@ export default function MaiaChatPage() {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingHistory, setIsLoadingHistory] = useState(true)
+  const [feedbacks, setFeedbacks] = useState<Record<number, 'positive' | 'negative' | null>>({})
 
   // Auto-scroll para última mensagem
   useEffect(() => {
@@ -66,6 +67,37 @@ export default function MaiaChatPage() {
       }])
     } finally {
       setIsLoadingHistory(false)
+    }
+  }
+
+  // Função para enviar feedback
+  const handleFeedback = async (messageIndex: number, feedback: 'positive' | 'negative') => {
+    const message = messages[messageIndex]
+    if (!message || message.role !== 'assistant' || !session) return
+
+    try {
+      setFeedbacks(prev => ({ ...prev, [messageIndex]: feedback }))
+      
+      console.log(`${feedback === 'positive' ? '👍' : '👎'} [FEEDBACK] Enviando feedback para mensagem ${messageIndex}`)
+      
+      // Envia feedback para o backend
+      await fetch('/api/ai/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messageId: `maia_${session.leadId}_${Date.now()}_${messageIndex}`,
+          userQuery: messageIndex > 0 ? messages[messageIndex - 1]?.content : '',
+          aiResponse: message.content,
+          feedback,
+          timestamp: new Date().toISOString()
+        })
+      })
+
+      console.log(`✅ [FEEDBACK] Feedback ${feedback} enviado com sucesso`)
+    } catch (error) {
+      console.error('❌ [FEEDBACK] Erro ao enviar feedback:', error)
+      // Reverte o estado em caso de erro
+      setFeedbacks(prev => ({ ...prev, [messageIndex]: null }))
     }
   }
 
@@ -240,18 +272,19 @@ export default function MaiaChatPage() {
           <Card className="mb-6 h-[600px] overflow-hidden bg-white shadow-xl border-2 border-gray-200 flex flex-col">
             <div className="flex-1 overflow-y-auto p-6">
               <div className="space-y-6">
-                {messages.map((message, index) => (
-                  <div 
-                    key={index}
-                    className={`flex gap-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
-                  >
-                    {message.role === 'assistant' && (
-                      <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
-                        <Bot className="w-6 h-6 text-white" />
-                      </div>
-                    )}
-                    
-                    <div className={`max-w-[80%] rounded-2xl px-6 py-4 shadow-md ${
+              {messages.map((message, index) => (
+                <div 
+                  key={index}
+                  className={`flex gap-4 ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                >
+                  {message.role === 'assistant' && (
+                    <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                      <Bot className="w-6 h-6 text-white" />
+                    </div>
+                  )}
+                  
+                  <div className="flex flex-col gap-2 max-w-[80%]">
+                    <div className={`rounded-2xl px-6 py-4 shadow-md ${
                       message.role === 'user' 
                         ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-tr-none' 
                         : 'bg-gray-100 text-gray-900 border border-gray-200 rounded-tl-none'
@@ -259,7 +292,15 @@ export default function MaiaChatPage() {
                       {message.role === 'user' ? (
                         <p className="text-base leading-relaxed whitespace-pre-wrap">{message.content}</p>
                       ) : (
-                        <div className="prose prose-sm max-w-none prose-headings:mt-3 prose-headings:mb-2 prose-p:my-2 prose-ul:my-2 prose-li:my-1 prose-strong:text-gray-900">
+                        <div className="prose prose-sm max-w-none 
+                          prose-headings:mt-4 prose-headings:mb-3 prose-headings:font-bold
+                          prose-p:my-3 prose-p:leading-relaxed
+                          prose-ul:my-3 prose-ul:space-y-2 
+                          prose-ol:my-3 prose-ol:space-y-2
+                          prose-li:my-1 prose-li:leading-relaxed
+                          prose-strong:text-gray-900 prose-strong:font-semibold
+                          prose-code:bg-green-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-green-800
+                          prose-pre:bg-gray-50 prose-pre:border prose-pre:border-gray-200">
                           <ReactMarkdown remarkPlugins={[remarkGfm]}>
                             {message.content}
                           </ReactMarkdown>
@@ -267,15 +308,52 @@ export default function MaiaChatPage() {
                       )}
                     </div>
 
-                    {message.role === 'user' && (
-                      <div className="w-10 h-10 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
-                        <User className="w-6 h-6 text-white" />
+                    {/* Botões de feedback apenas para mensagens do assistente */}
+                    {message.role === 'assistant' && (
+                      <div className="flex items-center gap-2 px-2">
+                        <span className="text-xs text-muted-foreground">Esta resposta foi útil?</span>
+                        <Button
+                          variant={feedbacks[index] === 'positive' ? 'default' : 'ghost'}
+                          size="sm"
+                          className={`h-7 w-7 p-0 ${
+                            feedbacks[index] === 'positive' 
+                              ? 'bg-green-100 hover:bg-green-200 text-green-700 border-green-300' 
+                              : 'hover:bg-green-50 hover:text-green-600'
+                          }`}
+                          onClick={() => handleFeedback(index, 'positive')}
+                          disabled={!!feedbacks[index]}
+                        >
+                          <ThumbsUp className="h-3 w-3" />
+                        </Button>
+                        <Button
+                          variant={feedbacks[index] === 'negative' ? 'default' : 'ghost'}
+                          size="sm"
+                          className={`h-7 w-7 p-0 ${
+                            feedbacks[index] === 'negative' 
+                              ? 'bg-red-100 hover:bg-red-200 text-red-700 border-red-300' 
+                              : 'hover:bg-red-50 hover:text-red-600'
+                          }`}
+                          onClick={() => handleFeedback(index, 'negative')}
+                          disabled={!!feedbacks[index]}
+                        >
+                          <ThumbsDown className="h-3 w-3" />
+                        </Button>
+                        {feedbacks[index] && (
+                          <span className="text-xs text-green-600 font-medium">
+                            Obrigado pelo feedback!
+                          </span>
+                        )}
                       </div>
                     )}
                   </div>
-                ))}
 
-                {isLoading && (
+                  {message.role === 'user' && (
+                    <div className="w-10 h-10 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
+                      <User className="w-6 h-6 text-white" />
+                    </div>
+                  )}
+                </div>
+              ))}                {isLoading && (
                   <div className="flex gap-4 justify-start animate-fade-in">
                     <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">
                       <Bot className="w-6 h-6 text-white" />

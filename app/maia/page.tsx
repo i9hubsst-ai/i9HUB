@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -40,10 +41,6 @@ export default function MaiaLandingPage() {
                 HUBSST
               </div>
             </Link>
-            <Badge variant="outline" className="hidden md:flex bg-green-50 border-green-300 text-green-700 px-3 py-1">
-              <Brain className="w-4 h-4 mr-2" />
-              <span className="font-semibold">MA.IA – Módulo Avançado de Inteligência Artificial</span>
-            </Badge>
           </div>
           
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
@@ -69,20 +66,36 @@ export default function MaiaLandingPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10 blur-3xl" />
         
         <div className="container relative px-4 py-24 md:py-32 max-w-7xl mx-auto">
-          {/* Badge e Título Superior - Largura Total */}
+          {/* Título com Imagem do Cérebro */}
           <div className="text-center space-y-6 mb-16 max-w-6xl mx-auto">
-            <Badge className="bg-gradient-to-r from-green-600 to-emerald-600 text-white text-sm px-4 py-2">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Módulo Avançado de Inteligência Artificial
-            </Badge>
+            {/* Imagem do Cérebro */}
+            <div className="flex justify-center mb-8">
+              <Image 
+                src="/images/maia-brain.png" 
+                alt="MA.IA Inteligência Artificial"
+                width={200}
+                height={200}
+                className="object-contain"
+                priority
+              />
+            </div>
             
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
-              Conheça o{' '}
-              <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 bg-clip-text text-transparent animate-gradient">
-                MA.IA
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
+              <span className="block mb-3">
+                Conheça o{' '}
+                <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 bg-clip-text text-transparent animate-gradient">
+                  MA.IA
+                </span>
+                {' '}—
               </span>
-              {' '}— o cérebro inteligente da Segurança do Trabalho.
+              <span className="block text-2xl md:text-3xl lg:text-4xl">
+                Módulo Avançado de Inteligência Artificial
+              </span>
             </h1>
+            
+            <p className="text-xl md:text-2xl font-semibold text-green-700 mt-4">
+              O cérebro inteligente da Segurança do Trabalho.
+            </p>
           </div>
 
           {/* Grid com Texto e Mockup */}

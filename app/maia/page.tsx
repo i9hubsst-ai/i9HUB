@@ -36,11 +36,9 @@ export default function MaiaLandingPage() {
       <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
         <div className="container flex h-20 items-center justify-between px-4 max-w-7xl mx-auto">
           <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="text-3xl font-black text-green-700">
-                HUBSST
-              </div>
-            </Link>
+            <div className="text-3xl font-black text-green-700">
+              HUBSST
+            </div>
           </div>
           
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
@@ -420,11 +418,11 @@ export default function MaiaLandingPage() {
       </section>
 
       {/* Footer Profissional */}
-      <footer className="bg-gray-900 text-white">
+      <footer id="contato" className="bg-gray-900 text-white">
         <div className="container px-4 py-16 max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-12 mb-12">
+          <div className="grid md:grid-cols-2 gap-12 mb-12">
             {/* Coluna 1 - Logo e Descrição */}
-            <div className="md:col-span-2 space-y-6">
+            <div className="space-y-6">
               <div className="text-3xl font-black bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
                 HUBSST
               </div>
@@ -434,61 +432,47 @@ export default function MaiaLandingPage() {
                 Plataforma SaaS completa para gestão de SST integrada à Inteligência Artificial MA.IA.
               </p>
               <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
+                <a href="https://www.linkedin.com/company/hubsst" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
                   <Linkedin className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
+                <a href="https://www.instagram.com/hub_sst" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors">
                   <Instagram className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors">
+                <a href="https://i9hubsst.vercel.app/maia" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-gray-800 hover:bg-gray-600 rounded-full flex items-center justify-center transition-colors">
                   <Globe className="w-5 h-5" />
                 </a>
               </div>
             </div>
 
-            {/* Coluna 2 - Links Rápidos */}
-            <div>
-              <h4 className="font-bold mb-4">Links Rápidos</h4>
-              <ul className="space-y-3 text-gray-400">
-                <li><a href="#sobre" className="hover:text-white transition-colors">Sobre o HUBSST</a></li>
-                <li><a href="#recursos" className="hover:text-white transition-colors">Recursos MA.IA</a></li>
-                <li><a href="#cadastro" className="hover:text-white transition-colors">Cadastro</a></li>
-              </ul>
-            </div>
-
-            {/* Coluna 3 - Legal */}
-            <div>
-              <h4 className="font-bold mb-4">Legal</h4>
-              <ul className="space-y-3 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Termos de Uso</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Política de Privacidade</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">LGPD</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Política de Cookies</a></li>
-              </ul>
+            {/* Coluna 2 - Contato */}
+            <div className="space-y-6">
+              <h4 className="font-bold text-xl mb-4">Contato</h4>
+              <div className="space-y-4 text-gray-400">
+                <p className="flex items-start gap-3">
+                  <MapPin className="w-5 h-5 flex-shrink-0 mt-1 text-green-400" />
+                  <span>Joinville / SC</span>
+                </p>
+                <p className="flex items-center gap-3">
+                  <Phone className="w-5 h-5 text-green-400" />
+                  <a href="tel:+5547999197942" className="hover:text-white transition-colors">47 99919-7942</a>
+                </p>
+                <p className="flex items-center gap-3">
+                  <Mail className="w-5 h-5 text-green-400" />
+                  <a href="mailto:i9hubsst@gmail.com" className="hover:text-white transition-colors">i9hubsst@gmail.com</a>
+                </p>
+                <p className="flex items-center gap-3">
+                  <Globe className="w-5 h-5 text-green-400" />
+                  <a href="https://hubsst.blogspot.com/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Blog HUBSST</a>
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Linha de Separação */}
           <div className="border-t border-gray-800 pt-8">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2 text-sm text-gray-400">
-                <p className="font-semibold text-white">© 2025 MAIA Equipamentos e Serviços Industriais LTDA</p>
-                <p>CNPJ: [Inserir CNPJ]</p>
-                <p className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                  <span>[Inserir Endereço Completo]</span>
-                </p>
-              </div>
-              <div className="space-y-2 text-sm text-gray-400 md:text-right">
-                <p className="flex items-center justify-start md:justify-end gap-2">
-                  <Phone className="w-4 h-4" />
-                  <span>[Inserir Telefone]</span>
-                </p>
-                <p className="flex items-center justify-start md:justify-end gap-2">
-                  <Mail className="w-4 h-4" />
-                  <span>contato@hubsst.com.br</span>
-                </p>
-              </div>
+            <div className="text-center text-sm text-gray-400">
+              <p className="font-semibold text-white mb-2">© 2025 HUBSST - Segurança Inteligente e Sustentável</p>
+              <p>Todos os direitos reservados</p>
             </div>
           </div>
         </div>

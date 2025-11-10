@@ -1,10 +1,6 @@
-import { Metadata } from 'next'
-import Link from 'next/link'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Debug Favicon - i9HUBSST',
-  description: 'Página de diagnóstico de favicons'
-}
+import Link from 'next/link'
 
 export default function FaviconDebugPage() {
   return (

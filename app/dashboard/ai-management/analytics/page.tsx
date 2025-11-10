@@ -58,14 +58,11 @@ async function getAnalytics() {
     // Total leads
     prisma.lead.count(),
     
-    // Leads ativos (com mensagens)
-    prisma.lead.count({
-      where: {
-        messages: {
-          some: {}
-        }
-      }
-    }),
+    // Leads ativos (com mensagens) - usando query raw para evitar erro de relação
+    prisma.$queryRaw<Array<{ count: bigint }>>`
+      SELECT COUNT(DISTINCT lead_id) as count
+      FROM "chat_messages"
+    `.then(result => result[0] ? Number(result[0].count) : 0),
     
     // Mensagens por dia (últimos 30 dias)
     prisma.$queryRaw<Array<{ date: Date, count: bigint }>>`

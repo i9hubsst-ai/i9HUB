@@ -4,8 +4,11 @@ export const metadata: Metadata = {
   title: 'Obrigado! - MA.IA',
   description: 'Bem-vindo ao MA.IA - Seu acesso foi confirmado',
   icons: {
-    icon: '/images/maia-brain.png',
-    apple: '/images/maia-brain.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
 }
 

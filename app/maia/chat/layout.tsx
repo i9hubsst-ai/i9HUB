@@ -4,8 +4,11 @@ export const metadata: Metadata = {
   title: 'Chat MA.IA - Assistente de Segurança do Trabalho',
   description: 'Converse com o MA.IA, seu assistente inteligente especializado em SST',
   icons: {
-    icon: '/images/maia-brain.png',
-    apple: '/images/maia-brain.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
 }
 

@@ -4,8 +4,11 @@ export const metadata: Metadata = {
   title: 'MA.IA - Inteligência Artificial para Segurança do Trabalho',
   description: 'Módulo Avançado de Inteligência Artificial especializado em Segurança e Saúde do Trabalho',
   icons: {
-    icon: '/images/maia-brain.png',
-    apple: '/images/maia-brain.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
 }
 

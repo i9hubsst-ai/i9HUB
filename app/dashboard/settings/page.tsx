@@ -3,7 +3,16 @@ import { Palette, Users, Bot, Bell, Activity, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 
-const settingsCards = [
+type SettingsCard = {
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  description: string
+  href: string
+  color: string
+  badge?: string
+}
+
+const settingsCards: SettingsCard[] = [
   {
     icon: Palette,
     title: 'Aparência e Identidade Visual',

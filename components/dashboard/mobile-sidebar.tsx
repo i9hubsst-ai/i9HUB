@@ -176,14 +176,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: Settings,
     label: 'Configurações',
-    children: [
-      { icon: Palette, label: 'Aparência e Identidade Visual', href: '/dashboard/settings/appearance' },
-      { icon: Users, label: 'Papéis e Permissões', href: '/dashboard/settings/roles' },
-      { icon: Bot, label: 'Integrações', href: '/dashboard/settings/integrations' },
-      { icon: Bell, label: 'Notificações e Alertas', href: '/dashboard/settings/notifications' },
-      { icon: Activity, label: 'Logs de Atividade', href: '/dashboard/settings/logs' },
-      { icon: Bot, label: 'Gestão de IA', href: '/dashboard/ai-management', adminOnly: true }
-    ]
+    href: '/dashboard/settings'
   }
 ]
 

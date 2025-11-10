@@ -12,118 +12,138 @@ import {
 } from 'lucide-react'
 
 async function getAnalytics() {
-  const now = new Date()
-  const last30Days = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
-  const last7Days = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+  try {
+    const now = new Date()
+    const last30Days = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+    const last7Days = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
 
-  const [
-    totalMessages,
-    messagesLast30Days,
-    messagesLast7Days,
-    totalFeedbacks,
-    positiveFeedbacks,
-    negativeFeedbacks,
-    totalLeads,
-    activeLeads,
-    messagesByDay,
-    topUsers,
-    feedbackByDate
-  ] = await Promise.all([
-    // Total de mensagens
-    prisma.chatMessage.count(),
-    
-    // Mensagens últimos 30 dias
-    prisma.chatMessage.count({
-      where: { createdAt: { gte: last30Days } }
-    }),
-    
-    // Mensagens últimos 7 dias
-    prisma.chatMessage.count({
-      where: { createdAt: { gte: last7Days } }
-    }),
-    
-    // Total feedbacks
-    prisma.aIFeedback.count(),
-    
-    // Feedbacks positivos
-    prisma.aIFeedback.count({
-      where: { feedback: 'POSITIVE' }
-    }),
-    
-    // Feedbacks negativos
-    prisma.aIFeedback.count({
-      where: { feedback: 'NEGATIVE' }
-    }),
-    
-    // Total leads
-    prisma.lead.count(),
-    
-    // Leads ativos (com mensagens) - usando query raw para evitar erro de relação
-    prisma.$queryRaw<Array<{ count: bigint }>>`
-      SELECT COUNT(DISTINCT lead_id) as count
+    const [
+      totalMessages,
+      messagesLast30Days,
+      messagesLast7Days,
+      totalFeedbacks,
+      positiveFeedbacks,
+      negativeFeedbacks,
+      totalLeads,
+      messagesByDay,
+      topUsers,
+      feedbackByDate
+    ] = await Promise.all([
+      // Total de mensagens
+      prisma.chatMessage.count(),
+      
+      // Mensagens últimos 30 dias
+      prisma.chatMessage.count({
+        where: { createdAt: { gte: last30Days } }
+      }),
+      
+      // Mensagens últimos 7 dias
+      prisma.chatMessage.count({
+        where: { createdAt: { gte: last7Days } }
+      }),
+      
+      // Total feedbacks
+      prisma.aIFeedback.count(),
+      
+      // Feedbacks positivos
+      prisma.aIFeedback.count({
+        where: { feedback: 'POSITIVE' }
+      }),
+      
+      // Feedbacks negativos
+      prisma.aIFeedback.count({
+        where: { feedback: 'NEGATIVE' }
+      }),
+      
+      // Total leads
+      prisma.lead.count(),
+      
+      // Mensagens por dia (últimos 30 dias)
+      prisma.$queryRaw<Array<{ date: Date, count: bigint }>>`
+        SELECT 
+          DATE(created_at) as date,
+          COUNT(*) as count
+        FROM "chat_messages"
+        WHERE created_at >= ${last30Days}
+        GROUP BY DATE(created_at)
+        ORDER BY date DESC
+        LIMIT 30
+      `,
+      
+      // Top 10 usuários mais ativos
+      prisma.chatMessage.groupBy({
+        by: ['leadId'],
+        _count: true,
+        orderBy: {
+          _count: {
+            leadId: 'desc'
+          }
+        },
+        take: 10
+      }),
+      
+      // Feedbacks por data
+      prisma.aIFeedback.groupBy({
+        by: ['feedback'],
+        _count: true
+      })
+    ])
+
+    // Contar leads ativos de forma simples
+    const activeLeadsCount = await prisma.$queryRaw<Array<{ count: bigint }>>`
+      SELECT COUNT(DISTINCT lead_id)::int as count
       FROM "chat_messages"
-    `.then(result => result[0] ? Number(result[0].count) : 0),
-    
-    // Mensagens por dia (últimos 30 dias)
-    prisma.$queryRaw<Array<{ date: Date, count: bigint }>>`
-      SELECT 
-        DATE(created_at) as date,
-        COUNT(*) as count
-      FROM "chat_messages"
-      WHERE created_at >= ${last30Days}
-      GROUP BY DATE(created_at)
-      ORDER BY date DESC
-      LIMIT 30
-    `,
-    
-    // Top 10 usuários mais ativos
-    prisma.chatMessage.groupBy({
-      by: ['leadId'],
-      _count: true,
-      orderBy: {
-        _count: {
-          leadId: 'desc'
-        }
-      },
-      take: 10
-    }),
-    
-    // Feedbacks por data
-    prisma.aIFeedback.groupBy({
-      by: ['feedback'],
-      _count: true
-    })
-  ])
+    `
+    const activeLeads = activeLeadsCount[0] ? Number(activeLeadsCount[0].count) : 0
 
-  // Calcular taxa de aprovação
-  const approvalRate = totalFeedbacks > 0 
-    ? Math.round((positiveFeedbacks / totalFeedbacks) * 100) 
-    : 0
+    // Calcular taxa de aprovação
+    const approvalRate = totalFeedbacks > 0 
+      ? Math.round((positiveFeedbacks / totalFeedbacks) * 100) 
+      : 0
 
-  // Taxa de engajamento
-  const engagementRate = totalLeads > 0
-    ? Math.round((activeLeads / totalLeads) * 100)
-    : 0
+    // Taxa de engajamento
+    const engagementRate = totalLeads > 0
+      ? Math.round((activeLeads / totalLeads) * 100)
+      : 0
 
-  // Média de mensagens por lead
-  const avgMessagesPerLead = activeLeads > 0
-    ? Math.round(totalMessages / activeLeads)
-    : 0
+    // Média de mensagens por lead
+    const avgMessagesPerLead = activeLeads > 0
+      ? Math.round(totalMessages / activeLeads)
+      : 0
 
-  return {
-    totalMessages,
-    messagesLast30Days,
-    messagesLast7Days,
-    totalFeedbacks,
-    positiveFeedbacks,
-    negativeFeedbacks,
-    approvalRate,
-    totalLeads,
-    activeLeads,
-    engagementRate,
-    avgMessagesPerLead,
-    messagesByDay,
-    topUsers
+    return {
+      totalMessages,
+      messagesLast30Days,
+      messagesLast7Days,
+      totalFeedbacks,
+      positiveFeedbacks,
+      negativeFeedbacks,
+      approvalRate,
+      totalLeads,
+      activeLeads,
+      engagementRate,
+      avgMessagesPerLead,
+      messagesByDay,
+      topUsers
+    }
+  } catch (error) {
+    console.error('Erro ao buscar analytics:', error)
+    // Retornar valores padrão em caso de erro
+    return {
+      totalMessages: 0,
+      messagesLast30Days: 0,
+      messagesLast7Days: 0,
+      totalFeedbacks: 0,
+      positiveFeedbacks: 0,
+      negativeFeedbacks: 0,
+      approvalRate: 0,
+      totalLeads: 0,
+      activeLeads: 0,
+      engagementRate: 0,
+      avgMessagesPerLead: 0,
+      messagesByDay: [],
+      topUsers: []
+    }
   }
 }
 

@@ -58,14 +58,7 @@ function AIManagementNav() {
         className="px-4 py-2 rounded-md hover:bg-accent transition-colors flex items-center gap-2"
       >
         <FileText className="w-4 h-4" />
-        Prompt do Sistema
-      </Link>
-      <Link
-        href="/dashboard/ai-management/documents"
-        className="px-4 py-2 rounded-md hover:bg-accent transition-colors flex items-center gap-2"
-      >
-        <FileText className="w-4 h-4" />
-        Documentos
+        Configuração da IA
       </Link>
       <Link
         href="/dashboard/ai-management/leads"

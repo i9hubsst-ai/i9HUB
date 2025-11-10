@@ -5,9 +5,9 @@ export default function PromptManagementPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold">Prompt do Sistema</h2>
+        <h2 className="text-2xl font-bold">Configuração da IA</h2>
         <p className="text-muted-foreground">
-          Configure o comportamento da IA editando o prompt do sistema
+          Configure o prompt do sistema e gerencie os documentos da base de conhecimento
         </p>
       </div>
 

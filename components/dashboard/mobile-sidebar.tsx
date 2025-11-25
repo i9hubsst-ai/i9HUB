@@ -218,8 +218,6 @@ function MenuItemComponent({ item, onLinkClick, level = 0, isCollapsed = false }
         </CollapsibleContent>
       </Collapsible>
     )
-      </Collapsible>
-    )
   }
 
   if (item.href) {

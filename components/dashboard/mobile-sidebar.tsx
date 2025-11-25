@@ -191,13 +191,33 @@ function MenuItemComponent({ item, onLinkClick, level = 0, isCollapsed = false }
     return (
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
-          {
-            icon: ShieldCheck,
-            label: 'Gerenciamento de Riscos',
-            href: '/dashboard/risk-management'
-          },
+          <button
+            className={`w-full flex items-center gap-2 py-2 rounded-lg hover:bg-sidebar-accent transition-colors text-left text-sm`}
+            style={{ paddingLeft: `${paddingLeft}px`, paddingRight: '12px' }}
+          >
+            <div className="flex items-center justify-center" style={{ width: `${iconWidth}px` }}>
+              <Icon className="h-4 w-4 flex-shrink-0" />
+            </div>
+            {!isCollapsed && <span className="flex-1">{item.label}</span>}
+            {!isCollapsed && (isOpen ? 
+              <ChevronDown className="h-3.5 w-3.5 flex-shrink-0" /> : 
+              <ChevronRight className="h-3.5 w-3.5 flex-shrink-0" />
+            )}
+          </button>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="space-y-0.5">
+          {item.children?.map((child, index) => (
+            <MenuItemComponent 
+              key={index} 
+              item={child} 
+              onLinkClick={onLinkClick} 
+              level={level + 1}
+              isCollapsed={isCollapsed}
+            />
           ))}
         </CollapsibleContent>
+      </Collapsible>
+    )
       </Collapsible>
     )
   }

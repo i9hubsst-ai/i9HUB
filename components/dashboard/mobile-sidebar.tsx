@@ -64,11 +64,6 @@ const menuStructure: MenuItem[] = [
     href: '/dashboard' 
   },
   {
-    icon: Eye,
-    label: 'Visão Geral',
-    href: '/dashboard/overview'
-  },
-  {
     icon: BarChart3,
     label: 'Diagnósticos',
     href: '/dashboard/diagnostics-module'

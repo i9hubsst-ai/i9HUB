@@ -16,6 +16,25 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 async function getAnalytics() {
+  // Durante o build, retornar valores padrão sem conectar ao banco
+  if (process.env.VERCEL_ENV === 'production' && !process.env.DATABASE_URL) {
+    return {
+      totalMessages: 0,
+      messagesLast30Days: 0,
+      messagesLast7Days: 0,
+      totalFeedbacks: 0,
+      positiveFeedbacks: 0,
+      negativeFeedbacks: 0,
+      approvalRate: 0,
+      totalLeads: 0,
+      activeLeads: 0,
+      engagementRate: 0,
+      avgMessagesPerLead: 0,
+      messagesByDay: [],
+      topUsers: []
+    }
+  }
+
   try {
     const now = new Date()
     const last30Days = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)

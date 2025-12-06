@@ -8,26 +8,27 @@ import { prisma } from '@/lib/prisma'
 export const dynamic = 'force-dynamic'
 
 async function getDashboardStats() {
-  const [
-    totalLeads,
-    totalMessages,
-    positiveFeedbacks,
-    recentLeads
-  ] = await Promise.all([
-    prisma.lead.count(),
-    prisma.chatMessage.count(),
-    prisma.aIFeedback.count({
-      where: { feedback: 'POSITIVE' }
-    }),
-    prisma.lead.findMany({
-      take: 5,
-      orderBy: { createdAt: 'desc' },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        company: true,
-        createdAt: true
+  try {
+    const [
+      totalLeads,
+      totalMessages,
+      positiveFeedbacks,
+      recentLeads
+    ] = await Promise.all([
+      prisma.lead.count(),
+      prisma.chatMessage.count(),
+      prisma.aIFeedback.count({
+        where: { feedback: 'POSITIVE' }
+      }),
+      prisma.lead.findMany({
+        take: 5,
+        orderBy: { createdAt: 'desc' },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          company: true,
+          createdAt: true
       }
     })
   ])
@@ -37,6 +38,15 @@ async function getDashboardStats() {
     totalMessages,
     positiveFeedbacks,
     recentLeads
+  }
+  } catch (error) {
+    console.error('Erro ao buscar stats:', error)
+    return {
+      totalLeads: 0,
+      totalMessages: 0,
+      positiveFeedbacks: 0,
+      recentLeads: []
+    }
   }
 }
 

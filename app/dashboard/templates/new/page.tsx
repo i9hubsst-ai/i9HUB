@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { TemplateBuilderForm } from '@/components/dashboard/template-builder-form'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Novo Template com IA | i9HUBSST',
   description: 'Gere templates de diagnóstico completos usando IA',

@@ -3,6 +3,8 @@ import { getKnowledgeDocuments, getDocumentCategoryCounts } from '@/app/actions/
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+
 export default async function KnowledgeBasePage() {
   const user = await getCurrentUser()
   

@@ -5,6 +5,8 @@ import { getCompanies } from '@/app/actions/companies'
 import { InviteUserDialog } from '@/components/dashboard/invite-user-dialog'
 import { UsersList } from '@/components/dashboard/users-list'
 
+export const dynamic = 'force-dynamic'
+
 export default async function UsersPage() {
   const result = await getAllUsers()
   const companiesResult = await getCompanies()

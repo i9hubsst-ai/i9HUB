@@ -10,6 +10,8 @@ import Link from 'next/link'
 import { TemplateActions } from './template-actions'
 import { TemplateSectionsView } from '@/components/dashboard/template-sections-view'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Detalhes do Template | i9HUBSST',
   description: 'Visualizar detalhes do template de diagnóstico',

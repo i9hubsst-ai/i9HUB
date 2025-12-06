@@ -4,6 +4,8 @@ import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { TemplateEditForm } from './template-edit-form'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Editar Template | i9HUBSST',
   description: 'Editar template de diagnóstico',

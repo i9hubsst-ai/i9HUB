@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { DeleteAssessmentButton } from '@/components/dashboard/delete-assessment-button'
 
+export const dynamic = 'force-dynamic'
+
 export default async function DiagnosticsPage() {
   const result = await getAssessments()
 

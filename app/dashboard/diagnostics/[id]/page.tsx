@@ -3,6 +3,7 @@ import { getAssessmentById } from '@/app/actions/assessments'
 import { DiagnosticTabs } from '@/components/dashboard/diagnostic-tabs'
 import { BackToDiagnostics } from '@/components/dashboard/back-to-diagnostics'
 
+export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default async function DiagnosticDetailPage({ 

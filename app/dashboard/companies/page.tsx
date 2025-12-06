@@ -4,6 +4,8 @@ import { Building2, Plus, Users, Calendar, FileText } from 'lucide-react'
 import { getCompanies } from '@/app/actions/companies'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 export default async function CompaniesPage() {
   const result = await getCompanies()
 

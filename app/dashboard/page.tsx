@@ -6,6 +6,8 @@ import { AssessmentStatusChart } from '@/components/dashboard/charts/assessment-
 import { AssessmentTrendChart } from '@/components/dashboard/charts/assessment-trend-chart'
 import { FindingsCategoryChart } from '@/components/dashboard/charts/findings-category-chart'
 
+export const dynamic = 'force-dynamic'
+
 export default async function DashboardPage() {
   const result = await getDashboardStats()
 

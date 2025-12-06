@@ -5,6 +5,8 @@ import { getCompanies } from '@/app/actions/companies'
 import { AddEmployeeDialog } from '@/components/dashboard/add-employee-dialog'
 import { EmployeesList } from '@/components/dashboard/employees-list'
 
+export const dynamic = 'force-dynamic'
+
 export default async function EmployeesPage() {
   const result = await getEmployees()
   const companiesResult = await getCompanies()

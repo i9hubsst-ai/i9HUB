@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button'
 import { Plus, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Templates de Diagnóstico | i9HUBSST',
   description: 'Gerencie templates de diagnóstico reutilizáveis',

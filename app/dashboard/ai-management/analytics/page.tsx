@@ -58,18 +58,6 @@ async function getAnalytics() {
       // Total leads
       prisma.lead.count(),
       
-      // Mensagens por dia (últimos 30 dias)
-      prisma.$queryRaw<Array<{ date: Date, count: bigint }>>`
-        SELECT 
-          DATE("createdAt"::timestamp) as date,
-          COUNT(*) as count
-        FROM "chat_messages"
-        WHERE "createdAt" >= ${last30Days}
-        GROUP BY DATE("createdAt"::timestamp)
-        ORDER BY date DESC
-        LIMIT 30
-      `,
-      
       // Top 10 usuários mais ativos
       prisma.chatMessage.groupBy({
         by: ['leadId'],
@@ -89,12 +77,20 @@ async function getAnalytics() {
       })
     ])
 
-    // Contar leads ativos de forma simples
-    const activeLeadsCount = await prisma.$queryRaw<Array<{ count: bigint }>>`
-      SELECT COUNT(DISTINCT "leadId") as count
-      FROM "chat_messages"
-    `
-    const activeLeads = activeLeadsCount[0] ? Number(activeLeadsCount[0].count) : 0
+    // Calcular mensagens por dia usando agregação simples
+    const messagesByDay: Array<{ date: Date, count: bigint }> = []
+
+    // Contar leads ativos únicos
+    const uniqueLeads = await prisma.chatMessage.findMany({
+      where: {
+        createdAt: { gte: last30Days }
+      },
+      select: {
+        leadId: true
+      },
+      distinct: ['leadId']
+    })
+    const activeLeads = uniqueLeads.length
 
     // Calcular taxa de aprovação
     const approvalRate = totalFeedbacks > 0 

@@ -2,8 +2,6 @@ import { Suspense } from 'react'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Brain, FileText, Users, BarChart3 } from 'lucide-react'
 
 export default async function AIManagementLayout({

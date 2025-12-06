@@ -3,6 +3,12 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
+    localPatterns: [
+      {
+        pathname: '/images/**',
+        search: '',
+      },
+    ],
     remotePatterns: [
       {
         protocol: 'https',

@@ -81,14 +81,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: Building,
     label: 'Gestão de Obras',
-    children: [
-      { icon: MapPin, label: 'Planejamento de Obras e Frentes', href: '/dashboard/construction/planning' },
-      { icon: FileCheck, label: 'Permissões de Trabalho (PT)', href: '/dashboard/construction/permits' },
-      { icon: ClipboardList, label: 'Checklists (Andaimes/Escadas/Linhas)', href: '/dashboard/construction/checklists' },
-      { icon: Users, label: 'Integração de Terceiros', href: '/dashboard/construction/integration' },
-      { icon: Camera, label: 'Registros Fotográficos e Relatórios', href: '/dashboard/construction/reports' },
-      { icon: Layers, label: 'Modelos de Relatórios de Obra', href: '/dashboard/construction/templates' }
-    ]
+    href: '/dashboard/construction-management'
   },
   {
     icon: Target,

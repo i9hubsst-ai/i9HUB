@@ -76,7 +76,13 @@ const menuStructure: MenuItem[] = [
   {
     icon: ShieldCheck,
     label: 'Gerenciamento de Riscos',
-    href: '/dashboard/risk-management'
+    href: '/dashboard/risk-management',
+    children: [
+      { icon: Gauge, label: 'Matriz de Riscos', href: '/dashboard/risk-management/matrix' },
+      { icon: Target, label: 'Classificação e Priorização', href: '/dashboard/risk-management/classification' },
+      { icon: TrendingUp, label: 'Exposição e Tendências', href: '/dashboard/risk-management/trends' },
+      { icon: BarChart, label: 'Relatórios de Risco', href: '/dashboard/risk-management/reports' }
+    ]
   },
   {
     icon: HardHat,
@@ -88,16 +94,6 @@ const menuStructure: MenuItem[] = [
       { icon: Bell, label: 'Alertas e Reposição', href: '/dashboard/epi/alerts' },
       { icon: FileText, label: 'Termos de Recebimento', href: '/dashboard/epi/terms' },
       { icon: Layers, label: 'Modelos de Documentos de EPI', href: '/dashboard/epi/templates' }
-    ]
-  },
-  {
-    icon: TrendingUp,
-    label: 'Gestão de Riscos',
-    children: [
-      { icon: Gauge, label: 'Matriz de Riscos', href: '/dashboard/risk-management/matrix' },
-      { icon: Target, label: 'Classificação e Priorização', href: '/dashboard/risk-management/classification' },
-      { icon: TrendingUp, label: 'Exposição e Tendências', href: '/dashboard/risk-management/trends' },
-      { icon: BarChart, label: 'Relatórios de Risco', href: '/dashboard/risk-management/reports' }
     ]
   },
   {

@@ -61,11 +61,11 @@ async function getAnalytics() {
       // Mensagens por dia (últimos 30 dias)
       prisma.$queryRaw<Array<{ date: Date, count: bigint }>>`
         SELECT 
-          DATE(created_at) as date,
+          DATE("createdAt") as date,
           COUNT(*) as count
         FROM "chat_messages"
-        WHERE created_at >= ${last30Days}
-        GROUP BY DATE(created_at)
+        WHERE "createdAt" >= ${last30Days}
+        GROUP BY DATE("createdAt")
         ORDER BY date DESC
         LIMIT 30
       `,
@@ -91,7 +91,7 @@ async function getAnalytics() {
 
     // Contar leads ativos de forma simples
     const activeLeadsCount = await prisma.$queryRaw<Array<{ count: bigint }>>`
-      SELECT COUNT(DISTINCT lead_id)::int as count
+      SELECT COUNT(DISTINCT "leadId")::int as count
       FROM "chat_messages"
     `
     const activeLeads = activeLeadsCount[0] ? Number(activeLeadsCount[0].count) : 0

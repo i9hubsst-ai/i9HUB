@@ -25,7 +25,6 @@ async function getAnalytics() {
       positiveFeedbacks,
       negativeFeedbacks,
       totalLeads,
-      messagesByDay,
       topUsers,
       feedbackByDate
     ] = await Promise.all([
@@ -77,7 +76,7 @@ async function getAnalytics() {
       })
     ])
 
-    // Calcular mensagens por dia usando agregação simples
+    // Array vazio para mensagens por dia (funcionalidade futura)
     const messagesByDay: Array<{ date: Date, count: bigint }> = []
 
     // Contar leads ativos únicos

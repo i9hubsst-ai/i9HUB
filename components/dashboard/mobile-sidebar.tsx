@@ -76,15 +76,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: ShieldCheck,
     label: 'Gerenciamento de Riscos',
-    children: [
-      { icon: AlertTriangle, label: 'Cadastro e Avaliação de Riscos', href: '/dashboard/risks/assessment' },
-      { icon: Database, label: 'Base de Agentes (Físicos/Químicos/Biológicos)', href: '/dashboard/risks/agents' },
-      { icon: Layers, label: 'Medidas de Prevenção e Controles', href: '/dashboard/risks/prevention' },
-      { icon: Target, label: 'Planos de Mitigação', href: '/dashboard/risks/mitigation' },
-      { icon: FileText, label: 'Documentos Técnicos (PGR, PCMSO, PCMAT)', href: '/dashboard/risks/documents' },
-      { icon: Clipboard, label: 'Registros de Inspeções e Incidentes', href: '/dashboard/risks/inspections' },
-      { icon: Layers, label: 'Modelos de PGR e Documentos', href: '/dashboard/risks/templates' }
-    ]
+    href: '/dashboard/risk-management'
   },
   {
     icon: HardHat,

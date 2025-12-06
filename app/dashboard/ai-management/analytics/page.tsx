@@ -11,6 +11,10 @@ import {
   Clock
 } from 'lucide-react'
 
+// Força dynamic rendering - não tenta gerar estaticamente durante build
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 async function getAnalytics() {
   try {
     const now = new Date()

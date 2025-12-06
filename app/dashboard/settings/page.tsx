@@ -3,6 +3,8 @@ import { Palette, Users, Bot, Bell, Activity, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 
+export const dynamic = 'force-dynamic'
+
 type SettingsCard = {
   icon: React.ComponentType<{ className?: string }>
   title: string

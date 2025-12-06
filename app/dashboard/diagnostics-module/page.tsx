@@ -16,6 +16,8 @@ import Link from 'next/link'
 import { getDiagnosticsMetrics } from '@/app/actions/assessments'
 import { getCurrentUser } from '@/lib/auth'
 
+export const dynamic = 'force-dynamic'
+
 export default async function DiagnosticsModulePage() {
   const user = await getCurrentUser()
   

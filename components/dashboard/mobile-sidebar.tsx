@@ -87,14 +87,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: HardHat,
     label: 'Gestão de EPIs',
-    children: [
-      { icon: Database, label: 'Catálogo de EPIs e Fornecedores', href: '/dashboard/epi/catalog' },
-      { icon: FileCheck, label: 'Entregas e Devoluções', href: '/dashboard/epi/delivery' },
-      { icon: Calendar, label: 'Controle de CA e Validade', href: '/dashboard/epi/control' },
-      { icon: Bell, label: 'Alertas e Reposição', href: '/dashboard/epi/alerts' },
-      { icon: FileText, label: 'Termos de Recebimento', href: '/dashboard/epi/terms' },
-      { icon: Layers, label: 'Modelos de Documentos de EPI', href: '/dashboard/epi/templates' }
-    ]
+    href: '/dashboard/epi-management'
   },
   {
     icon: Building,

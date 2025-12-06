@@ -76,13 +76,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: ShieldCheck,
     label: 'Gerenciamento de Riscos',
-    href: '/dashboard/risk-management',
-    children: [
-      { icon: Gauge, label: 'Matriz de Riscos', href: '/dashboard/risk-management/matrix' },
-      { icon: Target, label: 'Classificação e Priorização', href: '/dashboard/risk-management/classification' },
-      { icon: TrendingUp, label: 'Exposição e Tendências', href: '/dashboard/risk-management/trends' },
-      { icon: BarChart, label: 'Relatórios de Risco', href: '/dashboard/risk-management/reports' }
-    ]
+    href: '/dashboard/risk-management'
   },
   {
     icon: HardHat,

@@ -169,6 +169,53 @@ function MenuItemComponent({ item, onLinkClick, level = 0, isCollapsed = false }
   const paddingLeft = level === 0 ? 12 : (level * 12 + 12)
 
   if (hasChildren) {
+    // Se o item tem href E children, renderiza o link + botão de expandir
+    if (item.href) {
+      return (
+        <div>
+          <div className="flex items-center gap-1">
+            <Link
+              href={item.href}
+              onClick={onLinkClick}
+              className={`flex-1 flex items-center gap-2 py-2 rounded-lg hover:bg-sidebar-accent transition-colors text-sm`}
+              style={{ paddingLeft: `${paddingLeft}px`, paddingRight: '4px' }}
+              title={isCollapsed ? item.label : undefined}
+            >
+              <div className="flex items-center justify-center" style={{ width: `${iconWidth}px` }}>
+                <Icon className="h-4 w-4 flex-shrink-0" />
+              </div>
+              {!isCollapsed && <span className="flex-1">{item.label}</span>}
+            </Link>
+            {!isCollapsed && (
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 rounded-lg hover:bg-sidebar-accent transition-colors"
+              >
+                {isOpen ? 
+                  <ChevronDown className="h-3.5 w-3.5 flex-shrink-0" /> : 
+                  <ChevronRight className="h-3.5 w-3.5 flex-shrink-0" />
+                }
+              </button>
+            )}
+          </div>
+          {isOpen && (
+            <div className="space-y-0.5">
+              {item.children?.map((child, index) => (
+                <MenuItemComponent 
+                  key={index} 
+                  item={child} 
+                  onLinkClick={onLinkClick} 
+                  level={level + 1}
+                  isCollapsed={isCollapsed}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )
+    }
+    
+    // Se tem apenas children (sem href), usa o comportamento original
     return (
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>

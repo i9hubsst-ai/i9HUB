@@ -91,14 +91,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: Search,
     label: 'Inspeções e Medições',
-    children: [
-      { icon: ClipboardList, label: 'Checklists', href: '/dashboard/inspections/checklists' },
-      { icon: Eye, label: 'Inspeções em Campo', href: '/dashboard/inspections/field' },
-      { icon: Gauge, label: 'Medições Ambientais e Ocupacionais', href: '/dashboard/inspections/measurements' },
-      { icon: AlertTriangle, label: 'Não Conformidades', href: '/dashboard/inspections/non-compliance' },
-      { icon: BarChart, label: 'Relatórios de Inspeção', href: '/dashboard/inspections/reports' },
-      { icon: Layers, label: 'Modelos de Checklists e Relatórios', href: '/dashboard/inspections/templates' }
-    ]
+    href: '/dashboard/inspections-management'
   },
   {
     icon: BarChart,

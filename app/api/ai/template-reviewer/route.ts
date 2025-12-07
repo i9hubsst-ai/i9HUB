@@ -151,12 +151,12 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
   ]
 }`
 
-    console.log('🤖 Chamando IA com modelo gemini-2.0-flash-exp...')
+    console.log('🤖 Chamando IA com modelo gemini-1.5-flash...')
     
     let response
     try {
       response = await genai.models.generateContent({
-        model: 'gemini-2.0-flash-exp',
+        model: 'gemini-1.5-flash',
         config: {
           systemInstruction: systemPrompt,
           responseMimeType: 'application/json',
@@ -208,7 +208,7 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
     })
 
   } catch (error) {
-    console.error('Erro ao revisar template via IA:', error)
+    console.error('❌ Erro ao revisar template via IA:', error)
     
     // Mensagem de erro mais específica
     let errorMessage = 'Erro ao revisar template via IA'
@@ -219,10 +219,14 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
       // Erros específicos da API do Gemini
       if (error.message.includes('API key')) {
         errorMessage = 'Erro de configuração da API. Verifique a chave GEMINI_API_KEY.'
-      } else if (error.message.includes('quota') || error.message.includes('limit')) {
-        errorMessage = 'Limite de uso da API atingido. Tente novamente mais tarde.'
+      } else if (error.message.includes('quota') || error.message.includes('limit') || error.message.includes('429')) {
+        errorMessage = 'Limite de uso da API atingido. Tente novamente em alguns segundos ou aguarde o reset da quota diária.'
+      } else if (error.message.includes('RESOURCE_EXHAUSTED')) {
+        errorMessage = 'Limite de requisições excedido. Por favor, aguarde alguns minutos e tente novamente.'
       } else if (error.message.includes('model')) {
         errorMessage = 'Modelo de IA indisponível. Tente novamente mais tarde.'
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'A requisição demorou muito. Tente novamente.'
       }
     }
     

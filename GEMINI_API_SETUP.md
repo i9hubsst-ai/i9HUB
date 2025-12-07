@@ -83,10 +83,13 @@ node -e "console.log('GEMINI_API_KEY:', process.env.GEMINI_API_KEY ? '✅ Config
 - **Solução**: Gere uma nova chave no Google AI Studio
 
 ### Erro: "Limite de uso atingido"
-- **Causa**: Quota da API esgotada
+- **Causa**: Quota da API esgotada (código 429 - RESOURCE_EXHAUSTED)
 - **Solução**: 
-  - Aguarde o reset da quota (geralmente diário)
-  - Ou atualize seu plano no Google Cloud
+  - **Imediato**: Aguarde alguns segundos e tente novamente (o erro mostra o tempo de retry)
+  - **Curto prazo**: Aguarde o reset da quota por minuto (60 segundos)
+  - **Longo prazo**: Aguarde o reset da quota diária (00:00 UTC)
+  - **Definitivo**: Atualize para o plano pago no Google Cloud
+  - **Alternativa**: Use o modelo `gemini-1.5-flash` em vez de `gemini-2.0-flash-exp`
 
 ### Erro: "Modelo indisponível"
 - **Causa**: Modelo `gemini-2.0-flash-exp` não acessível
@@ -94,31 +97,44 @@ node -e "console.log('GEMINI_API_KEY:', process.env.GEMINI_API_KEY ? '✅ Config
 
 ## Modelos Utilizados
 
-### Atual: gemini-2.0-flash-exp
-- Modelo experimental com melhor performance
+### Atual: gemini-1.5-flash
+- Modelo estável e confiável
 - Suporta JSON estruturado
+- Limites generosos no free tier
 - Ideal para análise de templates SST
 
-### Alternativo: gemini-1.5-flash
-Para maior estabilidade, altere em:
+### Experimental: gemini-2.0-flash-exp
+⚠️ **Atenção**: Este modelo tem limites muito baixos no free tier e pode esgotar rapidamente.
+- Melhor performance em alguns casos
+- Limites mais restritos (0 após esgotamento)
+- Use apenas em contas pagas
+
+Para usar o modelo experimental, altere em:
 - `app/api/ai/template-reviewer/route.ts`
 - `app/api/ai/template-builder/route.ts`
 - `app/api/ai/report-writer/route.ts`
 
 ```typescript
-model: 'gemini-1.5-flash'
+model: 'gemini-2.0-flash-exp'
 ```
 
 ## Custo e Limites
 
 ### Free Tier (Google AI Studio)
+**gemini-1.5-flash**:
 - 15 requisições por minuto
 - 1 milhão de tokens por minuto
 - 1,500 requisições por dia
 
+**gemini-2.0-flash-exp** (experimental):
+- Limites muito restritos
+- Não recomendado para produção no free tier
+- Pode esgotar rapidamente
+
 ### Paid Tier (Google Cloud)
 - Consulte [preços atualizados](https://ai.google.dev/pricing)
 - Limites configuráveis por projeto
+- Recomendado para produção com alto volume
 
 ## Segurança
 

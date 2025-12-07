@@ -115,7 +115,7 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
 }`
 
     const response = await genai.models.generateContent({
-      model: 'gemini-2.0-flash-exp',
+      model: 'gemini-1.5-flash',
       config: {
         systemInstruction: systemPrompt,
         responseMimeType: 'application/json',

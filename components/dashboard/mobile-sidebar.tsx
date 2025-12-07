@@ -101,13 +101,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: GraduationCap,
     label: 'Treinamentos',
-    children: [
-      { icon: GraduationCap, label: 'Cursos', href: '/dashboard/training/courses' },
-      { icon: Target, label: 'Trilhas', href: '/dashboard/training/tracks' },
-      { icon: Award, label: 'Certificações', href: '/dashboard/training/certifications' },
-      { icon: Calendar, label: 'Reciclagens', href: '/dashboard/training/refresher' },
-      { icon: Layers, label: 'Modelos de Certificados', href: '/dashboard/training/templates' }
-    ]
+    href: '/dashboard/training-management'
   },
   {
     icon: Database,

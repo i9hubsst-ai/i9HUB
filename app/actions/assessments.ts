@@ -49,7 +49,7 @@ export async function getDiagnosticsMetrics(companyId?: string) {
       prisma.assessment.count({ where: { ...assessmentWhere, status: 'DRAFT' } }),
       prisma.assessment.count({ where: { ...assessmentWhere, status: 'IN_PROGRESS' } }),
       prisma.assessment.count({ where: { ...assessmentWhere, status: 'COMPLETED' } }),
-      prisma.diagnosticTemplate.count({ where: { status: 'PUBLISHED' } }),
+      prisma.diagnosticTemplate.count({ where: { status: { not: 'ARCHIVED' } } }),
       prisma.finding.count({ where: findingWhere }),
       prisma.actionPlan.count({ where: actionPlanWhere }),
       prisma.actionPlan.count({ where: { ...actionPlanWhere, status: 'DRAFT' } }),

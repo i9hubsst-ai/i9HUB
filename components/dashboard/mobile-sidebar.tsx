@@ -86,12 +86,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: Target,
     label: 'Planos de Ação',
-    children: [
-      { icon: Target, label: 'Minhas Ações', href: '/dashboard/actions/my' },
-      { icon: FileText, label: 'Todas as Ações', href: '/dashboard/actions' },
-      { icon: Bell, label: 'Alertas e Prazos', href: '/dashboard/actions/alerts' },
-      { icon: Calendar, label: 'Cronogramas e Status', href: '/dashboard/actions/schedule' }
-    ]
+    href: '/dashboard/action-plans-management'
   },
   {
     icon: Search,

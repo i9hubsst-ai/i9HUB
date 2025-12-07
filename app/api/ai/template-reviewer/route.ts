@@ -14,32 +14,41 @@ interface TemplateReviewRequest {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('🚀 Iniciando revisão de template via IA...')
+    
     // Verificar API key primeiro
     if (!process.env.GEMINI_API_KEY) {
-      console.error('GEMINI_API_KEY não configurada')
+      console.error('❌ GEMINI_API_KEY não configurada')
       return NextResponse.json(
         { error: 'Configuração de IA não encontrada. Entre em contato com o suporte.' },
         { status: 500 }
       )
     }
+    console.log('✅ API Key configurada')
 
     const user = await getCurrentUser()
     if (!user) {
+      console.log('❌ Usuário não autenticado')
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
     }
+    console.log('✅ Usuário autenticado:', user.id)
 
     const isAdmin = await isPlatformAdmin(user.id)
     if (!isAdmin) {
+      console.log('❌ Usuário não é admin')
       return NextResponse.json(
         { error: 'Apenas administradores podem revisar templates via IA' },
         { status: 403 }
       )
     }
+    console.log('✅ Usuário é admin')
 
     const body: TemplateReviewRequest = await request.json()
     const { templateId, focusArea } = body
+    console.log('📋 Template ID:', templateId)
 
     if (!templateId) {
+      console.log('❌ Template ID não fornecido')
       return NextResponse.json(
         { error: 'ID do template é obrigatório' },
         { status: 400 }
@@ -47,6 +56,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Buscar template completo do banco
+    console.log('🔍 Buscando template no banco de dados...')
     const template = await prisma.diagnosticTemplate.findUnique({
       where: { id: templateId },
       include: {
@@ -63,11 +73,16 @@ export async function POST(request: NextRequest) {
     })
 
     if (!template) {
+      console.log('❌ Template não encontrado')
       return NextResponse.json(
         { error: 'Template não encontrado' },
         { status: 404 }
       )
     }
+
+    console.log(`✅ Template encontrado: ${template.name}`)
+    console.log(`   Seções: ${template.sections.length}`)
+    console.log(`   Perguntas totais: ${template.sections.reduce((acc, s) => acc + s.questions.length, 0)}`)
 
     const systemPrompt = `Você é um consultor especialista em Segurança e Saúde no Trabalho (SST) no Brasil com vasta experiência em auditorias, diagnósticos e conformidade normativa.
 
@@ -136,23 +151,35 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
   ]
 }`
 
-    const response = await genai.models.generateContent({
-      model: 'gemini-2.0-flash-exp',
-      config: {
-        systemInstruction: systemPrompt,
-        responseMimeType: 'application/json',
-      },
-      contents: userPrompt,
-    })
+    console.log('🤖 Chamando IA com modelo gemini-2.0-flash-exp...')
+    
+    let response
+    try {
+      response = await genai.models.generateContent({
+        model: 'gemini-2.0-flash-exp',
+        config: {
+          systemInstruction: systemPrompt,
+          responseMimeType: 'application/json',
+        },
+        contents: userPrompt,
+      })
+    } catch (aiError) {
+      console.error('❌ Erro na chamada da IA:', aiError)
+      throw aiError
+    }
+
+    console.log('📦 Resposta recebida:', { hasText: !!response?.text, type: typeof response })
 
     const content = response.text
     if (!content) {
-      console.error('IA não retornou conteúdo. Resposta:', response)
+      console.error('IA não retornou conteúdo. Resposta completa:', JSON.stringify(response, null, 2))
       return NextResponse.json(
         { error: 'IA não retornou conteúdo' },
         { status: 500 }
       )
     }
+
+    console.log('✅ Conteúdo recebido, tamanho:', content.length)
 
     let reviewResult
     try {

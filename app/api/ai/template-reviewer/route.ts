@@ -14,6 +14,15 @@ interface TemplateReviewRequest {
 
 export async function POST(request: NextRequest) {
   try {
+    // Verificar API key primeiro
+    if (!process.env.GEMINI_API_KEY) {
+      console.error('GEMINI_API_KEY não configurada')
+      return NextResponse.json(
+        { error: 'Configuração de IA não encontrada. Entre em contato com o suporte.' },
+        { status: 500 }
+      )
+    }
+
     const user = await getCurrentUser()
     if (!user) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
@@ -173,8 +182,25 @@ Retorne APENAS um JSON válido no seguinte formato (sem markdown, sem explicaç�
 
   } catch (error) {
     console.error('Erro ao revisar template via IA:', error)
+    
+    // Mensagem de erro mais específica
+    let errorMessage = 'Erro ao revisar template via IA'
+    if (error instanceof Error) {
+      console.error('Detalhes do erro:', error.message)
+      console.error('Stack:', error.stack)
+      
+      // Erros específicos da API do Gemini
+      if (error.message.includes('API key')) {
+        errorMessage = 'Erro de configuração da API. Verifique a chave GEMINI_API_KEY.'
+      } else if (error.message.includes('quota') || error.message.includes('limit')) {
+        errorMessage = 'Limite de uso da API atingido. Tente novamente mais tarde.'
+      } else if (error.message.includes('model')) {
+        errorMessage = 'Modelo de IA indisponível. Tente novamente mais tarde.'
+      }
+    }
+    
     return NextResponse.json(
-      { error: 'Erro ao revisar template via IA' },
+      { error: errorMessage },
       { status: 500 }
     )
   }

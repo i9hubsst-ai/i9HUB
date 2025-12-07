@@ -96,12 +96,7 @@ const menuStructure: MenuItem[] = [
   {
     icon: BarChart,
     label: 'Relatórios',
-    children: [
-      { icon: Gauge, label: 'Painéis e Indicadores', href: '/dashboard/reports/dashboards' },
-      { icon: FileText, label: 'Relatórios Técnicos', href: '/dashboard/reports/technical' },
-      { icon: Download, label: 'Exportações (PDF/Excel)', href: '/dashboard/reports/exports' },
-      { icon: TrendingUp, label: 'Comparativos de Desempenho', href: '/dashboard/reports/performance' }
-    ]
+    href: '/dashboard/reports-management'
   },
   {
     icon: GraduationCap,

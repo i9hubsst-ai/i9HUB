@@ -122,138 +122,109 @@ export default async function DiagnosticsModulePage() {
 
       {/* Ações Rápidas */}
       <div>
-        <h2 className="text-xl font-semibold mb-4">Acesso Rápido</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-0 grid-cols-5">
           {/* Templates */}
-          <Card className="hover:border-primary transition-colors cursor-pointer group">
-            <Link href="/dashboard/templates">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 group-hover:text-primary transition-colors">
-                  <FileText className="h-5 w-5" />
-                  Templates
-                </CardTitle>
-                <CardDescription>
+          <Link href="/dashboard/templates" className="block">
+            <div className="bg-white hover:bg-primary/5 transition-colors cursor-pointer border-r border-b border-gray-200 p-6 h-full">
+              <div className="flex flex-col items-center text-center">
+                <FileText className="h-8 w-8 text-primary mb-3" />
+                <h3 className="font-semibold mb-1 text-sm">Templates</h3>
+                <p className="text-xs text-muted-foreground mb-3">
                   Gerencie templates de diagnósticos temáticos (NR-12, ISO 45001, etc.)
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold">{metrics.templates.total}</span>
-                  <Button variant="ghost" size="sm" className="gap-2">
-                    Acessar
-                  </Button>
-                </div>
-              </CardContent>
-            </Link>
-          </Card>
+                </p>
+                <span className="text-3xl font-bold text-primary">{metrics.templates.total}</span>
+                <span className="text-xs text-muted-foreground mt-1">Acessar</span>
+              </div>
+            </div>
+          </Link>
 
           {/* Diagnósticos */}
-          <Card className="hover:border-primary transition-colors cursor-pointer group">
-            <Link href="/dashboard/diagnostics">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 group-hover:text-primary transition-colors">
-                  <ClipboardList className="h-5 w-5" />
-                  Diagnósticos
-                </CardTitle>
-                <CardDescription>
+          <Link href="/dashboard/diagnostics" className="block">
+            <div className="bg-white hover:bg-primary/5 transition-colors cursor-pointer border-r border-b border-gray-200 p-6 h-full">
+              <div className="flex flex-col items-center text-center">
+                <ClipboardList className="h-8 w-8 text-primary mb-3" />
+                <h3 className="font-semibold mb-1 text-sm">Diagnósticos</h3>
+                <p className="text-xs text-muted-foreground mb-3">
                   Visualize e gerencie todos os diagnósticos realizados
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
+                </p>
+                <div className="space-y-1 w-full">
+                  <div className="flex items-center justify-between text-xs">
                     <span className="text-muted-foreground">Rascunhos</span>
                     <span className="font-semibold">{metrics.assessments.draft}</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center justify-between text-xs">
                     <span className="text-muted-foreground">Em andamento</span>
                     <span className="font-semibold text-blue-600">{metrics.assessments.inProgress}</span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center justify-between text-xs">
                     <span className="text-muted-foreground">Concluídos</span>
                     <span className="font-semibold text-green-600">{metrics.assessments.completed}</span>
                   </div>
                 </div>
-              </CardContent>
-            </Link>
-          </Card>
+              </div>
+            </div>
+          </Link>
 
           {/* Achados */}
-          <Card className="hover:border-primary transition-colors cursor-pointer group">
-            <Link href="/dashboard/findings">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 group-hover:text-primary transition-colors">
-                  <AlertTriangle className="h-5 w-5" />
-                  Achados
-                </CardTitle>
-                <CardDescription>
+          <Link href="/dashboard/findings" className="block">
+            <div className="bg-white hover:bg-primary/5 transition-colors cursor-pointer border-r border-b border-gray-200 p-6 h-full">
+              <div className="flex flex-col items-center text-center">
+                <AlertTriangle className="h-8 w-8 text-yellow-600 mb-3" />
+                <h3 className="font-semibold mb-1 text-sm">Achados</h3>
+                <p className="text-xs text-muted-foreground mb-3">
                   Não conformidades e oportunidades de melhoria identificadas
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+                </p>
+                <div className="space-y-1 w-full">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Abertos</span>
-                    <span className="text-lg font-bold text-yellow-600">{metrics.findings.open}</span>
+                    <span className="text-xs text-muted-foreground">Abertos</span>
+                    <span className="text-2xl font-bold text-yellow-600">{metrics.findings.open}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Total</span>
-                    <span className="text-lg font-bold">{metrics.findings.total}</span>
+                    <span className="text-xs text-muted-foreground">Total</span>
+                    <span className="text-xl font-bold">{metrics.findings.total}</span>
                   </div>
                 </div>
-              </CardContent>
-            </Link>
-          </Card>
+              </div>
+            </div>
+          </Link>
 
           {/* Planos de Ação */}
-          <Card className="hover:border-primary transition-colors cursor-pointer group">
-            <Link href="/dashboard/action-plans">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 group-hover:text-primary transition-colors">
-                  <Target className="h-5 w-5" />
-                  Planos de Ação
-                </CardTitle>
-                <CardDescription>
+          <Link href="/dashboard/action-plans" className="block">
+            <div className="bg-white hover:bg-primary/5 transition-colors cursor-pointer border-r border-b border-gray-200 p-6 h-full">
+              <div className="flex flex-col items-center text-center">
+                <Target className="h-8 w-8 text-orange-600 mb-3" />
+                <h3 className="font-semibold mb-1 text-sm">Planos de Ação</h3>
+                <p className="text-xs text-muted-foreground mb-3">
                   Ações corretivas e preventivas para tratamento dos achados
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+                </p>
+                <div className="space-y-1 w-full">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Pendentes</span>
-                    <span className="text-lg font-bold text-orange-600">{metrics.actionPlans.pending}</span>
+                    <span className="text-xs text-muted-foreground">Pendentes</span>
+                    <span className="text-2xl font-bold text-orange-600">{metrics.actionPlans.pending}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Total</span>
-                    <span className="text-lg font-bold">{metrics.actionPlans.total}</span>
+                    <span className="text-xs text-muted-foreground">Total</span>
+                    <span className="text-xl font-bold">{metrics.actionPlans.total}</span>
                   </div>
                 </div>
-              </CardContent>
-            </Link>
-          </Card>
+              </div>
+            </div>
+          </Link>
 
           {/* Evidências */}
-          <Card className="hover:border-primary transition-colors cursor-pointer group">
-            <Link href="/dashboard/evidence">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 group-hover:text-primary transition-colors">
-                  <FileCheck className="h-5 w-5" />
-                  Evidências
-                </CardTitle>
-                <CardDescription>
+          <Link href="/dashboard/evidence" className="block">
+            <div className="bg-white hover:bg-primary/5 transition-colors cursor-pointer border-b border-gray-200 p-6 h-full">
+              <div className="flex flex-col items-center text-center">
+                <FileCheck className="h-8 w-8 text-primary mb-3" />
+                <h3 className="font-semibold mb-1 text-sm">Evidências</h3>
+                <p className="text-xs text-muted-foreground mb-3">
                   Documentos e comprovações das ações realizadas
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold">{metrics.evidence.total}</span>
-                  <Button variant="ghost" size="sm" className="gap-2">
-                    Acessar
-                  </Button>
-                </div>
-              </CardContent>
-            </Link>
-          </Card>
+                </p>
+                <span className="text-3xl font-bold text-primary">{metrics.evidence.total}</span>
+                <span className="text-xs text-muted-foreground mt-1">Acessar</span>
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
 

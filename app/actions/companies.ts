@@ -339,7 +339,21 @@ export async function updateCompanyComplete(companyId: string, data: CompanyComp
     return { error: 'Sem permissão para editar esta empresa' }
   }
 
-  if (!data.name || !data.cnpj) {
+  // Buscar dados atuais da empresa
+  const currentCompany = await prisma.company.findUnique({
+    where: { id: companyId },
+    select: { name: true, cnpj: true }
+  })
+
+  if (!currentCompany) {
+    return { error: 'Empresa não encontrada' }
+  }
+
+  // Usar dados existentes se não forem fornecidos novos
+  const name = data.name || currentCompany.name
+  const cnpj = data.cnpj || currentCompany.cnpj
+
+  if (!name || !cnpj) {
     return { error: 'Nome e CNPJ são obrigatórios' }
   }
 
@@ -348,7 +362,9 @@ export async function updateCompanyComplete(companyId: string, data: CompanyComp
       where: { id: companyId },
       data: {
         ...data,
-        dataFundacao: data.dataFundacao ? new Date(data.dataFundacao) : null,
+        name,
+        cnpj,
+        dataFundacao: data.dataFundacao ? new Date(data.dataFundacao) : undefined,
       }
     })
 

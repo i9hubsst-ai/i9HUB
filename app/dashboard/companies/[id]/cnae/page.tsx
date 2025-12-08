@@ -10,11 +10,13 @@ export default async function CompanyCNAEPage({
 }: {
   params: { id: string }
 }) {
-  const company = await getCompanyById(params.id)
+  const result = await getCompanyById(params.id)
 
-  if (!company) {
+  if (result.error || !result.company) {
     notFound()
   }
+
+  const company = result.company
 
   return (
     <div className="container mx-auto py-10 max-w-6xl">

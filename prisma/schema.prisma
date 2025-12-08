@@ -69,10 +69,64 @@ model KnowledgeSource {
 
 model Company {
   id                String             @id @default(uuid())
-  name              String
+  // Dados Institucionais
+  name              String             // Nome Fantasia
+  razaoSocial       String?
   cnpj              String             @unique
+  inscricaoEstadual String?
+  inscricaoMunicipal String?
+  naturezaJuridica  String?
+  ramoAtividade     String?
+  cnaePrincipal     String?
+  cnaesSecundarios  String[]           @default([])
+  dataFundacao      DateTime?
+  
+  // Endereço Principal (Matriz)
+  endereco          String?
+  numero            String?
+  complemento       String?
+  bairro            String?
+  cidade            String?
+  estado            String?
+  cep               String?
+  
+  // Contatos
+  telefone          String?
+  telefone2         String?
+  email             String?
+  emailInstitucional String?
+  
+  // Responsáveis
+  responsavelLegal       String?
+  responsavelLegalCargo  String?
+  responsavelLegalEmail  String?
+  responsavelLegalTelefone String?
+  
+  responsavelTecnicoSST        String?
+  responsavelTecnicoCargo      String?
+  responsavelTecnicoRegistro   String?
+  responsavelTecnicoEmail      String?
+  responsavelTecnicoTelefone   String?
+  
+  // Informações SST
+  grauRisco         String?
+  temSesmt          Boolean            @default(false)
+  numeroFuncionarios Int?
+  numeroTurnos      Int?
+  jornada           String?
+  
+  // Informações Complementares
+  logo              String?
+  descricaoNegocio  String?
+  missao            String?
+  visao             String?
+  valores           String?
+  observacoes       String?
+  
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
+  
+  // Relações
   aiPrompts         AIPromptConfig[]
   knowledgeSources  KnowledgeSource[]
   actionPlans       ActionPlan[]
@@ -81,8 +135,96 @@ model Company {
   employees         Employee[]
   memberships       Membership[]
   modulePermissions ModulePermission[]
+  locations         CompanyLocation[]
+  contacts          CompanyContact[]
+  documents         CompanyDocument[]
+  settings          CompanySettings?
 
   @@map("companies")
+}
+
+model CompanyLocation {
+  id          String   @id @default(uuid())
+  companyId   String
+  tipo        String   // "MATRIZ" | "FILIAL" | "OBRA"
+  nome        String
+  endereco    String
+  numero      String?
+  complemento String?
+  bairro      String?
+  cidade      String
+  estado      String
+  cep         String
+  telefone    String?
+  email       String?
+  ativa       Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@map("company_locations")
+}
+
+model CompanyContact {
+  id        String   @id @default(uuid())
+  companyId String
+  tipo      String   // "RH" | "FINANCEIRO" | "ADMINISTRATIVO" | "OUTRO"
+  nome      String
+  cargo     String?
+  telefone  String?
+  email     String?
+  setor     String?
+  principal Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@map("company_contacts")
+}
+
+model CompanyDocument {
+  id              String   @id @default(uuid())
+  companyId       String
+  tipo            String   // "PPRA" | "PCMSO" | "LTCAT" | "ALVARA" | "AVCB" | "ART" | "OUTRO"
+  nome            String
+  numeroDocumento String?
+  dataEmissao     DateTime?
+  dataValidade    DateTime?
+  responsavel     String?
+  arquivoUrl      String?
+  observacoes     String?
+  ativo           Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  company         Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@map("company_documents")
+}
+
+model CompanySettings {
+  id                    String   @id @default(uuid())
+  companyId             String   @unique
+  // Configurações Operacionais
+  fluxoAprovacaoEpi     Boolean  @default(false)
+  fluxoAprovacaoOs      Boolean  @default(false)
+  fluxoAprovacaoTreinamento Boolean @default(false)
+  integracaoERP         String?
+  integracaoRH          String?
+  formatoRelatorio      String?  @default("PDF")
+  
+  // Dados Financeiros (opcional)
+  responsavelFinanceiro String?
+  responsavelFinanceiroEmail String?
+  condicoesComerciais   String?
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  company               Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@map("company_settings")
 }
 
 model Membership {

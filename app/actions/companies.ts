@@ -267,3 +267,96 @@ export async function getCompanyById(companyId: string) {
     return { error: 'Erro ao buscar empresa' }
   }
 }
+
+// ============= NOVAS FUNÇÕES COMPLETAS =============
+
+interface CompanyCompleteData {
+  // Dados Institucionais
+  name: string
+  razaoSocial?: string
+  cnpj: string
+  inscricaoEstadual?: string
+  inscricaoMunicipal?: string
+  naturezaJuridica?: string
+  ramoAtividade?: string
+  cnaePrincipal?: string
+  cnaesSecundarios?: string[]
+  dataFundacao?: string
+  
+  // Endereço
+  endereco?: string
+  numero?: string
+  complemento?: string
+  bairro?: string
+  cidade?: string
+  estado?: string
+  cep?: string
+  
+  // Contatos
+  telefone?: string
+  telefone2?: string
+  email?: string
+  emailInstitucional?: string
+  
+  // Responsáveis
+  responsavelLegal?: string
+  responsavelLegalCargo?: string
+  responsavelLegalEmail?: string
+  responsavelLegalTelefone?: string
+  
+  responsavelTecnicoSST?: string
+  responsavelTecnicoCargo?: string
+  responsavelTecnicoRegistro?: string
+  responsavelTecnicoEmail?: string
+  responsavelTecnicoTelefone?: string
+  
+  // SST
+  grauRisco?: string
+  temSesmt?: boolean
+  numeroFuncionarios?: number
+  numeroTurnos?: number
+  jornada?: string
+  
+  // Complementares
+  logo?: string
+  descricaoNegocio?: string
+  missao?: string
+  visao?: string
+  valores?: string
+  observacoes?: string
+}
+
+export async function updateCompanyComplete(companyId: string, data: CompanyCompleteData) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  const isAdmin = await isPlatformAdmin(user.id)
+  const role = await getUserRole(user.id, companyId)
+
+  if (!isAdmin && role !== 'COMPANY_ADMIN') {
+    return { error: 'Sem permissão para editar esta empresa' }
+  }
+
+  if (!data.name || !data.cnpj) {
+    return { error: 'Nome e CNPJ são obrigatórios' }
+  }
+
+  try {
+    const company = await prisma.company.update({
+      where: { id: companyId },
+      data: {
+        ...data,
+        dataFundacao: data.dataFundacao ? new Date(data.dataFundacao) : null,
+      }
+    })
+
+    revalidatePath('/dashboard/companies')
+    revalidatePath(`/dashboard/companies/${companyId}`)
+    return { success: true, company }
+  } catch (error) {
+    console.error('Erro ao atualizar empresa:', error)
+    return { error: 'Erro ao atualizar empresa' }
+  }
+}

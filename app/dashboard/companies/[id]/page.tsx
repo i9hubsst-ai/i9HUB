@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Building2, Users, Calendar, FileText, ArrowLeft, Edit, Trash2 } from 'lucide-react'
+import { Building2, Users, Calendar, FileText, ArrowLeft, Edit, MapPin, Phone, Mail, User, Shield, Briefcase } from 'lucide-react'
 import { getCompanyById } from '@/app/actions/companies'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -45,6 +45,7 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
         </div>
         <div>
           <h1 className="text-3xl font-bold text-primary">{company.name}</h1>
+          {company.razaoSocial && <p className="text-lg text-muted-foreground">{company.razaoSocial}</p>}
           <p className="text-muted-foreground">CNPJ: {company.cnpj}</p>
         </div>
       </div>

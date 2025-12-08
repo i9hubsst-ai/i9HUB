@@ -127,6 +127,13 @@ function MenuItemComponent({ item, onLinkClick, level = 0, isCollapsed = false }
   const iconWidth = 16 // Largura fixa para alinhamento
   const paddingLeft = level === 0 ? 12 : (level * 12 + 12)
 
+  // Resetar estado quando o sidebar colapsa
+  useEffect(() => {
+    if (isCollapsed) {
+      setIsOpen(false)
+    }
+  }, [isCollapsed])
+
   if (hasChildren) {
     // Se o item tem href E children, renderiza o link + botão de expandir
     if (item.href) {

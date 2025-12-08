@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Building2, Users, Calendar, FileText, ArrowLeft, Edit, MapPin, Phone, Mail, User, Shield, Briefcase, ListChecks } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Building2, Users, Calendar, FileText, ArrowLeft, Edit, MapPin, Phone, Mail, User, Shield, Briefcase } from 'lucide-react'
 import { getCompanyById } from '@/app/actions/companies'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -30,12 +31,6 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
         </Link>
 
         <div className="flex gap-2">
-          <Link href={`/dashboard/companies/${id}/cnae`}>
-            <Button variant="outline" size="sm" className="gap-2">
-              <ListChecks className="h-4 w-4" />
-              Gerenciar CNAEs
-            </Button>
-          </Link>
           <Link href={`/dashboard/companies/${id}/edit`}>
             <Button variant="outline" size="sm" className="gap-2">
               <Edit className="h-4 w-4" />
@@ -57,7 +52,7 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-4">
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -96,6 +91,41 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
             <div className="flex items-center gap-3">
               <FileText className="h-8 w-8 text-primary" />
               <div className="text-3xl font-bold">{company._count.actionPlans}</div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
+              Grau de Risco
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-3">
+              <Shield className="h-8 w-8 text-primary" />
+              {company.grauRisco ? (
+                <div className="flex items-center gap-2">
+                  <div className="text-3xl font-bold">{company.grauRisco}</div>
+                  <Badge 
+                    className={
+                      company.grauRisco === 1 ? 'bg-green-100 text-green-800' :
+                      company.grauRisco === 2 ? 'bg-yellow-100 text-yellow-800' :
+                      company.grauRisco === 3 ? 'bg-orange-100 text-orange-800' :
+                      'bg-red-100 text-red-800'
+                    }
+                  >
+                    {
+                      company.grauRisco === 1 ? 'Leve' :
+                      company.grauRisco === 2 ? 'Médio' :
+                      company.grauRisco === 3 ? 'Grave' :
+                      'Muito Grave'
+                    }
+                  </Badge>
+                </div>
+              ) : (
+                <div className="text-sm text-muted-foreground">Não definido</div>
+              )}
             </div>
           </CardContent>
         </Card>

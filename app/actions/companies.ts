@@ -311,7 +311,7 @@ interface CompanyCompleteData {
   responsavelTecnicoTelefone?: string
   
   // SST
-  grauRisco?: string
+  grauRisco?: string | number
   temSesmt?: boolean
   numeroFuncionarios?: number
   numeroTurnos?: number
@@ -358,12 +358,18 @@ export async function updateCompanyComplete(companyId: string, data: CompanyComp
   }
 
   try {
+    // Converter grauRisco para número se vier como string
+    const grauRiscoValue = data.grauRisco 
+      ? (typeof data.grauRisco === 'string' ? parseInt(data.grauRisco) : data.grauRisco)
+      : undefined
+
     const company = await prisma.company.update({
       where: { id: companyId },
       data: {
         ...data,
         name,
         cnpj,
+        grauRisco: grauRiscoValue,
         dataFundacao: data.dataFundacao ? new Date(data.dataFundacao) : undefined,
       }
     })

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Building2, Users, Calendar, FileText, ArrowLeft, Edit, MapPin, Phone, Mail, User, Shield, Briefcase } from 'lucide-react'
+import { Building2, Users, Calendar, FileText, ArrowLeft, Edit, MapPin, Phone, Mail, User, Shield, Briefcase, ListChecks } from 'lucide-react'
 import { getCompanyById } from '@/app/actions/companies'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -30,6 +30,12 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
         </Link>
 
         <div className="flex gap-2">
+          <Link href={`/dashboard/companies/${id}/cnae`}>
+            <Button variant="outline" size="sm" className="gap-2">
+              <ListChecks className="h-4 w-4" />
+              Gerenciar CNAEs
+            </Button>
+          </Link>
           <Link href={`/dashboard/companies/${id}/edit`}>
             <Button variant="outline" size="sm" className="gap-2">
               <Edit className="h-4 w-4" />

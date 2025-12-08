@@ -376,3 +376,134 @@ export async function updateCompanyComplete(companyId: string, data: CompanyComp
     return { error: 'Erro ao atualizar empresa' }
   }
 }
+
+// ===== AÇÕES DE CNAE =====
+
+export async function getAllCNAEs() {
+  try {
+    const cnaes = await prisma.cNAE.findMany({
+      where: { ativo: true },
+      orderBy: [
+        { grauRisco: 'asc' },
+        { codigo: 'asc' }
+      ]
+    })
+    return { success: true, cnaes }
+  } catch (error) {
+    console.error('Erro ao buscar CNAEs:', error)
+    return { error: 'Erro ao buscar CNAEs' }
+  }
+}
+
+export async function getCompanyCNAEs(companyId: string) {
+  try {
+    const companyCnaes = await prisma.companyCNAE.findMany({
+      where: { companyId },
+      include: {
+        cnae: true
+      },
+      orderBy: {
+        isPrincipal: 'desc'
+      }
+    })
+    
+    return { success: true, companyCnaes }
+  } catch (error) {
+    console.error('Erro ao buscar CNAEs da empresa:', error)
+    return { error: 'Erro ao buscar CNAEs da empresa' }
+  }
+}
+
+export async function updateCompanyCNAEs(
+  companyId: string,
+  cnaeIds: string[],
+  principalCnaeId: string
+) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  const isAdmin = await isPlatformAdmin(user.id)
+  const role = await getUserRole(user.id, companyId)
+
+  if (!isAdmin && role !== Role.COMPANY_ADMIN) {
+    return { error: 'Apenas administradores podem atualizar CNAEs da empresa' }
+  }
+
+  if (!cnaeIds.length) {
+    return { error: 'Selecione pelo menos um CNAE' }
+  }
+
+  if (!principalCnaeId || !cnaeIds.includes(principalCnaeId)) {
+    return { error: 'O CNAE principal deve estar entre os CNAEs selecionados' }
+  }
+
+  try {
+    // Remove todos os CNAEs atuais da empresa
+    await prisma.companyCNAE.deleteMany({
+      where: { companyId }
+    })
+
+    // Adiciona os novos CNAEs
+    await prisma.companyCNAE.createMany({
+      data: cnaeIds.map(cnaeId => ({
+        companyId,
+        cnaeId,
+        isPrincipal: cnaeId === principalCnaeId
+      }))
+    })
+
+    // Busca o CNAE principal para obter o grau de risco
+    const principalCnae = await prisma.cNAE.findUnique({
+      where: { id: principalCnaeId }
+    })
+
+    if (principalCnae) {
+      // Atualiza o grau de risco da empresa com base no CNAE principal
+      await prisma.company.update({
+        where: { id: companyId },
+        data: { grauRisco: principalCnae.grauRisco }
+      })
+    }
+
+    revalidatePath('/dashboard/companies')
+    revalidatePath(`/dashboard/companies/${companyId}`)
+    
+    return { 
+      success: true, 
+      message: 'CNAEs atualizados com sucesso',
+      grauRisco: principalCnae?.grauRisco 
+    }
+  } catch (error) {
+    console.error('Erro ao atualizar CNAEs:', error)
+    return { error: 'Erro ao atualizar CNAEs da empresa' }
+  }
+}
+
+export async function getCompanyRiskGrade(companyId: string) {
+  try {
+    const principalCnae = await prisma.companyCNAE.findFirst({
+      where: { 
+        companyId,
+        isPrincipal: true 
+      },
+      include: {
+        cnae: true
+      }
+    })
+
+    if (!principalCnae) {
+      return { success: true, grauRisco: null, message: 'Nenhum CNAE principal definido' }
+    }
+
+    return { 
+      success: true, 
+      grauRisco: principalCnae.cnae.grauRisco,
+      cnae: principalCnae.cnae
+    }
+  } catch (error) {
+    console.error('Erro ao buscar grau de risco:', error)
+    return { error: 'Erro ao buscar grau de risco da empresa' }
+  }
+}

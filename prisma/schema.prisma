@@ -109,7 +109,7 @@ model Company {
   responsavelTecnicoTelefone   String?
   
   // Informações SST
-  grauRisco         String?
+  grauRisco         Int?  // 1 a 4 (determinado pelo CNAE principal)
   temSesmt          Boolean            @default(false)
   numeroFuncionarios Int?
   numeroTurnos      Int?
@@ -139,6 +139,7 @@ model Company {
   contacts          CompanyContact[]
   documents         CompanyDocument[]
   settings          CompanySettings?
+  cnaes             CompanyCNAE[]
 
   @@map("companies")
 }
@@ -225,6 +226,36 @@ model CompanySettings {
   company               Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   @@map("company_settings")
+}
+
+model CNAE {
+  id          String        @id @default(uuid())
+  codigo      String        @unique // Ex: "4120-4/00"
+  descricao   String        // Ex: "Construção de edifícios"
+  grauRisco   Int           // 1 a 4 (NR-04)
+  ativo       Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  companies   CompanyCNAE[]
+
+  @@index([codigo])
+  @@index([grauRisco])
+  @@map("cnaes")
+}
+
+model CompanyCNAE {
+  id          String   @id @default(uuid())
+  companyId   String
+  cnaeId      String
+  isPrincipal Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  cnae        CNAE     @relation(fields: [cnaeId], references: [id])
+
+  @@unique([companyId, cnaeId])
+  @@index([companyId])
+  @@index([cnaeId])
+  @@map("company_cnaes")
 }
 
 model Membership {

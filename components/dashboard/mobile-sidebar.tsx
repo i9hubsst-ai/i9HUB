@@ -135,7 +135,13 @@ function MenuItemComponent({
       title={isCollapsed ? item.label : undefined}
     >
       <Icon className="h-4 w-4 flex-shrink-0" />
-      {!isCollapsed && <span>{item.label}</span>}
+      <span 
+        className={`whitespace-nowrap overflow-hidden transition-all duration-300 ${
+          isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'
+        }`}
+      >
+        {item.label}
+      </span>
     </Link>
   )
 }
@@ -178,7 +184,13 @@ function SidebarContent({ onLinkClick, isCollapsed = false }: { onLinkClick?: ()
             height={32}
             className="brightness-0 invert"
           />
-          {!isCollapsed && <span className="font-bold text-lg">HUBSST</span>}
+          <span 
+            className={`font-bold text-lg whitespace-nowrap overflow-hidden transition-all duration-300 ${
+              isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'
+            }`}
+          >
+            HUBSST
+          </span>
         </Link>
       </div>
 

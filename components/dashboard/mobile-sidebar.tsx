@@ -21,8 +21,6 @@ import {
   Target,
   BarChart,
   Settings,
-  ChevronDown,
-  ChevronRight,
   Stethoscope,
   FileCheck,
   Calendar,
@@ -47,14 +45,12 @@ import { useState, useEffect } from 'react'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 
 interface MenuItem {
   icon: any
   label: string
-  href?: string
+  href: string
   adminOnly?: boolean
-  children?: MenuItem[]
 }
 
 const menuStructure: MenuItem[] = [
@@ -120,118 +116,28 @@ const menuStructure: MenuItem[] = [
   }
 ]
 
-function MenuItemComponent({ item, onLinkClick, level = 0, isCollapsed = false }: { item: MenuItem, onLinkClick?: () => void, level?: number, isCollapsed?: boolean }) {
-  const [isOpen, setIsOpen] = useState(false)
+function MenuItemComponent({ 
+  item, 
+  onLinkClick, 
+  isCollapsed = false 
+}: { 
+  item: MenuItem
+  onLinkClick?: () => void
+  isCollapsed?: boolean
+}) {
   const Icon = item.icon
-  const hasChildren = item.children && item.children.length > 0
-  const iconWidth = 16 // Largura fixa para alinhamento
-  const paddingLeft = level === 0 ? 12 : (level * 12 + 12)
 
-  // Resetar estado quando o sidebar colapsa
-  useEffect(() => {
-    if (isCollapsed) {
-      setIsOpen(false)
-    }
-  }, [isCollapsed])
-
-  if (hasChildren) {
-    // Se o item tem href E children, renderiza o link + botão de expandir
-    if (item.href) {
-      return (
-        <div>
-          <div className="flex items-center gap-1">
-            <Link
-              href={item.href}
-              onClick={onLinkClick}
-              className={`flex-1 flex items-center gap-2 py-2 rounded-lg hover:bg-sidebar-accent transition-colors text-sm`}
-              style={{ paddingLeft: `${paddingLeft}px`, paddingRight: '4px' }}
-              title={isCollapsed ? item.label : undefined}
-            >
-              <div className="flex items-center justify-center" style={{ width: `${iconWidth}px` }}>
-                <Icon className="h-4 w-4 flex-shrink-0" />
-              </div>
-              {!isCollapsed && <span className="flex-1">{item.label}</span>}
-            </Link>
-            {!isCollapsed && (
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-lg hover:bg-sidebar-accent transition-colors"
-              >
-                {isOpen ? 
-                  <ChevronDown className="h-3.5 w-3.5 flex-shrink-0" /> : 
-                  <ChevronRight className="h-3.5 w-3.5 flex-shrink-0" />
-                }
-              </button>
-            )}
-          </div>
-          {isOpen && (
-            <div className="space-y-0.5">
-              {item.children?.map((child, index) => (
-                <MenuItemComponent 
-                  key={index} 
-                  item={child} 
-                  onLinkClick={onLinkClick} 
-                  level={level + 1}
-                  isCollapsed={isCollapsed}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )
-    }
-    
-    // Se tem apenas children (sem href), usa o comportamento original
-    return (
-      <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleTrigger asChild>
-          <button
-            className={`w-full flex items-center gap-2 py-2 rounded-lg hover:bg-sidebar-accent transition-colors text-left text-sm`}
-            style={{ paddingLeft: `${paddingLeft}px`, paddingRight: '12px' }}
-          >
-            <div className="flex items-center justify-center" style={{ width: `${iconWidth}px` }}>
-              <Icon className="h-4 w-4 flex-shrink-0" />
-            </div>
-            {!isCollapsed && <span className="flex-1">{item.label}</span>}
-            {!isCollapsed && (isOpen ? 
-              <ChevronDown className="h-3.5 w-3.5 flex-shrink-0" /> : 
-              <ChevronRight className="h-3.5 w-3.5 flex-shrink-0" />
-            )}
-          </button>
-        </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-0.5">
-          {item.children?.map((child, index) => (
-            <MenuItemComponent 
-              key={index} 
-              item={child} 
-              onLinkClick={onLinkClick} 
-              level={level + 1}
-              isCollapsed={isCollapsed}
-            />
-          ))}
-        </CollapsibleContent>
-      </Collapsible>
-    )
-  }
-
-  if (item.href) {
-    return (
-      <Link
-        href={item.href}
-        onClick={onLinkClick}
-        className={`flex items-center gap-2 py-2 rounded-lg hover:bg-sidebar-accent transition-colors text-sm`}
-        style={{ paddingLeft: `${paddingLeft}px`, paddingRight: '12px' }}
-        title={isCollapsed ? item.label : undefined}
-      >
-        <div className="flex items-center justify-center" style={{ width: `${iconWidth}px` }}>
-          <Icon className="h-4 w-4 flex-shrink-0" />
-        </div>
-        {!isCollapsed && <span>{item.label}</span>}
-      </Link>
-    )
-  }
-
-  return null
+  return (
+    <Link
+      href={item.href}
+      onClick={onLinkClick}
+      className="flex items-center gap-2 py-2 px-3 rounded-lg hover:bg-sidebar-accent transition-colors text-sm"
+      title={isCollapsed ? item.label : undefined}
+    >
+      <Icon className="h-4 w-4 flex-shrink-0" />
+      {!isCollapsed && <span>{item.label}</span>}
+    </Link>
+  )
 }
 
 function SidebarContent({ onLinkClick, isCollapsed = false }: { onLinkClick?: () => void, isCollapsed?: boolean }) {
@@ -257,16 +163,8 @@ function SidebarContent({ onLinkClick, isCollapsed = false }: { onLinkClick?: ()
     return !item.adminOnly || isAdmin
   }
 
-  // Filtrar recursivamente mantendo estrutura
-  const visibleMenuItems = menuStructure.map(item => {
-    if (item.children) {
-      return {
-        ...item,
-        children: item.children.filter(shouldShowItem)
-      }
-    }
-    return item
-  }).filter(shouldShowItem)
+  // Filtrar itens visíveis
+  const visibleMenuItems = menuStructure.filter(shouldShowItem)
 
   return (
     <>

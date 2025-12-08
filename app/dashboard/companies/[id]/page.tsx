@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Building2, Users, Calendar, FileText, ArrowLeft, Edit, MapPin, Phone, Mail, User, Shield, Briefcase } from 'lucide-react'
 import { getCompanyById } from '@/app/actions/companies'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { DeleteCompanyButton } from '@/components/dashboard/delete-company-button'
 import { CompanyDetailsCards } from '@/components/dashboard/company-details-cards'
@@ -42,9 +43,25 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="bg-primary/10 p-4 rounded-lg">
-          <Building2 className="h-8 w-8 text-primary" />
+        {/* Logo ou ícone */}
+        <div className="flex-shrink-0">
+          {company.logo ? (
+            <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex items-center justify-center">
+              <Image
+                src={company.logo}
+                alt={`Logo ${company.name}`}
+                width={64}
+                height={64}
+                className="object-contain w-full h-full"
+              />
+            </div>
+          ) : (
+            <div className="bg-primary/10 p-4 rounded-lg">
+              <Building2 className="h-8 w-8 text-primary" />
+            </div>
+          )}
         </div>
+        
         <div>
           <h1 className="text-3xl font-bold text-primary">{company.name}</h1>
           {company.razaoSocial && <p className="text-lg text-muted-foreground">{company.razaoSocial}</p>}

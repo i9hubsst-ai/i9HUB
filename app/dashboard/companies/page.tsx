@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Building2, Plus, Users, Calendar, FileText } from 'lucide-react'
 import { getCompanies } from '@/app/actions/companies'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
 
@@ -61,52 +62,63 @@ export default async function CompaniesPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        <div className="space-y-4">
           {companies.map((company) => (
             <Card key={company.id} className="hover:shadow-lg transition-shadow">
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-3">
-                  <div className="bg-primary/10 p-2 rounded-lg">
-                    <Building2 className="h-5 w-5 text-primary" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <CardTitle className="text-base truncate">{company.name}</CardTitle>
-                    <CardDescription className="text-xs">CNPJ: {company.cnpj}</CardDescription>
-                  </div>
+              <div className="flex items-center gap-4 p-4">
+                {/* Logo ou ícone */}
+                <div className="flex-shrink-0">
+                  {company.logo ? (
+                    <div className="w-12 h-12 rounded-lg overflow-hidden bg-muted flex items-center justify-center">
+                      <Image
+                        src={company.logo}
+                        alt={`Logo ${company.name}`}
+                        width={48}
+                        height={48}
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                  ) : (
+                    <div className="bg-primary/10 p-3 rounded-lg">
+                      <Building2 className="h-6 w-6 text-primary" />
+                    </div>
+                  )}
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="grid grid-cols-3 gap-3 text-sm">
-                  <div>
+                
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-base truncate">{company.name}</h3>
+                  <p className="text-xs text-muted-foreground">CNPJ: {company.cnpj}</p>
+                </div>
+                
+                <div className="flex items-center gap-8">
+                  <div className="text-center">
                     <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
-                      <Users className="h-3 w-3" />
+                      <Users className="h-3.5 w-3.5" />
                       <span className="text-xs">Usuários</span>
                     </div>
                     <div className="font-semibold text-sm">{company._count.memberships}</div>
                   </div>
-                  <div>
+                  <div className="text-center">
                     <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
-                      <Calendar className="h-3 w-3" />
+                      <Calendar className="h-3.5 w-3.5" />
                       <span className="text-xs">Diagnósticos</span>
                     </div>
                     <div className="font-semibold text-sm">{company._count.assessments}</div>
                   </div>
-                  <div>
+                  <div className="text-center">
                     <div className="flex items-center gap-1.5 text-muted-foreground mb-1">
-                      <FileText className="h-3 w-3" />
+                      <FileText className="h-3.5 w-3.5" />
                       <span className="text-xs">Ações</span>
                     </div>
                     <div className="font-semibold text-sm">{company._count.actionPlans}</div>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <Link href={`/dashboard/companies/${company.id}`} className="flex-1">
-                    <Button variant="outline" size="sm" className="w-full h-8 text-xs">
-                      Ver Detalhes
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
+                <Link href={`/dashboard/companies/${company.id}`}>
+                  <Button variant="outline" size="sm" className="h-9 px-4">
+                    Ver Detalhes
+                  </Button>
+                </Link>
+              </div>
             </Card>
           ))}
         </div>

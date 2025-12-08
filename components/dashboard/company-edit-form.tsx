@@ -12,6 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Loader2 } from 'lucide-react'
 import { updateCompanyComplete, updateCompanyCNAEs } from '@/app/actions/companies'
 import { CNAEFormTab } from '@/components/dashboard/cnae-form-tab'
+import { CompanyLogoUpload } from '@/components/dashboard/company-logo-upload'
 
 interface CompanyFormProps {
   company: any
@@ -118,8 +119,9 @@ export function CompanyEditForm({ company }: CompanyFormProps) {
   return (
     <form onSubmit={handleSubmit}>
       <Tabs defaultValue="institutional" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="institutional">Dados Institucionais</TabsTrigger>
+          <TabsTrigger value="logo">Logo</TabsTrigger>
           <TabsTrigger value="address">Endereço</TabsTrigger>
           <TabsTrigger value="contacts">Contatos</TabsTrigger>
           <TabsTrigger value="cnaes">CNAEs</TabsTrigger>
@@ -201,7 +203,12 @@ export function CompanyEditForm({ company }: CompanyFormProps) {
           </Card>
         </TabsContent>
 
-        {/* Aba 2: Endereço */}
+        {/* Aba 2: Logo */}
+        <TabsContent value="logo" className="space-y-4">
+          <CompanyLogoUpload companyId={company.id} currentLogo={company.logo} />
+        </TabsContent>
+
+        {/* Aba 3: Endereço */}
         <TabsContent value="address" className="space-y-4">
           <Card>
             <CardHeader>

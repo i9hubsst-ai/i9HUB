@@ -20,8 +20,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Search, X, Plus, Shield, AlertCircle } from 'lucide-react'
+import { Search, X, Plus, Shield, AlertCircle, ExternalLink } from 'lucide-react'
 import { getAllCNAEs } from '@/app/actions/companies'
+import Link from 'next/link'
 
 interface CNAE {
   id: string
@@ -141,7 +142,16 @@ export function CNAEFormTab({ companyId, initialCNAEs = [], onCNAEsChange }: CNA
 
       {/* Adicionar CNAE */}
       <div className="space-y-2">
-        <Label>Adicionar CNAE</Label>
+        <div className="flex items-center justify-between">
+          <Label>Adicionar CNAE</Label>
+          <Link href="/dashboard/cadastros/cnaes/novo" target="_blank">
+            <Button type="button" variant="outline" size="sm">
+              <Plus className="mr-2 h-4 w-4" />
+              Cadastrar Novo CNAE
+              <ExternalLink className="ml-2 h-3 w-3" />
+            </Button>
+          </Link>
+        </div>
         <div className="relative">
           <div className="flex gap-2">
             <div className="relative flex-1">
@@ -176,6 +186,24 @@ export function CNAEFormTab({ companyId, initialCNAEs = [], onCNAEsChange }: CNA
                   </div>
                 </button>
               ))}
+            </div>
+          )}
+          
+          {/* Se não encontrar, sugerir cadastro */}
+          {searchTerm && filteredCNAEs.length === 0 && (
+            <div className="absolute z-10 w-full mt-1 bg-white border rounded-lg shadow-lg p-4">
+              <div className="text-center">
+                <p className="text-sm text-gray-600 mb-3">
+                  Nenhum CNAE encontrado com "{searchTerm}"
+                </p>
+                <Link href="/dashboard/cadastros/cnaes/novo" target="_blank">
+                  <Button type="button" size="sm" variant="outline">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Cadastrar Novo CNAE
+                    <ExternalLink className="ml-2 h-3 w-3" />
+                  </Button>
+                </Link>
+              </div>
             </div>
           )}
         </div>

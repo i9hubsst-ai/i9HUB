@@ -9,7 +9,8 @@ import {
   AlertTriangle, 
   HardHat, 
   FileText,
-  ArrowRight
+  ArrowRight,
+  ListChecks
 } from 'lucide-react'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -48,6 +49,14 @@ const cadastrosConfig: CadastroCard[] = [
     icon: Building2,
     href: '/dashboard/companies',
     color: 'text-purple-600 bg-purple-100',
+    adminOnly: true
+  },
+  {
+    title: 'CNAEs',
+    description: 'Gerenciar códigos CNAE e graus de risco',
+    icon: ListChecks,
+    href: '/dashboard/cadastros/cnaes',
+    color: 'text-blue-600 bg-blue-100',
     adminOnly: true
   },
   {

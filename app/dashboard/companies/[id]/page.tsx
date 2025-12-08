@@ -1,9 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Building2, Users, Calendar, FileText, ArrowLeft } from 'lucide-react'
+import { Building2, Users, Calendar, FileText, ArrowLeft, Edit, Trash2 } from 'lucide-react'
 import { getCompanyById } from '@/app/actions/companies'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { DeleteCompanyButton } from '@/components/dashboard/delete-company-button'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,12 +20,24 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div className="p-8 space-y-6">
-      <Link href="/dashboard/companies">
-        <Button variant="ghost" size="sm" className="gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Voltar para Empresas
-        </Button>
-      </Link>
+      <div className="flex justify-between items-center">
+        <Link href="/dashboard/companies">
+          <Button variant="ghost" size="sm" className="gap-2">
+            <ArrowLeft className="h-4 w-4" />
+            Voltar para Empresas
+          </Button>
+        </Link>
+
+        <div className="flex gap-2">
+          <Link href={`/dashboard/companies/${id}/edit`}>
+            <Button variant="outline" size="sm" className="gap-2">
+              <Edit className="h-4 w-4" />
+              Editar
+            </Button>
+          </Link>
+          <DeleteCompanyButton companyId={id} companyName={company.name} />
+        </div>
+      </div>
 
       <div className="flex items-center gap-4">
         <div className="bg-primary/10 p-4 rounded-lg">

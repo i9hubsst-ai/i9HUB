@@ -10,7 +10,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Loader2 } from 'lucide-react'
-import { updateCompanyComplete } from '@/app/actions/companies'
+import { updateCompanyComplete, updateCompanyCNAEs } from '@/app/actions/companies'
+import { CNAEFormTab } from '@/components/dashboard/cnae-form-tab'
 
 interface CompanyFormProps {
   company: any
@@ -19,6 +20,8 @@ interface CompanyFormProps {
 export function CompanyEditForm({ company }: CompanyFormProps) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [selectedCnaeIds, setSelectedCnaeIds] = useState<string[]>([])
+  const [principalCnaeId, setPrincipalCnaeId] = useState<string | null>(null)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -94,6 +97,14 @@ export function CompanyEditForm({ company }: CompanyFormProps) {
         setIsSubmitting(false)
         return
       }
+
+      // Salvar CNAEs se foram selecionados
+      if (selectedCnaeIds.length > 0 && principalCnaeId) {
+        const cnaeResult = await updateCompanyCNAEs(company.id, selectedCnaeIds, principalCnaeId)
+        if (cnaeResult.error) {
+          alert('Empresa atualizada, mas houve erro ao salvar CNAEs: ' + cnaeResult.error)
+        }
+      }
       
       router.push(`/dashboard/companies/${company.id}`)
       router.refresh()
@@ -107,10 +118,11 @@ export function CompanyEditForm({ company }: CompanyFormProps) {
   return (
     <form onSubmit={handleSubmit}>
       <Tabs defaultValue="institutional" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="institutional">Dados Institucionais</TabsTrigger>
           <TabsTrigger value="address">Endereço</TabsTrigger>
           <TabsTrigger value="contacts">Contatos</TabsTrigger>
+          <TabsTrigger value="cnaes">CNAEs</TabsTrigger>
           <TabsTrigger value="sst">SST</TabsTrigger>
           <TabsTrigger value="additional">Complementares</TabsTrigger>
         </TabsList>
@@ -332,7 +344,28 @@ export function CompanyEditForm({ company }: CompanyFormProps) {
           </Card>
         </TabsContent>
 
-        {/* Aba 4: SST */}
+        {/* Aba 4: CNAEs */}
+        <TabsContent value="cnaes" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>CNAEs da Empresa</CardTitle>
+              <CardDescription>
+                Classifique a empresa com os códigos CNAE. O CNAE principal determina automaticamente o grau de risco.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CNAEFormTab
+                companyId={company.id}
+                onCNAEsChange={(cnaeIds, principalId) => {
+                  setSelectedCnaeIds(cnaeIds)
+                  setPrincipalCnaeId(principalId)
+                }}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Aba 5: SST */}
         <TabsContent value="sst" className="space-y-4">
           <Card>
             <CardHeader>
@@ -340,11 +373,13 @@ export function CompanyEditForm({ company }: CompanyFormProps) {
               <CardDescription>Dados técnicos para gestão de SST</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="grauRisco">Grau de Risco</Label>
-                  <Input id="grauRisco" name="grauRisco" defaultValue={company.grauRisco || ''} placeholder="1 a 4" maxLength={1} />
-                </div>
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-4">
+                <p className="text-sm text-blue-900">
+                  <strong>Nota:</strong> O grau de risco é determinado automaticamente com base no CNAE principal da empresa (definido na aba CNAEs).
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="numeroFuncionarios">Número de Funcionários</Label>
                   <Input id="numeroFuncionarios" name="numeroFuncionarios" type="number" defaultValue={company.numeroFuncionarios || ''} />
@@ -369,7 +404,7 @@ export function CompanyEditForm({ company }: CompanyFormProps) {
           </Card>
         </TabsContent>
 
-        {/* Aba 5: Complementares */}
+        {/* Aba 6: Complementares */}
         <TabsContent value="additional" className="space-y-4">
           <Card>
             <CardHeader>

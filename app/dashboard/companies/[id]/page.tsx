@@ -5,6 +5,7 @@ import { getCompanyById } from '@/app/actions/companies'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { DeleteCompanyButton } from '@/components/dashboard/delete-company-button'
+import { CompanyDetailsCards } from '@/components/dashboard/company-details-cards'
 
 export const dynamic = 'force-dynamic'
 
@@ -94,6 +95,10 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
         </Card>
       </div>
 
+      {/* Novos cards de detalhes */}
+      <CompanyDetailsCards company={company} />
+
+      {/* Diagnósticos e Membros */}
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>

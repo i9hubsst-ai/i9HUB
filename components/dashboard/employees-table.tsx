@@ -144,9 +144,18 @@ export function EmployeesTable({ employees, companyId }: EmployeesTableProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Confirmar Inativação</AlertDialogTitle>
-            <AlertDialogDescription>
-              Tem certeza que deseja inativar este funcionário? O registro será mantido no sistema mas o status será alterado para Inativo.
-              Você poderá reativar o funcionário posteriormente através da edição.
+            <AlertDialogDescription className="space-y-2">
+              <p>
+                Tem certeza que deseja inativar este funcionário? O registro será mantido no sistema mas o status será alterado para <strong>Inativo</strong>.
+              </p>
+              <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-3">
+                <p className="text-sm text-blue-900 font-medium">ℹ️ Importante:</p>
+                <ul className="text-sm text-blue-800 mt-1 space-y-1 list-disc list-inside">
+                  <li>O funcionário pode ser <strong>reativado</strong> a qualquer momento editando o registro</li>
+                  <li>Todo o histórico é preservado</li>
+                  <li>Para transferir entre empresas: inative aqui e cadastre na nova empresa</li>
+                </ul>
+              </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

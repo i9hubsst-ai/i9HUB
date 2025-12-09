@@ -138,7 +138,19 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
                 <div><Label>Matrícula *</Label><Input value={data.employeeNumber || ''} onChange={(e) => u('employeeNumber', e.target.value)} /></div>
                 <div><Label>Data de Admissão *</Label><Input type="date" value={data.admissionDate || ''} onChange={(e) => u('admissionDate', e.target.value)} /></div>
                 <div><Label>Tipo de Contrato *</Label><Select value={data.contractType} onValueChange={(v) => u('contractType', v)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="CLT">CLT</SelectItem><SelectItem value="INTERN">Estágio</SelectItem><SelectItem value="OUTSOURCED">Terceirizado</SelectItem><SelectItem value="TEMPORARY">Temporário</SelectItem><SelectItem value="AUTONOMOUS">Autônomo</SelectItem></SelectContent></Select></div>
-                <div><Label>Status *</Label><Select value={data.status} onValueChange={(v) => u('status', v)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="ACTIVE">Ativo</SelectItem><SelectItem value="INACTIVE">Inativo</SelectItem></SelectContent></Select></div>
+                <div>
+                  <Label>Status *</Label>
+                  <Select value={data.status} onValueChange={(v) => u('status', v)}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ACTIVE">Ativo</SelectItem>
+                      <SelectItem value="INACTIVE">Inativo</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Use "Inativo" para funcionários desligados ou afastados. Pode ser reativado posteriormente.
+                  </p>
+                </div>
                 <div><Label>Jornada/Turno</Label><Input value={data.workSchedule || ''} onChange={(e) => u('workSchedule', e.target.value)} /></div>
                 <div><Label>Unidade/Obra</Label><Input value={data.unit || ''} onChange={(e) => u('unit', e.target.value)} /></div>
                 <div><Label>Setor/Área</Label><Input value={data.department || ''} onChange={(e) => u('department', e.target.value)} /></div>

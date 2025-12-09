@@ -5,6 +5,30 @@ import { prisma } from '@/lib/prisma'
 import { getCurrentUser, isPlatformAdmin, getUserRole } from '@/lib/auth'
 import type { Gender, MaritalStatus, ContractType, MembershipStatus } from '@prisma/client'
 
+/**
+ * IMPORTANTE: Sistema Multi-Empresa de Funcionários
+ * 
+ * Este módulo suporta os seguintes cenários:
+ * 
+ * 1. MESMO CPF EM MÚLTIPLAS EMPRESAS:
+ *    - Um funcionário pode ter registros em várias empresas simultaneamente
+ *    - Constraint: @@unique([companyId, cpf]) permite isso
+ *    - Cada empresa tem seu próprio vínculo empregatício independente
+ * 
+ * 2. INATIVAÇÃO/REATIVAÇÃO:
+ *    - Status ACTIVE: Funcionário ativo na empresa
+ *    - Status INACTIVE: Funcionário inativo (saiu, demitido, etc)
+ *    - Pode ser REATIVADO editando o registro e mudando status para ACTIVE
+ *    - Histórico completo é preservado (nunca deletamos funcionários)
+ * 
+ * 3. TRANSFERÊNCIA ENTRE EMPRESAS:
+ *    - Cenário: Funcionário sai da Empresa A e vai para Empresa B
+ *    - Processo: 
+ *      a) Inativar na Empresa A (status = INACTIVE)
+ *      b) Criar novo registro na Empresa B (status = ACTIVE)
+ *    - Ambos os registros são mantidos para histórico
+ */
+
 export type EmployeeFormData = {
   companyId: string
   fullName: string
@@ -155,6 +179,19 @@ export async function updateEmployee(id: string, data: EmployeeFormData) {
   }
 }
 
+/**
+ * Inativa um funcionário alterando seu status para INACTIVE
+ * 
+ * IMPORTANTE: 
+ * - Não deleta o registro, apenas muda o status
+ * - Preserva todo o histórico e relacionamentos
+ * - Pode ser REATIVADO editando o funcionário e mudando status para ACTIVE
+ * - Útil para: demissões, afastamentos, transferências entre empresas
+ * 
+ * Para transferir funcionário entre empresas:
+ * 1. Inativar na empresa atual com esta função
+ * 2. Criar novo registro na nova empresa (o CPF pode ser repetido)
+ */
 export async function inactivateEmployee(id: string) {
   const user = await getCurrentUser()
   if (!user) {
@@ -191,6 +228,14 @@ export async function inactivateEmployee(id: string) {
   }
 }
 
+/**
+ * Deleta permanentemente um funcionário
+ * 
+ * ATENÇÃO: Use com cuidado!
+ * - Deleta o registro permanentemente
+ * - Pode quebrar relacionamentos se o funcionário tiver vínculos em outros módulos
+ * - RECOMENDAÇÃO: Use inactivateEmployee() ao invés desta função na maioria dos casos
+ */
 export async function deleteEmployee(id: string) {
   const user = await getCurrentUser()
   if (!user) {

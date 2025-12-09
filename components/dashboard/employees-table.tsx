@@ -1,12 +1,25 @@
 'use client'
 
+import { useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { Edit, Ban, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { inactivateEmployee } from '@/app/actions/employees'
+import { useRouter } from 'next/navigation'
 
 interface Employee {
   id: string
@@ -25,6 +38,24 @@ interface EmployeesTableProps {
 }
 
 export function EmployeesTable({ employees, companyId }: EmployeesTableProps) {
+  const [inactivateId, setInactivateId] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+  const router = useRouter()
+
+  const handleInactivate = async () => {
+    if (!inactivateId) return
+    setLoading(true)
+
+    const result = await inactivateEmployee(inactivateId)
+    
+    if (!result.error) {
+      setInactivateId(null)
+      router.refresh()
+    } else {
+      alert(result.error)
+    }
+    setLoading(false)
+  }
   if (employees.length === 0) {
     return (
       <div className="text-center py-8 text-muted-foreground">
@@ -96,6 +127,7 @@ export function EmployeesTable({ employees, companyId }: EmployeesTableProps) {
                       size="sm"
                       disabled={employee.status === 'INACTIVE'}
                       title={employee.status === 'INACTIVE' ? 'Já inativo' : 'Inativar funcionário'}
+                      onClick={() => setInactivateId(employee.id)}
                     >
                       <Ban className="h-4 w-4" />
                     </Button>
@@ -106,6 +138,25 @@ export function EmployeesTable({ employees, companyId }: EmployeesTableProps) {
           </TableBody>
         </Table>
       </div>
+
+      {/* Inactivate Confirmation Dialog */}
+      <AlertDialog open={!!inactivateId} onOpenChange={(open) => !open && setInactivateId(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirmar Inativação</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja inativar este funcionário? O registro será mantido no sistema mas o status será alterado para Inativo.
+              Você poderá reativar o funcionário posteriormente através da edição.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={loading}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleInactivate} disabled={loading}>
+              {loading ? 'Inativando...' : 'Inativar'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

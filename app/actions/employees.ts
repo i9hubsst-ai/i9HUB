@@ -155,6 +155,42 @@ export async function updateEmployee(id: string, data: EmployeeFormData) {
   }
 }
 
+export async function inactivateEmployee(id: string) {
+  const user = await getCurrentUser()
+  if (!user) {
+    return { error: 'Não autorizado' }
+  }
+
+  try {
+    const employee = await prisma.employee.findUnique({
+      where: { id },
+    })
+
+    if (!employee) {
+      return { error: 'Funcionário não encontrado' }
+    }
+
+    const isAdmin = await isPlatformAdmin(user.id)
+    const role = await getUserRole(user.id, employee.companyId)
+
+    if (!isAdmin && role !== 'COMPANY_ADMIN') {
+      return { error: 'Sem permissão para alterar status de funcionários' }
+    }
+
+    await prisma.employee.update({
+      where: { id },
+      data: { status: 'INACTIVE' },
+    })
+
+    revalidatePath('/dashboard/employees')
+    revalidatePath(`/dashboard/companies/${employee.companyId}`)
+    return { success: true }
+  } catch (error) {
+    console.error('Erro ao inativar funcionário:', error)
+    return { error: 'Erro ao inativar funcionário' }
+  }
+}
+
 export async function deleteEmployee(id: string) {
   const user = await getCurrentUser()
   if (!user) {

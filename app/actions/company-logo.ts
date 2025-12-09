@@ -36,7 +36,7 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
       return { error: 'Arquivo muito grande. Tamanho máximo: 5MB' }
     }
 
-    // Verificar se empresa existe e usuário tem acesso
+    // Verificar se empresa existe
     const company = await prisma.company.findUnique({
       where: { id: companyId },
       include: {
@@ -53,10 +53,17 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
       return { error: 'Empresa não encontrada' }
     }
 
-    if (company.memberships.length === 0) {
+    // Verificar se é admin da plataforma OU membro da empresa
+    const isAdmin = await isPlatformAdmin(user.id)
+    console.log('[Logo Upload] É admin da plataforma:', isAdmin)
+    console.log('[Logo Upload] Tem membership na empresa:', company.memberships.length > 0)
+
+    if (!isAdmin && company.memberships.length === 0) {
       console.error('[Logo Upload] Usuário sem permissão para empresa:', companyId)
       return { error: 'Você não tem permissão para editar esta empresa' }
     }
+
+    console.log('[Logo Upload] Permissão concedida:', isAdmin ? 'como admin' : 'como membro')
 
     // Upload para Supabase Storage
     const supabase = await createClient()

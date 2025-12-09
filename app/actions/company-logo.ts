@@ -1,6 +1,6 @@
 'use server'
 
-import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
+import { getCurrentUser } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { createClient } from '@/lib/supabase/server'
 
@@ -53,17 +53,23 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
       return { error: 'Empresa não encontrada' }
     }
 
-    // Verificar se é admin da plataforma ou membro da empresa
-    const isAdmin = await isPlatformAdmin(user.id)
-    console.log('[Logo Upload] É admin da plataforma:', isAdmin)
-
-    if (!isAdmin && company.memberships.length === 0) {
+    if (company.memberships.length === 0) {
       console.error('[Logo Upload] Usuário sem permissão para empresa:', companyId)
       return { error: 'Você não tem permissão para editar esta empresa' }
     }
 
     // Upload para Supabase Storage
     const supabase = await createClient()
+    
+    // Verificar autenticação do Supabase
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+    console.log('[Logo Upload] Sessão Supabase:', !!session, 'Erro:', sessionError)
+    
+    if (!session) {
+      console.error('[Logo Upload] Sem sessão do Supabase')
+      return { error: 'Sessão do Supabase não encontrada' }
+    }
+    
     const fileExt = file.name.split('.').pop()
     const fileName = `${companyId}-${Date.now()}.${fileExt}`
     const filePath = `company-logos/${fileName}`
@@ -142,15 +148,8 @@ export async function deleteCompanyLogo(companyId: string) {
       }
     })
 
-    if (!company) {
-      return { error: 'Empresa não encontrada' }
-    }
-
-    // Verificar se é admin da plataforma ou membro da empresa
-    const isAdmin = await isPlatformAdmin(user.id)
-
-    if (!isAdmin && company.memberships.length === 0) {
-      return { error: 'Você não tem permissão para editar esta empresa' }
+    if (!company || company.memberships.length === 0) {
+      return { error: 'Empresa não encontrada ou sem permissão' }
     }
 
     if (!company.logo) {

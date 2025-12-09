@@ -65,30 +65,36 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
 
     console.log('[Logo Upload] Permissão concedida:', isAdmin ? 'como admin' : 'como membro')
 
-    // Upload para Supabase Storage
-    const supabase = await createClient()
+    // Upload para Supabase Storage usando Service Role (bypassa RLS)
+    const { createClient: createServiceClient } = await import('@supabase/supabase-js')
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
     
-    // Verificar autenticação do Supabase
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
-    console.log('[Logo Upload] Sessão Supabase:', !!session, 'Erro:', sessionError)
-    
-    if (!session) {
-      console.error('[Logo Upload] Sem sessão do Supabase')
-      return { error: 'Sessão do Supabase não encontrada' }
+    if (!supabaseServiceKey) {
+      console.error('[Logo Upload] SUPABASE_SERVICE_ROLE_KEY não configurada')
+      return { error: 'Configuração de storage incorreta' }
     }
+    
+    // Usar service role para bypassar RLS
+    const supabaseAdmin = createServiceClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    })
     
     const fileExt = file.name.split('.').pop()
     const fileName = `${companyId}-${Date.now()}.${fileExt}`
     const filePath = `company-logos/${fileName}`
 
-    console.log('[Logo Upload] Preparando upload:', filePath)
+    console.log('[Logo Upload] Preparando upload com service role:', filePath)
 
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
     console.log('[Logo Upload] Buffer criado, tamanho:', buffer.length)
 
-    const { error: uploadError, data } = await supabase.storage
+    const { error: uploadError, data } = await supabaseAdmin.storage
       .from('company-assets')
       .upload(filePath, buffer, {
         contentType: file.type,
@@ -103,7 +109,7 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
     console.log('[Logo Upload] Upload bem-sucedido:', data)
 
     // Obter URL pública
-    const { data: { publicUrl } } = supabase.storage
+    const { data: { publicUrl } } = supabaseAdmin.storage
       .from('company-assets')
       .getPublicUrl(filePath)
 
@@ -114,7 +120,7 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
       const oldPath = company.logo.split('/company-assets/')[1]
       if (oldPath) {
         console.log('[Logo Upload] Deletando logo antiga:', oldPath)
-        const { error: deleteError } = await supabase.storage
+        const { error: deleteError } = await supabaseAdmin.storage
           .from('company-assets')
           .remove([oldPath])
         
@@ -155,19 +161,36 @@ export async function deleteCompanyLogo(companyId: string) {
       }
     })
 
-    if (!company || company.memberships.length === 0) {
-      return { error: 'Empresa não encontrada ou sem permissão' }
+    if (!company) {
+      return { error: 'Empresa não encontrada' }
+    }
+
+    // Verificar se é admin da plataforma ou membro da empresa
+    const isAdmin = await isPlatformAdmin(user.id)
+
+    if (!isAdmin && company.memberships.length === 0) {
+      return { error: 'Você não tem permissão para editar esta empresa' }
     }
 
     if (!company.logo) {
       return { error: 'Empresa não possui logo' }
     }
 
-    // Deletar do storage
-    const supabase = await createClient()
+    // Deletar do storage usando Service Role (bypassa RLS)
+    const { createClient: createServiceClient } = await import('@supabase/supabase-js')
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+    
+    const supabaseAdmin = createServiceClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    })
+    
     const oldPath = company.logo.split('/company-assets/')[1]
     if (oldPath) {
-      await supabase.storage
+      await supabaseAdmin.storage
         .from('company-assets')
         .remove([oldPath])
     }

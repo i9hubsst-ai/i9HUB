@@ -2,16 +2,24 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Edit } from 'lucide-react'
 import { updateEmployee } from '@/app/actions/employees'
 import { validateCPF, formatCPF, formatPhone } from '@/lib/utils/validators'
+import { useRouter } from 'next/navigation'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
+interface EditEmployeeDialogProps {
+  employee: any
+  trigger?: 'button' | 'icon'
+  defaultOpen?: boolean
+}
+
+export function EditEmployeeDialog({ employee, trigger = 'button', defaultOpen = false }: EditEmployeeDialogProps) {
+  const router = useRouter()
+  const [open, setOpen] = useState(defaultOpen)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,8 +86,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
       setError(result.error)
       setLoading(false)
     } else {
-      onOpenChange(false)
+      setOpen(false)
       setLoading(false)
+      router.refresh()
     }
   }
 
@@ -87,7 +96,22 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
   const u = (field: string, value: any) => setData((prev: any) => ({ ...prev, [field]: value }))
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
+      {trigger === 'button' ? (
+        <DialogTrigger asChild>
+          <Button variant="outline" size="sm" className="gap-2">
+            <Edit className="h-4 w-4" />
+            Editar
+          </Button>
+        </DialogTrigger>
+      ) : (
+        <DialogTrigger asChild>
+          <Button variant="ghost" size="sm">
+            <Edit className="h-4 w-4" />
+          </Button>
+        </DialogTrigger>
+      )}
+      
       <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">Editar Funcionário</DialogTitle>
@@ -362,7 +386,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
             <Button 
               type="button" 
               variant="outline" 
-              onClick={() => onOpenChange(false)} 
+              onClick={() => setOpen(false)} 
               disabled={loading}
               className="h-11 px-6"
             >

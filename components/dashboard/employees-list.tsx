@@ -20,10 +20,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { MoreVertical, Pencil, Trash2, Mail, Phone, Building2, Briefcase } from 'lucide-react'
+import { MoreVertical, Pencil, Trash2, Mail, Phone, Building2, Briefcase, Eye } from 'lucide-react'
 import { deleteEmployee } from '@/app/actions/employees'
 import { formatCPF, formatPhone } from '@/lib/utils/validators'
 import { EditEmployeeDialog } from './edit-employee-dialog'
+import Link from 'next/link'
 
 type Employee = {
   id: string
@@ -47,7 +48,6 @@ interface EmployeesListProps {
 
 export function EmployeesList({ employees }: EmployeesListProps) {
   const [deleteId, setDeleteId] = useState<string | null>(null)
-  const [editEmployee, setEditEmployee] = useState<Employee | null>(null)
   const [loading, setLoading] = useState(false)
 
   const handleDelete = async () => {
@@ -152,9 +152,16 @@ export function EmployeesList({ employees }: EmployeesListProps) {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setEditEmployee(employee)}>
-                    <Pencil className="h-4 w-4 mr-2" />
-                    Editar
+                  <DropdownMenuItem asChild>
+                    <Link href={`/dashboard/employees/${employee.id}`} className="flex items-center cursor-pointer">
+                      <Eye className="h-4 w-4 mr-2" />
+                      Ver Detalhes
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <div className="flex items-center cursor-pointer">
+                      <EditEmployeeDialog employee={employee} trigger="icon" />
+                    </div>
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     onClick={() => setDeleteId(employee.id)}
@@ -187,15 +194,6 @@ export function EmployeesList({ employees }: EmployeesListProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
-      {/* Edit Dialog */}
-      {editEmployee && (
-        <EditEmployeeDialog
-          employee={editEmployee}
-          open={!!editEmployee}
-          onOpenChange={(open: boolean) => !open && setEditEmployee(null)}
-        />
-      )}
     </>
   )
 }

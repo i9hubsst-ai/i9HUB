@@ -117,8 +117,8 @@ export function EmployeesTable({ employees, companyId }: EmployeesTableProps) {
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Link href={`/dashboard/employees/${employee.id}/edit`}>
-                      <Button variant="ghost" size="sm">
+                    <Link href={`/dashboard/employees/${employee.id}`}>
+                      <Button variant="ghost" size="sm" title="Ver detalhes">
                         <Edit className="h-4 w-4" />
                       </Button>
                     </Link>

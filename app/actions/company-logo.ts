@@ -1,6 +1,6 @@
 'use server'
 
-import { getCurrentUser } from '@/lib/auth'
+import { getCurrentUser, isPlatformAdmin } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { createClient } from '@/lib/supabase/server'
 

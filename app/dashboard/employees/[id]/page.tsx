@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import Image from 'next/image'
 import { 
   User, 
   ArrowLeft, 
@@ -75,16 +76,33 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
         </Link>
 
         <div className="flex gap-2">
-          <EditEmployeeDialog employee={employee} />
+          <Link href={`/dashboard/employees/${id}/edit`}>
+            <Button className="gap-2">
+              <Edit className="h-4 w-4" />
+              Editar Funcionário
+            </Button>
+          </Link>
         </div>
       </div>
 
       {/* Employee Header */}
       <div className="flex items-center gap-4">
         <div className="flex-shrink-0">
-          <div className="bg-primary/10 p-4 rounded-lg">
-            <User className="h-12 w-12 text-primary" />
-          </div>
+          {(employee as any).photo ? (
+            <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-primary/20">
+              <Image
+                src={(employee as any).photo}
+                alt={employee.fullName}
+                width={80}
+                height={80}
+                className="object-cover w-full h-full"
+              />
+            </div>
+          ) : (
+            <div className="bg-primary/10 p-4 rounded-lg">
+              <User className="h-12 w-12 text-primary" />
+            </div>
+          )}
         </div>
         
         <div className="flex-1">

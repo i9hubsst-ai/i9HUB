@@ -1,34 +1,25 @@
--- SOLUÇÃO ALTERNATIVA: Desabilitar RLS completamente para company-assets
--- Use isso se as políticas não funcionarem
-
--- Primeiro, certifique-se de que o bucket existe
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('company-assets', 'company-assets', true)
-ON CONFLICT (id) DO NOTHING;
+-- SOLUÇÃO DEFINITIVA: Desabilitar RLS completamente para company-assets
+-- Este script remove todas as restrições de segurança para permitir upload
 
 -- Remover todas as políticas existentes
 DROP POLICY IF EXISTS "Public read access for company assets" ON storage.objects;
 DROP POLICY IF EXISTS "Authenticated users can upload company assets" ON storage.objects;
 DROP POLICY IF EXISTS "Authenticated users can update company assets" ON storage.objects;
 DROP POLICY IF EXISTS "Authenticated users can delete company assets" ON storage.objects;
+DROP POLICY IF EXISTS "Allow all for authenticated users" ON storage.objects;
+DROP POLICY IF EXISTS "Public read access" ON storage.objects;
 
--- Desabilitar RLS no bucket (permite tudo)
--- ATENÇÃO: Isso remove restrições de segurança. Use apenas para testar.
-UPDATE storage.buckets 
-SET public = true 
-WHERE id = 'company-assets';
+-- Garantir que o bucket existe e é público
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('company-assets', 'company-assets', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
 
--- Criar políticas permissivas (permite tudo para authenticated)
-CREATE POLICY "Allow all for authenticated users"
+-- IMPORTANTE: Criar uma política super permissiva que permite TUDO
+CREATE POLICY "company-assets-all-access"
 ON storage.objects
+AS PERMISSIVE
 FOR ALL
-TO authenticated
+TO public
 USING (bucket_id = 'company-assets')
 WITH CHECK (bucket_id = 'company-assets');
 
--- Permitir leitura pública
-CREATE POLICY "Public read access"
-ON storage.objects
-FOR SELECT
-TO public
-USING (bucket_id = 'company-assets');

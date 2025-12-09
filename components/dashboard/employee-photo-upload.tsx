@@ -51,12 +51,23 @@ export function EmployeePhotoUpload({ employeeId, currentPhoto, employeeName }: 
       console.error('[Component] Erro no upload:', result.error)
       setError(result.error)
       setPreview(currentPhoto || null)
+      setIsUploading(false)
+    } else if (result.photoUrl) {
+      console.log('[Component] Upload bem-sucedido, URL:', result.photoUrl)
+      setPreview(result.photoUrl) // Atualizar preview com a URL real
+      setIsUploading(false)
+      // Pequeno delay para garantir que o estado foi atualizado
+      setTimeout(() => {
+        try {
+          router.refresh()
+        } catch (err) {
+          console.error('[Component] Erro no refresh:', err)
+        }
+      }, 100)
     } else {
-      console.log('[Component] Upload bem-sucedido')
-      router.refresh()
+      setError('Upload realizado mas URL não retornada')
+      setIsUploading(false)
     }
-    
-    setIsUploading(false)
   }
 
   const handleDelete = async () => {
@@ -66,12 +77,18 @@ export function EmployeePhotoUpload({ employeeId, currentPhoto, employeeName }: 
     
     if (result.error) {
       setError(result.error)
+      setIsDeleting(false)
     } else {
       setPreview(null)
-      router.refresh()
+      setIsDeleting(false)
+      setTimeout(() => {
+        try {
+          router.refresh()
+        } catch (err) {
+          console.error('[Component] Erro no refresh:', err)
+        }
+      }, 100)
     }
-    
-    setIsDeleting(false)
   }
 
   return (

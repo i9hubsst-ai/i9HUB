@@ -8,23 +8,31 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
   try {
     const user = await getCurrentUser()
     if (!user) {
+      console.error('[Logo Upload] Usuário não autenticado')
       return { error: 'Não autorizado' }
     }
 
+    console.log('[Logo Upload] Usuário:', user.id, 'Empresa:', companyId)
+
     const file = formData.get('logo') as File
     if (!file) {
+      console.error('[Logo Upload] Nenhum arquivo enviado')
       return { error: 'Nenhum arquivo foi enviado' }
     }
+
+    console.log('[Logo Upload] Arquivo:', file.name, 'Tipo:', file.type, 'Tamanho:', file.size)
 
     // Validar tipo de arquivo
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/svg+xml']
     if (!allowedTypes.includes(file.type)) {
+      console.error('[Logo Upload] Tipo não permitido:', file.type)
       return { error: 'Tipo de arquivo não permitido. Use: JPG, PNG, WEBP ou SVG' }
     }
 
     // Validar tamanho (max 5MB)
     const maxSize = 5 * 1024 * 1024 // 5MB
     if (file.size > maxSize) {
+      console.error('[Logo Upload] Arquivo muito grande:', file.size)
       return { error: 'Arquivo muito grande. Tamanho máximo: 5MB' }
     }
 
@@ -38,8 +46,16 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
       }
     })
 
-    if (!company || company.memberships.length === 0) {
-      return { error: 'Empresa não encontrada ou sem permissão' }
+    console.log('[Logo Upload] Empresa encontrada:', !!company, 'Memberships:', company?.memberships.length)
+
+    if (!company) {
+      console.error('[Logo Upload] Empresa não encontrada:', companyId)
+      return { error: 'Empresa não encontrada' }
+    }
+
+    if (company.memberships.length === 0) {
+      console.error('[Logo Upload] Usuário sem permissão para empresa:', companyId)
+      return { error: 'Você não tem permissão para editar esta empresa' }
     }
 
     // Upload para Supabase Storage
@@ -48,8 +64,12 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
     const fileName = `${companyId}-${Date.now()}.${fileExt}`
     const filePath = `company-logos/${fileName}`
 
+    console.log('[Logo Upload] Preparando upload:', filePath)
+
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
+
+    console.log('[Logo Upload] Buffer criado, tamanho:', buffer.length)
 
     const { error: uploadError, data } = await supabase.storage
       .from('company-assets')
@@ -59,35 +79,46 @@ export async function uploadCompanyLogo(companyId: string, formData: FormData) {
       })
 
     if (uploadError) {
-      console.error('Upload error:', uploadError)
-      return { error: 'Erro ao fazer upload da imagem' }
+      console.error('[Logo Upload] Erro no upload:', uploadError)
+      return { error: `Erro ao fazer upload: ${uploadError.message}` }
     }
+
+    console.log('[Logo Upload] Upload bem-sucedido:', data)
 
     // Obter URL pública
     const { data: { publicUrl } } = supabase.storage
       .from('company-assets')
       .getPublicUrl(filePath)
 
+    console.log('[Logo Upload] URL pública:', publicUrl)
+
     // Deletar logo antiga se existir
     if (company.logo) {
       const oldPath = company.logo.split('/company-assets/')[1]
       if (oldPath) {
-        await supabase.storage
+        console.log('[Logo Upload] Deletando logo antiga:', oldPath)
+        const { error: deleteError } = await supabase.storage
           .from('company-assets')
           .remove([oldPath])
+        
+        if (deleteError) {
+          console.warn('[Logo Upload] Erro ao deletar logo antiga:', deleteError)
+        }
       }
     }
 
     // Atualizar empresa com novo logo
+    console.log('[Logo Upload] Atualizando empresa no banco')
     await prisma.company.update({
       where: { id: companyId },
       data: { logo: publicUrl }
     })
 
+    console.log('[Logo Upload] Sucesso! Logo atualizado')
     return { success: true, logoUrl: publicUrl }
   } catch (error) {
-    console.error('Error uploading company logo:', error)
-    return { error: 'Erro ao processar upload' }
+    console.error('[Logo Upload] Erro fatal:', error)
+    return { error: `Erro ao processar upload: ${error instanceof Error ? error.message : 'Erro desconhecido'}` }
   }
 }
 

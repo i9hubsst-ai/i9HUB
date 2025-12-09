@@ -20,11 +20,15 @@ export function CompanyLogoUpload({ companyId, currentLogo }: CompanyLogoUploadP
   const [isUploading, setIsUploading] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [preview, setPreview] = useState<string | null>(currentLogo || null)
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+
+    setError(null)
+    console.log('[Component] Arquivo selecionado:', file.name, file.type, file.size)
 
     // Preview local
     const reader = new FileReader()
@@ -38,13 +42,16 @@ export function CompanyLogoUpload({ companyId, currentLogo }: CompanyLogoUploadP
     const formData = new FormData()
     formData.append('logo', file)
 
+    console.log('[Component] Iniciando upload para empresa:', companyId)
     const result = await uploadCompanyLogo(companyId, formData)
+    console.log('[Component] Resultado:', result)
     
     if (result.error) {
-      alert(result.error)
+      console.error('[Component] Erro no upload:', result.error)
+      setError(result.error)
       setPreview(currentLogo || null)
     } else {
-      alert('Logo atualizado com sucesso!')
+      console.log('[Component] Upload bem-sucedido')
       router.refresh()
     }
     
@@ -53,13 +60,13 @@ export function CompanyLogoUpload({ companyId, currentLogo }: CompanyLogoUploadP
 
   const handleDelete = async () => {
     setIsDeleting(true)
+    setError(null)
     const result = await deleteCompanyLogo(companyId)
     
     if (result.error) {
-      alert(result.error)
+      setError(result.error)
     } else {
       setPreview(null)
-      alert('Logo removido com sucesso!')
       router.refresh()
     }
     
@@ -75,6 +82,13 @@ export function CompanyLogoUpload({ companyId, currentLogo }: CompanyLogoUploadP
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
+        {/* Mensagem de erro */}
+        {error && (
+          <div className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
+
         <div className="flex flex-col items-center gap-4">
           {/* Preview */}
           <div className="w-48 h-48 border-2 border-dashed border-muted-foreground/25 rounded-lg flex items-center justify-center overflow-hidden bg-muted/5">

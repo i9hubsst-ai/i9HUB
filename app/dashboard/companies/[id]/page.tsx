@@ -8,6 +8,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { DeleteCompanyButton } from '@/components/dashboard/delete-company-button'
 import { CompanyDetailsCards } from '@/components/dashboard/company-details-cards'
+import { EmployeesTable } from '@/components/dashboard/employees-table'
 
 export const dynamic = 'force-dynamic'
 
@@ -196,6 +197,17 @@ export default async function CompanyDetailPage({ params }: { params: Promise<{ 
                 ))}
               </ul>
             )}
+          </CardContent>
+        </Card>
+
+        {/* Funcionários */}
+        <Card className="col-span-full">
+          <CardHeader>
+            <CardTitle>Funcionários</CardTitle>
+            <CardDescription>Relação de funcionários cadastrados na empresa</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <EmployeesTable employees={company.employees} companyId={company.id} />
           </CardContent>
         </Card>
       </div>

@@ -241,6 +241,21 @@ export async function getCompanyById(companyId: string) {
             company: true
           }
         },
+        employees: {
+          select: {
+            id: true,
+            fullName: true,
+            cpf: true,
+            employeeNumber: true,
+            position: true,
+            department: true,
+            admissionDate: true,
+            status: true
+          },
+          orderBy: {
+            fullName: 'asc'
+          }
+        },
         assessments: {
           orderBy: {
             createdAt: 'desc'
@@ -252,6 +267,7 @@ export async function getCompanyById(companyId: string) {
             memberships: true,
             assessments: true,
             actionPlans: true,
+            employees: true
           }
         }
       }

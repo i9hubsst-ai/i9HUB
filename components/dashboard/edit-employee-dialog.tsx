@@ -19,29 +19,34 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: any) {
 
   useEffect(() => {
     if (employee && open) {
-      const formatDate = (date: string) => date?.split('T')[0] || ''
+      const formatDate = (date: string | Date | null | undefined) => {
+        if (!date) return ''
+        if (typeof date === 'string') return date.split('T')[0]
+        if (date instanceof Date) return date.toISOString().split('T')[0]
+        return ''
+      }
       setData({
         companyId: employee.company.id,
-        fullName: employee.fullName,
-        cpf: employee.cpf,
+        fullName: employee.fullName || '',
+        cpf: employee.cpf || '',
         birthDate: formatDate(employee.birthDate),
-        gender: employee.gender,
-        maritalStatus: employee.maritalStatus,
+        gender: employee.gender || '',
+        maritalStatus: employee.maritalStatus || '',
         nationality: employee.nationality || 'Brasileira',
-        email: employee.email,
+        email: employee.email || '',
         phone: employee.phone || '',
         emergencyContactName: employee.emergencyContactName || '',
         emergencyContactPhone: employee.emergencyContactPhone || '',
-        employeeNumber: employee.employeeNumber,
+        employeeNumber: employee.employeeNumber || '',
         admissionDate: formatDate(employee.admissionDate),
-        contractType: employee.contractType,
+        contractType: employee.contractType || '',
         workSchedule: employee.workSchedule || '',
         unit: employee.unit || '',
         department: employee.department || '',
-        position: employee.position,
+        position: employee.position || '',
         cboCode: employee.cboCode || '',
         supervisor: employee.supervisor || '',
-        status: employee.status,
+        status: employee.status || 'ACTIVE',
       })
     }
   }, [employee, open])

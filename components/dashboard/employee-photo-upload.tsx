@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Upload, Trash2, User } from 'lucide-react'
 import { uploadEmployeePhoto, deleteEmployeePhoto } from '@/app/actions/employee-photo'
@@ -118,21 +117,19 @@ export function EmployeePhotoUpload({ employeeId, currentPhoto, employeeName }: 
 
           {/* Actions */}
           <div className="flex gap-2">
-            <Label htmlFor="photo-upload">
-              <Button
-                type="button"
-                variant="outline"
-                disabled={isUploading}
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  document.getElementById('photo-upload')?.click()
-                }}
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                {isUploading ? 'Enviando...' : preview ? 'Alterar Foto' : 'Fazer Upload'}
-              </Button>
-            </Label>
+            <Button
+              type="button"
+              variant="outline"
+              disabled={isUploading}
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                document.getElementById('photo-upload')?.click()
+              }}
+            >
+              <Upload className="h-4 w-4 mr-2" />
+              {isUploading ? 'Enviando...' : preview ? 'Alterar Foto' : 'Fazer Upload'}
+            </Button>
             <Input
               id="photo-upload"
               type="file"

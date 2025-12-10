@@ -77,8 +77,8 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
         return
       }
       
+      // Navegar de volta para a página de detalhes
       router.push(`/dashboard/employees/${employee.id}`)
-      router.refresh()
     } catch (error) {
       console.error('Erro ao atualizar funcionário:', error)
       setError('Erro ao atualizar funcionário')

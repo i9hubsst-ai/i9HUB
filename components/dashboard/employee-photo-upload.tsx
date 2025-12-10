@@ -56,14 +56,7 @@ export function EmployeePhotoUpload({ employeeId, currentPhoto, employeeName }: 
       console.log('[Component] Upload bem-sucedido, URL:', result.photoUrl)
       setPreview(result.photoUrl) // Atualizar preview com a URL real
       setIsUploading(false)
-      // Pequeno delay para garantir que o estado foi atualizado
-      setTimeout(() => {
-        try {
-          router.refresh()
-        } catch (err) {
-          console.error('[Component] Erro no refresh:', err)
-        }
-      }, 100)
+      // Não fazer refresh automático para evitar erros
     } else {
       setError('Upload realizado mas URL não retornada')
       setIsUploading(false)
@@ -81,13 +74,7 @@ export function EmployeePhotoUpload({ employeeId, currentPhoto, employeeName }: 
     } else {
       setPreview(null)
       setIsDeleting(false)
-      setTimeout(() => {
-        try {
-          router.refresh()
-        } catch (err) {
-          console.error('[Component] Erro no refresh:', err)
-        }
-      }, 100)
+      // Não fazer refresh automático para evitar erros
     }
   }
 

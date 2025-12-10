@@ -35,8 +35,12 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
     setIsSubmitting(true)
     setError('')
 
+    console.log('[EDIT FORM] 🔵 Iniciando submit do formulário')
+
     const formData = new FormData(e.currentTarget)
     
+    console.log('[EDIT FORM] 📝 Dados do formulário coletados')
+
     const data = {
       companyId: formData.get('companyId') as string,
       fullName: formData.get('fullName') as string,
@@ -61,26 +65,36 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
       status: formData.get('status') as string || 'ACTIVE',
     } as any
 
+    console.log('[EDIT FORM] 📦 Dados preparados:', data)
+
     // Validate CPF
     if (!validateCPF(data.cpf)) {
+      console.log('[EDIT FORM] ❌ CPF inválido:', data.cpf)
       setError('CPF inválido')
       setIsSubmitting(false)
       return
     }
 
+    console.log('[EDIT FORM] ✅ CPF válido, chamando updateEmployee...')
+
     try {
       const result = await updateEmployee(employee.id, data)
       
+      console.log('[EDIT FORM] 📨 Resultado do updateEmployee:', result)
+      
       if (result.error) {
+        console.log('[EDIT FORM] ❌ Erro retornado:', result.error)
         setError(result.error)
         setIsSubmitting(false)
         return
       }
       
+      console.log('[EDIT FORM] ✅ Update bem-sucedido, navegando para detalhes...')
       // Navegar de volta para a página de detalhes
       router.push(`/dashboard/employees/${employee.id}`)
+      console.log('[EDIT FORM] ✅ Navegação concluída')
     } catch (error) {
-      console.error('Erro ao atualizar funcionário:', error)
+      console.error('[EDIT FORM] ❌ Erro fatal ao atualizar funcionário:', error)
       setError('Erro ao atualizar funcionário')
       setIsSubmitting(false)
     }

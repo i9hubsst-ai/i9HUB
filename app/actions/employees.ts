@@ -113,27 +113,41 @@ export async function createEmployee(data: EmployeeFormData) {
 }
 
 export async function updateEmployee(id: string, data: EmployeeFormData) {
+  console.log('[UPDATE EMPLOYEE] 🔵 Iniciando updateEmployee para ID:', id)
+  
   const user = await getCurrentUser()
   if (!user) {
+    console.log('[UPDATE EMPLOYEE] ❌ Usuário não autenticado')
     return { error: 'Não autorizado' }
   }
 
+  console.log('[UPDATE EMPLOYEE] ✅ Usuário autenticado:', user.id)
+
   try {
+    console.log('[UPDATE EMPLOYEE] 🔍 Buscando funcionário no banco...')
     const employee = await prisma.employee.findUnique({
       where: { id },
     })
 
     if (!employee) {
+      console.log('[UPDATE EMPLOYEE] ❌ Funcionário não encontrado')
       return { error: 'Funcionário não encontrado' }
     }
 
+    console.log('[UPDATE EMPLOYEE] ✅ Funcionário encontrado, companyId:', employee.companyId)
+
+    console.log('[UPDATE EMPLOYEE] 🔍 Verificando permissões...')
     const isAdmin = await isPlatformAdmin(user.id)
     const role = await getUserRole(user.id, employee.companyId)
 
+    console.log('[UPDATE EMPLOYEE] 👤 isAdmin:', isAdmin, 'role:', role)
+
     if (!isAdmin && role !== 'COMPANY_ADMIN') {
+      console.log('[UPDATE EMPLOYEE] ❌ Sem permissão')
       return { error: 'Sem permissão para editar funcionários' }
     }
 
+    console.log('[UPDATE EMPLOYEE] 💾 Atualizando funcionário no banco...')
     const updated = await prisma.employee.update({
       where: { id },
       data: {
@@ -160,21 +174,27 @@ export async function updateEmployee(id: string, data: EmployeeFormData) {
       },
     })
 
+    console.log('[UPDATE EMPLOYEE] ✅ Funcionário atualizado com sucesso')
+    console.log('[UPDATE EMPLOYEE] 🔄 Revalidando paths...')
     revalidatePath('/dashboard/employees')
     revalidatePath(`/dashboard/companies/${employee.companyId}`)
+    console.log('[UPDATE EMPLOYEE] ✅ Paths revalidados, retornando sucesso')
     return { success: true, employee: updated }
   } catch (error: any) {
-    console.error('Erro ao atualizar funcionário:', error)
+    console.error('[UPDATE EMPLOYEE] ❌ Erro fatal ao atualizar funcionário:', error)
     
     if (error.code === 'P2002') {
       if (error.meta?.target?.includes('cpf')) {
+        console.log('[UPDATE EMPLOYEE] ❌ Erro: CPF duplicado')
         return { error: 'CPF já cadastrado nesta empresa' }
       }
       if (error.meta?.target?.includes('employeeNumber')) {
+        console.log('[UPDATE EMPLOYEE] ❌ Erro: Matrícula duplicada')
         return { error: 'Matrícula já cadastrada nesta empresa' }
       }
     }
     
+    console.log('[UPDATE EMPLOYEE] ❌ Erro genérico')
     return { error: 'Erro ao atualizar funcionário' }
   }
 }

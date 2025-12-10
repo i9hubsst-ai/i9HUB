@@ -22,7 +22,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import { EditEmployeeDialog } from '@/components/dashboard/edit-employee-dialog'
+import { EmployeeActions } from '@/components/dashboard/employee-actions'
 
 export const dynamic = 'force-dynamic'
 
@@ -82,6 +82,12 @@ export default async function EmployeeDetailPage({ params }: { params: Promise<{
               Editar Funcionário
             </Button>
           </Link>
+          
+          <EmployeeActions 
+            employeeId={id}
+            employeeName={employee.fullName}
+            currentStatus={employee.status}
+          />
         </div>
       </div>
 

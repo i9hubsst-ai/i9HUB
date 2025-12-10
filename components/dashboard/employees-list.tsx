@@ -1,29 +1,10 @@
 'use client'
 
-import { useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
-import { MoreVertical, Pencil, Trash2, Mail, Phone, Building2, Briefcase, Eye } from 'lucide-react'
-import { deleteEmployee } from '@/app/actions/employees'
+import { Mail, Phone, Building2, Briefcase, Eye } from 'lucide-react'
 import { formatCPF, formatPhone } from '@/lib/utils/validators'
-import { EditEmployeeDialog } from './edit-employee-dialog'
 import Link from 'next/link'
 
 type Employee = {
@@ -47,21 +28,6 @@ interface EmployeesListProps {
 }
 
 export function EmployeesList({ employees }: EmployeesListProps) {
-  const [deleteId, setDeleteId] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-
-  const handleDelete = async () => {
-    if (!deleteId) return
-    setLoading(true)
-
-    const result = await deleteEmployee(deleteId)
-    
-    if (!result.error) {
-      setDeleteId(null)
-    }
-    setLoading(false)
-  }
-
   const contractTypeLabels: Record<string, string> = {
     CLT: 'CLT',
     INTERN: 'Estágio',
@@ -145,55 +111,16 @@ export function EmployeesList({ employees }: EmployeesListProps) {
                 </div>
               </div>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <MoreVertical className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem asChild>
-                    <Link href={`/dashboard/employees/${employee.id}`} className="flex items-center cursor-pointer">
-                      <Eye className="h-4 w-4 mr-2" />
-                      Ver Detalhes
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <div className="flex items-center cursor-pointer">
-                      <EditEmployeeDialog employee={employee} trigger="icon" />
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => setDeleteId(employee.id)}
-                    className="text-destructive"
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Excluir
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Link href={`/dashboard/employees/${employee.id}`}>
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <Eye className="h-4 w-4" />
+                  Ver Detalhes
+                </Button>
+              </Link>
             </div>
           </Card>
         ))}
       </div>
-
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog open={!!deleteId} onOpenChange={(open) => !open && setDeleteId(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Confirmar Exclusão</AlertDialogTitle>
-            <AlertDialogDescription>
-              Tem certeza que deseja excluir este funcionário? Esta ação não pode ser desfeita.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={loading}>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} disabled={loading} className="bg-destructive hover:bg-destructive/90">
-              {loading ? 'Excluindo...' : 'Excluir'}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   )
 }

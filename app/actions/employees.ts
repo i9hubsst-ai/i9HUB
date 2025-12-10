@@ -192,7 +192,7 @@ export async function updateEmployee(id: string, data: EmployeeFormData) {
  * 1. Inativar na empresa atual com esta função
  * 2. Criar novo registro na nova empresa (o CPF pode ser repetido)
  */
-export async function inactivateEmployee(id: string) {
+export async function inactivateEmployee(id: string, status: 'ACTIVE' | 'INACTIVE' = 'INACTIVE') {
   const user = await getCurrentUser()
   if (!user) {
     return { error: 'Não autorizado' }
@@ -216,15 +216,16 @@ export async function inactivateEmployee(id: string) {
 
     await prisma.employee.update({
       where: { id },
-      data: { status: 'INACTIVE' },
+      data: { status },
     })
 
     revalidatePath('/dashboard/employees')
     revalidatePath(`/dashboard/companies/${employee.companyId}`)
+    revalidatePath(`/dashboard/employees/${id}`)
     return { success: true }
   } catch (error) {
-    console.error('Erro ao inativar funcionário:', error)
-    return { error: 'Erro ao inativar funcionário' }
+    console.error('Erro ao alterar status do funcionário:', error)
+    return { error: 'Erro ao alterar status do funcionário' }
   }
 }
 

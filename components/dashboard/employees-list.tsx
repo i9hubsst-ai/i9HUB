@@ -3,9 +3,10 @@
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Mail, Phone, Building2, Briefcase, Eye } from 'lucide-react'
+import { Mail, Phone, Building2, Briefcase, Eye, User } from 'lucide-react'
 import { formatCPF, formatPhone } from '@/lib/utils/validators'
 import Link from 'next/link'
+import Image from 'next/image'
 
 type Employee = {
   id: string
@@ -13,6 +14,7 @@ type Employee = {
   cpf: string
   email: string
   phone: string | null
+  photo: string | null
   position: string
   department: string | null
   contractType: string
@@ -62,9 +64,21 @@ export function EmployeesList({ employees }: EmployeesListProps) {
             <div className="flex items-start justify-between">
               <div className="flex-1 space-y-2">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-semibold">
-                    {employee.fullName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
-                  </div>
+                  {employee.photo ? (
+                    <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-teal-200">
+                      <Image
+                        src={employee.photo}
+                        alt={employee.fullName}
+                        width={40}
+                        height={40}
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-10 w-10 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center">
+                      <User className="h-5 w-5" />
+                    </div>
+                  )}
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className="font-semibold text-primary">{employee.fullName}</h3>

@@ -25,6 +25,9 @@ export function EmployeePhotoUpload({ employeeId, currentPhoto, employeeName }: 
   const router = useRouter()
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
     const file = e.target.files?.[0]
     if (!file) return
 
@@ -120,7 +123,11 @@ export function EmployeePhotoUpload({ employeeId, currentPhoto, employeeName }: 
                 type="button"
                 variant="outline"
                 disabled={isUploading}
-                onClick={() => document.getElementById('photo-upload')?.click()}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  document.getElementById('photo-upload')?.click()
+                }}
               >
                 <Upload className="h-4 w-4 mr-2" />
                 {isUploading ? 'Enviando...' : preview ? 'Alterar Foto' : 'Fazer Upload'}

@@ -40,11 +40,26 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
     const formData = new FormData(e.currentTarget)
     
     console.log('[EDIT FORM] 📝 Dados do formulário coletados')
+    console.log('[EDIT FORM] 🔍 Todos os campos do FormData:')
+    for (let [key, value] of formData.entries()) {
+      console.log(`  ${key}:`, value)
+    }
+
+    // Coletar e validar CPF
+    const cpfValue = formData.get('cpf')
+    console.log('[EDIT FORM] 🔍 CPF do formulário:', cpfValue, 'tipo:', typeof cpfValue)
+    
+    if (!cpfValue || cpfValue === '') {
+      console.log('[EDIT FORM] ❌ CPF não encontrado no formulário')
+      setError('CPF é obrigatório')
+      setIsSubmitting(false)
+      return
+    }
 
     const data = {
       companyId: formData.get('companyId') as string,
       fullName: formData.get('fullName') as string,
-      cpf: (formData.get('cpf') as string).replace(/\D/g, ''),
+      cpf: (cpfValue as string).replace(/\D/g, ''),
       birthDate: formData.get('birthDate') as string,
       gender: (formData.get('gender') as string) || undefined,
       maritalStatus: (formData.get('maritalStatus') as string) || undefined,

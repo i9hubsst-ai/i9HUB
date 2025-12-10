@@ -32,16 +32,26 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setIsSubmitting(true)
-    setError('')
-
-    console.log('[EDIT FORM] 🔵 Iniciando submit do formulário')
+    
+    console.log('[EDIT FORM] 🔵 Submit capturado')
 
     const formData = new FormData(e.currentTarget)
     
-    console.log('[EDIT FORM] 📝 Dados do formulário coletados')
+    // VERIFICAÇÃO CRÍTICA: Ignorar submits com FormData vazio
+    const entries = Array.from(formData.entries())
+    console.log('[EDIT FORM] 📊 Número de campos no FormData:', entries.length)
+    
+    if (entries.length === 0) {
+      console.log('[EDIT FORM] ⚠️ FormData vazio - ignorando submit (provavelmente evento de componente filho)')
+      return
+    }
+    
+    setIsSubmitting(true)
+    setError('')
+    
+    console.log('[EDIT FORM] ✅ FormData válido, processando submit...')
     console.log('[EDIT FORM] 🔍 Todos os campos do FormData:')
-    for (let [key, value] of formData.entries()) {
+    for (let [key, value] of entries) {
       console.log(`  ${key}:`, value)
     }
 

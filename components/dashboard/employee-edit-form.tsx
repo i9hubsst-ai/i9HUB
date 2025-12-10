@@ -137,7 +137,7 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
         </TabsList>
 
         {/* Aba 1: Identificação Civil */}
-        <TabsContent value="identification" className="space-y-4">
+        <TabsContent value="identification" className="space-y-4" forceMount>
           <Card>
             <CardHeader>
               <CardTitle>Identificação Civil</CardTitle>
@@ -229,7 +229,7 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
         </TabsContent>
 
         {/* Aba 2: Contato */}
-        <TabsContent value="contact" className="space-y-4">
+        <TabsContent value="contact" className="space-y-4" forceMount>
           <Card>
             <CardHeader>
               <CardTitle>Informações de Contato</CardTitle>
@@ -293,7 +293,7 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
         </TabsContent>
 
         {/* Aba 3: Vínculo Trabalhista */}
-        <TabsContent value="employment" className="space-y-4">
+        <TabsContent value="employment" className="space-y-4" forceMount>
           <Card>
             <CardHeader>
               <CardTitle>Vínculo Trabalhista</CardTitle>
@@ -427,7 +427,7 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
         </TabsContent>
 
         {/* Aba 4: Foto */}
-        <TabsContent value="photo" className="space-y-4">
+        <TabsContent value="photo" className="space-y-4" forceMount>
           <EmployeePhotoUpload 
             employeeId={employee.id}
             currentPhoto={employee.photo}
@@ -436,7 +436,7 @@ export function EmployeeEditForm({ employee, companies }: EmployeeEditFormProps)
         </TabsContent>
 
         {/* Aba 5: Informações Adicionais */}
-        <TabsContent value="additional" className="space-y-4">
+        <TabsContent value="additional" className="space-y-4" forceMount>
           <Card>
             <CardHeader>
               <CardTitle>Informações Adicionais</CardTitle>

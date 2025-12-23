@@ -46,7 +46,8 @@ export async function getDashboardStats() {
 
         const statusData = {
           inProgress: assessmentsByStatus.find(s => s.status === 'IN_PROGRESS')?._count || 0,
-          completed: assessmentsByStatus.find(s => s.status === 'COMPLETED')?._count || 0,
+          completed: (assessmentsByStatus.find(s => s.status === 'COMPLETED')?._count || 0) + 
+                     (assessmentsByStatus.find(s => s.status === 'SCORED')?._count || 0),
           pending: (assessmentsByStatus.find(s => s.status === 'DRAFT')?._count || 0) + 
                    (assessmentsByStatus.find(s => s.status === 'SUBMITTED')?._count || 0),
         }
@@ -189,7 +190,8 @@ export async function getDashboardStats() {
 
         const statusData = {
           inProgress: assessmentsByStatus.find(s => s.status === 'IN_PROGRESS')?._count || 0,
-          completed: assessmentsByStatus.find(s => s.status === 'COMPLETED')?._count || 0,
+          completed: (assessmentsByStatus.find(s => s.status === 'COMPLETED')?._count || 0) + 
+                     (assessmentsByStatus.find(s => s.status === 'SCORED')?._count || 0),
           pending: (assessmentsByStatus.find(s => s.status === 'DRAFT')?._count || 0) + 
                    (assessmentsByStatus.find(s => s.status === 'SUBMITTED')?._count || 0),
         }

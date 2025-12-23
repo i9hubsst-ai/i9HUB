@@ -39,6 +39,7 @@ export async function getDiagnosticsMetrics(companyId?: string) {
       draftAssessments,
       inProgressAssessments,
       completedAssessments,
+      scoredAssessments,
       totalTemplates,
       totalFindings,
       totalActionPlans,
@@ -49,6 +50,7 @@ export async function getDiagnosticsMetrics(companyId?: string) {
       prisma.assessment.count({ where: { ...assessmentWhere, status: 'DRAFT' } }),
       prisma.assessment.count({ where: { ...assessmentWhere, status: 'IN_PROGRESS' } }),
       prisma.assessment.count({ where: { ...assessmentWhere, status: 'COMPLETED' } }),
+      prisma.assessment.count({ where: { ...assessmentWhere, status: 'SCORED' } }),
       prisma.diagnosticTemplate.count({ where: { status: { not: 'ARCHIVED' } } }),
       prisma.finding.count({ where: findingWhere }),
       prisma.actionPlan.count({ where: actionPlanWhere }),
@@ -63,7 +65,7 @@ export async function getDiagnosticsMetrics(companyId?: string) {
           total: totalAssessments,
           draft: draftAssessments,
           inProgress: inProgressAssessments,
-          completed: completedAssessments
+          completed: completedAssessments + scoredAssessments
         },
         templates: {
           total: totalTemplates

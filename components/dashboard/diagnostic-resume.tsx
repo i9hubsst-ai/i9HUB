@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 
 interface DiagnosticResumeProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,24 +13,30 @@ export function DiagnosticResume({ assessment }: DiagnosticResumeProps) {
   // Dados reais dos scores por seção
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sections = (assessment.scores || []).map((score: any) => ({
-    title: score.section?.title?.substring(0, 3) || 'N/A',
+    title: score.section?.title || 'Sem título',
     score: score.weightedScore / 20, // Converte de 0-100 para 0-5
     label: score.section?.title || 'Sem título',
-    fullScore: score.weightedScore
+    fullScore: score.weightedScore,
+    percentage: Math.round((score.weightedScore / 100) * 100) // Para tooltip
   }))
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const radarData = sections.map((section: any) => ({
-    section: section.title,
-    score: section.score,
-  }))
+  // Dados para o gráfico de barras (ordenados por pontuação decrescente)
+  const chartData = sections
+    .sort((a: any, b: any) => b.score - a.score)
+    .map((section: any, index: number) => ({
+      name: section.title.length > 20 ? section.title.substring(0, 20) + '...' : section.title,
+      score: section.score,
+      fullName: section.title,
+      percentage: section.percentage,
+      color: section.score >= 4 ? '#10b981' : section.score >= 3 ? '#f59e0b' : '#ef4444'
+    }))
 
   // Calcular score geral e nível de maturidade
-  const overallScore = assessment.overallScore 
+  const overallScore = assessment.overallScore
     ? assessment.overallScore / 20  // Converte de 0-100 para 0-5
-    : sections.length > 0 
+    : sections.length > 0
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ? sections.reduce((sum: number, s: any) => sum + s.score, 0) / sections.length 
+      ? sections.reduce((sum: number, s: any) => sum + s.score, 0) / sections.length
       : 0
 
   const overallLevel = assessment.overallLevel || Math.ceil(overallScore)
@@ -54,29 +60,66 @@ export function DiagnosticResume({ assessment }: DiagnosticResumeProps) {
             <CardDescription className="text-xs">Visão geral do desempenho e pontuação de maturidade.</CardDescription>
           </CardHeader>
           <CardContent className="pb-4">
-            <div className="h-[300px]">
+            <div className="h-[350px]">
               <ResponsiveContainer width="100%" height="100%">
-                <RadarChart data={radarData}>
-                  <PolarGrid stroke="#e2e8f0" />
-                  <PolarAngleAxis 
-                    dataKey="section" 
+                <BarChart
+                  data={chartData}
+                  layout="horizontal"
+                  margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <XAxis
+                    type="number"
+                    domain={[0, 5]}
                     tick={{ fill: '#64748b', fontSize: 12 }}
+                    tickCount={6}
                   />
-                  <PolarRadiusAxis 
-                    angle={90} 
-                    domain={[0, 5]} 
-                    tick={{ fill: '#64748b', fontSize: 10 }}
+                  <YAxis
+                    type="category"
+                    dataKey="name"
+                    tick={{ fill: '#64748b', fontSize: 11 }}
+                    width={120}
                   />
-                  <Radar 
-                    name="Pontuação" 
-                    dataKey="score" 
-                    stroke="#17a2b8" 
-                    fill="#17a2b8" 
-                    fillOpacity={0.5}
-                    strokeWidth={2}
+                  <Tooltip
+                    content={({ active, payload, label }) => {
+                      if (active && payload && payload.length) {
+                        const data = payload[0].payload
+                        return (
+                          <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
+                            <p className="font-semibold text-gray-900">{data.fullName}</p>
+                            <p className="text-sm text-gray-600">
+                              Pontuação: <span className="font-bold text-teal-600">{payload[0].value?.toFixed(1)}/5</span>
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              Percentual: <span className="font-bold">{data.percentage}%</span>
+                            </p>
+                          </div>
+                        )
+                      }
+                      return null
+                    }}
                   />
-                </RadarChart>
+                  <Bar dataKey="score" radius={[0, 4, 4, 0]}>
+                    {chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
               </ResponsiveContainer>
+            </div>
+            <div className="mt-4 flex justify-center gap-4 text-xs text-gray-600">
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 bg-green-500 rounded"></div>
+                <span>Excelente (4-5)</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 bg-yellow-500 rounded"></div>
+                <span>Bom (3-4)</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 bg-red-500 rounded"></div>
+                <span>Precisa Melhorar (0-3)</span>
+              </div>
             </div>
           </CardContent>
         </Card>

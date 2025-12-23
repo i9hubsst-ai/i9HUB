@@ -100,7 +100,7 @@ export function DiagnosticResume({ assessment }: DiagnosticResumeProps) {
                     }}
                   />
                   <Bar dataKey="score" radius={[0, 4, 4, 0]}>
-                    {chartData.map((entry, index) => (
+                    {chartData.map((entry: any, index: number) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Bar>
